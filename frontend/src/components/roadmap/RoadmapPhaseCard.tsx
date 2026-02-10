@@ -12,7 +12,9 @@ import {
   ChevronDown,
   ChevronUp,
   Lock,
+  Info,
 } from 'lucide-react';
+import { SemesterModal } from '@/components/common/SemesterModal';
 
 interface RoadmapPhaseCardProps {
   phase: RoadmapPhase;
@@ -34,6 +36,7 @@ export function RoadmapPhaseCard({
   onMarkComplete,
 }: RoadmapPhaseCardProps) {
   const [selectedSkill, setSelectedSkill] = useState<string | null>(null);
+  const [showInfo, setShowInfo] = useState(false);
 
   return (
     <>
@@ -95,7 +98,16 @@ export function RoadmapPhaseCard({
                 </span>
               )}
             </div>
-            <h3 className="text-lg font-semibold text-foreground truncate">{phase.title}</h3>
+            <div className="flex items-center gap-2">
+              <h3 className="text-lg font-semibold text-foreground truncate">{phase.title}</h3>
+              <button
+                onClick={(e) => { e.stopPropagation(); setShowInfo(true); }}
+                className="p-1 hover:bg-muted rounded-full transition-colors text-muted-foreground hover:text-primary"
+                title="View Semester Details"
+              >
+                <Info className="w-4 h-4" />
+              </button>
+            </div>
           </div>
 
           {/* Expand Icon */}
@@ -211,6 +223,13 @@ export function RoadmapPhaseCard({
         isOpen={!!selectedSkill}
         onClose={() => setSelectedSkill(null)}
         skillName={selectedSkill || ''}
+      />
+
+      <SemesterModal
+        semesterId={phase.id}
+        isOpen={showInfo}
+        onClose={() => setShowInfo(false)}
+        title={phase.title}
       />
     </>
   );
