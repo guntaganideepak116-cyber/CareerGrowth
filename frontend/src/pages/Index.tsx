@@ -57,7 +57,6 @@ export default function Index() {
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-24">
           {/* Nav */}
-          {/* Nav */}
           <nav className="flex items-center justify-between mb-8 md:mb-16 animate-fade-in gap-2">
             <Link to="/" className="flex items-center gap-2 md:gap-3 shrink-0">
               <div className="p-2 md:p-2.5 bg-primary rounded-xl">
