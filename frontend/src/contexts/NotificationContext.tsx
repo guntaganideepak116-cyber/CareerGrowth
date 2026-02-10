@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState, ReactNode, useCallback } from 'react';
+import { createContext, useContext, useEffect, useState, ReactNode, useCallback, useMemo } from 'react';
 import { db } from '@/lib/firebase';
 import { collection, query, orderBy, limit, onSnapshot } from 'firebase/firestore';
 import { useAuthContext } from '@/contexts/AuthContext';
@@ -115,33 +115,50 @@ export function NotificationProvider({ children }: { children: ReactNode }) {
             setNotifications(prev => prev.map(n => n.id === notificationId ? { ...n, is_read: true } : n));
 
             const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
-            await fetch(`${API_URL}/api/notifications/read/${notificationId}`, {
+            // Trigger API in background without blocking UI
+            fetch(`${API_URL}/api/notifications/read/${notificationId}`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ userId: user.uid })
-            });
+            }).catch(err => console.error('Background markAsRead error:', err));
+
         } catch (err) {
-            console.error('Error marking as read:', err);
-            // Revert if API fails?
-            // onSnapshot will eventually reconcile true state so optimistic update is fine
+            console.error('Error in markAsRead logic:', err);
         }
     }, [user]);
 
     const markAllAsRead = useCallback(async () => {
-        if (!user) return;
-        const unread = notifications.filter(n => !n.is_read);
-        unread.forEach(n => markAsRead(n.id));
-    }, [notifications, markAsRead, user]);
+        if (!user || notifications.length === 0) return;
+
+        const unreadIds = notifications.filter(n => !n.is_read).map(n => n.id);
+        if (unreadIds.length === 0) return;
+
+        // Optimistic update for all
+        setNotifications(prev => prev.map(n => unreadIds.includes(n.id) ? { ...n, is_read: true } : n));
+
+        // Parallel background requests
+        const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+        Promise.all(unreadIds.map(id =>
+            fetch(`${API_URL}/api/notifications/read/${id}`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ userId: user.uid })
+            })
+        )).catch(err => console.error('Batch markAsRead error:', err));
+
+    }, [notifications, user]);
+
+    const contextValue = useMemo(() => ({
+        notifications,
+        loading,
+        error,
+        unreadCount: notifications.filter(n => !n.is_read).length,
+        markAsRead,
+        markAllAsRead
+    }), [notifications, loading, error, markAsRead, markAllAsRead]);
 
     return (
-        <NotificationContext.Provider value={{
-            notifications,
-            loading,
-            error,
-            unreadCount: notifications.filter(n => !n.is_read).length,
-            markAsRead,
-            markAllAsRead
-        }}>
+        <NotificationContext.Provider value={contextValue}>
             {children}
         </NotificationContext.Provider>
     );

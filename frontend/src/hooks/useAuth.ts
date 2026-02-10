@@ -81,7 +81,8 @@ export function useAuth() {
   });
 
   // Start as loading=true, will be set to false after Firebase auth initializes
-  const [loading, setLoading] = useState(true);
+  // OPTIMIZATION: If we already have a cached profile, we can skip the initial loading flicker
+  const [loading, setLoading] = useState(!profile);
 
   useEffect(() => {
     // Single Global Auth Listener

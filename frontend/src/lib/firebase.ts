@@ -16,6 +16,20 @@ const app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApps()[0
 export const auth = getAuth(app);
 export const db = getFirestore(app);
 
+import { enableIndexedDbPersistence, terminate } from 'firebase/firestore';
+
+// Enable multi-tab offline persistence for Firestore
+if (typeof window !== 'undefined') {
+    enableIndexedDbPersistence(db, { forceOwnership: false })
+        .catch((err) => {
+            if (err.code === 'failed-precondition') {
+                console.warn('Firestore Persistence: Multiple tabs open, persistence can only be enabled in one tab at a time.');
+            } else if (err.code === 'unimplemented') {
+                console.warn('Firestore Persistence: The current browser does not support persistence.');
+            }
+        });
+}
+
 // Enable tab-level persistence
 setPersistence(auth, browserSessionPersistence)
     .then(() => {

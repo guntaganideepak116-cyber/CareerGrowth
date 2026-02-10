@@ -52,13 +52,25 @@ const SystemSettings = lazy(() => import("./pages/admin/SystemSettings"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 1000 * 60 * 5, // 5 minutes - keep data fresh to avoid frequent loading states
+      gcTime: 1000 * 60 * 30,    // 30 minutes - keep data in memory longer
+      retry: 1,                 // Minimal retries for faster failure feedback
+      refetchOnWindowFocus: false, // Prevent background refetch on tab switch (save network/CPU)
+    },
+  },
+});
 
 const LoadingFallback = () => (
-  <div className="min-h-screen w-full flex items-center justify-center bg-background">
+  <div className="min-h-screen w-full flex items-center justify-center bg-background animate-in fade-in duration-500">
     <div className="flex flex-col items-center gap-4">
-      <Loader2 className="w-10 h-10 animate-spin text-primary" />
-      <p className="text-muted-foreground animate-pulse">Loading experience...</p>
+      <div className="w-16 h-16 relative">
+        <div className="absolute inset-0 border-4 border-primary/20 rounded-full"></div>
+        <div className="absolute inset-0 border-4 border-primary border-t-transparent rounded-full animate-spin"></div>
+      </div>
+      <p className="text-sm font-medium text-muted-foreground animate-pulse tracking-widest uppercase">Initializing Intelligence</p>
     </div>
   </div>
 );
