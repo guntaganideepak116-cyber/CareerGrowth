@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import { useQuery } from '@tanstack/react-query';
 import { DashboardLayout } from '@/components/dashboard/DashboardLayout';
 import { useAuthContext } from '@/contexts/AuthContext';
 import { Button } from '@/components/ui/button';
@@ -14,8 +13,6 @@ import {
   Briefcase,
 } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
-import { SkillModal } from '@/components/common/SkillModal';
-import { ExpandableInfoSection } from '@/components/common/ExpandableInfoSection';
 
 interface CareerPath {
   id: string;
@@ -23,23 +20,14 @@ interface CareerPath {
   field: string;
   requiredSkills: string[];
   level: string;
-  description?: string;
-  salaryRange?: string;
 }
 
 export default function CareerPaths() {
   const { user, profile, loading, updateProfile } = useAuthContext();
   const navigate = useNavigate();
   const [selectedPath, setSelectedPath] = useState<string | null>(null);
-  const [selectedSkill, setSelectedSkill] = useState<string | null>(null);
-  const [activeCardSections, setActiveCardSections] = useState<Record<string, string | null>>({});
-
-  const toggleCardSection = (pathId: string, section: string) => {
-    setActiveCardSections(prev => ({
-      ...prev,
-      [pathId]: prev[pathId] === section ? null : section
-    }));
-  };
+  const [careerPaths, setCareerPaths] = useState<CareerPath[]>([]);
+  const [pathsLoading, setPathsLoading] = useState(true);
 
   useEffect(() => {
     if (!loading && !user) {
@@ -54,12 +42,23 @@ export default function CareerPaths() {
     }
   }, [user, profile?.field, loading, navigate]);
 
-  // Optimized: Fetch career paths using React Query with caching
-  const { data: careerPaths = [], isLoading: pathsLoading } = useQuery({
-    queryKey: ['career_paths', profile?.field],
-    queryFn: async () => {
-      if (!profile?.field) return [];
+  useEffect(() => {
+    if (profile?.field) {
+      fetchCareerPaths();
+    }
+  }, [profile?.field]);
 
+  // Fetch career paths from database using structured endpoint
+  const fetchCareerPaths = async () => {
+    if (!profile?.field) {
+      setPathsLoading(false);
+      return;
+    }
+
+    setPathsLoading(true);
+
+    try {
+      // Normalize field ID
       const fieldId = profile.field.toLowerCase().replace(/\s+/g, '-');
       const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000';
       const response = await fetch(`${apiUrl}/api/career-paths/structured/${fieldId}`);
@@ -71,7 +70,8 @@ export default function CareerPaths() {
       const data = await response.json();
 
       if (data.success && data.specializations) {
-        return data.specializations.flatMap((spec: any) =>
+        // Flatten all careers from all specializations
+        const allCareers = data.specializations.flatMap((spec: any) =>
           spec.careers.map((career: any) => ({
             ...career,
             fieldId: data.fieldId,
@@ -80,13 +80,22 @@ export default function CareerPaths() {
             specializationName: spec.specializationName
           }))
         );
+
+        console.log(`✅ Loaded ${allCareers.length} career paths across ${data.specializations.length} specializations`);
+        setCareerPaths(allCareers);
+      } else {
+        setCareerPaths([]);
       }
-      return [];
-    },
-    enabled: !!profile?.field,
-    staleTime: 1000 * 60 * 60, // Cache for 1 hour
-    refetchOnWindowFocus: false,
-  });
+
+      setPathsLoading(false);
+
+    } catch (error) {
+      console.error('Error loading career paths:', error);
+      setCareerPaths([]);
+      setPathsLoading(false);
+      // Don't show error toast - just show empty state
+    }
+  };
 
   const handleSelectPath = async (path: CareerPath) => {
     setSelectedPath(path.id);
@@ -106,39 +115,20 @@ export default function CareerPaths() {
     advanced: 'bg-danger/10 text-danger border-danger/20',
   };
 
-  const fieldName = profile?.field?.charAt(0).toUpperCase() + profile?.field?.slice(1) || 'your field';
+  if (loading || pathsLoading) {
+    return (
+      <DashboardLayout>
+        <div className="flex items-center justify-center min-h-[60vh]">
+          <div className="text-center space-y-3">
+            <div className="animate-spin h-12 w-12 border-4 border-primary border-t-transparent rounded-full mx-auto"></div>
+            <span className="text-muted-foreground block">Loading career paths...</span>
+          </div>
+        </div>
+      </DashboardLayout>
+    );
+  }
 
-  const CareerPathSkeleton = () => (
-    <div className="bg-card rounded-xl border border-border p-6 animate-pulse">
-      <div className="flex flex-col lg:flex-row gap-6">
-        <div className="flex-1 space-y-4">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-muted rounded-lg" />
-            <div className="space-y-2">
-              <div className="h-6 w-48 bg-muted rounded" />
-              <div className="h-4 w-24 bg-muted rounded-full" />
-            </div>
-          </div>
-          <div className="space-y-2 mt-4">
-            <div className="h-4 w-32 bg-muted rounded" />
-            <div className="flex gap-2">
-              <div className="h-6 w-20 bg-muted rounded-full" />
-              <div className="h-6 w-24 bg-muted rounded-full" />
-              <div className="h-6 w-16 bg-muted rounded-full" />
-            </div>
-          </div>
-        </div>
-        <div className="lg:w-64 grid grid-cols-2 gap-4">
-          <div className="h-20 bg-muted rounded-lg" />
-          <div className="h-20 bg-muted rounded-lg" />
-        </div>
-      </div>
-      <div className="mt-6 pt-4 border-t border-border flex justify-between">
-        <div className="h-4 w-48 bg-muted rounded" />
-        <div className="h-10 w-32 bg-muted rounded" />
-      </div>
-    </div>
-  );
+  const fieldName = profile?.field?.charAt(0).toUpperCase() + profile?.field?.slice(1) || 'your field';
 
   return (
     <DashboardLayout>
@@ -155,17 +145,8 @@ export default function CareerPaths() {
           </p>
         </div>
 
-        {/* Loading State - Skeletons */}
-        {(loading || pathsLoading) && (
-          <div className="space-y-6">
-            <CareerPathSkeleton />
-            <CareerPathSkeleton />
-            <CareerPathSkeleton />
-          </div>
-        )}
-
         {/* Empty State - Clean message, no AI generation */}
-        {!loading && !pathsLoading && careerPaths.length === 0 && (
+        {careerPaths.length === 0 && (
           <div className="bg-card rounded-xl border border-border p-12 text-center">
             <div className="max-w-md mx-auto space-y-4">
               <div className="p-4 bg-muted rounded-full w-20 h-20 mx-auto flex items-center justify-center">
@@ -221,32 +202,15 @@ export default function CareerPaths() {
                     <div className="flex flex-wrap gap-2">
                       {path.requiredSkills && path.requiredSkills.length > 0 ? (
                         path.requiredSkills.map((skill, i) => (
-                          <button
-                            key={i}
-                            onClick={(e) => { e.stopPropagation(); setSelectedSkill(skill); }}
-                            className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-secondary/50 text-secondary-foreground border border-secondary hover:bg-primary/20 hover:scale-105 active:scale-95 transition-all cursor-pointer"
-                          >
+                          <Badge key={i} variant="secondary" className="text-xs">
                             <CheckCircle2 className="w-3 h-3 mr-1" />
                             {skill}
-                          </button>
+                          </Badge>
                         ))
                       ) : (
                         <span className="text-xs text-muted-foreground italic">No specific skills listed</span>
                       )}
                     </div>
-                  </div>
-
-                  {/* Expandable Overview */}
-                  <div className="mt-6">
-                    <ExpandableInfoSection
-                      title="Role Overview"
-                      content={path.description}
-                      icon={Sparkles}
-                      isOpen={activeCardSections[path.id] === 'overview'}
-                      onToggle={() => toggleCardSection(path.id, 'overview')}
-                      variant="primary"
-                      contextType="career"
-                    />
                   </div>
                 </div>
 
@@ -266,7 +230,7 @@ export default function CareerPaths() {
               </div>
 
               {/* Action */}
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between mt-6 pt-4 border-t border-border gap-4 sm:gap-0">
+              <div className="flex items-center justify-between mt-6 pt-4 border-t border-border">
                 <div className="flex items-center gap-2 text-sm text-muted-foreground">
                   <CheckCircle2 className="w-4 h-4 text-primary" />
                   Recommended for your {fieldName} journey
@@ -274,7 +238,7 @@ export default function CareerPaths() {
                 <Button
                   onClick={() => handleSelectPath(path)}
                   disabled={selectedPath === path.id}
-                  className="group w-full sm:w-auto"
+                  className="group"
                 >
                   {selectedPath === path.id ? (
                     <>
@@ -311,13 +275,6 @@ export default function CareerPaths() {
           </div>
         )}
       </div>
-
-      <SkillModal
-        skillId={selectedSkill || ''}
-        isOpen={!!selectedSkill}
-        onClose={() => setSelectedSkill(null)}
-        skillName={selectedSkill || ''}
-      />
-    </DashboardLayout>
+    </DashboardLayout >
   );
 }

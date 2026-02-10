@@ -15,241 +15,141 @@ import {
   ChevronLeft,
   ChevronRight,
   User,
-  Menu,
-  X,
-  ShieldCheck,
+  CreditCard,
+  Terminal,
   Briefcase,
   Activity,
 } from 'lucide-react';
-import { useState, useEffect, memo, useMemo, useCallback } from 'react';
+import { useState } from 'react';
 import { useAuthContext } from '@/contexts/AuthContext';
-import { useQueryClient } from '@tanstack/react-query';
+import { useNotifications } from '@/hooks/useNotifications';
+import { Button } from '@/components/ui/button';
+import { toast } from 'sonner';
 
-const NavItem = memo(({
-  to,
-  icon: Icon,
-  label,
-  isActive,
-  isCollapsed,
-  badge,
-  onHover
-}: {
-  to: string;
-  icon: any;
-  label: string;
-  isActive: boolean;
-  isCollapsed: boolean;
-  badge?: number;
-  onHover?: () => void;
-}) => (
-  <Link
-    to={to}
-    onMouseEnter={onHover}
-    className={cn(
-      'group flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all duration-300 relative',
-      isActive
-        ? 'bg-primary text-white shadow-lg shadow-primary/25 translate-x-1'
-        : 'text-muted-foreground hover:bg-secondary/50 hover:text-foreground active:scale-[0.98]'
-    )}
-  >
-    <div className={cn(
-      "transition-transform duration-300 group-hover:scale-110",
-      isActive ? "text-white" : "text-muted-foreground group-hover:text-primary"
-    )}>
-      <Icon className="w-5 h-5" />
-    </div>
+const navItems = [
+  { icon: LayoutDashboard, label: 'Dashboard', path: '/dashboard' },
+  { icon: User, label: 'My Profile', path: '/profile' },
+  { icon: Briefcase, label: 'Portfolio', path: '/portfolio' },
+  { icon: CreditCard, label: 'Upgrade Plan', path: '/subscription' },
+  { icon: GraduationCap, label: 'Field Selection', path: '/fields' },
+  { icon: Compass, label: 'Specializations', path: '/specializations' },
+  { icon: Route, label: 'Career Paths', path: '/career-paths' },
+  { icon: Map, label: 'Roadmap', path: '/roadmap' },
+  { icon: FolderKanban, label: 'Projects', path: '/projects' },
+  { icon: Terminal, label: 'Playground', path: '/playground' },
+  { icon: Award, label: 'Certifications', path: '/certifications' },
+  { icon: MessageSquare, label: 'AI Mentor', path: '/ai-mentor' },
+  { icon: Activity, label: 'Analytics', path: '/analytics' },
+  { icon: Bell, label: 'Notifications', path: '/notifications' },
+];
 
-    {!isCollapsed && (
-      <span className="font-bold text-sm tracking-tight whitespace-nowrap animate-in fade-in slide-in-from-left-2 duration-300">
-        {label}
-      </span>
-    )}
-
-    {badge !== undefined && badge > 0 && (
-      <span className={cn(
-        "absolute right-2 flex h-5 w-5 items-center justify-center rounded-full text-[10px] font-bold ring-2 ring-background",
-        isActive ? "bg-white text-primary" : "bg-danger text-white animate-pulse"
-      )}>
-        {badge}
-      </span>
-    )}
-
-    {isActive && (
-      <div className="absolute left-0 w-1 h-6 bg-white rounded-r-full -translate-x-3" />
-    )}
-  </Link>
-));
-
-NavItem.displayName = 'NavItem';
-
-export const Sidebar = memo(() => {
+export function Sidebar() {
+  const [collapsed, setCollapsed] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
-  const { profile, signOut } = useAuthContext();
-  const queryClient = useQueryClient();
-  const [isCollapsed, setIsCollapsed] = useState(false);
-  const [isMobileOpen, setIsMobileOpen] = useState(false);
+  const { user, profile, signOut } = useAuthContext();
+  const { unreadCount } = useNotifications();
 
-  // Close mobile sidebar on route change
-  useEffect(() => {
-    setIsMobileOpen(false);
-  }, [location.pathname]);
-
-  const handleSignOut = useCallback(async () => {
+  const handleLogout = async () => {
     try {
+      // Signs out ONLY this browser session
+      // Other active sessions in different browsers remain logged in
       await signOut();
-      navigate('/login');
+      toast.success('Logged out successfully');
+      navigate('/');
     } catch (error) {
-      console.error('Failed to sign out', error);
+      toast.error('Failed to log out');
     }
-  }, [signOut, navigate]);
-
-  const isAdmin = profile?.role === 'admin';
-
-  const menuItems = useMemo(() => {
-    const items = [
-      { icon: LayoutDashboard, label: 'Dashboard', to: '/dashboard' },
-      { icon: Compass, label: 'Explore Fields', to: '/fields' },
-      { icon: Route, label: 'Career Paths', to: '/career-paths' },
-      { icon: Map, label: 'Roadmap', to: '/roadmap' },
-      { icon: Award, label: 'Skills & Badges', to: '/skills' },
-      { icon: FolderKanban, label: 'Projects', to: '/projects' },
-      { icon: Briefcase, label: 'Portfolio', to: '/portfolio' },
-      { icon: Activity, label: 'Assessment', to: '/assessment' },
-      { icon: MessageSquare, label: 'AI Mentor', to: '/ai-mentor' },
-      { icon: Bell, label: 'Notifications', to: '/notifications' },
-    ];
-
-    const combined = [...items];
-    if (isAdmin) {
-      combined.unshift({ icon: ShieldCheck, label: 'Admin Panel', to: '/admin' });
-    }
-    return combined;
-  }, [isAdmin]);
-
-  const prefetchData = useCallback((to: string) => {
-    if (to === '/dashboard') queryClient.prefetchQuery({ queryKey: ['dashboard_metrics'] });
-    if (to === '/notifications') queryClient.prefetchQuery({ queryKey: ['notifications'] });
-    if (to === '/admin') queryClient.prefetchQuery({ queryKey: ['admin_stats'] });
-  }, [queryClient]);
-
-  const sidebarContent = (
-    <div className="flex flex-col h-full bg-background border-r border-border shadow-xl">
-      {/* Logo */}
-      <div className="p-6 flex items-center justify-between">
-        <div className={cn("flex items-center gap-3 transition-all duration-300", isCollapsed && "justify-center w-full")}>
-          <div className="w-10 h-10 bg-primary/10 rounded-xl flex items-center justify-center ring-2 ring-primary/20">
-            <Brain className="w-6 h-6 text-primary" />
-          </div>
-          {!isCollapsed && (
-            <div className="flex flex-col animate-in fade-in slide-in-from-left-3 duration-500">
-              <span className="text-xl font-black text-foreground tracking-tighter leading-none">Career</span>
-              <span className="text-sm font-bold text-primary tracking-widest uppercase">Growth</span>
-            </div>
-          )}
-        </div>
-        {!isCollapsed && (
-          <button
-            onClick={() => setIsCollapsed(true)}
-            className="hidden lg:flex p-1.5 hover:bg-secondary rounded-lg text-muted-foreground transition-colors"
-          >
-            <ChevronLeft className="w-4 h-4" />
-          </button>
-        )}
-      </div>
-
-      {/* Nav Items */}
-      <div className="flex-1 px-3 space-y-1.5 overflow-y-auto no-scrollbar py-4">
-        {menuItems.map((item) => (
-          <NavItem
-            key={item.to}
-            {...item}
-            isActive={location.pathname === item.to}
-            isCollapsed={isCollapsed}
-            onHover={() => prefetchData(item.to)}
-          />
-        ))}
-
-        {isCollapsed && (
-          <button
-            onClick={() => setIsCollapsed(false)}
-            className="hidden lg:flex w-full items-center justify-center p-2.5 text-muted-foreground hover:text-primary transition-colors mt-4"
-          >
-            <ChevronRight className="w-5 h-5" />
-          </button>
-        )}
-      </div>
-
-      {/* User Footer */}
-      <div className="p-3 border-t border-border bg-secondary/20">
-        <Link
-          to="/profile"
-          onMouseEnter={() => prefetchData('/profile')}
-          className={cn(
-            "flex items-center gap-3 p-2.5 rounded-xl transition-all duration-300 hover:bg-background/80",
-            isCollapsed && "justify-center"
-          )}
-        >
-          <div className="w-9 h-9 bg-primary/10 rounded-lg flex items-center justify-center shrink-0 border border-primary/20">
-            <User className="w-5 h-5 text-primary" />
-          </div>
-          {!isCollapsed && (
-            <div className="flex-1 min-w-0 animate-in fade-in slide-in-from-left-2 duration-300">
-              <p className="text-sm font-bold text-foreground truncate">{profile?.full_name || 'User'}</p>
-              <p className="text-[10px] text-muted-foreground uppercase tracking-wider font-bold truncate">Project Admin</p>
-            </div>
-          )}
-        </Link>
-        <button
-          onClick={handleSignOut}
-          className={cn(
-            "w-full flex items-center gap-3 p-2.5 mt-2 rounded-xl text-muted-foreground hover:bg-danger/10 hover:text-danger transition-all duration-300",
-            isCollapsed && "justify-center"
-          )}
-        >
-          <LogOut className="w-5 h-5" />
-          {!isCollapsed && <span className="text-sm font-bold tracking-tight">Sign Out</span>}
-        </button>
-      </div>
-    </div>
-  );
+  };
 
   return (
-    <>
-      {/* Mobile Toggle */}
-      <div className="lg:hidden fixed top-0 left-0 right-0 h-16 bg-background border-b border-border px-4 flex items-center justify-between z-50">
-        <div className="flex items-center gap-2">
-          <div className="w-8 h-8 bg-primary/10 rounded-lg flex items-center justify-center">
-            <Brain className="w-5 h-5 text-primary" />
+    <aside
+      className={cn(
+        'fixed left-0 top-0 z-40 h-screen bg-card border-r border-border transition-all duration-300 flex flex-col',
+        collapsed ? 'w-20' : 'w-64'
+      )}
+    >
+      {/* Logo */}
+      <div className="p-6 border-b border-border">
+        <Link to="/dashboard" className="flex items-center gap-3">
+          <div className="p-2 bg-primary rounded-xl shrink-0">
+            <Brain className="w-6 h-6 text-primary-foreground" />
           </div>
-          <span className="font-black text-lg">Career Growth</span>
-        </div>
-        <button
-          onClick={() => setIsMobileOpen(!isMobileOpen)}
-          className="p-2 hover:bg-secondary rounded-lg transition-colors"
-        >
-          {isMobileOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-        </button>
+          {!collapsed && (
+            <span className="text-xl font-bold text-foreground">CareerGrowth</span>
+          )}
+        </Link>
       </div>
 
-      {/* Mobile Sidebar Overlay */}
-      {isMobileOpen && (
-        <div
-          className="lg:hidden fixed inset-0 bg-background/80 backdrop-blur-sm z-40 animate-in fade-in duration-300"
-          onClick={() => setIsMobileOpen(false)}
-        />
-      )}
+      {/* Navigation */}
+      <nav className="flex-1 overflow-y-auto p-4 space-y-1">
+        {navItems.map((item) => {
+          const isActive = location.pathname === item.path;
+          const isNotifications = item.path === '/notifications';
+          const showBadge = isNotifications && unreadCount > 0;
 
-      {/* Sidebar Container */}
-      <aside className={cn(
-        "fixed inset-y-0 left-0 z-40 transition-all duration-500 ease-in-out lg:z-30",
-        isCollapsed ? "w-[80px]" : "w-[280px]",
-        isMobileOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"
-      )}>
-        {sidebarContent}
-      </aside>
-    </>
+          return (
+            <Link
+              key={item.path}
+              to={item.path}
+              className={cn(
+                'flex items-center gap-3 px-3 py-3 rounded-lg transition-all duration-200 relative',
+                isActive
+                  ? 'bg-primary text-primary-foreground shadow-md'
+                  : 'text-muted-foreground hover:bg-secondary hover:text-foreground'
+              )}
+            >
+              <item.icon className="w-5 h-5 shrink-0" />
+              {!collapsed && <span className="font-medium">{item.label}</span>}
+
+              {/* Unread Badge */}
+              {showBadge && (
+                <span className={cn(
+                  "absolute flex items-center justify-center min-w-5 h-5 px-1 text-xs font-bold text-white bg-red-500 rounded-full",
+                  collapsed ? "top-1 right-1" : "right-3"
+                )}>
+                  {unreadCount > 99 ? '99+' : unreadCount}
+                </span>
+              )}
+            </Link>
+          );
+        })}
+      </nav>
+
+      {/* User Section */}
+      <div className="p-4 border-t border-border space-y-3">
+        {!collapsed && user && (
+          <div className="px-3 py-2">
+            <p className="font-medium text-foreground truncate">
+              {profile?.full_name || user.email?.split('@')[0] || 'User'}
+            </p>
+            <p className="text-sm text-muted-foreground truncate">{user.email}</p>
+          </div>
+        )}
+        <Button
+          variant="ghost"
+          className={cn(
+            'w-full justify-start gap-3 text-muted-foreground hover:text-danger hover:bg-danger/10',
+            collapsed && 'justify-center px-0'
+          )}
+          onClick={handleLogout}
+        >
+          <LogOut className="w-5 h-5" />
+          {!collapsed && <span>Logout</span>}
+        </Button>
+      </div>
+
+      {/* Collapse Toggle */}
+      <button
+        onClick={() => setCollapsed(!collapsed)}
+        className="absolute -right-3 top-20 p-1.5 bg-card border border-border rounded-full shadow-md hover:bg-secondary transition-colors"
+      >
+        {collapsed ? (
+          <ChevronRight className="w-4 h-4 text-muted-foreground" />
+        ) : (
+          <ChevronLeft className="w-4 h-4 text-muted-foreground" />
+        )}
+      </button>
+    </aside>
   );
-});
-
-Sidebar.displayName = 'Sidebar';
+}

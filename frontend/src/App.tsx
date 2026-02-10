@@ -4,7 +4,6 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "@/contexts/AuthContext";
-import { NotificationProvider } from "@/contexts/NotificationContext";
 import { Suspense, lazy } from "react";
 import { Loader2 } from "lucide-react";
 import { ProtectedRoute } from "@/components/ProtectedRoute";
@@ -52,25 +51,13 @@ const SystemSettings = lazy(() => import("./pages/admin/SystemSettings"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      staleTime: 1000 * 60 * 5, // 5 minutes - keep data fresh to avoid frequent loading states
-      gcTime: 1000 * 60 * 30,    // 30 minutes - keep data in memory longer
-      retry: 1,                 // Minimal retries for faster failure feedback
-      refetchOnWindowFocus: false, // Prevent background refetch on tab switch (save network/CPU)
-    },
-  },
-});
+const queryClient = new QueryClient();
 
 const LoadingFallback = () => (
-  <div className="min-h-screen w-full flex items-center justify-center bg-background animate-in fade-in duration-500">
+  <div className="min-h-screen w-full flex items-center justify-center bg-background">
     <div className="flex flex-col items-center gap-4">
-      <div className="w-16 h-16 relative">
-        <div className="absolute inset-0 border-4 border-primary/20 rounded-full"></div>
-        <div className="absolute inset-0 border-4 border-primary border-t-transparent rounded-full animate-spin"></div>
-      </div>
-      <p className="text-sm font-medium text-muted-foreground animate-pulse tracking-widest uppercase">Initializing Intelligence</p>
+      <Loader2 className="w-10 h-10 animate-spin text-primary" />
+      <p className="text-muted-foreground animate-pulse">Loading experience...</p>
     </div>
   </div>
 );
@@ -79,59 +66,57 @@ const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
       <AuthProvider>
-        <NotificationProvider>
-          <Toaster />
-          <Sonner />
-          <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
-            <Suspense fallback={<LoadingFallback />}>
-              <Routes>
-                {/* Public Routes */}
-                <Route path="/" element={<Index />} />
-                <Route path="/login" element={<Login />} />
-                <Route path="/signup" element={<Signup />} />
-                <Route path="/redirect" element={<LoginRedirect />} />
-                {/* Protected User Routes */}
-                <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
-                <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
-                <Route path="/portfolio" element={<ProtectedRoute><Portfolio /></ProtectedRoute>} />
-                <Route path="/onboarding" element={<ProtectedRoute><Onboarding /></ProtectedRoute>} />
-                <Route path="/fields" element={<ProtectedRoute><FieldSelection /></ProtectedRoute>} />
-                <Route path="/field-assessment" element={<ProtectedRoute><FieldAssessment /></ProtectedRoute>} />
-                <Route path="/branches" element={<ProtectedRoute><BranchSelection /></ProtectedRoute>} />
-                <Route path="/specializations" element={<ProtectedRoute><Specializations /></ProtectedRoute>} />
+        <Toaster />
+        <Sonner />
+        <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
+          <Suspense fallback={<LoadingFallback />}>
+            <Routes>
+              {/* Public Routes */}
+              <Route path="/" element={<Index />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/signup" element={<Signup />} />
+              <Route path="/redirect" element={<LoginRedirect />} />
+              {/* Protected User Routes */}
+              <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+              <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
+              <Route path="/portfolio" element={<ProtectedRoute><Portfolio /></ProtectedRoute>} />
+              <Route path="/onboarding" element={<ProtectedRoute><Onboarding /></ProtectedRoute>} />
+              <Route path="/fields" element={<ProtectedRoute><FieldSelection /></ProtectedRoute>} />
+              <Route path="/field-assessment" element={<ProtectedRoute><FieldAssessment /></ProtectedRoute>} />
+              <Route path="/branches" element={<ProtectedRoute><BranchSelection /></ProtectedRoute>} />
+              <Route path="/specializations" element={<ProtectedRoute><Specializations /></ProtectedRoute>} />
 
-                <Route path="/career-paths" element={<ProtectedRoute><CareerPaths /></ProtectedRoute>} />
-                <Route path="/roadmap" element={<ProtectedRoute><Roadmap /></ProtectedRoute>} />
-                <Route path="/projects" element={<ProtectedRoute><Projects /></ProtectedRoute>} />
-                <Route path="/certifications" element={<ProtectedRoute><Certifications /></ProtectedRoute>} />
-                <Route path="/ai-mentor" element={<ProtectedRoute><AIMentor /></ProtectedRoute>} />
-                <Route path="/subscription" element={<ProtectedRoute><Subscription /></ProtectedRoute>} />
-                <Route path="/project/:projectId" element={<ProtectedRoute><ProjectWorkspace /></ProtectedRoute>} />
-                <Route path="/playground" element={<ProtectedRoute><CodePlayground /></ProtectedRoute>} />
-                <Route path="/notifications" element={<ProtectedRoute><Notifications /></ProtectedRoute>} />
-                <Route path="/analytics" element={<ProtectedRoute><ProgressAnalytics /></ProtectedRoute>} />
+              <Route path="/career-paths" element={<ProtectedRoute><CareerPaths /></ProtectedRoute>} />
+              <Route path="/roadmap" element={<ProtectedRoute><Roadmap /></ProtectedRoute>} />
+              <Route path="/projects" element={<ProtectedRoute><Projects /></ProtectedRoute>} />
+              <Route path="/certifications" element={<ProtectedRoute><Certifications /></ProtectedRoute>} />
+              <Route path="/ai-mentor" element={<ProtectedRoute><AIMentor /></ProtectedRoute>} />
+              <Route path="/subscription" element={<ProtectedRoute><Subscription /></ProtectedRoute>} />
+              <Route path="/project/:projectId" element={<ProtectedRoute><ProjectWorkspace /></ProtectedRoute>} />
+              <Route path="/playground" element={<ProtectedRoute><CodePlayground /></ProtectedRoute>} />
+              <Route path="/notifications" element={<ProtectedRoute><Notifications /></ProtectedRoute>} />
+              <Route path="/analytics" element={<ProtectedRoute><ProgressAnalytics /></ProtectedRoute>} />
 
-                {/* Protected Admin Routes */}
-                <Route path="/admin" element={<ProtectedRoute requireAdmin><AdminDashboard /></ProtectedRoute>} />
-                <Route path="/admin/user-dashboard-control" element={<ProtectedRoute requireAdmin><UserDashboardControl /></ProtectedRoute>} />
-                <Route path="/admin/user-activity" element={<ProtectedRoute requireAdmin><UserActivity /></ProtectedRoute>} />
-                <Route path="/admin/field-insights" element={<ProtectedRoute requireAdmin><FieldInsights /></ProtectedRoute>} />
-                <Route path="/admin/roadmaps" element={<ProtectedRoute requireAdmin><RoadmapManager /></ProtectedRoute>} />
-                <Route path="/admin/assessments" element={<ProtectedRoute requireAdmin><AssessmentManagement /></ProtectedRoute>} />
-                <Route path="/admin/ai-usage" element={<ProtectedRoute requireAdmin><AIUsageMonitor /></ProtectedRoute>} />
+              {/* Protected Admin Routes */}
+              <Route path="/admin" element={<ProtectedRoute requireAdmin><AdminDashboard /></ProtectedRoute>} />
+              <Route path="/admin/user-dashboard-control" element={<ProtectedRoute requireAdmin><UserDashboardControl /></ProtectedRoute>} />
+              <Route path="/admin/user-activity" element={<ProtectedRoute requireAdmin><UserActivity /></ProtectedRoute>} />
+              <Route path="/admin/field-insights" element={<ProtectedRoute requireAdmin><FieldInsights /></ProtectedRoute>} />
+              <Route path="/admin/roadmaps" element={<ProtectedRoute requireAdmin><RoadmapManager /></ProtectedRoute>} />
+              <Route path="/admin/assessments" element={<ProtectedRoute requireAdmin><AssessmentManagement /></ProtectedRoute>} />
+              <Route path="/admin/ai-usage" element={<ProtectedRoute requireAdmin><AIUsageMonitor /></ProtectedRoute>} />
 
-                <Route path="/admin/notifications" element={<ProtectedRoute requireAdmin><NotificationsControl /></ProtectedRoute>} />
-                <Route path="/admin/feedback" element={<ProtectedRoute requireAdmin><FeedbackReports /></ProtectedRoute>} />
-                <Route path="/admin/career-paths" element={<ProtectedRoute requireAdmin><CareerPathManager /></ProtectedRoute>} />
-                <Route path="/admin/security" element={<ProtectedRoute requireAdmin><SecurityAccess /></ProtectedRoute>} />
-                <Route path="/admin/settings" element={<ProtectedRoute requireAdmin><SystemSettings /></ProtectedRoute>} />
+              <Route path="/admin/notifications" element={<ProtectedRoute requireAdmin><NotificationsControl /></ProtectedRoute>} />
+              <Route path="/admin/feedback" element={<ProtectedRoute requireAdmin><FeedbackReports /></ProtectedRoute>} />
+              <Route path="/admin/career-paths" element={<ProtectedRoute requireAdmin><CareerPathManager /></ProtectedRoute>} />
+              <Route path="/admin/security" element={<ProtectedRoute requireAdmin><SecurityAccess /></ProtectedRoute>} />
+              <Route path="/admin/settings" element={<ProtectedRoute requireAdmin><SystemSettings /></ProtectedRoute>} />
 
-                {/* 404 */}
-                <Route path="*" element={<NotFound />} />
-              </Routes>
-            </Suspense>
-          </BrowserRouter>
-        </NotificationProvider>
+              {/* 404 */}
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </Suspense>
+        </BrowserRouter>
       </AuthProvider>
     </TooltipProvider>
   </QueryClientProvider>

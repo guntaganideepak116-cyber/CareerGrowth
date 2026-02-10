@@ -1,5 +1,5 @@
-import { initializeApp, getApps } from 'firebase/app';
-import { getAuth, setPersistence, browserSessionPersistence } from 'firebase/auth';
+import { initializeApp } from 'firebase/app';
+import { getAuth, setPersistence, browserLocalPersistence } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
 
 const firebaseConfig = {
@@ -11,32 +11,28 @@ const firebaseConfig = {
     appId: import.meta.env.VITE_FIREBASE_APP_ID
 };
 
-// Ensure Firebase is only initialized once
-const app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApps()[0];
+// Validate Firebase config
+if (!firebaseConfig.apiKey) {
+    console.error("Firebase API Key is missing! Check your .env file.");
+    console.error("Current env:", {
+        hasApiKey: !!import.meta.env.VITE_FIREBASE_API_KEY,
+        hasProjectId: !!import.meta.env.VITE_FIREBASE_PROJECT_ID
+    });
+}
+
+console.log("Initializing Firebase with project:", firebaseConfig.projectId);
+
+const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 export const db = getFirestore(app);
 
-import { enableIndexedDbPersistence, terminate } from 'firebase/firestore';
-
-// Enable multi-tab offline persistence for Firestore
-if (typeof window !== 'undefined') {
-    enableIndexedDbPersistence(db, { forceOwnership: false })
-        .catch((err) => {
-            if (err.code === 'failed-precondition') {
-                console.warn('Firestore Persistence: Multiple tabs open, persistence can only be enabled in one tab at a time.');
-            } else if (err.code === 'unimplemented') {
-                console.warn('Firestore Persistence: The current browser does not support persistence.');
-            }
-        });
-}
-
-// Enable tab-level persistence
-setPersistence(auth, browserSessionPersistence)
+// Enable persistence to maintain auth state across refreshes
+setPersistence(auth, browserLocalPersistence)
     .then(() => {
-        console.log("✅ Firebase Auth: Tab-level session persistence enabled");
+        console.log("✅ Firebase Auth persistence enabled (local storage)");
     })
     .catch((error) => {
-        console.error("❌ Failed to enable tab-level persistence:", error);
+        console.error("❌ Failed to enable Firebase persistence:", error);
     });
 
 console.log("Firebase initialized successfully");
