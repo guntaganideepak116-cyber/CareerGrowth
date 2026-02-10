@@ -1,9 +1,11 @@
+import { useState } from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
 import { Badge } from '@/components/ui/badge';
-import { BookOpen, Briefcase, TrendingUp, Target } from 'lucide-react';
+import { Briefcase, TrendingUp, Target, BookOpen } from 'lucide-react';
 import { useQuery } from '@tanstack/react-query';
 import { db } from '@/lib/firebase';
 import { doc, getDoc } from 'firebase/firestore';
+import { ExpandableInfoSection } from './ExpandableInfoSection';
 
 interface SemesterModalProps {
     semesterId: number;
@@ -21,7 +23,13 @@ interface SemesterMetadata {
 }
 
 export function SemesterModal({ semesterId, isOpen, onClose, title }: SemesterModalProps) {
-    // Determine level based on semester number (scalable for any field)
+    const [activeSection, setActiveSection] = useState<string | null>('why');
+
+    const toggleSection = (section: string) => {
+        setActiveSection(activeSection === section ? null : section);
+    };
+
+    // Determine level based on semester number
     const getLevel = (sem: number) => {
         if (sem <= 2) return "foundation";
         if (sem <= 4) return "core";
@@ -34,7 +42,6 @@ export function SemesterModal({ semesterId, isOpen, onClose, title }: SemesterMo
     const { data: metadata, isLoading } = useQuery({
         queryKey: ['semester_metadata', level],
         queryFn: async () => {
-            // 1. Fetch generic metadata for this level
             const docRef = doc(db, 'semester_metadata', level);
             const snap = await getDoc(docRef);
 
@@ -42,7 +49,6 @@ export function SemesterModal({ semesterId, isOpen, onClose, title }: SemesterMo
                 return snap.data() as SemesterMetadata;
             }
 
-            // 2. Generate fallback based on level logic
             const fallbacks: Record<string, SemesterMetadata> = {
                 foundation: {
                     semesterLevel: "foundation",
@@ -82,54 +88,60 @@ export function SemesterModal({ semesterId, isOpen, onClose, title }: SemesterMo
 
     return (
         <Dialog open={isOpen} onOpenChange={onClose}>
-            <DialogContent className="max-w-md">
-                <DialogHeader>
-                    <DialogTitle className="flex items-center gap-2 text-xl">
-                        {title}
-                        <Badge variant="secondary" className="text-xs font-normal capitalize">
-                            {metadata?.semesterLevel || level} Level
-                        </Badge>
-                    </DialogTitle>
-                    <DialogDescription className="text-sm text-muted-foreground">
-                        {metadata?.shortDescription}
-                    </DialogDescription>
-                </DialogHeader>
-
-                {isLoading ? (
-                    <div className="py-8 text-center text-muted-foreground">Loading details...</div>
-                ) : (
-                    <div className="space-y-4 pt-2">
-                        <div className="space-y-3">
-                            <div className="bg-primary/5 p-3 rounded-lg border border-primary/10">
-                                <div className="flex items-center gap-2 mb-1.5 text-primary text-sm font-semibold">
-                                    <Target className="w-4 h-4" />
-                                    Why Learn This?
-                                </div>
-                                <p className="text-xs text-foreground/80 leading-relaxed">
-                                    {metadata?.whyLearn}
-                                </p>
-                            </div>
-
-                            <div className="bg-secondary/30 p-3 rounded-lg border border-secondary">
-                                <div className="flex items-center gap-2 mb-1.5 text-foreground text-sm font-semibold">
-                                    <Briefcase className="w-4 h-4" />
-                                    Career Value
-                                </div>
-                                <p className="text-xs text-muted-foreground leading-relaxed">
-                                    {metadata?.careerValue}
-                                </p>
-                            </div>
-
-                            <div className="flex items-center justify-between pt-2 border-t border-border mt-4">
-                                <span className="text-xs text-muted-foreground">Industry Demand</span>
-                                <span className="flex items-center gap-1.5 text-sm font-medium text-green-600">
-                                    <TrendingUp className="w-3.5 h-3.5" />
-                                    {metadata?.industryDemand}
-                                </span>
-                            </div>
+            <DialogContent className="max-w-md bg-white/95 backdrop-blur-sm border-primary/20 shadow-2xl overflow-hidden p-0">
+                <div className="p-6 pb-4 border-b border-border/50">
+                    <DialogHeader>
+                        <div className="flex items-center justify-between">
+                            <DialogTitle className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-blue-600">
+                                {title}
+                            </DialogTitle>
+                            <Badge variant="secondary" className="bg-primary/5 text-primary border-primary/10 px-3 py-1 capitalize">
+                                {metadata?.semesterLevel || level} Level
+                            </Badge>
                         </div>
-                    </div>
-                )}
+                        <DialogDescription className="text-sm text-muted-foreground mt-2 font-medium">
+                            {metadata?.shortDescription}
+                        </DialogDescription>
+                    </DialogHeader>
+                </div>
+
+                <div className="p-6 pt-4 max-h-[70vh] overflow-y-auto">
+                    {isLoading ? (
+                        <div className="py-12 flex flex-col items-center justify-center gap-4">
+                            <div className="w-10 h-10 border-4 border-primary/30 border-t-primary rounded-full animate-spin"></div>
+                            <p className="text-sm text-muted-foreground animate-pulse">Loading intelligence...</p>
+                        </div>
+                    ) : (
+                        <div className="space-y-4 animate-in fade-in slide-in-from-bottom-4 duration-500">
+                            <ExpandableInfoSection
+                                title="Why Learn This?"
+                                content={metadata?.whyLearn}
+                                icon={Target}
+                                isOpen={activeSection === 'why'}
+                                onToggle={() => toggleSection('why')}
+                                variant="primary"
+                            />
+
+                            <ExpandableInfoSection
+                                title="Career Value"
+                                content={metadata?.careerValue}
+                                icon={Briefcase}
+                                isOpen={activeSection === 'career'}
+                                onToggle={() => toggleSection('career')}
+                                variant="blue"
+                            />
+
+                            <ExpandableInfoSection
+                                title="Industry Demand"
+                                content={metadata?.industryDemand}
+                                icon={TrendingUp}
+                                isOpen={activeSection === 'demand'}
+                                onToggle={() => toggleSection('demand')}
+                                variant="emerald"
+                            />
+                        </div>
+                    )}
+                </div>
             </DialogContent>
         </Dialog>
     );

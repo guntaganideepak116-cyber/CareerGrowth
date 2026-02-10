@@ -1,9 +1,11 @@
+import { useState } from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
 import { Badge } from '@/components/ui/badge';
 import { BookOpen, Briefcase, TrendingUp } from 'lucide-react';
 import { useQuery } from '@tanstack/react-query';
 import { db } from '@/lib/firebase';
 import { doc, getDoc } from 'firebase/firestore';
+import { ExpandableInfoSection } from './ExpandableInfoSection';
 
 interface SkillModalProps {
     skillId: string;
@@ -22,6 +24,12 @@ interface SkillMetadata {
 }
 
 export function SkillModal({ skillId, isOpen, onClose, skillName }: SkillModalProps) {
+    const [activeSection, setActiveSection] = useState<string | null>('important');
+
+    const toggleSection = (section: string) => {
+        setActiveSection(activeSection === section ? null : section);
+    };
+
     // Normalize ID
     const normalizedId = skillId.toLowerCase().replace(/\s+/g, '-');
 
@@ -52,74 +60,62 @@ export function SkillModal({ skillId, isOpen, onClose, skillName }: SkillModalPr
 
     return (
         <Dialog open={isOpen} onOpenChange={onClose}>
-            <DialogContent className="max-w-md bg-white/95 backdrop-blur-sm border-primary/20 shadow-2xl overflow-hidden">
-                <DialogHeader className="pb-4 border-b border-border/50">
-                    <div className="flex items-center justify-between">
-                        <DialogTitle className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-blue-600">
-                            {metadata?.name || skillName}
-                        </DialogTitle>
-                        {metadata?.category && (
-                            <Badge variant="secondary" className="bg-primary/5 text-primary border-primary/10 px-3 py-1">
-                                {metadata.category}
-                            </Badge>
-                        )}
-                    </div>
-                    <DialogDescription className="text-sm text-muted-foreground mt-2 font-medium">
-                        {metadata?.shortDescription || `Master the essentials of ${skillName}`}
-                    </DialogDescription>
-                </DialogHeader>
-
-                {isLoading ? (
-                    <div className="py-12 flex flex-col items-center justify-center gap-4">
-                        <div className="w-10 h-10 border-4 border-primary/30 border-t-primary rounded-full animate-spin"></div>
-                        <p className="text-sm text-muted-foreground animate-pulse">Fetching intelligence...</p>
-                    </div>
-                ) : (
-                    <div className="space-y-6 pt-4 animate-in fade-in slide-in-from-bottom-4 duration-500">
-                        {/* Why it's important section */}
-                        <div className="group">
-                            <div className="flex items-center gap-2 mb-2 text-primary">
-                                <div className="p-2 bg-primary/10 rounded-lg group-hover:bg-primary/20 transition-colors">
-                                    <BookOpen className="w-5 h-5" />
-                                </div>
-                                <h4 className="font-bold text-sm uppercase tracking-wider">Why it's important</h4>
-                            </div>
-                            <div className="pl-11 pr-2">
-                                <p className="text-sm text-foreground/80 leading-relaxed border-l-2 border-primary/20 pl-4 py-1">
-                                    {metadata?.whyImportant}
-                                </p>
-                            </div>
+            <DialogContent className="max-w-md bg-white/95 backdrop-blur-sm border-primary/20 shadow-2xl overflow-hidden p-0">
+                <div className="p-6 pb-4 border-b border-border/50">
+                    <DialogHeader>
+                        <div className="flex items-center justify-between">
+                            <DialogTitle className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-blue-600">
+                                {metadata?.name || skillName}
+                            </DialogTitle>
+                            {metadata?.category && (
+                                <Badge variant="secondary" className="bg-primary/5 text-primary border-primary/10 px-3 py-1">
+                                    {metadata.category}
+                                </Badge>
+                            )}
                         </div>
+                        <DialogDescription className="text-sm text-muted-foreground mt-2 font-medium">
+                            {metadata?.shortDescription || `Master the essentials of ${skillName}`}
+                        </DialogDescription>
+                    </DialogHeader>
+                </div>
 
-                        {/* Real-world Usage section */}
-                        <div className="group">
-                            <div className="flex items-center gap-2 mb-2 text-blue-600">
-                                <div className="p-2 bg-blue-50 rounded-lg group-hover:bg-blue-100 transition-colors">
-                                    <Briefcase className="w-5 h-5" />
-                                </div>
-                                <h4 className="font-bold text-sm uppercase tracking-wider">Real-world Usage</h4>
-                            </div>
-                            <div className="pl-11 pr-2">
-                                <p className="text-sm text-muted-foreground leading-relaxed border-l-2 border-blue-200 pl-4 py-1">
-                                    {metadata?.realWorldUsage}
-                                </p>
-                            </div>
+                <div className="p-6 pt-4 max-h-[70vh] overflow-y-auto">
+                    {isLoading ? (
+                        <div className="py-12 flex flex-col items-center justify-center gap-4">
+                            <div className="w-10 h-10 border-4 border-primary/30 border-t-primary rounded-full animate-spin"></div>
+                            <p className="text-sm text-muted-foreground animate-pulse">Fetching intelligence...</p>
                         </div>
+                    ) : (
+                        <div className="space-y-4 animate-in fade-in slide-in-from-bottom-4 duration-500">
+                            <ExpandableInfoSection
+                                title="Why it's important"
+                                content={metadata?.whyImportant}
+                                icon={BookOpen}
+                                isOpen={activeSection === 'important'}
+                                onToggle={() => toggleSection('important')}
+                                variant="primary"
+                            />
 
-                        {/* Market/Industry section */}
-                        <div className="pt-4 border-t border-border/50">
-                            <div className="flex items-center justify-between p-3 bg-gradient-to-r from-green-50 to-emerald-50 rounded-xl border border-green-100">
-                                <div className="flex items-center gap-2 text-green-700">
-                                    <TrendingUp className="w-4 h-4" />
-                                    <span className="text-xs font-bold uppercase tracking-tight">Industry Demand</span>
-                                </div>
-                                <span className="text-sm font-bold text-emerald-600">
-                                    {metadata?.industryRelevance}
-                                </span>
-                            </div>
+                            <ExpandableInfoSection
+                                title="Real-world Usage"
+                                content={metadata?.realWorldUsage}
+                                icon={Briefcase}
+                                isOpen={activeSection === 'usage'}
+                                onToggle={() => toggleSection('usage')}
+                                variant="blue"
+                            />
+
+                            <ExpandableInfoSection
+                                title="Industry Demand"
+                                content={metadata ? `Current market trends show ${metadata.industryRelevance} for specialists in ${metadata.name}. Candidates with these skills are highly prioritized in modern tech recruitment.` : null}
+                                icon={TrendingUp}
+                                isOpen={activeSection === 'demand'}
+                                onToggle={() => toggleSection('demand')}
+                                variant="emerald"
+                            />
                         </div>
-                    </div>
-                )}
+                    )}
+                </div>
             </DialogContent>
         </Dialog>
     );

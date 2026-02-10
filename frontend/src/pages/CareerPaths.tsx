@@ -15,6 +15,7 @@ import {
 } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { SkillModal } from '@/components/common/SkillModal';
+import { ExpandableInfoSection } from '@/components/common/ExpandableInfoSection';
 
 interface CareerPath {
   id: string;
@@ -22,6 +23,8 @@ interface CareerPath {
   field: string;
   requiredSkills: string[];
   level: string;
+  description?: string;
+  salaryRange?: string;
 }
 
 export default function CareerPaths() {
@@ -29,6 +32,14 @@ export default function CareerPaths() {
   const navigate = useNavigate();
   const [selectedPath, setSelectedPath] = useState<string | null>(null);
   const [selectedSkill, setSelectedSkill] = useState<string | null>(null);
+  const [activeCardSections, setActiveCardSections] = useState<Record<string, string | null>>({});
+
+  const toggleCardSection = (pathId: string, section: string) => {
+    setActiveCardSections(prev => ({
+      ...prev,
+      [pathId]: prev[pathId] === section ? null : section
+    }));
+  };
 
   useEffect(() => {
     if (!loading && !user) {
@@ -223,6 +234,19 @@ export default function CareerPaths() {
                         <span className="text-xs text-muted-foreground italic">No specific skills listed</span>
                       )}
                     </div>
+                  </div>
+
+                  {/* Expandable Overview */}
+                  <div className="mt-6">
+                    <ExpandableInfoSection
+                      title="Role Overview"
+                      content={path.description}
+                      icon={Sparkles}
+                      isOpen={activeCardSections[path.id] === 'overview'}
+                      onToggle={() => toggleCardSection(path.id, 'overview')}
+                      variant="primary"
+                      contextType="career"
+                    />
                   </div>
                 </div>
 

@@ -13,8 +13,11 @@ import {
   ChevronUp,
   Lock,
   Info,
+  Target,
+  Sparkles,
 } from 'lucide-react';
 import { SemesterModal } from '@/components/common/SemesterModal';
+import { ExpandableInfoSection } from '@/components/common/ExpandableInfoSection';
 
 interface RoadmapPhaseCardProps {
   phase: RoadmapPhase;
@@ -37,9 +40,15 @@ export function RoadmapPhaseCard({
 }: RoadmapPhaseCardProps) {
   const [selectedSkill, setSelectedSkill] = useState<string | null>(null);
   const [showInfo, setShowInfo] = useState(false);
+  const [activeCardSection, setActiveCardSection] = useState<string | null>(null);
+
+  const toggleCardSection = (section: string) => {
+    setActiveCardSection(activeCardSection === section ? null : section);
+  };
 
   return (
     <>
+      {/* ... (previous code) ... */}
       <div
         className={`relative bg-card rounded-xl border transition-all duration-300 ${isExpanded
           ? 'border-primary shadow-lg'
@@ -123,7 +132,17 @@ export function RoadmapPhaseCard({
         {/* Expanded Content */}
         {isExpanded && !isLocked && (
           <div className="px-4 pb-4 pt-0 border-t border-border mt-2">
-            <p className="text-muted-foreground text-sm mt-4 mb-6">{phase.focus}</p>
+            <div className="mt-4 mb-6">
+              <ExpandableInfoSection
+                title="Semester Focus"
+                content={phase.focus}
+                icon={Target}
+                isOpen={activeCardSection === 'focus'}
+                onToggle={() => toggleCardSection('focus')}
+                variant="primary"
+                contextType="roadmap"
+              />
+            </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {/* Skills */}
@@ -198,11 +217,16 @@ export function RoadmapPhaseCard({
             </div>
 
             {/* Career Relevance */}
-            <div className="mt-6 p-4 bg-secondary/50 rounded-lg">
-              <p className="text-sm">
-                <span className="font-medium text-foreground">Career Relevance: </span>
-                <span className="text-muted-foreground">{phase.careerRelevance}</span>
-              </p>
+            <div className="mt-6">
+              <ExpandableInfoSection
+                title="Career Relevance"
+                content={phase.careerRelevance}
+                icon={Briefcase}
+                isOpen={activeCardSection === 'relevance'}
+                onToggle={() => toggleCardSection('relevance')}
+                variant="blue"
+                contextType="roadmap"
+              />
             </div>
 
             {/* Mark Complete Button */}
