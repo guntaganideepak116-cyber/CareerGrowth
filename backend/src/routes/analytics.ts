@@ -10,8 +10,8 @@ const getCollectionCount = async (collection: string, userId: string, completedO
     if (completedOnly) {
         query = query.where('completed', '==', true);
     }
-    const snap = await query.get();
-    return snap.size;
+    const snap = await query.count().get();
+    return snap.data().count;
 };
 
 // Helper: Standardize date extraction
@@ -29,31 +29,46 @@ const extractDate = (data: any): Date | null => {
  * GET /api/analytics/dashboard-analytics
  * Fetch real-time analytics for the user dashboard (Summary View)
  */
+// Refactored: Parallel execution for dashboard analytics
 router.get('/dashboard-analytics', verifyToken, async (req, res) => {
     try {
         const userId = (req as any).user.uid;
+
+        // 1. Fetch User Data (Essential for Field ID)
         const userDoc = await db.collection('users').doc(userId).get();
         const userData = userDoc.data() || {};
         const fieldId = userData.field;
 
-        // 1. Assessments
+        // 2. Execute Independent Queries Concurrently
+        const [
+            assessmentsSnap,
+            completedSteps,
+            skillsCompletedCount,
+            interactionCount,
+            certCount
+        ] = await Promise.all([
+            db.collection('assessments_attempts').where('userId', '==', userId).get(),
+            getCollectionCount('roadmap_progress', userId, true),
+            getCollectionCount('skills_progress', userId, true),
+            getCollectionCount('ai_usage_logs', userId),
+            getCollectionCount('certifications_progress', userId, true)
+        ]);
+
+        // 3. Process Assessments
         let totalScore = 0;
         let assessmentCount = 0;
-        const assessmentsRef = db.collection('assessments_attempts');
-        const attemptsQuery = await assessmentsRef.where('userId', '==', userId).get();
 
-        if (!attemptsQuery.empty) {
-            attemptsQuery.forEach(doc => {
+        if (!assessmentsSnap.empty) {
+            assessmentsSnap.forEach(doc => {
                 const data = doc.data();
                 if (typeof data.percentage === 'number') {
                     totalScore += data.percentage;
                     assessmentCount++;
                 }
             });
-        }
-
-        // Fallback
-        if (assessmentCount === 0) {
+        } else {
+            // Fallback: Check subcollection only if main collection empty
+            // This is kept sequential to avoid unnecessary reads if main data exists
             const subAssessments = await db.collection('users').doc(userId).collection('assessments').get();
             subAssessments.forEach(doc => {
                 const data = doc.data();
@@ -66,36 +81,34 @@ router.get('/dashboard-analytics', verifyToken, async (req, res) => {
 
         const avgAssessmentScore = assessmentCount > 0 ? (totalScore / assessmentCount) : 0;
 
-        // 2. Roadmap
-        const completedSteps = await getCollectionCount('roadmap_progress', userId, true);
+        // 4. Calculate Scores
+        // Roadmap
         const TOTAL_ROADMAP_STEPS = 20;
         const roadmapCompletion = Math.min(Math.round((completedSteps / TOTAL_ROADMAP_STEPS) * 100), 100);
-
         const readinessScore = Math.round((avgAssessmentScore + roadmapCompletion) / 2);
 
-        // 3. Skills
-        const skillsCompleted = await getCollectionCount('skills_progress', userId, true);
+        // Skills (Total depends on Field)
         let totalSkills = 20;
         if (fieldId) {
             const pathsQuery = await db.collection('career_paths').where('field', '==', fieldId).get();
             const skillsSet = new Set();
             pathsQuery.forEach(doc => {
-                (doc.data().requiredSkills || []).forEach((s: any) => skillsSet.add(s));
+                if (doc.data().requiredSkills && Array.isArray(doc.data().requiredSkills)) {
+                    doc.data().requiredSkills.forEach((s: any) => skillsSet.add(s));
+                }
             });
             if (skillsSet.size > 0) totalSkills = skillsSet.size;
         }
 
-        // 4. AI Confidence
-        const interactionCount = await getCollectionCount('ai_usage_logs', userId);
+        // AI Confidence
         const interactionScore = Math.min((interactionCount / 20) * 100, 100);
         let aiConfidence = 0;
         if (assessmentCount > 0 || interactionCount > 0) {
             aiConfidence = Math.round((avgAssessmentScore * 0.6) + (interactionScore * 0.4));
         }
 
-        // 5. Market Alignment
-        const certCount = await getCollectionCount('certifications_progress', userId, true);
-        const skillsWeight = (skillsCompleted / totalSkills) * 80;
+        // Market Alignment
+        const skillsWeight = (skillsCompletedCount / totalSkills) * 80;
         const certBonus = Math.min(certCount * 10, 20);
         let marketAlignment = 0;
         if (fieldId) {
@@ -106,9 +119,9 @@ router.get('/dashboard-analytics', verifyToken, async (req, res) => {
             readinessScore: readinessScore || 0,
             marketAlignment: marketAlignment || 0,
             aiConfidence: aiConfidence || 0,
-            skillsCompleted: skillsCompleted || 0,
-            totalSkills: totalSkills || 0,
-            hasActivity: (assessmentCount > 0 || completedSteps > 0 || skillsCompleted > 0 || interactionCount > 0),
+            skillsCompleted: skillsCompletedCount || 0,
+            totalSkills: totalSkills || 20,
+            hasActivity: (assessmentCount > 0 || completedSteps > 0 || skillsCompletedCount > 0 || interactionCount > 0),
             fieldId: fieldId || null
         });
 
