@@ -1,0 +1,941 @@
+# 💰 PRICING MODEL IMPLEMENTATION GUIDE
+## Step-by-Step Example for Intelligence Career Platform
+
+---
+
+## 📋 TABLE OF CONTENTS
+1. [Pricing Structure Overview](#pricing-structure)
+2. [Database Schema](#database-schema)
+3. [Backend Implementation](#backend-implementation)
+4. [Frontend Components](#frontend-components)
+5. [Payment Integration](#payment-integration)
+6. [Complete Implementation Steps](#implementation-steps)
+
+---
+
+## 1️⃣ PRICING STRUCTURE OVERVIEW
+
+### Recommended Pricing Tiers:
+
+```typescript
+// PRICING_CONFIG.ts - Copy this to your project
+export const PRICING_PLANS = {
+  FREE: {
+    id: 'free',
+    name: 'Free',
+    price: 0,
+    interval: 'forever',
+    features: [
+      '10 AI Mentor messages per day',
+      'Basic career roadmaps',
+      'Limited project suggestions',
+      'Community access',
+      'Daily notifications (3 per day)',
+    ],
+    limits: {
+      aiMessages: 10, // per day
+      projectsAccess: 5, // can view 5 projects
+      certificationsAccess: 10,
+      roadmapsAccess: 3,
+    },
+  },
+  
+  PRO: {
+    id: 'pro',
+    name: 'Pro',
+    price: 99, // ₹99/month
+    interval: 'month',
+    features: [
+      '100 AI Mentor messages per day',
+      'All career roadmaps unlocked',
+      'Unlimited project access',
+      'Interview preparation resources',
+      'Resume builder & templates',
+      'Priority support',
+      'All notifications',
+      'Certification recommendations',
+    ],
+    limits: {
+      aiMessages: 100,
+      projectsAccess: -1, // unlimited
+      certificationsAccess: -1,
+      roadmapsAccess: -1,
+    },
+    popular: true, // Show "Most Popular" badge
+  },
+  
+  PREMIUM: {
+    id: 'premium',
+    name: 'Premium',
+    price: 499, // ₹499/month
+    interval: 'month',
+    features: [
+      'Unlimited AI Mentor messages',
+      'Everything in Pro',
+      '1-on-1 career counseling (2 sessions/month)',
+      'Resume review by experts',
+      'Mock interview sessions',
+      'Job referral assistance',
+      'Exclusive webinars & workshops',
+      'LinkedIn profile optimization',
+      'Placement preparation bootcamp access',
+    ],
+    limits: {
+      aiMessages: -1, // unlimited
+      projectsAccess: -1,
+      certificationsAccess: -1,
+      roadmapsAccess: -1,
+      counselingSessions: 2, // per month
+      mockInterviews: 4, // per month
+    },
+  },
+};
+
+// Annual discounts
+export const ANNUAL_DISCOUNT = 20; // 20% off on annual plans
+
+export const PRICING_PLANS_ANNUAL = {
+  PRO: {
+    ...PRICING_PLANS.PRO,
+    price: 950, // ₹99 * 12 * 0.8 = ₹950/year (save ₹238)
+    interval: 'year',
+  },
+  PREMIUM: {
+    ...PRICING_PLANS.PREMIUM,
+    price: 4790, // ₹499 * 12 * 0.8 = ₹4790/year (save ₹1198)
+    interval: 'year',
+  },
+};
+```
+
+---
+
+## 2️⃣ DATABASE SCHEMA
+
+### Firestore Collections Structure:
+
+```typescript
+// Collection: subscriptions
+{
+  userId: string,              // Reference to users collection
+  plan: 'free' | 'pro' | 'premium',
+  status: 'active' | 'canceled' | 'expired' | 'trial',
+  startDate: Timestamp,
+  endDate: Timestamp,
+  paymentId: string,           // Razorpay payment ID
+  orderId: string,             // Razorpay order ID
+  amount: number,              // Amount paid
+  currency: 'INR',
+  autoRenew: boolean,
+  createdAt: Timestamp,
+  updatedAt: Timestamp,
+}
+
+// Collection: usage_tracking
+{
+  userId: string,
+  date: string,                // YYYY-MM-DD
+  aiMessagesUsed: number,
+  projectsViewed: number,
+  roadmapsViewed: number,
+  resetAt: Timestamp,          // When daily limits reset
+}
+
+// Collection: payments
+{
+  userId: string,
+  orderId: string,
+  paymentId: string,
+  amount: number,
+  currency: 'INR',
+  status: 'created' | 'paid' | 'failed',
+  plan: 'pro' | 'premium',
+  interval: 'month' | 'year',
+  createdAt: Timestamp,
+  paidAt: Timestamp,
+  razorpaySignature: string,
+}
+```
+
+---
+
+## 3️⃣ BACKEND IMPLEMENTATION
+
+### Step 1: Create Subscription Routes
+
+```typescript
+// backend/src/routes/subscriptions.ts
+
+import { Router, Request, Response } from 'express';
+import { verifyToken } from '../middleware/adminMiddleware';
+import { db } from '../config/firebase';
+import Razorpay from 'razorpay';
+import crypto from 'crypto';
+
+const router = Router();
+
+// Initialize Razorpay
+const razorpay = new Razorpay({
+  key_id: process.env.RAZORPAY_KEY_ID || '',
+  key_secret: process.env.RAZORPAY_KEY_SECRET || '',
+});
+
+// Pricing configuration
+const PRICING_PLANS = {
+  pro_monthly: { amount: 9900, currency: 'INR', plan: 'pro', interval: 'month' }, // ₹99 in paise
+  pro_yearly: { amount: 95000, currency: 'INR', plan: 'pro', interval: 'year' },
+  premium_monthly: { amount: 49900, currency: 'INR', plan: 'premium', interval: 'month' },
+  premium_yearly: { amount: 479000, currency: 'INR', plan: 'premium', interval: 'year' },
+};
+
+// GET - Check user's current subscription
+router.get('/status', verifyToken, async (req: Request, res: Response) => {
+  try {
+    const userId = (req as any).userId;
+
+    const subscriptionDoc = await db.collection('subscriptions')
+      .where('userId', '==', userId)
+      .where('status', '==', 'active')
+      .limit(1)
+      .get();
+
+    if (subscriptionDoc.empty) {
+      return res.json({
+        plan: 'free',
+        status: 'active',
+        features: ['Basic features'],
+      });
+    }
+
+    const subscription = subscriptionDoc.docs[0].data();
+    
+    res.json({
+      plan: subscription.plan,
+      status: subscription.status,
+      startDate: subscription.startDate,
+      endDate: subscription.endDate,
+      autoRenew: subscription.autoRenew,
+    });
+  } catch (error) {
+    console.error('Error fetching subscription:', error);
+    res.status(500).json({ error: 'Failed to fetch subscription' });
+  }
+});
+
+// POST - Create payment order
+router.post('/create-order', verifyToken, async (req: Request, res: Response) => {
+  try {
+    const userId = (req as any).userId;
+    const { planId } = req.body; // e.g., 'pro_monthly'
+
+    if (!PRICING_PLANS[planId as keyof typeof PRICING_PLANS]) {
+      return res.status(400).json({ error: 'Invalid plan' });
+    }
+
+    const planDetails = PRICING_PLANS[planId as keyof typeof PRICING_PLANS];
+
+    // Create Razorpay order
+    const order = await razorpay.orders.create({
+      amount: planDetails.amount,
+      currency: planDetails.currency,
+      receipt: `order_${userId}_${Date.now()}`,
+      notes: {
+        userId,
+        plan: planDetails.plan,
+        interval: planDetails.interval,
+      },
+    });
+
+    // Save order to Firestore
+    await db.collection('payments').doc(order.id).set({
+      userId,
+      orderId: order.id,
+      amount: planDetails.amount,
+      currency: planDetails.currency,
+      status: 'created',
+      plan: planDetails.plan,
+      interval: planDetails.interval,
+      createdAt: new Date(),
+    });
+
+    res.json({
+      orderId: order.id,
+      amount: order.amount,
+      currency: order.currency,
+      key: process.env.RAZORPAY_KEY_ID,
+    });
+  } catch (error) {
+    console.error('Error creating order:', error);
+    res.status(500).json({ error: 'Failed to create order' });
+  }
+});
+
+// POST - Verify payment and activate subscription
+router.post('/verify-payment', verifyToken, async (req: Request, res: Response) => {
+  try {
+    const userId = (req as any).userId;
+    const { orderId, paymentId, signature } = req.body;
+
+    // Verify Razorpay signature
+    const generatedSignature = crypto
+      .createHmac('sha256', process.env.RAZORPAY_KEY_SECRET || '')
+      .update(`${orderId}|${paymentId}`)
+      .digest('hex');
+
+    if (generatedSignature !== signature) {
+      return res.status(400).json({ error: 'Invalid payment signature' });
+    }
+
+    // Get payment details
+    const paymentDoc = await db.collection('payments').doc(orderId).get();
+    if (!paymentDoc.exists) {
+      return res.status(404).json({ error: 'Payment not found' });
+    }
+
+    const paymentData = paymentDoc.data()!;
+
+    // Update payment status
+    await db.collection('payments').doc(orderId).update({
+      paymentId,
+      razorpaySignature: signature,
+      status: 'paid',
+      paidAt: new Date(),
+    });
+
+    // Calculate subscription dates
+    const startDate = new Date();
+    const endDate = new Date();
+    if (paymentData.interval === 'month') {
+      endDate.setMonth(endDate.getMonth() + 1);
+    } else {
+      endDate.setFullYear(endDate.getFullYear() + 1);
+    }
+
+    // Create/update subscription
+    const subscriptionRef = db.collection('subscriptions').doc();
+    await subscriptionRef.set({
+      userId,
+      plan: paymentData.plan,
+      status: 'active',
+      startDate,
+      endDate,
+      paymentId,
+      orderId,
+      amount: paymentData.amount,
+      currency: paymentData.currency,
+      interval: paymentData.interval,
+      autoRenew: true,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    });
+
+    res.json({
+      success: true,
+      message: 'Subscription activated successfully',
+      plan: paymentData.plan,
+      endDate,
+    });
+  } catch (error) {
+    console.error('Error verifying payment:', error);
+    res.status(500).json({ error: 'Failed to verify payment' });
+  }
+});
+
+// POST - Check usage limits
+router.post('/check-limit', verifyToken, async (req: Request, res: Response) => {
+  try {
+    const userId = (req as any).userId;
+    const { action } = req.body; // 'ai_message', 'project_view', etc.
+
+    // Get user's subscription
+    const subscription = await getUserSubscription(userId);
+    
+    // Get today's usage
+    const today = new Date().toISOString().split('T')[0];
+    const usageDoc = await db.collection('usage_tracking').doc(`${userId}_${today}`).get();
+    const usage = usageDoc.exists ? usageDoc.data()! : {
+      userId,
+      date: today,
+      aiMessagesUsed: 0,
+      projectsViewed: 0,
+      roadmapsViewed: 0,
+    };
+
+    // Check limits based on plan
+    const limits = getPlanLimits(subscription.plan);
+    
+    let canProceed = true;
+    let remaining = 0;
+
+    if (action === 'ai_message') {
+      remaining = limits.aiMessages === -1 ? -1 : limits.aiMessages - usage.aiMessagesUsed;
+      canProceed = limits.aiMessages === -1 || usage.aiMessagesUsed < limits.aiMessages;
+    }
+
+    res.json({
+      canProceed,
+      remaining,
+      plan: subscription.plan,
+      upgradeRequired: !canProceed,
+    });
+  } catch (error) {
+    console.error('Error checking limit:', error);
+    res.status(500).json({ error: 'Failed to check limit' });
+  }
+});
+
+// Helper functions
+async function getUserSubscription(userId: string) {
+  const snapshot = await db.collection('subscriptions')
+    .where('userId', '==', userId)
+    .where('status', '==', 'active')
+    .limit(1)
+    .get();
+
+  if (snapshot.empty) {
+    return { plan: 'free', status: 'active' };
+  }
+
+  return snapshot.docs[0].data();
+}
+
+function getPlanLimits(plan: string) {
+  const limits: any = {
+    free: { aiMessages: 10, projectsAccess: 5, roadmapsAccess: 3 },
+    pro: { aiMessages: 100, projectsAccess: -1, roadmapsAccess: -1 },
+    premium: { aiMessages: -1, projectsAccess: -1, roadmapsAccess: -1 },
+  };
+  return limits[plan] || limits.free;
+}
+
+export default router;
+```
+
+### Step 2: Update Environment Variables
+
+```bash
+# backend/.env
+
+# Add these lines:
+RAZORPAY_KEY_ID=rzp_test_xxxxxxxxxx
+RAZORPAY_KEY_SECRET=your_razorpay_secret_key
+```
+
+### Step 3: Install Dependencies
+
+```bash
+cd backend
+npm install razorpay
+npm install @types/razorpay --save-dev
+```
+
+### Step 4: Register Routes
+
+```typescript
+// backend/src/index.ts
+
+import subscriptionRoutes from './routes/subscriptions';
+
+// Add this line with other routes:
+app.use('/api/subscriptions', subscriptionRoutes);
+```
+
+---
+
+## 4️⃣ FRONTEND IMPLEMENTATION
+
+### Step 1: Create Pricing Page Component
+
+```tsx
+// frontend/src/pages/Pricing.tsx
+
+import { useState } from 'react';
+import { Check, Sparkles, Crown, Zap } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { useAuth } from '@/hooks/useAuth';
+import { toast } from 'sonner';
+
+declare global {
+  interface Window {
+    Razorpay: any;
+  }
+}
+
+const pricingPlans = [
+  {
+    id: 'free',
+    name: 'Free',
+    price: 0,
+    interval: 'forever',
+    description: 'Perfect for getting started',
+    icon: Zap,
+    features: [
+      '10 AI Mentor messages/day',
+      'Basic career roadmaps',
+      '5 project suggestions',
+      'Community access',
+      'Daily notifications',
+    ],
+    cta: 'Current Plan',
+    disabled: true,
+  },
+  {
+    id: 'pro_monthly',
+    name: 'Pro',
+    price: 99,
+    interval: 'month',
+    description: 'Most popular for students',
+    icon: Sparkles,
+    popular: true,
+    features: [
+      '100 AI messages/day',
+      'All roadmaps unlocked',
+      'Unlimited project access',
+      'Interview prep resources',
+      'Resume builder',
+      'Priority support',
+    ],
+    cta: 'Upgrade to Pro',
+  },
+  {
+    id: 'premium_monthly',
+    name: 'Premium',
+    price: 499,
+    interval: 'month',
+    description: 'For serious career builders',
+    icon: Crown,
+    features: [
+      'Unlimited AI messages',
+      'Everything in Pro',
+      '1-on-1 counseling (2x/month)',
+      'Resume review by experts',
+      'Mock interviews (4x/month)',
+      'Job referral assistance',
+      'Exclusive webinars',
+    ],
+    cta: 'Go Premium',
+  },
+];
+
+export default function Pricing() {
+  const [billingInterval, setBillingInterval] = useState<'month' | 'year'>('month');
+  const [loading, setLoading] = useState<string | null>(null);
+  const { user } = useAuth();
+
+  const handleSubscribe = async (planId: string, amount: number) => {
+    if (!user) {
+      toast.error('Please login to subscribe');
+      return;
+    }
+
+    setLoading(planId);
+
+    try {
+      // Create order
+      const response = await fetch('http://localhost:5000/api/subscriptions/create-order', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${await user.getIdToken()}`,
+        },
+        body: JSON.stringify({ planId }),
+      });
+
+      const { orderId, amount: orderAmount, currency, key } = await response.json();
+
+      // Open Razorpay checkout
+      const options = {
+        key,
+        amount: orderAmount,
+        currency,
+        name: 'Intelligence Career',
+        description: `${planId.includes('pro') ? 'Pro' : 'Premium'} Plan`,
+        order_id: orderId,
+        handler: async (response: any) => {
+          // Verify payment
+          const verifyResponse = await fetch('http://localhost:5000/api/subscriptions/verify-payment', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${await user.getIdToken()}`,
+            },
+            body: JSON.stringify({
+              orderId: response.razorpay_order_id,
+              paymentId: response.razorpay_payment_id,
+              signature: response.razorpay_signature,
+            }),
+          });
+
+          const result = await verifyResponse.json();
+
+          if (result.success) {
+            toast.success('Subscription activated successfully!');
+            window.location.href = '/dashboard';
+          } else {
+            toast.error('Payment verification failed');
+          }
+        },
+        prefill: {
+          email: user.email || '',
+          contact: '',
+        },
+        theme: {
+          color: '#6366f1',
+        },
+      };
+
+      const razorpay = new window.Razorpay(options);
+      razorpay.open();
+    } catch (error) {
+      console.error('Error:', error);
+      toast.error('Failed to initiate payment');
+    } finally {
+      setLoading(null);
+    }
+  };
+
+  return (
+    <div className="min-h-screen bg-background py-12 px-4">
+      <div className="max-w-7xl mx-auto">
+        {/* Header */}
+        <div className="text-center mb-12">
+          <h1 className="text-4xl font-bold mb-4">Choose Your Plan</h1>
+          <p className="text-muted-foreground text-lg mb-8">
+            Unlock your career potential with the right plan
+          </p>
+
+          {/* Billing Toggle */}
+          <div className="inline-flex items-center gap-4 bg-secondary p-1 rounded-lg">
+            <button
+              onClick={() => setBillingInterval('month')}
+              className={`px-6 py-2 rounded-md transition ${
+                billingInterval === 'month' ? 'bg-primary text-primary-foreground' : ''
+              }`}
+            >
+              Monthly
+            </button>
+            <button
+              onClick={() => setBillingInterval('year')}
+              className={`px-6 py-2 rounded-md transition ${
+                billingInterval === 'year' ? 'bg-primary text-primary-foreground' : ''
+              }`}
+            >
+              Yearly
+              <span className="ml-2 text-xs bg-green-500 text-white px-2 py-1 rounded">
+                Save 20%
+              </span>
+            </button>
+          </div>
+        </div>
+
+        {/* Pricing Cards */}
+        <div className="grid md:grid-cols-3 gap-8">
+          {pricingPlans.map((plan) => {
+            const Icon = plan.icon;
+            const yearlyPrice = plan.price * 12 * 0.8;
+            const displayPrice = billingInterval === 'year' ? yearlyPrice : plan.price;
+            const planId = billingInterval === 'year' ? `${plan.id.replace('_monthly', '_yearly')}` : plan.id;
+
+            return (
+              <Card
+                key={plan.id}
+                className={`relative ${plan.popular ? 'border-primary shadow-lg scale-105' : ''}`}
+              >
+                {plan.popular && (
+                  <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-primary text-primary-foreground px-4 py-1 rounded-full text-sm font-medium">
+                    Most Popular
+                  </div>
+                )}
+
+                <CardHeader>
+                  <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-4">
+                    <Icon className="w-6 h-6 text-primary" />
+                  </div>
+                  <CardTitle className="text-2xl">{plan.name}</CardTitle>
+                  <CardDescription>{plan.description}</CardDescription>
+                  <div className="mt-4">
+                    <span className="text-4xl font-bold">₹{displayPrice}</span>
+                    <span className="text-muted-foreground">/{billingInterval}</span>
+                  </div>
+                </CardHeader>
+
+                <CardContent>
+                  <ul className="space-y-3 mb-6">
+                    {plan.features.map((feature, i) => (
+                      <li key={i} className="flex items-start gap-2">
+                        <Check className="w-5 h-5 text-primary shrink-0 mt-0.5" />
+                        <span className="text-sm">{feature}</span>
+                      </li>
+                    ))}
+                  </ul>
+
+                  <Button
+                    onClick={() => handleSubscribe(planId, displayPrice * 100)}
+                    disabled={plan.disabled || loading === planId}
+                    className="w-full"
+                    variant={plan.popular ? 'default' : 'outline'}
+                  >
+                    {loading === planId ? 'Processing...' : plan.cta}
+                  </Button>
+                </CardContent>
+              </Card>
+            );
+          })}
+        </div>
+
+        {/* FAQ Section */}
+        <div className="mt-16 text-center">
+          <p className="text-muted-foreground">
+            Have questions? <a href="/contact" className="text-primary underline">Contact us</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+}
+```
+
+### Step 2: Add Razorpay Script
+
+```html
+<!-- frontend/index.html -->
+
+<!-- Add before </body> -->
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+```
+
+### Step 3: Create Subscription Status Component
+
+```tsx
+// frontend/src/components/SubscriptionBanner.tsx
+
+import { useEffect, useState } from 'react';
+import { Crown } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { auth } from '@/lib/firebase';
+import { Link } from 'react-router-dom';
+
+export function SubscriptionBanner() {
+  const [plan, setPlan] = useState<string>('free');
+
+  useEffect(() => {
+    const fetchSubscription = async () => {
+      const user = auth.currentUser;
+      if (!user) return;
+
+      const token = await user.getIdToken();
+      const response = await fetch('http://localhost:5000/api/subscriptions/status', {
+        headers: { 'Authorization': `Bearer ${token}` },
+      });
+      const data = await response.json();
+      setPlan(data.plan);
+    };
+
+    fetchSubscription();
+  }, []);
+
+  if (plan !== 'free') return null;
+
+  return (
+    <div className="bg-gradient-to-r from-primary to-primary-dark text-primary-foreground p-4 rounded-lg mb-6">
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-3">
+          <Crown className="w-6 h-6" />
+          <div>
+            <p className="font-semibold">Upgrade to unlock unlimited features</p>
+            <p className="text-sm opacity-90">Get 100+ AI messages, all roadmaps, and more!</p>
+          </div>
+        </div>
+        <Link to="/pricing">
+          <Button variant="secondary">Upgrade Now</Button>
+        </Link>
+      </div>
+    </div>
+  );
+}
+```
+
+---
+
+## 5️⃣ PAYMENT INTEGRATION (Razorpay)
+
+### Step 1: Create Razorpay Account
+
+1. Go to https://razorpay.com/
+2. Sign up for free account
+3. Complete business verification (optional for test mode)
+4. Get API keys from Dashboard → API Keys
+
+### Step 2: Test Mode Keys
+
+```
+Test Key ID: rzp_test_xxxxxxxxxx
+Test Secret: your_test_secret_key
+```
+
+### Step 3: Test Payment
+
+Use these test cards:
+- **Success**: 4111 1111 1111 1111
+- **Failure**: 4111 1111 1111 1234
+- CVV: Any 3 digits
+- Expiry: Any future date
+
+---
+
+## 6️⃣ COMPLETE IMPLEMENTATION STEPS
+
+### ✅ STEP-BY-STEP CHECKLIST:
+
+#### **Phase 1: Setup (30 mins)**
+
+1. **Create Razorpay Account**
+   ```
+   - Visit razorpay.com
+   - Sign up
+   - Get Test API keys
+   - Save to backend/.env
+   ```
+
+2. **Install Dependencies**
+   ```bash
+   cd backend
+   npm install razorpay crypto
+   npm install @types/razorpay --save-dev
+   ```
+
+3. **Add Environment Variables**
+   ```bash
+   # backend/.env
+   RAZORPAY_KEY_ID=rzp_test_xxxxx
+   RAZORPAY_KEY_SECRET=your_secret
+   ```
+
+#### **Phase 2: Backend (1 hour)**
+
+4. **Create Subscription Route**
+   - Copy `subscriptions.ts` code above
+   - Save to `backend/src/routes/subscriptions.ts`
+
+5. **Register Route**
+   ```typescript
+   // backend/src/index.ts
+   import subscriptionRoutes from './routes/subscriptions';
+   app.use('/api/subscriptions', subscriptionRoutes);
+   ```
+
+6. **Test Backend**
+   ```bash
+   cd backend
+   npm run dev
+   # Should see: Server running on port 5000
+   ```
+
+#### **Phase 3: Frontend (1.5 hours)**
+
+7. **Add Razorpay Script**
+   ```html
+   <!-- frontend/index.html -->
+   <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+   ```
+
+8. **Create Pricing Page**
+   - Copy `Pricing.tsx` code above
+   - Save to `frontend/src/pages/Pricing.tsx`
+
+9. **Add Route**
+   ```typescript
+   // frontend/src/App.tsx or router config
+   <Route path="/pricing" element={<Pricing />} />
+   ```
+
+10. **Create Subscription Banner**
+    - Copy `SubscriptionBanner.tsx` code
+    - Add to Dashboard component
+
+#### **Phase 4: Testing (30 mins)**
+
+11. **Test Full Flow**
+    ```
+    1. Go to http://localhost:5173/pricing
+    2. Click "Upgrade to Pro"
+    3. Login if needed
+    4. Razorpay popup should appear
+    5. Use test card: 4111 1111 1111 1111
+    6. Complete payment
+    7. Should redirect to dashboard with Pro plan
+    ```
+
+12. **Verify in Firebase**
+    ```
+    - Check Firestore
+    - Should see new doc in 'subscriptions' collection
+    - Should see new doc in 'payments' collection
+    ```
+
+#### **Phase 5: Production (1 hour)**
+
+13. **Switch to Live Keys**
+    ```bash
+    # After Razorpay verification approval
+    RAZORPAY_KEY_ID=rzp_live_xxxxx
+    RAZORPAY_KEY_SECRET=your_live_secret
+    ```
+
+14. **Add Webhooks** (optional, for auto-renewals)
+    ```
+    - Razorpay Dashboard → Webhooks
+    - Add endpoint: https://yourapp.com/api/webhooks/razorpay
+    - Select events: payment.captured, payment.failed
+    ```
+
+---
+
+## 📊 EXPECTED RESULTS
+
+After implementation, you should have:
+
+✅ Pricing page at `/pricing`  
+✅ Three plans: Free, Pro, Premium  
+✅ Razorpay payment integration  
+✅ Subscription tracking in Firebase  
+✅ Usage limits enforcement  
+✅ Upgrade prompts in UI  
+
+---
+
+## 🎯 MONETIZATION POTENTIAL
+
+### Revenue Estimates:
+
+**Conservative (100 users):**
+- 10 Pro users @ ₹99 = ₹990/month
+- 5 Premium users @ ₹499 = ₹2,495/month
+- **Total: ₹3,485/month** (₹41,820/year)
+
+**Moderate (500 users):**
+- 75 Pro users @ ₹99 = ₹7,425/month
+- 25 Premium users @ ₹499 = ₹12,475/month
+- **Total: ₹19,900/month** (₹2,38,800/year)
+
+**Optimistic (1000 users):**
+- 200 Pro users @ ₹99 = ₹19,800/month
+- 50 Premium users @ ₹499 = ₹24,950/month
+- **Total: ₹44,750/month** (₹5,37,000/year)
+
+---
+
+## 🚀 NEXT STEPS
+
+1. **Implement this guide step-by-step**
+2. **Test thoroughly in test mode**
+3. **Get Razorpay verified for live payments**
+4. **Launch pricing page**
+5. **Market premium features**
+6. **Track conversions and optimize**
+
+---
+
+**Questions? Issues?**
+Check backend logs, Razorpay dashboard, and Firebase console for debugging.
