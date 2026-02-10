@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { db, auth } from '@/lib/firebase';
-import { collection, query, where, onSnapshot } from 'firebase/firestore';
+import { collection, query, where, getDocs } from 'firebase/firestore';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { AdminLayout } from '@/components/admin/AdminLayout';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -48,11 +49,11 @@ import { AssessmentQuestion } from '@/types/assessment';
 
 export default function AssessmentManagement() {
     const [selectedField, setSelectedField] = useState<string>('');
-    const [questions, setQuestions] = useState<AssessmentQuestion[]>([]);
     const [editingQuestion, setEditingQuestion] = useState<AssessmentQuestion | null>(null);
     const [isDialogOpen, setIsDialogOpen] = useState(false);
     const [passingScore, setPassingScore] = useState(75);
     const [assessmentEnabled, setAssessmentEnabled] = useState(true);
+    const queryClient = useQueryClient();
 
     // Form state for question editing
     const [questionForm, setQuestionForm] = useState({
@@ -64,31 +65,23 @@ export default function AssessmentManagement() {
         topic: '',
     });
 
-    // Load questions real-time from Firestore
-    useEffect(() => {
-        if (!selectedField) {
-            setQuestions([]);
-            return;
-        }
-
-        const q = query(
-            collection(db, 'assessment_questions'),
-            where('fieldId', '==', selectedField.toLowerCase().trim())
-        );
-
-        const unsubscribe = onSnapshot(q, (snapshot) => {
-            const fetchedQuestions = snapshot.docs.map(doc => ({
+    // Load questions using React Query
+    const { data: questions = [], isLoading: loadingQuestions } = useQuery({
+        queryKey: ['assessment_questions', selectedField],
+        queryFn: async () => {
+            if (!selectedField) return [];
+            const q = query(
+                collection(db, 'assessment_questions'),
+                where('fieldId', '==', selectedField.toLowerCase().trim())
+            );
+            const snapshot = await getDocs(q);
+            return snapshot.docs.map(doc => ({
                 id: doc.id,
                 ...doc.data()
             })) as AssessmentQuestion[];
-            setQuestions(fetchedQuestions);
-        }, (error) => {
-            console.error('Error fetching questions:', error);
-            toast.error('Failed to load questions real-time');
-        });
-
-        return () => unsubscribe();
-    }, [selectedField]);
+        },
+        enabled: !!selectedField,
+    });
 
     const handleAddQuestion = () => {
         setEditingQuestion(null);
@@ -133,6 +126,7 @@ export default function AssessmentManagement() {
             if (!response.ok) throw new Error('Failed to delete');
 
             toast.success('Question deleted successfully');
+            queryClient.invalidateQueries({ queryKey: ['assessment_questions', selectedField] });
         } catch (error) {
             console.error('Delete error:', error);
             toast.error('Failed to delete question');
@@ -202,6 +196,7 @@ export default function AssessmentManagement() {
 
             toast.success('Question saved successfully');
             setIsDialogOpen(false);
+            queryClient.invalidateQueries({ queryKey: ['assessment_questions', selectedField] }); // Refresh list
 
         } catch (error) {
             console.error('Save error:', error);

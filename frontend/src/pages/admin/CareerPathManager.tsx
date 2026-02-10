@@ -26,31 +26,24 @@ interface CareerPath {
     level: string;
 }
 
+import { useQuery } from '@tanstack/react-query';
+
 export default function CareerPathManager() {
-    const [paths, setPaths] = useState<CareerPath[]>([]);
-    const [loading, setLoading] = useState(true);
     const [search, setSearch] = useState('');
 
     // Edit/Add Mode
     const [editingId, setEditingId] = useState<string | null>(null);
     const [formData, setFormData] = useState<Partial<CareerPath>>({});
 
-    useEffect(() => {
-        fetchPaths();
-    }, []);
-
-    const fetchPaths = async () => {
-        setLoading(true);
-        try {
+    // Optimized: Fetch career paths using React Query
+    const { data: paths = [], isLoading: loading, refetch } = useQuery({
+        queryKey: ['career_paths'],
+        queryFn: async () => {
             const snap = await getDocs(collection(db, 'career_paths'));
-            const list = snap.docs.map(d => ({ id: d.id, ...d.data() } as CareerPath));
-            setPaths(list);
-        } catch (error) {
-            toast.error('Failed to load career paths');
-        } finally {
-            setLoading(false);
-        }
-    };
+            return snap.docs.map(d => ({ id: d.id, ...d.data() } as CareerPath));
+        },
+        staleTime: 1000 * 60 * 60, // 1 hour
+    });
 
     const roundedSkills = (skills: string[] | string) => {
         if (Array.isArray(skills)) return skills;
@@ -80,7 +73,7 @@ export default function CareerPathManager() {
                 toast.success('Career path updated');
             }
             setEditingId(null);
-            fetchPaths();
+            refetch();
         } catch (error) {
             console.error(error);
             toast.error('Failed to save');
@@ -92,7 +85,7 @@ export default function CareerPathManager() {
         try {
             await deleteDoc(doc(db, 'career_paths', id));
             toast.success('Deleted successfully');
-            fetchPaths();
+            refetch();
         } catch (e) {
             toast.error('Delete failed');
         }
@@ -150,7 +143,7 @@ export default function CareerPathManager() {
                             <Input
                                 placeholder="Required Skills (comma separated)"
                                 value={Array.isArray(formData.requiredSkills) ? formData.requiredSkills.join(', ') : formData.requiredSkills || ''}
-                                onChange={e => setFormData({ ...formData, requiredSkills: e.target.value })}
+                                onChange={e => setFormData({ ...formData, requiredSkills: e.target.value as any })}
                             />
                         </div>
                         <div className="flex gap-2 justify-end">

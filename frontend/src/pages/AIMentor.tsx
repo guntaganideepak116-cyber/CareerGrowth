@@ -2,7 +2,6 @@ import { useState, useRef, useEffect } from 'react';
 import { DashboardLayout } from '@/components/dashboard/DashboardLayout';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { streamChat } from '@/lib/ai-chat';
 import { toast } from 'sonner';
 import {
   Brain,
@@ -60,6 +59,9 @@ export default function AIMentor() {
   const handleSend = async () => {
     if (!input.trim() || isTyping) return;
 
+    // Dynamically import streamChat to reduce initial bundle size
+    const { streamChat } = await import('@/lib/ai-chat');
+
     const userMessage: Message = {
       id: crypto.randomUUID(),
       role: 'user',
@@ -67,6 +69,7 @@ export default function AIMentor() {
       timestamp: new Date(),
     };
 
+    // ... rest of handleSend logic ...
     setMessages(prev => [...prev, userMessage]);
     setInput('');
     setIsTyping(true);
@@ -165,8 +168,8 @@ export default function AIMentor() {
               key={role.id}
               onClick={() => handleRoleChange(role.id)}
               className={`flex items-center gap-2 px-4 py-2 rounded-lg border transition-all shrink-0 ${activeRole === role.id
-                  ? 'bg-primary text-primary-foreground border-primary'
-                  : 'bg-card text-foreground border-border hover:border-primary/50'
+                ? 'bg-primary text-primary-foreground border-primary'
+                : 'bg-card text-foreground border-border hover:border-primary/50'
                 }`}
             >
               <role.icon className="w-4 h-4" />

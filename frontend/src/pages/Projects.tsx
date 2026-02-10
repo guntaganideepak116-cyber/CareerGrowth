@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useQuery } from '@tanstack/react-query';
 import { DashboardLayout } from '@/components/dashboard/DashboardLayout';
 import { Button } from '@/components/ui/button';
 import { toast } from 'sonner';
@@ -30,8 +31,6 @@ export default function Projects() {
   const { user, profile, loading: profileLoading } = useAuthContext();
   const navigate = useNavigate();
 
-  const [projects, setProjects] = useState<FieldProject[]>([]);
-  const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState<'all' | 'Free' | 'Pro' | 'Premium'>('all');
   const [selectedProject, setSelectedProject] = useState<FieldProject | null>(null);
 
@@ -73,40 +72,31 @@ export default function Projects() {
     }
   }, [profile?.field, profileLoading, navigate]);
 
-  // Load projects based on field & branch
-  useEffect(() => {
-    if (profile?.field) {
-      setLoading(true);
+  // Optimized: Load projects based on field & branch using React Query
+  const { data: projects = [], isLoading: loading } = useQuery({
+    queryKey: ['field_projects', profile?.field, profile?.branch],
+    queryFn: async () => {
+      if (!profile?.field) return [];
 
-      const fetchProjects = async () => {
-        try {
-          const apiBase = import.meta.env.VITE_API_URL || 'http://localhost:5000';
-          const queryParams = new URLSearchParams();
-          queryParams.append('field', profile.field);
-          if (profile.branch) {
-            queryParams.append('branch', profile.branch);
-          }
+      const apiBase = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+      const queryParams = new URLSearchParams();
+      queryParams.append('field', profile.field);
+      if (profile.branch) {
+        queryParams.append('branch', profile.branch);
+      }
 
-          const res = await fetch(`${apiBase}/api/projects?${queryParams}`);
-          const data = await res.json();
+      const res = await fetch(`${apiBase}/api/projects?${queryParams}`);
+      if (!res.ok) throw new Error('Failed to fetch projects');
 
-          if (data.success && Array.isArray(data.data)) {
-            setProjects(data.data);
-          } else {
-            console.error('Failed to load projects:', data);
-            toast.error('Failed to load projects');
-          }
-        } catch (error) {
-          console.error('Error fetching projects:', error);
-          toast.error('Error loading projects');
-        } finally {
-          setLoading(false);
-        }
-      };
-
-      fetchProjects();
-    }
-  }, [profile?.field, profile?.branch]);
+      const data = await res.json();
+      if (data.success && Array.isArray(data.data)) {
+        return data.data;
+      }
+      return [];
+    },
+    enabled: !!profile?.field,
+    staleTime: 1000 * 60 * 30, // 30 minutes
+  });
 
   const filteredProjects = filter === 'all'
     ? projects

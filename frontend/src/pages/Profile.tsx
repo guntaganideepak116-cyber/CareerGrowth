@@ -35,6 +35,7 @@ import {
 } from "@/components/ui/dialog";
 import { Badge } from "@/components/ui/badge";
 import { ExternalLink, Clock, Github } from "lucide-react";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export default function Profile() {
   const { user, profile, loading, updateProfile } = useAuthContext();
@@ -145,8 +146,44 @@ export default function Profile() {
   if (loading) {
     return (
       <DashboardLayout>
-        <div className="flex items-center justify-center h-[60vh]">
-          <Loader2 className="w-8 h-8 animate-spin text-primary" />
+        <div className="max-w-4xl mx-auto space-y-6">
+          {/* Header Skeleton */}
+          <div className="space-y-2">
+            <Skeleton className="h-8 w-48" />
+            <Skeleton className="h-4 w-64" />
+          </div>
+
+          {/* Profile Card Skeleton */}
+          <div className="rounded-xl border p-6 flex gap-6 items-center">
+            <Skeleton className="h-24 w-24 rounded-full" />
+            <div className="space-y-2 flex-1">
+              <Skeleton className="h-6 w-32" />
+              <Skeleton className="h-4 w-48" />
+              <div className="flex gap-2 pt-2">
+                <Skeleton className="h-6 w-20 rounded-full" />
+                <Skeleton className="h-6 w-20 rounded-full" />
+              </div>
+            </div>
+          </div>
+
+          {/* Stats Grid Skeleton */}
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+            {[1, 2, 3, 4].map((i) => (
+              <Skeleton key={i} className="h-24 rounded-xl" />
+            ))}
+          </div>
+
+          {/* Main Content Skeleton */}
+          <div className="grid md:grid-cols-3 gap-6">
+            <div className="md:col-span-2 space-y-6">
+              <Skeleton className="h-[400px] rounded-xl" />
+              <Skeleton className="h-[200px] rounded-xl" />
+            </div>
+            <div className="space-y-6">
+              <Skeleton className="h-[200px] rounded-xl" />
+              <Skeleton className="h-[200px] rounded-xl" />
+            </div>
+          </div>
         </div>
       </DashboardLayout>
     );

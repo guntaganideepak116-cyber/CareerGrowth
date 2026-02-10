@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useQuery } from '@tanstack/react-query';
 import { DashboardLayout } from '@/components/dashboard/DashboardLayout';
 import { useAuthContext } from '@/contexts/AuthContext';
 import { certificationsMap, Certification } from '@/data/certificationsData';
@@ -14,8 +15,6 @@ export default function Certifications() {
   const { user, profile, loading: profileLoading } = useAuthContext();
   const navigate = useNavigate();
 
-  const [certifications, setCertifications] = useState<Certification[]>([]);
-  const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
   const [filterType, setFilterType] = useState<FilterType>('all');
 
@@ -33,32 +32,33 @@ export default function Certifications() {
     }
   }, [profile?.field, profileLoading, navigate]);
 
-  // Load certifications based on field & branch
-  useEffect(() => {
-    if (profile?.field) {
-      setLoading(true);
+  // Optimized: Load certifications using React Query
+  const { data: certifications = [], isLoading: loading } = useQuery({
+    queryKey: ['certifications', profile?.field, profile?.branch],
+    queryFn: async () => {
+      if (!profile?.field) return [];
+
       // Simulate API call delay
-      setTimeout(() => {
-        let data: Certification[] = [];
+      await new Promise(resolve => setTimeout(resolve, 500));
 
-        // 1. Prioritize Branch
-        if (profile.branch && certificationsMap[profile.branch]) {
-          data = certificationsMap[profile.branch];
-        }
-        // 2. Field
-        else if (certificationsMap[profile.field]) {
-          data = certificationsMap[profile.field];
-        }
-        // 3. Fallback
-        else {
-          data = certificationsMap['engineering'] || [];
-        }
-
-        setCertifications(data);
-        setLoading(false);
-      }, 500);
-    }
-  }, [profile?.field, profile?.branch]);
+      let data: Certification[] = [];
+      // 1. Prioritize Branch
+      if (profile.branch && certificationsMap[profile.branch]) {
+        data = certificationsMap[profile.branch];
+      }
+      // 2. Field
+      else if (certificationsMap[profile.field]) {
+        data = certificationsMap[profile.field];
+      }
+      // 3. Fallback
+      else {
+        data = certificationsMap['engineering'] || [];
+      }
+      return data;
+    },
+    enabled: !!profile?.field,
+    staleTime: 1000 * 60 * 60, // 1 hour
+  });
 
   // Filter certifications
   const filteredCertifications = certifications.filter(cert => {

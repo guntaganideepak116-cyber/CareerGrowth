@@ -156,7 +156,7 @@ export default function Roadmap() {
 
   // Handle refresh dynamic content
   const handleRefresh = useCallback(() => {
-    clearContentCache();
+    // React Query refetch will handle fetching fresh data
     refetchDynamic();
     toast.success('Refreshing roadmap with latest data...');
   }, [refetchDynamic]);

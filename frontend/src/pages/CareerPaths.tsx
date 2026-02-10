@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useQuery } from '@tanstack/react-query';
 import { DashboardLayout } from '@/components/dashboard/DashboardLayout';
 import { useAuthContext } from '@/contexts/AuthContext';
 import { Button } from '@/components/ui/button';
@@ -26,8 +27,6 @@ export default function CareerPaths() {
   const { user, profile, loading, updateProfile } = useAuthContext();
   const navigate = useNavigate();
   const [selectedPath, setSelectedPath] = useState<string | null>(null);
-  const [careerPaths, setCareerPaths] = useState<CareerPath[]>([]);
-  const [pathsLoading, setPathsLoading] = useState(true);
 
   useEffect(() => {
     if (!loading && !user) {
@@ -42,23 +41,12 @@ export default function CareerPaths() {
     }
   }, [user, profile?.field, loading, navigate]);
 
-  useEffect(() => {
-    if (profile?.field) {
-      fetchCareerPaths();
-    }
-  }, [profile?.field]);
+  // Optimized: Fetch career paths using React Query with caching
+  const { data: careerPaths = [], isLoading: pathsLoading } = useQuery({
+    queryKey: ['career_paths', profile?.field],
+    queryFn: async () => {
+      if (!profile?.field) return [];
 
-  // Fetch career paths from database using structured endpoint
-  const fetchCareerPaths = async () => {
-    if (!profile?.field) {
-      setPathsLoading(false);
-      return;
-    }
-
-    setPathsLoading(true);
-
-    try {
-      // Normalize field ID
       const fieldId = profile.field.toLowerCase().replace(/\s+/g, '-');
       const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000';
       const response = await fetch(`${apiUrl}/api/career-paths/structured/${fieldId}`);
@@ -70,8 +58,7 @@ export default function CareerPaths() {
       const data = await response.json();
 
       if (data.success && data.specializations) {
-        // Flatten all careers from all specializations
-        const allCareers = data.specializations.flatMap((spec: any) =>
+        return data.specializations.flatMap((spec: any) =>
           spec.careers.map((career: any) => ({
             ...career,
             fieldId: data.fieldId,
@@ -80,22 +67,13 @@ export default function CareerPaths() {
             specializationName: spec.specializationName
           }))
         );
-
-        console.log(`✅ Loaded ${allCareers.length} career paths across ${data.specializations.length} specializations`);
-        setCareerPaths(allCareers);
-      } else {
-        setCareerPaths([]);
       }
-
-      setPathsLoading(false);
-
-    } catch (error) {
-      console.error('Error loading career paths:', error);
-      setCareerPaths([]);
-      setPathsLoading(false);
-      // Don't show error toast - just show empty state
-    }
-  };
+      return [];
+    },
+    enabled: !!profile?.field,
+    staleTime: 1000 * 60 * 60, // Cache for 1 hour
+    refetchOnWindowFocus: false,
+  });
 
   const handleSelectPath = async (path: CareerPath) => {
     setSelectedPath(path.id);
@@ -115,20 +93,39 @@ export default function CareerPaths() {
     advanced: 'bg-danger/10 text-danger border-danger/20',
   };
 
-  if (loading || pathsLoading) {
-    return (
-      <DashboardLayout>
-        <div className="flex items-center justify-center min-h-[60vh]">
-          <div className="text-center space-y-3">
-            <div className="animate-spin h-12 w-12 border-4 border-primary border-t-transparent rounded-full mx-auto"></div>
-            <span className="text-muted-foreground block">Loading career paths...</span>
+  const fieldName = profile?.field?.charAt(0).toUpperCase() + profile?.field?.slice(1) || 'your field';
+
+  const CareerPathSkeleton = () => (
+    <div className="bg-card rounded-xl border border-border p-6 animate-pulse">
+      <div className="flex flex-col lg:flex-row gap-6">
+        <div className="flex-1 space-y-4">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 bg-muted rounded-lg" />
+            <div className="space-y-2">
+              <div className="h-6 w-48 bg-muted rounded" />
+              <div className="h-4 w-24 bg-muted rounded-full" />
+            </div>
+          </div>
+          <div className="space-y-2 mt-4">
+            <div className="h-4 w-32 bg-muted rounded" />
+            <div className="flex gap-2">
+              <div className="h-6 w-20 bg-muted rounded-full" />
+              <div className="h-6 w-24 bg-muted rounded-full" />
+              <div className="h-6 w-16 bg-muted rounded-full" />
+            </div>
           </div>
         </div>
-      </DashboardLayout>
-    );
-  }
-
-  const fieldName = profile?.field?.charAt(0).toUpperCase() + profile?.field?.slice(1) || 'your field';
+        <div className="lg:w-64 grid grid-cols-2 gap-4">
+          <div className="h-20 bg-muted rounded-lg" />
+          <div className="h-20 bg-muted rounded-lg" />
+        </div>
+      </div>
+      <div className="mt-6 pt-4 border-t border-border flex justify-between">
+        <div className="h-4 w-48 bg-muted rounded" />
+        <div className="h-10 w-32 bg-muted rounded" />
+      </div>
+    </div>
+  );
 
   return (
     <DashboardLayout>
@@ -145,8 +142,17 @@ export default function CareerPaths() {
           </p>
         </div>
 
+        {/* Loading State - Skeletons */}
+        {(loading || pathsLoading) && (
+          <div className="space-y-6">
+            <CareerPathSkeleton />
+            <CareerPathSkeleton />
+            <CareerPathSkeleton />
+          </div>
+        )}
+
         {/* Empty State - Clean message, no AI generation */}
-        {careerPaths.length === 0 && (
+        {!loading && !pathsLoading && careerPaths.length === 0 && (
           <div className="bg-card rounded-xl border border-border p-12 text-center">
             <div className="max-w-md mx-auto space-y-4">
               <div className="p-4 bg-muted rounded-full w-20 h-20 mx-auto flex items-center justify-center">

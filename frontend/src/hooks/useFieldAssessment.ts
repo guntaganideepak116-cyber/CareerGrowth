@@ -1,33 +1,29 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useAuthContext } from '@/contexts/AuthContext';
 import {
     AssessmentResult,
-    FieldAssessmentStatus,
     AssessmentAnswer,
     AssessmentQuestion,
 } from '@/types/assessment';
 import { toast } from 'sonner';
 import { db } from '@/lib/firebase';
 import { doc, getDoc, setDoc, serverTimestamp } from 'firebase/firestore';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 
 const API_URL = 'http://localhost:5000/api/assessment';
 
 export function useFieldAssessment(fieldId: string) {
     const { user } = useAuthContext();
-    const [status, setStatus] = useState<FieldAssessmentStatus | null>(null);
-    const [loading, setLoading] = useState(true);
     const [submitting, setSubmitting] = useState(false);
+    const queryClient = useQueryClient();
 
-    // Fetch assessment status
-    useEffect(() => {
-        if (!user || !fieldId) {
-            setLoading(false);
-            return;
-        }
+    // Optimized: Fetch assessment status using React Query
+    const { data: status, isLoading: loading } = useQuery({
+        queryKey: ['assessment_status', user?.uid, fieldId],
+        queryFn: async () => {
+            if (!user || !fieldId) return null;
 
-        const fetchStatus = async () => {
             try {
-                setLoading(true);
                 // Try backend first
                 try {
                     const token = await user.getIdToken();
@@ -37,15 +33,14 @@ export function useFieldAssessment(fieldId: string) {
 
                     if (response.ok) {
                         const data = await response.json();
-                        setStatus({
+                        return {
                             fieldId,
                             hasAttempted: data.hasAttempted,
                             hasPassed: data.hasPassed,
                             score: data.score,
                             lastAttemptDate: data.lastAttemptDate ? new Date(data.lastAttemptDate._seconds * 1000) : undefined,
                             attemptsCount: data.attemptsCount || 0,
-                        });
-                        return; // Success, exit
+                        };
                     }
                 } catch (backendError) {
                     console.warn('Backend status fetch failed, falling back to Firestore directly', backendError);
@@ -57,47 +52,52 @@ export function useFieldAssessment(fieldId: string) {
 
                 if (docSnap.exists()) {
                     const data = docSnap.data();
-                    setStatus({
+                    return {
                         fieldId,
                         hasAttempted: true,
                         hasPassed: data.status === 'passed',
                         score: data.score,
                         lastAttemptDate: data.attemptDate?.toDate(),
                         attemptsCount: data.attemptsCount || 1,
-                    });
+                    };
                 } else {
-                    setStatus({
+                    return {
                         fieldId,
                         hasAttempted: false,
                         hasPassed: false,
                         attemptsCount: 0,
-                    });
+                    };
                 }
             } catch (error) {
                 console.error('Error fetching assessment status:', error);
-                setStatus({
+                return {
                     fieldId,
                     hasAttempted: false,
                     hasPassed: false,
                     attemptsCount: 0,
-                });
-            } finally {
-                setLoading(false);
+                };
             }
-        };
-
-        fetchStatus();
-    }, [user, fieldId]);
+        },
+        enabled: !!user && !!fieldId,
+        staleTime: Infinity, // Status doesn't change unless user submits
+        gcTime: 1000 * 60 * 60, // Keep in cache for 1 hour
+    });
 
     const updateLocalStatus = (result: any) => {
-        setStatus({
+        const newStatus = {
             fieldId,
             hasAttempted: true,
             hasPassed: result.status === 'passed',
             score: result.score,
             lastAttemptDate: new Date(),
             attemptsCount: result.attemptsCount || 1,
-        });
+        };
+
+        // Update React Query Cache immediately
+        queryClient.setQueryData(['assessment_status', user?.uid, fieldId], newStatus);
+
+        // Also invalidate other related queries if needed (e.g. dashboard metrics)
+        queryClient.invalidateQueries({ queryKey: ['dashboard_metrics'] });
     };
 
     const showCompletionToast = (result: any) => {
@@ -261,6 +261,5 @@ export function useFieldAssessment(fieldId: string) {
         loading,
         submitting,
         submitAssessment,
-        fetchQuestions,
     };
 }

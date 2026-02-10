@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useAuthContext } from '@/contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
+import { useQuery } from '@tanstack/react-query';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -62,37 +63,35 @@ export default function Onboarding() {
     });
     const [recommendations, setRecommendations] = useState<Recommendation[]>([]);
 
-    // Fetch existing profile data to pre-fill
-    useEffect(() => {
-        const fetchProfileData = async () => {
-            if (!user) return;
-            try {
-                const docRef = doc(db, 'users', user.uid);
-                const docSnap = await getDoc(docRef);
+    // Optimized: Fetch existing profile data using React Query
+    const { data: existingProfile, isLoading: profileLoading } = useQuery({
+        queryKey: ['onboarding_profile', user?.uid],
+        queryFn: async () => {
+            if (!user) return null;
+            const docRef = doc(db, 'users', user.uid);
+            const docSnap = await getDoc(docRef);
+            return docSnap.exists() ? (docSnap.data() as FormData & { onboardingCompleted?: boolean }) : null;
+        },
+        enabled: !!user,
+        staleTime: Infinity, // Profile data for onboarding form is static until changed here
+    });
 
-                if (docSnap.exists()) {
-                    const data = docSnap.data() as FormData & { onboardingCompleted?: boolean };
-                    // Only pre-fill if onboarding was previously completed
-                    if (data.onboardingCompleted) {
-                        setFormData({
-                            stream: data.stream || '',
-                            strongSubjects: data.strongSubjects || [],
-                            weakSubjects: data.weakSubjects || [],
-                            interests: data.interests || [],
-                            skillRatings: data.skillRatings || { logical: 3, communication: 3 },
-                            careerPreference: data.careerPreference || '',
-                            openToNewSkills: data.openToNewSkills ?? false
-                        });
-                    }
-                }
-            } catch (error) {
-                console.error("Error fetching profile", error);
-            } finally {
-                setInitialLoading(false);
-            }
-        };
-        fetchProfileData();
-    }, [user]);
+    useEffect(() => {
+        if (existingProfile && existingProfile.onboardingCompleted) {
+            setFormData({
+                stream: existingProfile.stream || '',
+                strongSubjects: existingProfile.strongSubjects || [],
+                weakSubjects: existingProfile.weakSubjects || [],
+                interests: existingProfile.interests || [],
+                skillRatings: existingProfile.skillRatings || { logical: 3, communication: 3 },
+                careerPreference: existingProfile.careerPreference || '',
+                openToNewSkills: existingProfile.openToNewSkills ?? false
+            });
+            setInitialLoading(false);
+        } else if (!profileLoading) {
+            setInitialLoading(false);
+        }
+    }, [existingProfile, profileLoading]);
 
     // Form Handlers
     const handleStreamChange = (val: string) => setFormData({ ...formData, stream: val });

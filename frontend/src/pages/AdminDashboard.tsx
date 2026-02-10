@@ -1,4 +1,5 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
+import { useQuery } from '@tanstack/react-query';
 import { AdminLayout } from '@/components/admin/AdminLayout';
 import { useAuthContext } from '@/contexts/AuthContext';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -27,43 +28,26 @@ const API_URL = `${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/
 
 export default function AdminDashboard() {
     const { user } = useAuthContext();
-    const [stats, setStats] = useState<Stats | null>(null);
-    const [loading, setLoading] = useState(true);
-    const [refreshing, setRefreshing] = useState(false);
-
-    useEffect(() => {
-        if (user) {
-            loadData();
-        }
-    }, [user]);
-
-    const loadData = async () => {
-        if (!user) return;
-
-        try {
+    // Optimized: Fetch admin stats using React Query
+    const { data: stats, isLoading: loading, refetch, isRefetching } = useQuery({
+        queryKey: ['admin_stats'],
+        queryFn: async () => {
+            if (!user) return null;
             const token = await user.getIdToken(true);
+            const API_URL = `${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/admin`;
             const statsRes = await fetch(`${API_URL}/stats`, {
                 headers: { 'Authorization': `Bearer ${token}` },
             });
-
-            if (statsRes.ok) {
-                setStats(await statsRes.json());
-            } else {
-                toast.error('Failed to load statistics');
-            }
-        } catch (error) {
-            console.error('Error loading admin data:', error);
-            toast.error('Failed to load data');
-        } finally {
-            setLoading(false);
-        }
-    };
+            if (!statsRes.ok) throw new Error('Failed to load stats');
+            return statsRes.json();
+        },
+        enabled: !!user,
+        staleTime: 1000 * 60 * 5, // 5 minutes
+    });
 
     const handleRefresh = async () => {
-        setRefreshing(true);
-        await loadData();
+        await refetch();
         toast.success('Data refreshed');
-        setRefreshing(false);
     };
 
     if (loading) {
@@ -81,8 +65,8 @@ export default function AdminDashboard() {
             <div className="space-y-6">
                 {/* Quick Actions */}
                 <div className="flex justify-end">
-                    <Button onClick={handleRefresh} disabled={refreshing} variant="outline">
-                        <RefreshCw className={`mr-2 h-4 w-4 ${refreshing ? 'animate-spin' : ''}`} />
+                    <Button onClick={handleRefresh} disabled={isRefetching} variant="outline">
+                        <RefreshCw className={`mr-2 h-4 w-4 ${isRefetching ? 'animate-spin' : ''}`} />
                         Refresh
                     </Button>
                 </div>

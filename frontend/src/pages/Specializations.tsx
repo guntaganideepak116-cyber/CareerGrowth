@@ -81,8 +81,18 @@ export default function Specializations() {
   if (loading) {
     return (
       <DashboardLayout>
-        <div className="flex items-center justify-center min-h-screen">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+          {[1, 2, 3, 4, 5, 6].map((i) => (
+            <div key={i} className="bg-card rounded-xl border p-6 h-64 animate-pulse">
+              <div className="h-4 bg-muted rounded w-1/4 mb-4"></div>
+              <div className="h-6 bg-muted rounded w-3/4 mb-4"></div>
+              <div className="h-20 bg-muted rounded mb-4"></div>
+              <div className="flex gap-2">
+                <div className="h-8 bg-muted rounded w-1/2"></div>
+                <div className="h-8 bg-muted rounded w-1/2"></div>
+              </div>
+            </div>
+          ))}
         </div>
       </DashboardLayout>
     );

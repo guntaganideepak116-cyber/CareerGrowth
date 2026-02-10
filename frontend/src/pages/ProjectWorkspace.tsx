@@ -23,13 +23,13 @@ import {
     Download,
     ExternalLink
 } from 'lucide-react';
+import { useQuery } from '@tanstack/react-query';
 import CodeEditor from '@/components/CodeEditor';
 
 export default function ProjectWorkspace() {
     const { projectId } = useParams();
     const navigate = useNavigate();
     const [project, setProject] = useState<FieldProject | null>(null);
-    const [loading, setLoading] = useState(true);
 
     // UI States
     const [showLocalEnv, setShowLocalEnv] = useState(false);
@@ -37,31 +37,35 @@ export default function ProjectWorkspace() {
     const [repoUrl, setRepoUrl] = useState('');
     const [isSubmitting, setIsSubmitting] = useState(false);
 
-    useEffect(() => {
-        const fetchProject = async () => {
-            try {
-                const apiBase = import.meta.env.VITE_API_URL || 'http://localhost:5000';
-                const res = await fetch(`${apiBase}/api/projects?id=${projectId}`);
-                const data = await res.json();
-
-                if (data.success && data.data) {
-                    setProject(data.data);
-                } else {
-                    toast.error('Project not found');
-                    navigate('/projects');
-                }
-            } catch (error) {
-                console.error('Error:', error);
-                toast.error('Failed to load project details');
-            } finally {
-                setLoading(false);
+    // Optimized: Fetch project details using React Query
+    const { data: projectData, isLoading: loading } = useQuery({
+        queryKey: ['project', projectId],
+        queryFn: async () => {
+            const apiBase = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+            const res = await fetch(`${apiBase}/api/projects?id=${projectId}`);
+            const data = await res.json();
+            if (data.success && data.data) {
+                return data.data as FieldProject;
             }
-        };
+            throw new Error('Project not found');
+        },
+        enabled: !!projectId,
+        staleTime: 1000 * 60 * 30, // 30 minutes
+        retry: 1,
+    });
 
-        if (projectId) {
-            fetchProject();
+    useEffect(() => {
+        if (projectData) {
+            setProject(projectData);
         }
-    }, [projectId, navigate]);
+    }, [projectData]);
+
+    useEffect(() => {
+        if (!loading && !projectData && projectId) {
+            toast.error('Project not found');
+            navigate('/projects');
+        }
+    }, [loading, projectData, projectId, navigate]);
 
     const getRecommendedIDEs = () => {
         if (!project) return [];

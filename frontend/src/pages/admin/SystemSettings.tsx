@@ -37,6 +37,8 @@ interface SystemConfig {
     apiRateLimit: number;
 }
 
+import { useQuery } from '@tanstack/react-query';
+
 export default function SystemSettings() {
     const [config, setConfig] = useState<SystemConfig>({
         maintenanceMode: false,
@@ -48,32 +50,24 @@ export default function SystemSettings() {
         systemMessage: '',
         apiRateLimit: 100
     });
-
-    const [loading, setLoading] = useState(true);
     const [saving, setSaving] = useState(false);
 
-    // Load settings from Firestore
-    useEffect(() => {
-        loadSettings();
-    }, []);
-
-    const loadSettings = async () => {
-        setLoading(true);
-        try {
+    // Load settings from Firestore using React Query
+    const { data: configData, isLoading: loading, refetch } = useQuery({
+        queryKey: ['system_settings'],
+        queryFn: async () => {
             const settingsRef = doc(db, 'system_settings', 'config');
             const snapshot = await getDoc(settingsRef);
+            return snapshot.exists() ? (snapshot.data() as SystemConfig) : null;
+        },
+        staleTime: Infinity, // Settings change rarely
+    });
 
-            if (snapshot.exists()) {
-                setConfig({ ...config, ...snapshot.data() });
-                toast.success('Settings loaded');
-            }
-        } catch (error) {
-            console.error('Error loading settings:', error);
-            toast.error('Failed to load settings');
-        } finally {
-            setLoading(false);
+    useEffect(() => {
+        if (configData) {
+            setConfig(prev => ({ ...prev, ...configData }));
         }
-    };
+    }, [configData]);
 
     // Save settings to Firestore
     const saveSettings = async () => {
@@ -110,7 +104,7 @@ export default function SystemSettings() {
                         </p>
                     </div>
                     <div className="flex gap-2">
-                        <Button variant="outline" onClick={loadSettings} disabled={loading}>
+                        <Button variant="outline" onClick={() => refetch()} disabled={loading}>
                             <RefreshCw className={`h-4 w-4 mr-2 ${loading ? 'animate-spin' : ''}`} />
                             Refresh
                         </Button>

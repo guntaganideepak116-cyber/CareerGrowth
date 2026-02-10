@@ -20,7 +20,7 @@ export default function Subscription() {
     const [billingCycle, setBillingCycle] = useState<'monthly' | 'yearly'>('monthly');
     const [showComingSoonModal, setShowComingSoonModal] = useState(false);
 
-    const currentPlan = profile?.userPlan || 'free';
+    const currentPlan = (profile?.userPlan || 'free').toLowerCase();
 
     const handleUpgrade = (planName: string) => {
         const planNameLower = planName.toLowerCase();

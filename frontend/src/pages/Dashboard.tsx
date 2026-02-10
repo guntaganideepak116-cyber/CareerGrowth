@@ -1,8 +1,8 @@
-import { useEffect, useState } from 'react';
 import { DashboardLayout } from '@/components/dashboard/DashboardLayout';
 import { MetricCard } from '@/components/dashboard/MetricCard';
 import { useAuthContext } from '@/contexts/AuthContext';
 import { useNotifications } from '@/hooks/useNotifications';
+import { useDashboardMetrics } from '@/hooks/useDashboardMetrics';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import {
@@ -19,17 +19,8 @@ import {
 } from 'lucide-react';
 import { Skeleton } from '@/components/ui/skeleton';
 
-interface DashboardMetrics {
-  readinessScore: number;
-  marketAlignment: number;
-  aiConfidence: number;
-  skillsCompleted: number;
-  totalSkills: number;
-  hasActivity: boolean;
-  fieldId: string | null;
-}
-
-const DASHBOARD_CACHE_KEY = 'dashboard_metrics_cache';
+// Constants moved to hook or unused
+// const DASHBOARD_CACHE_KEY = 'dashboard_metrics_cache';
 
 const MetricSkeleton = () => (
   <div className="rounded-xl border border-border p-6 bg-card space-y-4 animate-pulse">
@@ -57,50 +48,8 @@ export default function Dashboard() {
   const { user, profile, loading: authLoading } = useAuthContext();
   const { notifications, unreadCount, loading: notificationsLoading } = useNotifications();
 
-  // Optimized State: Initialize with cached data for instant paint
-  const [metrics, setMetrics] = useState<DashboardMetrics | null>(() => {
-    const cached = localStorage.getItem(DASHBOARD_CACHE_KEY);
-    return cached ? JSON.parse(cached) : null;
-  });
-  const [loadingMetrics, setLoadingMetrics] = useState(!metrics);
-  const [isRefreshing, setIsRefreshing] = useState(false);
-
-  useEffect(() => {
-    const fetchAnalytics = async () => {
-      if (!user) return;
-
-      // If we have cached data, fetch silently in background
-      if (metrics) setIsRefreshing(true);
-      else setLoadingMetrics(true);
-
-      try {
-        const token = await user.getIdToken();
-        const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
-
-        const response = await fetch(`${API_URL}/api/analytics/dashboard-analytics`, {
-          headers: {
-            'Authorization': `Bearer ${token}`
-          }
-        });
-
-        if (response.ok) {
-          const data = await response.json();
-          setMetrics(data);
-          // Update cache
-          localStorage.setItem(DASHBOARD_CACHE_KEY, JSON.stringify(data));
-        }
-      } catch (error) {
-        console.error('Error fetching dashboard analytics:', error);
-      } finally {
-        setLoadingMetrics(false);
-        setIsRefreshing(false);
-      }
-    };
-
-    // Phase 1: Small delay to let initial layout render, then fetch fresh data
-    const timer = setTimeout(fetchAnalytics, metrics ? 1000 : 100);
-    return () => clearTimeout(timer);
-  }, [user]);
+  // Optimized: Instant load from React Query cache / LocalStorage
+  const { data: metrics, isLoading: loadingMetrics, isFetching: isRefreshing } = useDashboardMetrics();
 
   // Phase 1 Redirect: Only block if auth is still loading AND we have no cached profile
   // Dashboard layout should render immediately if profile exists
@@ -114,7 +63,7 @@ export default function Dashboard() {
     );
   }
 
-  const careerPhaseLabels = {
+  const careerPhaseLabels: Record<string, string> = {
     student: 'Student Phase',
     fresher: 'Fresher Phase',
     professional: 'Professional Phase',

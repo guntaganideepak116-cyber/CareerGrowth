@@ -1,29 +1,5 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useQuery } from '@tanstack/react-query';
 import { generateContent } from '@/services/apiService';
-
-interface CacheEntry<T> {
-  data: T;
-  timestamp: number;
-}
-
-const cache = new Map<string, CacheEntry<unknown>>();
-const CACHE_TTL = 5 * 60 * 1000; // 5 minutes
-
-function getCacheKey(type: string, ...params: (string | undefined)[]): string {
-  return [type, ...params.filter(Boolean)].join(':');
-}
-
-function getFromCache<T>(key: string): T | null {
-  const entry = cache.get(key) as CacheEntry<T> | undefined;
-  if (entry && Date.now() - entry.timestamp < CACHE_TTL) {
-    return entry.data;
-  }
-  return null;
-}
-
-function setCache<T>(key: string, data: T): void {
-  cache.set(key, { data, timestamp: Date.now() });
-}
 
 interface ContentRequest {
   type: 'fields' | 'specializations' | 'career-paths' | 'roadmap' | 'certifications' | 'projects';
@@ -53,40 +29,13 @@ export interface DynamicField {
 
 // Hook for fetching fields
 export function useFields() {
-  const [fields, setFields] = useState<DynamicField[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const { data: fields = [], isLoading: loading, error, refetch } = useQuery({
+    queryKey: ['dynamic_fields'],
+    queryFn: () => fetchDynamicContent<DynamicField[]>({ type: 'fields' }),
+    staleTime: 1000 * 60 * 30, // 30 mins
+  });
 
-  const fetchFields = useCallback(async () => {
-    const cacheKey = getCacheKey('fields');
-    const cached = getFromCache<DynamicField[]>(cacheKey);
-
-    if (cached) {
-      setFields(cached);
-      setLoading(false);
-      return;
-    }
-
-    setLoading(true);
-    setError(null);
-
-    try {
-      const data = await fetchDynamicContent<DynamicField[]>({ type: 'fields' });
-      setFields(data);
-      setCache(cacheKey, data);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to fetch fields');
-      console.error('Error fetching fields:', err);
-    } finally {
-      setLoading(false);
-    }
-  }, []);
-
-  useEffect(() => {
-    fetchFields();
-  }, [fetchFields]);
-
-  return { fields, loading, error, refetch: fetchFields };
+  return { fields, loading, error: error ? (error as Error).message : null, refetch };
 }
 
 // Specialization type
@@ -103,48 +52,17 @@ export interface DynamicSpecialization {
 
 // Hook for fetching specializations
 export function useSpecializations(fieldId: string | null) {
-  const [specializations, setSpecializations] = useState<DynamicSpecialization[]>([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const { data: specializations = [], isLoading: loading, error, refetch } = useQuery({
+    queryKey: ['dynamic_specializations', fieldId],
+    queryFn: () => fetchDynamicContent<DynamicSpecialization[]>({
+      type: 'specializations',
+      fieldId: fieldId!,
+    }),
+    enabled: !!fieldId,
+    staleTime: 1000 * 60 * 30,
+  });
 
-  const fetchSpecializations = useCallback(async () => {
-    if (!fieldId) {
-      setSpecializations([]);
-      return;
-    }
-
-    const cacheKey = getCacheKey('specializations', fieldId);
-    const cached = getFromCache<DynamicSpecialization[]>(cacheKey);
-
-    if (cached) {
-      setSpecializations(cached);
-      setLoading(false);
-      return;
-    }
-
-    setLoading(true);
-    setError(null);
-
-    try {
-      const data = await fetchDynamicContent<DynamicSpecialization[]>({
-        type: 'specializations',
-        fieldId,
-      });
-      setSpecializations(data);
-      setCache(cacheKey, data);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to fetch specializations');
-      console.error('Error fetching specializations:', err);
-    } finally {
-      setLoading(false);
-    }
-  }, [fieldId]);
-
-  useEffect(() => {
-    fetchSpecializations();
-  }, [fetchSpecializations]);
-
-  return { specializations, loading, error, refetch: fetchSpecializations };
+  return { specializations, loading, error: error ? (error as Error).message : null, refetch };
 }
 
 // Career path type
@@ -162,49 +80,18 @@ export interface DynamicCareerPath {
 
 // Hook for fetching career paths
 export function useCareerPaths(fieldId: string | null, specializationId: string | null) {
-  const [careerPaths, setCareerPaths] = useState<DynamicCareerPath[]>([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const { data: careerPaths = [], isLoading: loading, error, refetch } = useQuery({
+    queryKey: ['dynamic_career_paths', fieldId, specializationId],
+    queryFn: () => fetchDynamicContent<DynamicCareerPath[]>({
+      type: 'career-paths',
+      fieldId: fieldId!,
+      specializationId: specializationId!,
+    }),
+    enabled: !!fieldId && !!specializationId,
+    staleTime: 1000 * 60 * 30,
+  });
 
-  const fetchCareerPaths = useCallback(async () => {
-    if (!fieldId || !specializationId) {
-      setCareerPaths([]);
-      return;
-    }
-
-    const cacheKey = getCacheKey('career-paths', fieldId, specializationId);
-    const cached = getFromCache<DynamicCareerPath[]>(cacheKey);
-
-    if (cached) {
-      setCareerPaths(cached);
-      setLoading(false);
-      return;
-    }
-
-    setLoading(true);
-    setError(null);
-
-    try {
-      const data = await fetchDynamicContent<DynamicCareerPath[]>({
-        type: 'career-paths',
-        fieldId,
-        specializationId,
-      });
-      setCareerPaths(data);
-      setCache(cacheKey, data);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to fetch career paths');
-      console.error('Error fetching career paths:', err);
-    } finally {
-      setLoading(false);
-    }
-  }, [fieldId, specializationId]);
-
-  useEffect(() => {
-    fetchCareerPaths();
-  }, [fetchCareerPaths]);
-
-  return { careerPaths, loading, error, refetch: fetchCareerPaths };
+  return { careerPaths, loading, error: error ? (error as Error).message : null, refetch };
 }
 
 // Roadmap phase type
@@ -226,50 +113,19 @@ export function useRoadmap(
   specializationId: string | null,
   userProfile?: { semester?: number; careerGoal?: string }
 ) {
-  const [phases, setPhases] = useState<DynamicRoadmapPhase[]>([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const { data: phases = [], isLoading: loading, error, refetch } = useQuery({
+    queryKey: ['dynamic_roadmap', fieldId, specializationId, userProfile?.semester, userProfile?.careerGoal],
+    queryFn: () => fetchDynamicContent<DynamicRoadmapPhase[]>({
+      type: 'roadmap',
+      fieldId: fieldId!,
+      specializationId: specializationId!,
+      userProfile,
+    }),
+    enabled: !!fieldId && !!specializationId,
+    staleTime: 1000 * 60 * 30,
+  });
 
-  const fetchRoadmap = useCallback(async () => {
-    if (!fieldId || !specializationId) {
-      setPhases([]);
-      return;
-    }
-
-    const cacheKey = getCacheKey('roadmap', fieldId, specializationId, String(userProfile?.semester));
-    const cached = getFromCache<DynamicRoadmapPhase[]>(cacheKey);
-
-    if (cached) {
-      setPhases(cached);
-      setLoading(false);
-      return;
-    }
-
-    setLoading(true);
-    setError(null);
-
-    try {
-      const data = await fetchDynamicContent<DynamicRoadmapPhase[]>({
-        type: 'roadmap',
-        fieldId,
-        specializationId,
-        userProfile,
-      });
-      setPhases(data);
-      setCache(cacheKey, data);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to fetch roadmap');
-      console.error('Error fetching roadmap:', err);
-    } finally {
-      setLoading(false);
-    }
-  }, [fieldId, specializationId, userProfile?.semester, userProfile?.careerGoal]);
-
-  useEffect(() => {
-    fetchRoadmap();
-  }, [fetchRoadmap]);
-
-  return { phases, loading, error, refetch: fetchRoadmap };
+  return { phases, loading, error: error ? (error as Error).message : null, refetch };
 }
 
 // Certification type
@@ -294,49 +150,18 @@ export interface DynamicCertification {
 
 // Hook for fetching certifications
 export function useCertifications(fieldId: string | null, specializationId: string | null) {
-  const [certifications, setCertifications] = useState<DynamicCertification[]>([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const { data: certifications = [], isLoading: loading, error, refetch } = useQuery({
+    queryKey: ['dynamic_certifications', fieldId, specializationId],
+    queryFn: () => fetchDynamicContent<DynamicCertification[]>({
+      type: 'certifications',
+      fieldId: fieldId!,
+      specializationId: specializationId!,
+    }),
+    enabled: !!fieldId && !!specializationId,
+    staleTime: 1000 * 60 * 30,
+  });
 
-  const fetchCertifications = useCallback(async () => {
-    if (!fieldId || !specializationId) {
-      setCertifications([]);
-      return;
-    }
-
-    const cacheKey = getCacheKey('certifications', fieldId, specializationId);
-    const cached = getFromCache<DynamicCertification[]>(cacheKey);
-
-    if (cached) {
-      setCertifications(cached);
-      setLoading(false);
-      return;
-    }
-
-    setLoading(true);
-    setError(null);
-
-    try {
-      const data = await fetchDynamicContent<DynamicCertification[]>({
-        type: 'certifications',
-        fieldId,
-        specializationId,
-      });
-      setCertifications(data);
-      setCache(cacheKey, data);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to fetch certifications');
-      console.error('Error fetching certifications:', err);
-    } finally {
-      setLoading(false);
-    }
-  }, [fieldId, specializationId]);
-
-  useEffect(() => {
-    fetchCertifications();
-  }, [fetchCertifications]);
-
-  return { certifications, loading, error, refetch: fetchCertifications };
+  return { certifications, loading, error: error ? (error as Error).message : null, refetch };
 }
 
 // Project type
@@ -359,53 +184,25 @@ export function useProjects(
   specializationId: string | null,
   userProfile?: { skills?: string[]; careerGoal?: string }
 ) {
-  const [projects, setProjects] = useState<DynamicProject[]>([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const { data: projects = [], isLoading: loading, error, refetch } = useQuery({
+    queryKey: ['dynamic_projects', fieldId, specializationId, userProfile?.skills, userProfile?.careerGoal],
+    queryFn: () => fetchDynamicContent<DynamicProject[]>({
+      type: 'projects',
+      fieldId: fieldId!,
+      specializationId: specializationId!,
+      userProfile,
+    }),
+    enabled: !!fieldId && !!specializationId,
+    staleTime: 1000 * 60 * 30,
+  });
 
-  const fetchProjects = useCallback(async () => {
-    if (!fieldId || !specializationId) {
-      setProjects([]);
-      return;
-    }
-
-    const cacheKey = getCacheKey('projects', fieldId, specializationId);
-    const cached = getFromCache<DynamicProject[]>(cacheKey);
-
-    if (cached) {
-      setProjects(cached);
-      setLoading(false);
-      return;
-    }
-
-    setLoading(true);
-    setError(null);
-
-    try {
-      const data = await fetchDynamicContent<DynamicProject[]>({
-        type: 'projects',
-        fieldId,
-        specializationId,
-        userProfile,
-      });
-      setProjects(data);
-      setCache(cacheKey, data);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to fetch projects');
-      console.error('Error fetching projects:', err);
-    } finally {
-      setLoading(false);
-    }
-  }, [fieldId, specializationId, userProfile?.skills, userProfile?.careerGoal]);
-
-  useEffect(() => {
-    fetchProjects();
-  }, [fetchProjects]);
-
-  return { projects, loading, error, refetch: fetchProjects };
+  return { projects, loading, error: error ? (error as Error).message : null, refetch };
 }
 
 // Utility to clear cache (useful when user wants fresh data)
 export function clearContentCache() {
-  cache.clear();
+  // QueryClient instance should be imported or passed if we need to clear specific queries
+  // But for simple "refresh" usage, React Query's refetch() from hooks is preferred.
+  // We can keep this empty or remove it. Keeping for backward compatibility but making it no-op or log warning.
+  // Ideally, use queryClient.invalidateQueries() where needed.
 }

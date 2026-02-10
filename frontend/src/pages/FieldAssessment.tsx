@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
 import { db } from '@/lib/firebase';
-import { collection, query, where, onSnapshot } from 'firebase/firestore';
+import { collection, query, where, getDocs } from 'firebase/firestore';
 import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useQuery } from '@tanstack/react-query';
 import { DashboardLayout } from '@/components/dashboard/DashboardLayout';
 import { useAuthContext } from '@/contexts/AuthContext';
 import { FieldIntroPanel } from '@/components/field-assessment/FieldIntroPanel';
@@ -30,7 +31,7 @@ export default function FieldAssessment() {
     const [result, setResult] = useState<AssessmentResult | null>(null);
     const [loadingQuestions, setLoadingQuestions] = useState(false);
 
-    const { status, loading: statusLoading, submitAssessment, fetchQuestions } = useFieldAssessment(fieldId);
+    const { status, loading: statusLoading, submitAssessment } = useFieldAssessment(fieldId);
 
     const field = getFieldById(fieldId);
     const fieldContent = fieldIntroductions[fieldId];
@@ -48,31 +49,43 @@ export default function FieldAssessment() {
         }
     }, [authLoading, user, fieldId, navigate]);
 
-    // Real-time questions listener
-    useEffect(() => {
-        if (!fieldId) return;
+    // Optimized: Fetch questions using React Query
+    const { data: fetchedQuestions = [] } = useQuery({
+        queryKey: ['assessment_questions', fieldId],
+        queryFn: async () => {
+            if (!fieldId) return [];
+            const apiBase = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+            try {
+                // Try backend first
+                const res = await fetch(`${apiBase}/api/assessment/questions/${fieldId}`);
+                if (res.ok) {
+                    const data = await res.json();
+                    return data.questions || [];
+                }
+            } catch (err) {
+                console.warn('Backend questions fetch failed, falling back to Firestore');
+            }
 
-        console.log(`[FieldAssessment] Listening for questions for field: ${fieldId}`);
-        const q = query(
-            collection(db, 'assessment_questions'),
-            where('fieldId', '==', fieldId.toLowerCase().trim())
-        );
-
-        const unsubscribe = onSnapshot(q, (snapshot) => {
-            const fetchedQuestions = snapshot.docs.map(doc => ({
+            // Fallback to Firestore getDocs (not listener)
+            const q = query(
+                collection(db, 'assessment_questions'),
+                where('fieldId', '==', fieldId.toLowerCase().trim())
+            );
+            const snapshot = await getDocs(q);
+            return snapshot.docs.map(doc => ({
                 id: doc.id,
                 ...doc.data()
             })) as AssessmentQuestion[];
+        },
+        enabled: !!fieldId,
+        staleTime: Infinity, // Questions don't change often
+    });
 
-            console.log(`[FieldAssessment] Loaded ${fetchedQuestions.length} questions`);
+    useEffect(() => {
+        if (fetchedQuestions.length > 0) {
             setQuestions(fetchedQuestions);
-        }, (error) => {
-            console.error('Error fetching questions:', error);
-            // Don't show toast here to avoid spamming if permission denied initially
-        });
-
-        return () => unsubscribe();
-    }, [fieldId]);
+        }
+    }, [fetchedQuestions]);
 
     // Start quiz
     const handleStartAssessment = async () => {
