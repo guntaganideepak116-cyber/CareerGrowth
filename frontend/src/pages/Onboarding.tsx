@@ -71,16 +71,19 @@ export default function Onboarding() {
                 const docSnap = await getDoc(docRef);
 
                 if (docSnap.exists()) {
-                    const data = docSnap.data() as FormData;
-                    setFormData({
-                        stream: data.stream || '',
-                        strongSubjects: data.strongSubjects || [],
-                        weakSubjects: data.weakSubjects || [],
-                        interests: data.interests || [],
-                        skillRatings: data.skillRatings || { logical: 3, communication: 3 },
-                        careerPreference: data.careerPreference || '',
-                        openToNewSkills: data.openToNewSkills ?? true
-                    });
+                    const data = docSnap.data() as FormData & { onboardingCompleted?: boolean };
+                    // Only pre-fill if onboarding was previously completed
+                    if (data.onboardingCompleted) {
+                        setFormData({
+                            stream: data.stream || '',
+                            strongSubjects: data.strongSubjects || [],
+                            weakSubjects: data.weakSubjects || [],
+                            interests: data.interests || [],
+                            skillRatings: data.skillRatings || { logical: 3, communication: 3 },
+                            careerPreference: data.careerPreference || '',
+                            openToNewSkills: data.openToNewSkills ?? true
+                        });
+                    }
                 }
             } catch (error) {
                 console.error("Error fetching profile", error);
@@ -220,28 +223,28 @@ export default function Onboarding() {
             <div className="max-w-5xl w-full z-10">
                 {step === 1 ? (
                     <Card className="border-0 shadow-2xl bg-white/80 backdrop-blur-xl animate-in fade-in slide-in-from-bottom-8 duration-700 ring-1 ring-white/50">
-                        <CardHeader className="text-center pb-8 border-b border-gray-100 bg-gradient-to-b from-white/50 to-transparent">
-                            <div className="mx-auto bg-gradient-to-tr from-violet-500 to-fuchsia-500 p-4 rounded-2xl shadow-lg shadow-violet-200 w-fit mb-6 transform hover:scale-110 transition-transform duration-300">
-                                <Sparkles className="w-8 h-8 text-white animate-pulse" />
+                        <CardHeader className="text-center pb-4 md:pb-8 border-b border-gray-100 bg-gradient-to-b from-white/50 to-transparent">
+                            <div className="mx-auto bg-gradient-to-tr from-violet-500 to-fuchsia-500 p-3 md:p-4 rounded-2xl shadow-lg shadow-violet-200 w-fit mb-4 md:mb-6 transform hover:scale-110 transition-transform duration-300">
+                                <Sparkles className="w-6 h-6 md:w-8 md:h-8 text-white animate-pulse" />
                             </div>
-                            <CardTitle className="text-4xl md:text-5xl font-extrabold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-violet-600 via-fuchsia-600 to-indigo-600">
+                            <CardTitle className="text-2xl md:text-4xl lg:text-5xl font-extrabold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-violet-600 via-fuchsia-600 to-indigo-600 leading-tight">
                                 Career Profile
                             </CardTitle>
-                            <CardDescription className="text-lg mt-3 text-gray-600 max-w-2xl mx-auto font-medium">
+                            <CardDescription className="text-sm md:text-lg mt-2 md:mt-3 text-gray-600 max-w-2xl mx-auto font-medium px-2">
                                 Share your academic journey and interests to unlock specific, AI-driven career paths.
                             </CardDescription>
                         </CardHeader>
-                        <CardContent className="space-y-12 p-8 md:p-12">
+                        <CardContent className="space-y-8 md:space-y-12 p-4 md:p-12">
 
                             {/* Section 1: Stream */}
                             <div className="space-y-4 animate-in slide-in-from-left-4 duration-500 delay-100 group">
                                 <div className="flex items-center gap-3">
                                     <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-indigo-100 text-indigo-600 font-bold border border-indigo-200 shadow-sm group-hover:scale-110 transition-transform">01</div>
-                                    <Label className="text-xl font-bold text-gray-800">Educational Background</Label>
+                                    <Label className="text-base md:text-xl font-bold text-gray-800">Educational Background</Label>
                                 </div>
                                 <div className="p-1 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded-lg opacity-80 transition-opacity hover:opacity-100">
                                     <Select onValueChange={handleStreamChange} value={formData.stream}>
-                                        <SelectTrigger className="w-full bg-white border-0 h-12 text-lg font-medium focus:ring-0">
+                                        <SelectTrigger className="w-full bg-white border-0 h-10 md:h-12 text-sm md:text-lg font-medium focus:ring-0">
                                             <SelectValue placeholder="Select your current stream" />
                                         </SelectTrigger>
                                         <SelectContent>
@@ -256,7 +259,7 @@ export default function Onboarding() {
                                 <div className="space-y-5">
                                     <div className="flex items-center gap-3 group">
                                         <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-emerald-100 text-emerald-600 font-bold border border-emerald-200 shadow-sm group-hover:scale-110 transition-transform">02</div>
-                                        <Label className="text-xl font-bold text-gray-800">Strong Subjects</Label>
+                                        <Label className="text-base md:text-xl font-bold text-gray-800">Strong Subjects</Label>
                                     </div>
                                     <div className="flex flex-wrap gap-3">
                                         {SUBJECTS.map(subj => (
@@ -278,7 +281,7 @@ export default function Onboarding() {
                                 <div className="space-y-5">
                                     <div className="flex items-center gap-3 group">
                                         <div className="flex items-center justify-center w-auto px-2 h-8 rounded-lg bg-rose-100 text-rose-600 font-bold border border-rose-200 shadow-sm text-sm group-hover:scale-110 transition-transform">Optional</div>
-                                        <Label className="text-xl font-bold text-gray-800">Weak Subjects</Label>
+                                        <Label className="text-base md:text-xl font-bold text-gray-800">Weak Subjects</Label>
                                     </div>
                                     <div className="flex flex-wrap gap-3">
                                         {SUBJECTS.map(subj => (
@@ -303,7 +306,7 @@ export default function Onboarding() {
                             <div className="space-y-5 animate-in slide-in-from-left-4 duration-500 delay-300">
                                 <div className="flex items-center gap-3 group">
                                     <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-blue-100 text-blue-600 font-bold border border-blue-200 shadow-sm group-hover:scale-110 transition-transform">03</div>
-                                    <Label className="text-xl font-bold text-gray-800">Areas of Interest</Label>
+                                    <Label className="text-base md:text-xl font-bold text-gray-800">Areas of Interest</Label>
                                 </div>
                                 <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
                                     {INTERESTS.map(interest => (
@@ -342,7 +345,7 @@ export default function Onboarding() {
                             <div className="space-y-8 bg-gradient-to-br from-slate-50 to-indigo-50/50 p-8 rounded-3xl border border-slate-100 animate-in slide-in-from-left-4 duration-500 delay-400 shadow-inner">
                                 <div className="flex items-center gap-3 group">
                                     <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-amber-100 text-amber-600 font-bold border border-amber-200 shadow-sm group-hover:scale-110 transition-transform">04</div>
-                                    <Label className="text-xl font-bold text-gray-800">Self Assessment</Label>
+                                    <Label className="text-base md:text-xl font-bold text-gray-800">Self Assessment</Label>
                                 </div>
                                 <div className="grid md:grid-cols-2 gap-12">
                                     {['logical', 'communication'].map((skill) => (
@@ -374,11 +377,11 @@ export default function Onboarding() {
                             <div className="space-y-4 animate-in slide-in-from-left-4 duration-500 delay-500 group">
                                 <div className="flex items-center gap-3">
                                     <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-cyan-100 text-cyan-600 font-bold border border-cyan-200 shadow-sm group-hover:scale-110 transition-transform">05</div>
-                                    <Label className="text-xl font-bold text-gray-800">Career Preference</Label>
+                                    <Label className="text-base md:text-xl font-bold text-gray-800">Career Preference</Label>
                                 </div>
                                 <div className="p-1 bg-gradient-to-r from-cyan-500 via-blue-500 to-indigo-500 rounded-lg opacity-80 transition-opacity hover:opacity-100">
                                     <Select onValueChange={(val) => setFormData({ ...formData, careerPreference: val })} value={formData.careerPreference}>
-                                        <SelectTrigger className="w-full bg-white border-0 h-12 text-lg font-medium shadow-sm">
+                                        <SelectTrigger className="w-full bg-white border-0 h-10 md:h-12 text-sm md:text-lg font-medium shadow-sm">
                                             <SelectValue placeholder="Select your preferred path" />
                                         </SelectTrigger>
                                         <SelectContent>
@@ -401,14 +404,14 @@ export default function Onboarding() {
                                 <Label htmlFor="openToSkills" className="cursor-pointer text-base font-medium text-gray-700">I am open to learning new skills outside my stream.</Label>
                             </div>
 
-                            <div className="flex gap-6 pt-8 animate-in slide-in-from-bottom-4 duration-500 delay-700">
-                                <Button variant="outline" size="xl" className="flex-1 h-16 text-lg font-semibold border-2 border-gray-200 hover:border-gray-300 hover:bg-gray-50 text-gray-600" onClick={handleSkip}>
+                            <div className="flex flex-col sm:flex-row gap-3 md:gap-6 pt-6 md:pt-8 animate-in slide-in-from-bottom-4 duration-500 delay-700">
+                                <Button variant="outline" size="lg" className="w-full sm:flex-1 h-12 md:h-16 text-base md:text-lg font-semibold border-2 border-gray-200 hover:border-gray-300 hover:bg-gray-50 text-gray-600 order-2 sm:order-1" onClick={handleSkip}>
                                     Skip for Now
                                 </Button>
-                                <Button size="xl" className="flex-1 h-16 text-xl font-bold bg-gradient-to-r from-violet-600 to-indigo-600 hover:from-violet-700 hover:to-indigo-700 shadow-xl shadow-indigo-200 hover:shadow-indigo-300 transition-all transform hover:-translate-y-1 group" onClick={generateRecommendations} disabled={loading}>
-                                    {loading ? <><Loader2 className="mr-2 h-6 w-6 animate-spin" /> Analyzing...</> :
-                                        <span className="flex items-center gap-2">
-                                            <Wand2 className="w-6 h-6 group-hover:rotate-12 transition-transform" />
+                                <Button size="lg" className="w-full sm:flex-1 h-12 md:h-16 text-base md:text-xl font-bold bg-gradient-to-r from-violet-600 to-indigo-600 hover:from-violet-700 hover:to-indigo-700 shadow-xl shadow-indigo-200 hover:shadow-indigo-300 transition-all transform hover:-translate-y-1 group order-1 sm:order-2" onClick={generateRecommendations} disabled={loading}>
+                                    {loading ? <><Loader2 className="mr-2 h-5 w-5 md:h-6 md:w-6 animate-spin" /> Analyzing...</> :
+                                        <span className="flex items-center gap-2 justify-center w-full">
+                                            <Wand2 className="w-5 h-5 md:w-6 md:h-6 group-hover:rotate-12 transition-transform" />
                                             Generate Recommendations
                                         </span>}
                                 </Button>
@@ -508,7 +511,7 @@ export default function Onboarding() {
                     </div>
                 )}
             </div>
-        </div>
+        </div >
     );
 }
 

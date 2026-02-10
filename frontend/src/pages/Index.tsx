@@ -57,21 +57,22 @@ export default function Index() {
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-24">
           {/* Nav */}
-          <nav className="flex items-center justify-between mb-16 animate-fade-in">
-            <Link to="/" className="flex items-center gap-3">
-              <div className="p-2.5 bg-primary rounded-xl">
-                <Brain className="w-6 h-6 text-primary-foreground" />
+          {/* Nav */}
+          <nav className="flex items-center justify-between mb-8 md:mb-16 animate-fade-in gap-2">
+            <Link to="/" className="flex items-center gap-2 md:gap-3 shrink-0">
+              <div className="p-2 md:p-2.5 bg-primary rounded-xl">
+                <Brain className="w-5 h-5 md:w-6 md:h-6 text-primary-foreground" />
               </div>
-              <span className="text-xl font-bold text-foreground">CareerGrowth</span>
+              <span className="text-lg md:text-xl font-bold text-foreground hidden min-[400px]:block">CareerGrowth</span>
             </Link>
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-2 md:gap-4 shrink-0">
               <Link to="/login">
-                <Button variant="ghost">Sign In</Button>
+                <Button variant="ghost" size="sm" className="text-sm md:text-base px-2 md:px-4">Sign In</Button>
               </Link>
               <Link to="/signup">
-                <Button variant="hero" className="gap-2">
+                <Button variant="hero" size="sm" className="gap-1 md:gap-2 text-sm md:text-base px-3 md:px-6 h-9 md:h-11">
                   Get Started
-                  <ArrowRight className="w-4 h-4" />
+                  <ArrowRight className="w-3 h-3 md:w-4 md:h-4" />
                 </Button>
               </Link>
             </div>
