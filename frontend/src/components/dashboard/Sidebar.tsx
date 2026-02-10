@@ -125,7 +125,7 @@ export function Sidebar() {
           'lg:translate-x-0',
           collapsed ? 'lg:w-20' : 'lg:w-64',
           // Mobile behavior
-          'w-64',
+          'w-64 pt-16 lg:pt-0',
           mobileOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'
         )}
       >

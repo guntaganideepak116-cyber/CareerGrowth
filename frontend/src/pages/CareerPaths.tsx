@@ -230,7 +230,7 @@ export default function CareerPaths() {
               </div>
 
               {/* Action */}
-              <div className="flex items-center justify-between mt-6 pt-4 border-t border-border">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between mt-6 pt-4 border-t border-border gap-4 sm:gap-0">
                 <div className="flex items-center gap-2 text-sm text-muted-foreground">
                   <CheckCircle2 className="w-4 h-4 text-primary" />
                   Recommended for your {fieldName} journey
@@ -238,7 +238,7 @@ export default function CareerPaths() {
                 <Button
                   onClick={() => handleSelectPath(path)}
                   disabled={selectedPath === path.id}
-                  className="group"
+                  className="group w-full sm:w-auto"
                 >
                   {selectedPath === path.id ? (
                     <>
