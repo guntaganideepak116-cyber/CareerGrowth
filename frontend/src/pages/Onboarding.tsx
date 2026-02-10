@@ -58,7 +58,7 @@ export default function Onboarding() {
         interests: [],
         skillRatings: { logical: 3, communication: 3 },
         careerPreference: '',
-        openToNewSkills: true
+        openToNewSkills: false
     });
     const [recommendations, setRecommendations] = useState<Recommendation[]>([]);
 
@@ -81,7 +81,7 @@ export default function Onboarding() {
                             interests: data.interests || [],
                             skillRatings: data.skillRatings || { logical: 3, communication: 3 },
                             careerPreference: data.careerPreference || '',
-                            openToNewSkills: data.openToNewSkills ?? true
+                            openToNewSkills: data.openToNewSkills ?? false
                         });
                     }
                 }

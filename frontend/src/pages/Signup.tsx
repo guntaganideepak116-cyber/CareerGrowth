@@ -44,7 +44,7 @@ export default function Signup() {
     try {
       await signUp(email, password, name);
       toast.success('Account created! Welcome to CareerGrowth.');
-      navigate('/dashboard');
+      navigate('/onboarding');
     } catch (error) {
       toast.error(error instanceof Error ? error.message : 'Signup failed. Please try again.');
     } finally {
@@ -57,7 +57,7 @@ export default function Signup() {
     try {
       await signInWithGoogle();
       toast.success('Welcome to CareerGrowth!');
-      navigate('/dashboard');
+      navigate('/onboarding');
     } catch (error) {
       toast.error(error instanceof Error ? error.message : 'Google sign-in failed.');
     } finally {
