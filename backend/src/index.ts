@@ -63,9 +63,17 @@ app.use('/api/assessment', assessmentRoutes);
 app.use('/api/recommendation', recommendationRoutes);
 
 
-app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
+// For Vercel, we need to export the app
+export default app;
 
-    // Start notification scheduler
-    startNotificationScheduler();
-});
+// Only start the server if not running in Vercel (local dev)
+if (process.env.NODE_ENV !== 'production') {
+    app.listen(PORT, () => {
+        console.log(`Server is running on port ${PORT}`);
+        startNotificationScheduler();
+    });
+} else {
+    // In production (Vercel), we still need to start the scheduler separately
+    // Note: Scheduled jobs work differently in serverless environments
+    console.log('App initialized for Vercel environment');
+}
