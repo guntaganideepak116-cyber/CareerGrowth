@@ -52,54 +52,68 @@ export function SkillModal({ skillId, isOpen, onClose, skillName }: SkillModalPr
 
     return (
         <Dialog open={isOpen} onOpenChange={onClose}>
-            <DialogContent className="max-w-md">
-                <DialogHeader>
-                    <DialogTitle className="flex items-center gap-2 text-xl">
-                        {metadata?.name || skillName}
+            <DialogContent className="max-w-md bg-white/95 backdrop-blur-sm border-primary/20 shadow-2xl overflow-hidden">
+                <DialogHeader className="pb-4 border-b border-border/50">
+                    <div className="flex items-center justify-between">
+                        <DialogTitle className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-blue-600">
+                            {metadata?.name || skillName}
+                        </DialogTitle>
                         {metadata?.category && (
-                            <Badge variant="secondary" className="text-xs font-normal">
+                            <Badge variant="secondary" className="bg-primary/5 text-primary border-primary/10 px-3 py-1">
                                 {metadata.category}
                             </Badge>
                         )}
-                    </DialogTitle>
-                    <DialogDescription className="text-sm text-muted-foreground">
-                        {metadata?.shortDescription || `Learn about ${skillName}`}
+                    </div>
+                    <DialogDescription className="text-sm text-muted-foreground mt-2 font-medium">
+                        {metadata?.shortDescription || `Master the essentials of ${skillName}`}
                     </DialogDescription>
                 </DialogHeader>
 
                 {isLoading ? (
-                    <div className="py-8 text-center text-muted-foreground">Loading skill details...</div>
+                    <div className="py-12 flex flex-col items-center justify-center gap-4">
+                        <div className="w-10 h-10 border-4 border-primary/30 border-t-primary rounded-full animate-spin"></div>
+                        <p className="text-sm text-muted-foreground animate-pulse">Fetching intelligence...</p>
+                    </div>
                 ) : (
-                    <div className="space-y-4 pt-2">
-                        <p className="text-sm text-muted-foreground">
-                            {metadata?.shortDescription}
-                        </p>
-
-                        <div className="space-y-3">
-                            <div className="bg-primary/5 p-3 rounded-lg border border-primary/10">
-                                <div className="flex items-center gap-2 mb-1.5 text-primary text-sm font-semibold">
-                                    <BookOpen className="w-4 h-4" />
-                                    Why it's important
+                    <div className="space-y-6 pt-4 animate-in fade-in slide-in-from-bottom-4 duration-500">
+                        {/* Why it's important section */}
+                        <div className="group">
+                            <div className="flex items-center gap-2 mb-2 text-primary">
+                                <div className="p-2 bg-primary/10 rounded-lg group-hover:bg-primary/20 transition-colors">
+                                    <BookOpen className="w-5 h-5" />
                                 </div>
-                                <p className="text-xs text-foreground/80 leading-relaxed">
+                                <h4 className="font-bold text-sm uppercase tracking-wider">Why it's important</h4>
+                            </div>
+                            <div className="pl-11 pr-2">
+                                <p className="text-sm text-foreground/80 leading-relaxed border-l-2 border-primary/20 pl-4 py-1">
                                     {metadata?.whyImportant}
                                 </p>
                             </div>
+                        </div>
 
-                            <div className="bg-secondary/30 p-3 rounded-lg border border-secondary">
-                                <div className="flex items-center gap-2 mb-1.5 text-foreground text-sm font-semibold">
-                                    <Briefcase className="w-4 h-4" />
-                                    Real-world Usage
+                        {/* Real-world Usage section */}
+                        <div className="group">
+                            <div className="flex items-center gap-2 mb-2 text-blue-600">
+                                <div className="p-2 bg-blue-50 rounded-lg group-hover:bg-blue-100 transition-colors">
+                                    <Briefcase className="w-5 h-5" />
                                 </div>
-                                <p className="text-xs text-muted-foreground leading-relaxed">
+                                <h4 className="font-bold text-sm uppercase tracking-wider">Real-world Usage</h4>
+                            </div>
+                            <div className="pl-11 pr-2">
+                                <p className="text-sm text-muted-foreground leading-relaxed border-l-2 border-blue-200 pl-4 py-1">
                                     {metadata?.realWorldUsage}
                                 </p>
                             </div>
+                        </div>
 
-                            <div className="flex items-center justify-between pt-2 border-t border-border mt-4">
-                                <span className="text-xs text-muted-foreground">Industry Relevance</span>
-                                <span className="flex items-center gap-1.5 text-sm font-medium text-green-600">
-                                    <TrendingUp className="w-3.5 h-3.5" />
+                        {/* Market/Industry section */}
+                        <div className="pt-4 border-t border-border/50">
+                            <div className="flex items-center justify-between p-3 bg-gradient-to-r from-green-50 to-emerald-50 rounded-xl border border-green-100">
+                                <div className="flex items-center gap-2 text-green-700">
+                                    <TrendingUp className="w-4 h-4" />
+                                    <span className="text-xs font-bold uppercase tracking-tight">Industry Demand</span>
+                                </div>
+                                <span className="text-sm font-bold text-emerald-600">
                                     {metadata?.industryRelevance}
                                 </span>
                             </div>

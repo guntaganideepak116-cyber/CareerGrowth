@@ -137,7 +137,7 @@ export function RoadmapPhaseCard({
                     <button
                       key={skill}
                       onClick={(e) => { e.stopPropagation(); setSelectedSkill(skill); }}
-                      className="px-2.5 py-1 bg-primary/10 text-primary text-sm rounded-lg hover:bg-primary/20 transition-colors cursor-pointer text-left"
+                      className="px-2.5 py-1 bg-primary/10 text-primary text-sm rounded-lg hover:bg-primary/20 hover:scale-105 active:scale-95 transition-all cursor-pointer text-left"
                     >
                       {skill}
                     </button>
@@ -153,12 +153,13 @@ export function RoadmapPhaseCard({
                 </div>
                 <div className="flex flex-wrap gap-2">
                   {phase.tools.map(tool => (
-                    <span
+                    <button
                       key={tool}
-                      className="px-2.5 py-1 bg-success/10 text-success text-sm rounded-lg"
+                      onClick={(e) => { e.stopPropagation(); setSelectedSkill(tool); }}
+                      className="px-2.5 py-1 bg-success/10 text-success text-sm rounded-lg hover:bg-success/20 hover:scale-105 active:scale-95 transition-all cursor-pointer text-left"
                     >
                       {tool}
-                    </span>
+                    </button>
                   ))}
                 </div>
               </div>

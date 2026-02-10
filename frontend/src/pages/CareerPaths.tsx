@@ -14,6 +14,7 @@ import {
   Briefcase,
 } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
+import { SkillModal } from '@/components/common/SkillModal';
 
 interface CareerPath {
   id: string;
@@ -27,6 +28,7 @@ export default function CareerPaths() {
   const { user, profile, loading, updateProfile } = useAuthContext();
   const navigate = useNavigate();
   const [selectedPath, setSelectedPath] = useState<string | null>(null);
+  const [selectedSkill, setSelectedSkill] = useState<string | null>(null);
 
   useEffect(() => {
     if (!loading && !user) {
@@ -208,10 +210,14 @@ export default function CareerPaths() {
                     <div className="flex flex-wrap gap-2">
                       {path.requiredSkills && path.requiredSkills.length > 0 ? (
                         path.requiredSkills.map((skill, i) => (
-                          <Badge key={i} variant="secondary" className="text-xs">
+                          <button
+                            key={i}
+                            onClick={(e) => { e.stopPropagation(); setSelectedSkill(skill); }}
+                            className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-secondary/50 text-secondary-foreground border border-secondary hover:bg-primary/20 hover:scale-105 active:scale-95 transition-all cursor-pointer"
+                          >
                             <CheckCircle2 className="w-3 h-3 mr-1" />
                             {skill}
-                          </Badge>
+                          </button>
                         ))
                       ) : (
                         <span className="text-xs text-muted-foreground italic">No specific skills listed</span>
@@ -281,6 +287,13 @@ export default function CareerPaths() {
           </div>
         )}
       </div>
+
+      <SkillModal
+        skillId={selectedSkill || ''}
+        isOpen={!!selectedSkill}
+        onClose={() => setSelectedSkill(null)}
+        skillName={selectedSkill || ''}
+      />
     </DashboardLayout>
   );
 }
