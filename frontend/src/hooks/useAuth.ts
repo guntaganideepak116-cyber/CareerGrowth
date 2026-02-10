@@ -7,7 +7,9 @@ import {
   signOut as firebaseSignOut,
   updateProfile as updateFirebaseProfile,
   GoogleAuthProvider,
-  signInWithPopup
+  signInWithPopup,
+  setPersistence,
+  browserSessionPersistence
 } from 'firebase/auth';
 import {
   doc,
@@ -17,10 +19,10 @@ import {
   Timestamp
 } from 'firebase/firestore';
 import { auth, db } from '@/lib/firebase';
-import { saveProfile, loadProfile, removeProfile, migrateLegacyStorage, UserRole } from '@/lib/authStorage';
+import { saveProfile, loadProfile, removeProfile, saveToken, removeToken, migrateLegacyStorage } from '@/lib/authStorage';
 
 // Check if email is admin (matches ADMIN_EMAIL from backend)
-const ADMIN_EMAIL = 'guntaganideepak1234@gmail.com'; // Should match backend .env
+const ADMIN_EMAIL = import.meta.env.VITE_ADMIN_EMAIL || 'guntaganideepak1234@gmail.com';
 const isAdminEmail = (email: string | null): boolean => {
   return email?.toLowerCase() === ADMIN_EMAIL.toLowerCase();
 };
@@ -73,57 +75,39 @@ export function useAuth() {
 
   // Initialize from local storage for instant load
   const [profile, setProfile] = useState<Profile | null>(() => {
-    // Migrate legacy storage if it exists
+    // Migrate legacy storage if it exists (handles single key logic now)
     migrateLegacyStorage();
-
-    // Try to load from role-based storage
-    // Check admin profile first
-    const adminProfile = loadProfile('admin');
-    if (adminProfile) {
-      console.log('[Auth Init] ✅ Using cached admin profile:', adminProfile.email);
-      return adminProfile;
-    }
-
-    // Check user profile
-    const userProfile = loadProfile('user');
-    if (userProfile) {
-      console.log('[Auth Init] ✅ Using cached user profile:', userProfile.email);
-      return userProfile;
-    }
-
-    console.log('[Auth Init] No cached profile found');
-    return null;
+    return loadProfile();
   });
 
   // Start as loading=true, will be set to false after Firebase auth initializes
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Firebase Auth listener - this is BROWSER-SPECIFIC
-    // Each browser/tab has its own Firebase auth instance and won't interfere with others
-    // Browser A: User session  -> auth.currentUser = user instance
-    // Browser B: Admin session -> auth.currentUser = admin instance (completely separate)
+    // Single Global Auth Listener
     const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
       console.log('[Auth State Change]', currentUser ? `User: ${currentUser.email}` : 'Logged out');
 
       setUser(currentUser);
       if (currentUser) {
-        // Fetch the profile for THIS session's user
-        // This won't affect other browsers/tabs at all
+        // Fetch fresh profile data
         await fetchProfile(currentUser.uid);
+
+        // Update token in storage
+        const token = await currentUser.getIdToken();
+        saveToken(token);
       } else {
-        // User logged out in THIS browser only
-        // Remove profile from storage based on current role
-        if (profile?.role) {
-          removeProfile(profile.role);
-        }
+        // Clear local profile state but don't force redirects here 
+        // to handle multi-tab stability
         setProfile(null);
+        removeProfile();
+        removeToken();
       }
       setLoading(false);
     });
 
     return () => unsubscribe();
-  }, []); // Empty deps is correct - we want this listener to run once per component mount
+  }, []);
 
 
   const fetchProfile = async (userId: string) => {
@@ -132,26 +116,24 @@ export function useAuth() {
       const docSnap = await getDoc(docRef);
 
       if (docSnap.exists()) {
-        const data = docSnap.data() as any; // Use 'any' temporarily for migration check
+        const data = docSnap.data() as any;
 
-        // Auto-migrate: Add role if missing (for existing users)
+        // Ensure role exists
         if (!data.role) {
-          console.log('[Migration] Adding role field to existing user profile');
           const role = isAdminEmail(data.email) ? 'admin' : 'user';
           const updatedData = { ...data, role } as Profile;
-
-          // Update in Firestore
           await updateDoc(docRef, { role });
-
-          // Update local state with role-based storage
           setProfile(updatedData);
-          saveProfile(updatedData, role);
+          saveProfile(updatedData);
         } else {
-          // Profile already has role - save to role-specific storage
           const profileData = data as Profile;
           setProfile(profileData);
-          saveProfile(profileData, profileData.role);
+          saveProfile(profileData);
         }
+
+        // Refresh token to ensure custom claims are synced
+        const token = await auth.currentUser?.getIdToken(true);
+        if (token) saveToken(token);
       }
     } catch (error) {
       console.error("Error fetching profile:", error);
@@ -160,10 +142,11 @@ export function useAuth() {
 
   const signUp = async (email: string, password: string, fullName: string) => {
     try {
+      // Ensure tab-level isolation
+      await setPersistence(auth, browserSessionPersistence);
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
 
-      // Create profile in Firestore
       const newProfile: Profile = {
         id: user.uid,
         user_id: user.uid,
@@ -184,8 +167,6 @@ export function useAuth() {
         twitter_url: null,
         website_url: null,
         role: isAdminEmail(user.email) ? 'admin' : 'user',
-
-        // Initialize new fields
         skills: [],
         experience_years: 0,
         preferred_roles: [],
@@ -193,22 +174,20 @@ export function useAuth() {
         resume_url: null,
         completed_projects: [],
         roadmap_progress: 0,
-
-        // Initialize Free Plan
         userPlan: 'free',
         planStartDate: new Date().toISOString(),
-
         created_at: new Date().toISOString(),
         updated_at: new Date().toISOString()
       };
 
       await setDoc(doc(db, 'users', user.uid), newProfile);
-
-      // Update display name in Auth
       await updateFirebaseProfile(user, { displayName: fullName });
 
       setProfile(newProfile);
-      saveProfile(newProfile, newProfile.role);
+      saveProfile(newProfile);
+
+      const token = await user.getIdToken();
+      saveToken(token);
       return user;
     } catch (error: any) {
       if (error.code === 'auth/email-already-in-use') {
@@ -220,15 +199,12 @@ export function useAuth() {
 
   const signIn = async (email: string, password: string) => {
     try {
-      // Sign in creates a session ONLY for this browser/tab
-      // Multiple independent sessions are fully supported:
-      // - Browser A: user@example.com logged in
-      // - Browser B: admin@example.com logged in
-      // Both remain active simultaneously without interference
+      // Ensure tab-level isolation before sign in
+      await setPersistence(auth, browserSessionPersistence);
       const result = await signInWithEmailAndPassword(auth, email, password);
+      const token = await result.user.getIdToken();
+      saveToken(token);
 
-      // Update lastLogin timestamp in Firestore
-      // Fire and forget - don't await this
       const userRef = doc(db, 'users', result.user.uid);
       updateDoc(userRef, {
         lastLogin: Timestamp.now(),
@@ -244,18 +220,15 @@ export function useAuth() {
   };
 
   const signOut = async () => {
-    // Sign out ONLY in this browser/tab
-    // This will NOT affect any other browser where the user (or admin) is logged in
-    // Each browser has its own Firebase auth token
-
-    // Remove only the current role's profile
-    if (profile?.role) {
-      removeProfile(profile.role);
-      console.log(`[Auth] Signed out ${profile.role}, other role sessions preserved`);
+    try {
+      // Clear storage manually first for instant feedback
+      setProfile(null);
+      removeProfile();
+      removeToken();
+      await firebaseSignOut(auth);
+    } catch (error) {
+      console.error('Firebase signout error:', error);
     }
-
-    await firebaseSignOut(auth);
-    setProfile(null);
   };
 
   const updateProfile = async (updates: Partial<Profile>) => {
@@ -267,10 +240,9 @@ export function useAuth() {
 
       await updateDoc(docRef, updatedData);
 
-      // Refresh local state with role-based storage
       const newItem = { ...profile, ...updatedData } as Profile;
       setProfile(newItem);
-      saveProfile(newItem, newItem.role);
+      saveProfile(newItem);
       return newItem;
 
     } catch (error) {
@@ -281,13 +253,12 @@ export function useAuth() {
 
   const signInWithGoogle = async () => {
     try {
-      // Google sign-in creates a session ONLY for this browser/tab
-      // Same independence as email/password login
+      // Ensure tab-level isolation
+      await setPersistence(auth, browserSessionPersistence);
       const provider = new GoogleAuthProvider();
       const result = await signInWithPopup(auth, provider);
       const user = result.user;
 
-      // Check if profile exists, if not create one
       const docRef = doc(db, 'users', user.uid);
       const docSnap = await getDoc(docRef);
 
@@ -312,8 +283,6 @@ export function useAuth() {
           twitter_url: null,
           website_url: null,
           role: isAdminEmail(user.email) ? 'admin' : 'user',
-
-          // Initialize new fields
           skills: [],
           experience_years: 0,
           preferred_roles: [],
@@ -321,21 +290,18 @@ export function useAuth() {
           resume_url: null,
           completed_projects: [],
           roadmap_progress: 0,
-
-          // Initialize Free Plan
           userPlan: 'free',
           planStartDate: new Date().toISOString(),
-
           created_at: new Date().toISOString(),
           updated_at: new Date().toISOString()
         };
         await setDoc(docRef, newProfile);
         setProfile(newProfile);
-        saveProfile(newProfile, newProfile.role);
+        saveProfile(newProfile);
       } else {
         const data = docSnap.data() as Profile;
         setProfile(data);
-        saveProfile(data, data.role);
+        saveProfile(data);
       }
 
       return result;
@@ -349,7 +315,7 @@ export function useAuth() {
 
   return {
     user,
-    session: null, // Deprecated in Firebase, keeping for compatibility if needed
+    session: null,
     profile,
     loading,
     signUp,

@@ -10,7 +10,7 @@ interface AdminGuardProps {
     children: ReactNode;
 }
 
-const API_URL = 'http://localhost:5000/api/admin';
+const API_URL = `${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/admin`;
 
 /**
  * AdminGuard - Blocks non-admin users from accessing admin routes
@@ -41,6 +41,7 @@ export function AdminGuard({ children }: AdminGuardProps) {
             setTimeout(() => navigate('/login'), 2000);
             return;
         }
+
 
         try {
             const token = await user.getIdToken();

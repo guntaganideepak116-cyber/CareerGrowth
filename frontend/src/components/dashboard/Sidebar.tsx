@@ -120,7 +120,7 @@ export function Sidebar() {
       {/* Sidebar */}
       <aside
         className={cn(
-          'fixed left-0 top-0 z-40 h-screen bg-card border-r border-border transition-all duration-300 flex flex-col',
+          'fixed left-0 top-0 z-40 h-[100dvh] bg-card border-r border-border transition-all duration-300 flex flex-col overflow-hidden',
           // Desktop behavior
           'lg:translate-x-0',
           collapsed ? 'lg:w-20' : 'lg:w-64',
@@ -130,7 +130,7 @@ export function Sidebar() {
         )}
       >
         {/* Logo */}
-        <div className="p-6 border-b border-border">
+        <div className="p-6 border-b border-border shrink-0">
           <Link to="/dashboard" className="flex items-center gap-3">
             <div className="p-2 bg-primary rounded-xl shrink-0">
               <Brain className="w-6 h-6 text-primary-foreground" />
@@ -177,9 +177,9 @@ export function Sidebar() {
         </nav>
 
         {/* User Section */}
-        <div className="p-4 border-t border-border space-y-3">
+        <div className="p-4 border-t border-border space-y-3 shrink-0 pb-8 lg:pb-4">
           {!collapsed && user && (
-            <div className="px-3 py-2">
+            <div className="px-3 py-1">
               <p className="font-medium text-foreground truncate">
                 {profile?.full_name || user.email?.split('@')[0] || 'User'}
               </p>

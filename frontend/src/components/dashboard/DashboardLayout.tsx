@@ -11,7 +11,9 @@ interface DashboardLayoutProps {
 export function DashboardLayout({ children }: DashboardLayoutProps) {
   const { loading, profile } = useAuthContext();
 
-  if (loading) {
+  // Optimized Phase 1: If we have a cached profile, show layout immediately
+  // This achieves the "0ms" load feel for the sidebar and header.
+  if (loading && !profile) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center">
         <Loader2 className="w-8 h-8 animate-spin text-primary" />

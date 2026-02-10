@@ -1,5 +1,5 @@
-import { initializeApp } from 'firebase/app';
-import { getAuth, setPersistence, browserLocalPersistence } from 'firebase/auth';
+import { initializeApp, getApps } from 'firebase/app';
+import { getAuth, setPersistence, browserSessionPersistence } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
 
 const firebaseConfig = {
@@ -11,28 +11,18 @@ const firebaseConfig = {
     appId: import.meta.env.VITE_FIREBASE_APP_ID
 };
 
-// Validate Firebase config
-if (!firebaseConfig.apiKey) {
-    console.error("Firebase API Key is missing! Check your .env file.");
-    console.error("Current env:", {
-        hasApiKey: !!import.meta.env.VITE_FIREBASE_API_KEY,
-        hasProjectId: !!import.meta.env.VITE_FIREBASE_PROJECT_ID
-    });
-}
-
-console.log("Initializing Firebase with project:", firebaseConfig.projectId);
-
-const app = initializeApp(firebaseConfig);
+// Ensure Firebase is only initialized once
+const app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApps()[0];
 export const auth = getAuth(app);
 export const db = getFirestore(app);
 
-// Enable persistence to maintain auth state across refreshes
-setPersistence(auth, browserLocalPersistence)
+// Enable tab-level persistence
+setPersistence(auth, browserSessionPersistence)
     .then(() => {
-        console.log("✅ Firebase Auth persistence enabled (local storage)");
+        console.log("✅ Firebase Auth: Tab-level session persistence enabled");
     })
     .catch((error) => {
-        console.error("❌ Failed to enable Firebase persistence:", error);
+        console.error("❌ Failed to enable tab-level persistence:", error);
     });
 
 console.log("Firebase initialized successfully");

@@ -70,7 +70,7 @@ export default function UserDashboardControl() {
     const fetchUsers = async () => {
         setLoading(true);
         try {
-            const userProfiles = collection(db, 'user_profiles');
+            const userProfiles = collection(db, 'users');
             const snapshot = await getDocs(userProfiles);
 
             const userData: UserData[] = snapshot.docs.map(doc => ({
@@ -130,7 +130,7 @@ export default function UserDashboardControl() {
     const toggleUserBlock = async (userId: string, currentlyBlocked: boolean) => {
         setProcessingAction(userId);
         try {
-            const userRef = doc(db, 'user_profiles', userId);
+            const userRef = doc(db, 'users', userId);
             await updateDoc(userRef, {
                 isBlocked: !currentlyBlocked,
                 updatedAt: new Date().toISOString()
@@ -186,7 +186,7 @@ export default function UserDashboardControl() {
 
         setProcessingAction(userId);
         try {
-            const userRef = doc(db, 'user_profiles', userId);
+            const userRef = doc(db, 'users', userId);
             await updateDoc(userRef, {
                 roadmap_progress: 0,
                 completed_projects: [],

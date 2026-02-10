@@ -1,150 +1,106 @@
 /**
- * Role-Based Authentication Storage Utility
- * Ensures complete session isolation between admin and user roles
+ * Authentication Storage Utility
+ * Manages user profile and token in sessionStorage for tab-level isolation.
+ * Role-based access is handled via the 'role' field within the profile.
  */
 
-export type UserRole = 'admin' | 'user';
-
-// Storage keys for role-based separation
 const STORAGE_KEYS = {
-    admin: {
-        profile: 'admin_profile',
-        token: 'admin_token',
-    },
-    user: {
-        profile: 'user_profile',
-        token: 'user_token',
-    },
+    PROFILE: 'auth_profile',
+    TOKEN: 'auth_token',
 } as const;
 
 /**
- * Get the appropriate storage key based on role
+ * Save profile to sessionStorage
  */
-function getStorageKey(role: UserRole, type: 'profile' | 'token'): string {
-    return STORAGE_KEYS[role][type];
-}
-
-/**
- * Save profile to role-specific localStorage
- */
-export function saveProfile(profile: any, role: UserRole): void {
+export function saveProfile(profile: any): void {
     try {
-        const key = getStorageKey(role, 'profile');
-        localStorage.setItem(key, JSON.stringify(profile));
-        console.log(`[Auth Storage] ✓ Saved ${role} profile to ${key}`);
+        sessionStorage.setItem(STORAGE_KEYS.PROFILE, JSON.stringify(profile));
     } catch (error) {
-        console.error(`[Auth Storage] Failed to save ${role} profile:`, error);
+        console.error('[Auth Storage] Failed to save profile:', error);
     }
 }
 
 /**
- * Load profile from role-specific localStorage
+ * Load profile from sessionStorage
  */
-export function loadProfile(role: UserRole): any | null {
+export function loadProfile(): any | null {
     try {
-        const key = getStorageKey(role, 'profile');
-        const cached = localStorage.getItem(key);
-
-        if (!cached) {
-            console.log(`[Auth Storage] No cached ${role} profile`);
-            return null;
-        }
+        const cached = sessionStorage.getItem(STORAGE_KEYS.PROFILE);
+        if (!cached) return null;
 
         const parsed = JSON.parse(cached);
-
-        // Validate profile has required fields
+        // Basic validation
         if (parsed && parsed.id && parsed.email) {
-            console.log(`[Auth Storage] ✓ Loaded ${role} profile:`, parsed.email);
             return parsed;
         }
-
-        // Invalid cache
-        console.log(`[Auth Storage] Invalid ${role} profile cache, clearing`);
-        localStorage.removeItem(key);
         return null;
     } catch (error) {
-        console.error(`[Auth Storage] Error loading ${role} profile:`, error);
-        const key = getStorageKey(role, 'profile');
-        localStorage.removeItem(key);
+        console.error('[Auth Storage] Error loading profile:', error);
         return null;
     }
 }
 
 /**
- * Remove profile from role-specific localStorage
- * ONLY removes the specified role's data, leaving other roles intact
+ * Remove profile from sessionStorage
  */
-export function removeProfile(role: UserRole): void {
-    try {
-        const key = getStorageKey(role, 'profile');
-        localStorage.removeItem(key);
-        console.log(`[Auth Storage] ✓ Removed ${role} profile from ${key}`);
-    } catch (error) {
-        console.error(`[Auth Storage] Failed to remove ${role} profile:`, error);
-    }
+export function removeProfile(): void {
+    sessionStorage.removeItem(STORAGE_KEYS.PROFILE);
 }
 
 /**
- * Get the current profile from either role
- * Checks both admin and user storage and returns whichever exists
- * Prioritizes admin if both exist (edge case)
+ * Save Firebase ID token to sessionStorage
  */
-export function getCurrentProfile(): { profile: any; role: UserRole } | null {
-    // Check admin first
-    const adminProfile = loadProfile('admin');
-    if (adminProfile) {
-        return { profile: adminProfile, role: 'admin' };
-    }
-
-    // Check user
-    const userProfile = loadProfile('user');
-    if (userProfile) {
-        return { profile: userProfile, role: 'user' };
-    }
-
-    return null;
+export function saveToken(token: string): void {
+    sessionStorage.setItem(STORAGE_KEYS.TOKEN, token);
 }
 
 /**
- * Clear ALL authentication data (use only for complete logout/reset)
- * This should rarely be used - prefer removeProfile() for role-specific logout
+ * Load Firebase ID token from sessionStorage
+ */
+export function loadToken(): string | null {
+    return sessionStorage.getItem(STORAGE_KEYS.TOKEN);
+}
+
+/**
+ * Remove Firebase ID token from sessionStorage
+ */
+export function removeToken(): void {
+    sessionStorage.removeItem(STORAGE_KEYS.TOKEN);
+}
+
+/**
+ * Clear all authentication data (Login Reset)
  */
 export function clearAllAuthData(): void {
-    console.warn('[Auth Storage] ⚠️ Clearing ALL auth data');
-    localStorage.removeItem(STORAGE_KEYS.admin.profile);
-    localStorage.removeItem(STORAGE_KEYS.admin.token);
-    localStorage.removeItem(STORAGE_KEYS.user.profile);
-    localStorage.removeItem(STORAGE_KEYS.user.token);
+    removeProfile();
+    removeToken();
 }
 
 /**
- * Migrate old single-key storage to role-based storage
- * Checks for legacy 'user_profile' key and migrates to appropriate role
+ * Check if a session exists (profile + token)
+ */
+export function hasSession(): boolean {
+    return !!sessionStorage.getItem(STORAGE_KEYS.PROFILE) && !!sessionStorage.getItem(STORAGE_KEYS.TOKEN);
+}
+
+/**
+ * Legacy migration: ensure old localStorage keys are cleared
+ * This unblocks tab-level isolation.
  */
 export function migrateLegacyStorage(): void {
-    try {
-        const legacyKey = 'user_profile';
-        const legacyData = localStorage.getItem(legacyKey);
-
-        if (!legacyData) {
-            return; // No legacy data to migrate
+    const legacyKeys = [
+        'admin_profile',
+        'admin_token',
+        'user_profile',
+        'user_token',
+        'auth_profile',
+        'auth_token',
+        'dashboard_metrics_cache' // Also clear dashboard cache to force fresh load per tab
+    ];
+    legacyKeys.forEach(key => {
+        if (localStorage.getItem(key)) {
+            // Clean up localStorage to ensure it doesn't leak into tab-level logic
+            localStorage.removeItem(key);
         }
-
-        const parsed = JSON.parse(legacyData);
-
-        if (!parsed || !parsed.email) {
-            localStorage.removeItem(legacyKey);
-            return;
-        }
-
-        // Determine role and migrate
-        const role: UserRole = parsed.role || 'user';
-        saveProfile(parsed, role);
-
-        // Remove legacy key
-        localStorage.removeItem(legacyKey);
-        console.log(`[Auth Storage] ✓ Migrated legacy profile to ${role} storage`);
-    } catch (error) {
-        console.error('[Auth Storage] Failed to migrate legacy storage:', error);
-    }
+    });
 }

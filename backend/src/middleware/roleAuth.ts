@@ -50,32 +50,55 @@ export async function verifyAdminToken(req: AuthenticatedRequest, res: Response,
         return res.status(401).json({ error: 'Unauthorized: Invalid admin token' });
     }
 
-    // Check if email matches admin email
-    const adminEmail = process.env.ADMIN_EMAIL;
-    const userEmail = decodedToken.email;
+    try {
+        const userEmail = decodedToken.email;
+        const adminEmail = process.env.ADMIN_EMAIL;
 
-    if (!adminEmail) {
-        console.error('[Admin Auth] ADMIN_EMAIL not configured');
-        return res.status(500).json({ error: 'Server configuration error' });
-    }
+        // 1. Check Custom Claims (Fastest & Production-Standard)
+        if (decodedToken.role === 'admin') {
+            req.user = {
+                uid: decodedToken.uid,
+                email: userEmail || '',
+                role: 'admin'
+            };
+            console.log(`[Admin Auth] ✓ Verified by Custom Claim: ${userEmail}`);
+            return next();
+        }
 
-    if (!userEmail || userEmail.toLowerCase() !== adminEmail.toLowerCase()) {
+        // 2. Fallback to Firestore check
+        const db = admin.firestore();
+        const userDoc = await db.collection('users').doc(decodedToken.uid).get();
+        const userData = userDoc.data();
+
+        const hasAdminRole = userData?.role === 'admin';
+        const isEmailAdmin = adminEmail && userEmail?.toLowerCase() === adminEmail.toLowerCase();
+
+        if (hasAdminRole || isEmailAdmin) {
+            // Set claim for next time if missing
+            if (isEmailAdmin && decodedToken.role !== 'admin') {
+                admin.auth().setCustomUserClaims(decodedToken.uid, { role: 'admin' })
+                    .catch(err => console.error('Error setting custom claim:', err));
+            }
+
+            req.user = {
+                uid: decodedToken.uid,
+                email: userEmail || '',
+                role: 'admin'
+            };
+
+            console.log(`[Admin Auth] ✓ Verified by Firestore/Email: ${userEmail}`);
+            return next();
+        }
+
         console.warn(`[Admin Auth] Access denied for ${userEmail}`);
         return res.status(403).json({
             error: 'Admin access required',
             details: 'You do not have admin privileges'
         });
+    } catch (error) {
+        console.error('Error verifying admin role:', error);
+        res.status(500).json({ error: 'Internal server error during verification' });
     }
-
-    // Attach admin user info to request
-    req.user = {
-        uid: decodedToken.uid,
-        email: decodedToken.email || '',
-        role: 'admin'
-    };
-
-    console.log(`[Admin Auth] ✓ Admin access granted: ${userEmail}`);
-    next();
 }
 
 /**
@@ -93,10 +116,10 @@ export async function verifyUserToken(req: AuthenticatedRequest, res: Response, 
     req.user = {
         uid: decodedToken.uid,
         email: decodedToken.email || '',
-        role: 'user'
+        role: decodedToken.role || 'user'
     };
 
-    console.log(`[User Auth] ✓ User access granted: ${decodedToken.email}`);
+    console.log(`[User Auth] ✓ User access granted: ${decodedToken.email} (${req.user.role})`);
     next();
 }
 

@@ -17,6 +17,7 @@ import {
 } from 'lucide-react';
 
 import { auth } from '@/lib/firebase';
+import { useAuthContext } from '@/contexts/AuthContext';
 import { AdminGuard } from './AdminGuard';
 
 interface AdminLayoutProps {
@@ -38,17 +39,15 @@ const adminNavItems = [
     { icon: Settings, label: 'System Settings', path: '/admin/settings' },
 ];
 
-
-
 export function AdminLayout({ children }: AdminLayoutProps) {
     const location = useLocation();
     const navigate = useNavigate();
+    const { signOut } = useAuthContext();
 
     const handleLogout = async () => {
         try {
-            // Signs out ONLY this browser session
-            // Other browsers with active sessions remain logged in
-            await auth.signOut();
+            // Signs out ONLY this browser session with role-specific cleanup
+            await signOut();
             navigate('/login');
         } catch (error) {
             console.error('Logout failed:', error);

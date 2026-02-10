@@ -67,7 +67,7 @@ export default function Onboarding() {
         const fetchProfileData = async () => {
             if (!user) return;
             try {
-                const docRef = doc(db, 'user_profiles', user.uid);
+                const docRef = doc(db, 'users', user.uid);
                 const docSnap = await getDoc(docRef);
 
                 if (docSnap.exists()) {

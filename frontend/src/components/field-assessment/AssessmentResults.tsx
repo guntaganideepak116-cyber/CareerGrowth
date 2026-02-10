@@ -42,7 +42,7 @@ export function AssessmentResults({
     return (
         <div className="max-w-4xl mx-auto space-y-8 animate-fade-in">
             {/* Header */}
-            <div className="text-center space-y-4">
+            <div className="text-center space-y-4 pt-6 sm:pt-0 pl-12 sm:pl-0">
                 <div
                     className={cn(
                         'inline-flex items-center justify-center w-20 h-20 rounded-full mb-2',

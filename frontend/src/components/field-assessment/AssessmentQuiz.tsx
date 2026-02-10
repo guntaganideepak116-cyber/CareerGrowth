@@ -98,8 +98,8 @@ export function AssessmentQuiz({
     return (
         <div className="max-w-4xl mx-auto space-y-6 animate-fade-in">
             {/* Header */}
-            <div className="flex items-center justify-between">
-                <div>
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div className="pl-12 sm:pl-0">
                     <h2 className="text-2xl font-bold text-foreground">
                         Field Assessment
                     </h2>
@@ -107,9 +107,9 @@ export function AssessmentQuiz({
                         Question {currentQuestionIndex + 1} of {questions.length}
                     </p>
                 </div>
-                <div className="flex items-center gap-2 text-muted-foreground">
-                    <Clock className="w-4 h-4" />
-                    <span className="text-sm">
+                <div className="flex items-center gap-2 text-muted-foreground bg-secondary/30 px-3 py-1.5 rounded-full w-fit">
+                    <Clock className="w-4 h-4 text-primary" />
+                    <span className="text-sm font-medium tabular-nums">
                         {Math.floor((Date.now() - startTime) / 60000)}:
                         {String(Math.floor(((Date.now() - startTime) % 60000) / 1000)).padStart(2, '0')}
                     </span>
@@ -175,30 +175,39 @@ export function AssessmentQuiz({
                 </RadioGroup>
             </div>
 
-            {/* Navigation */}
-            <div className="flex items-center justify-between">
+            {/* Navigation - Optimized for Full Visibility on Mobile */}
+            <div className="flex items-center justify-between gap-2 pt-6 border-t border-border mt-6">
                 <Button
                     variant="outline"
+                    size="sm"
                     onClick={handlePrevious}
                     disabled={isFirstQuestion}
-                    className="gap-2"
+                    className="flex-1 sm:flex-initial h-10 px-2 sm:px-4 text-xs sm:text-sm gap-1"
                 >
-                    <ArrowLeft className="w-4 h-4" />
-                    Previous
+                    <ArrowLeft className="w-3 h-3 sm:w-4 sm:h-4" />
+                    <span>Prev<span className="hidden sm:inline">ious</span></span>
                 </Button>
 
-                <Button onClick={onCancel} variant="ghost">
-                    Cancel Assessment
+                <Button
+                    onClick={onCancel}
+                    variant="ghost"
+                    size="sm"
+                    className="flex-1 sm:flex-initial h-10 px-1 sm:px-4 text-xs sm:text-sm text-muted-foreground hover:text-danger whitespace-nowrap"
+                >
+                    <span>Cancel<span className="hidden sm:inline"> Assessment</span></span>
                 </Button>
 
                 <Button
                     onClick={handleNext}
                     disabled={selectedOption === null}
                     variant={isLastQuestion ? 'hero' : 'default'}
-                    className="gap-2"
+                    size="sm"
+                    className="flex-1 sm:flex-initial h-10 px-2 sm:px-4 text-xs sm:text-sm gap-1 min-w-[70px] sm:min-w-[100px]"
                 >
-                    {isLastQuestion ? 'Review & Submit' : 'Next'}
-                    <ArrowRight className="w-4 h-4" />
+                    <span className="font-semibold">
+                        {isLastQuestion ? 'Submit' : 'Next'}
+                    </span>
+                    <ArrowRight className="w-3 h-3 sm:w-4 sm:h-4" />
                 </Button>
             </div>
 
