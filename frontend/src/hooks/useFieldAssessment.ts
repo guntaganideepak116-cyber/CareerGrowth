@@ -117,7 +117,8 @@ export function useFieldAssessment(fieldId: string) {
         questions: AssessmentQuestion[],
         answers: AssessmentAnswer[],
         timeSpent: number,
-        fieldName: string
+        fieldName: string,
+        metadata?: { tabSwitchCount?: number; terminated?: boolean }
     ): Promise<AssessmentResult> => {
         if (!user) throw new Error('User not authenticated');
 
@@ -143,6 +144,7 @@ export function useFieldAssessment(fieldId: string) {
                         fieldName,
                         answers: formattedAnswers,
                         timeSpent,
+                        metadata // Send metadata to backend
                     }),
                 });
 
@@ -151,18 +153,7 @@ export function useFieldAssessment(fieldId: string) {
                     const result = data.result;
                     updateLocalStatus(result);
                     showCompletionToast(result);
-                    return {
-                        userId: result.userId,
-                        fieldId: result.fieldId,
-                        fieldName: result.fieldName,
-                        score: result.score,
-                        totalQuestions: result.totalQuestions,
-                        correctAnswers: result.correctAnswers,
-                        answers: result.answers,
-                        status: result.status,
-                        attemptDate: new Date(result.attemptDate),
-                        timeSpent: result.timeSpent,
-                    };
+                    return { ...result, attemptsCount: result.attemptsCount || 0 };
                 }
             } catch (backendError) {
                 // console.warn('Backend submission failed, falling back to client-side evaluation', backendError);
@@ -171,13 +162,33 @@ export function useFieldAssessment(fieldId: string) {
             // Fallback: Client-side evaluation and direct Firestore save
             console.log('Using fallback submission...');
 
+            // If questions passed, use them. If they don't have correctAnswer, fetch them securely now.
+            let gradingQuestions = questions;
+            const needsFetching = questions.some(q => (q as any).correctAnswer === undefined);
+
+            if (needsFetching) {
+                try {
+                    // Since we are now "backend" logic in fallback, we fetch full questions with answers
+                    // Note: We need a secure way, but if using Firestore direct access, we might need a separate query 
+                    // or assume the previously fetched questions might be sufficient if I hadn't stripped them.
+                    // But I DID strip them in FieldAssessment.tsx.
+                    // So we must fetch them again here.
+                    const qQuery = await import('firebase/firestore').then(mod => {
+                        return mod.query(mod.collection(db, 'assessment_questions'), mod.where('fieldId', '==', fieldId));
+                    });
+                    const snapshot = await import('firebase/firestore').then(mod => mod.getDocs(qQuery));
+                    gradingQuestions = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as AssessmentQuestion));
+                } catch (e) {
+                    console.error("Failed to fetch grading key", e);
+                }
+            }
+
             let correctCount = 0;
             // Evaluated answers locally
             const evaluatedAnswers = answers.map((ans) => {
-                const question = questions.find(q => q.id === ans.questionId);
-                let isCorrect = ans.isCorrect;
+                const question = gradingQuestions.find(q => q.id === ans.questionId);
+                let isCorrect = false;
 
-                // If question has correctAnswer property (frontend fallback), use it to verify
                 if (question && typeof (question as any).correctAnswer === 'number') {
                     const expected = (question as any).correctAnswer;
                     isCorrect = ans.selectedOption === expected;
@@ -201,6 +212,8 @@ export function useFieldAssessment(fieldId: string) {
                 status: statusStr,
                 answers: evaluatedAnswers,
                 timeSpent,
+                tabSwitchCount: metadata?.tabSwitchCount || 0,
+                terminated: metadata?.terminated || false,
                 attemptDate: serverTimestamp(),
                 updatedAt: serverTimestamp(),
                 attemptsCount: (status?.attemptsCount || 0) + 1
@@ -226,7 +239,6 @@ export function useFieldAssessment(fieldId: string) {
             showCompletionToast(result);
 
             return result;
-
         } catch (error) {
             console.error('Error submitting assessment:', error);
             toast.error('Failed to submit assessment. Please try again.');

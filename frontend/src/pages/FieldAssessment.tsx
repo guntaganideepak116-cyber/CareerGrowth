@@ -72,10 +72,15 @@ export default function FieldAssessment() {
                 where('fieldId', '==', fieldId.toLowerCase().trim())
             );
             const snapshot = await getDocs(q);
-            return snapshot.docs.map(doc => ({
-                id: doc.id,
-                ...doc.data()
-            })) as AssessmentQuestion[];
+            return snapshot.docs.map(doc => {
+                const data = doc.data();
+                // Security: Do not expose correctAnswer to frontend (Grading fetched separately)
+                const { correctAnswer, ...rest } = data;
+                return {
+                    id: doc.id,
+                    ...rest
+                } as AssessmentQuestion;
+            });
         },
         enabled: !!fieldId,
         staleTime: Infinity, // Questions don't change often
@@ -97,7 +102,7 @@ export default function FieldAssessment() {
     };
 
     // Handle quiz completion
-    const handleQuizComplete = async (answers: AssessmentAnswer[], timeSpent: number) => {
+    const handleQuizComplete = async (answers: AssessmentAnswer[], timeSpent: number, metadata?: any) => {
         if (!field || !fieldContent) return;
 
         try {
@@ -105,7 +110,8 @@ export default function FieldAssessment() {
                 questions,
                 answers,
                 timeSpent,
-                fieldContent.fieldName
+                fieldContent.fieldName,
+                metadata
             );
             setResult(assessmentResult);
             setStage('results');
