@@ -12,6 +12,15 @@ import { Button } from '@/components/ui/button';
 import { toast } from 'sonner';
 import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
+import { streamChat } from '@/lib/ai-chat';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog';
+import { Send, Terminal } from 'lucide-react';
 
 type FilterType = 'all' | 'high' | 'medium' | 'low';
 
@@ -22,6 +31,11 @@ export default function Certifications() {
   const [searchQuery, setSearchQuery] = useState('');
   const [filterType, setFilterType] = useState<FilterType>('all');
   const [isSeeding, setIsSeeding] = useState(false);
+
+  // Roadmap AI State
+  const [showRoadmapModal, setShowRoadmapModal] = useState(false);
+  const [roadmapText, setRoadmapText] = useState('');
+  const [isGeneratingRoadmap, setIsGeneratingRoadmap] = useState(false);
 
   // Load certifications dynamic
   const { data: certifications = [], isLoading: loading, refetch } = useCertifications();
@@ -52,6 +66,53 @@ export default function Certifications() {
       toast.error('Failed to seed database');
     } finally {
       setIsSeeding(false);
+    }
+  };
+
+  const generateAIRoadmap = async () => {
+    if (isGeneratingRoadmap) return;
+
+    setRoadmapText('');
+    setShowRoadmapModal(true);
+    setIsGeneratingRoadmap(true);
+
+    const userContext = `
+      User Field: ${profile?.field}
+      User Specialization: ${profile?.specialization || 'None'}
+      User Branch: ${profile?.branch || 'None'}
+      Current Level: ${profile?.career_phase || 'Student'}
+    `;
+
+    const prompt = `Generate a highly professional and structured industry certification roadmap for a professional in the ${profile?.field} field (Specialization: ${profile?.specialization || 'General'}). 
+    
+    The response should:
+    1. Start with a brief career path overview.
+    2. List 4-6 specific industry certifications in order (Beginner -> Advanced).
+    3. For each certification, include:
+       - 🎯 Name & Provider
+       - 💡 Why it matters
+       - ⏱️ Approx. time to complete
+       - 💰 Career impact / Salary boost
+    4. Provide a "Pro Tip" for clearing these certifications.
+    
+    Keep the formatting clean with markdown, using bolding and bullet points. Use standard icons like 🚀, 💎, 📈 where appropriate.`;
+
+    try {
+      await streamChat({
+        messages: [
+          { role: 'user', content: prompt }
+        ],
+        role: 'Certification Strategist',
+        onDelta: (delta) => setRoadmapText(prev => prev + delta),
+        onDone: () => setIsGeneratingRoadmap(false),
+        onError: (err) => {
+          toast.error(err);
+          setIsGeneratingRoadmap(false);
+        }
+      });
+    } catch (error) {
+      console.error('Roadmap error:', error);
+      setIsGeneratingRoadmap(false);
     }
   };
 
@@ -279,12 +340,58 @@ export default function Certifications() {
               <p className="text-sm text-muted-foreground mb-3">
                 These certifications are ranked by industry acceptance and career impact for professionals in <strong>{profile?.field || 'your field'}</strong>. Start with high-acceptance certifications to build credibility.
               </p>
-              <Button variant="hero" size="sm">
-                View Recommended Path
+              <Button variant="hero" size="sm" onClick={generateAIRoadmap} disabled={isGeneratingRoadmap}>
+                {isGeneratingRoadmap ? (
+                  <><Loader2 className="w-4 h-4 mr-2 animate-spin" /> Analyzing Field...</>
+                ) : (
+                  'View Recommended Path'
+                )}
               </Button>
             </div>
           </div>
         </div>
+
+        {/* AI Roadmap Modal */}
+        <Dialog open={showRoadmapModal} onOpenChange={setShowRoadmapModal}>
+          <DialogContent className="sm:max-w-2xl max-h-[80vh] overflow-y-auto">
+            <DialogHeader>
+              <div className="flex items-center gap-3 mb-2">
+                <div className="p-2 bg-primary/10 rounded-lg">
+                  <Sparkles className="w-5 h-5 text-primary" />
+                </div>
+                <div>
+                  <DialogTitle>AI Career Roadmap</DialogTitle>
+                  <DialogDescription>
+                    Tailored path for {profile?.field} • Generated in real-time
+                  </DialogDescription>
+                </div>
+              </div>
+            </DialogHeader>
+
+            <div className="mt-4 prose prose-sm dark:prose-invert max-w-none">
+              {roadmapText ? (
+                <div className="whitespace-pre-wrap text-sm leading-relaxed text-foreground/90 bg-secondary/30 p-4 rounded-xl border border-border">
+                  {roadmapText}
+                </div>
+              ) : (
+                <div className="flex flex-col items-center justify-center py-12 gap-4">
+                  <Loader2 className="w-8 h-8 animate-spin text-primary" />
+                  <p className="text-muted-foreground animate-pulse text-sm">
+                    AI is analyzing market trends and industry requirements...
+                  </p>
+                </div>
+              )}
+            </div>
+
+            {!isGeneratingRoadmap && roadmapText && (
+              <div className="mt-6 flex justify-end">
+                <Button onClick={() => setShowRoadmapModal(false)}>
+                  Close Roadmap
+                </Button>
+              </div>
+            )}
+          </DialogContent>
+        </Dialog>
       </div>
     </DashboardLayout>
   );
