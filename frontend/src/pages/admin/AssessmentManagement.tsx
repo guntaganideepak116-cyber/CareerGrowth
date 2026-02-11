@@ -54,8 +54,6 @@ export default function AssessmentManagement() {
     const [isDialogOpen, setIsDialogOpen] = useState(false);
     const [passingScore, setPassingScore] = useState(75);
     const [assessmentEnabled, setAssessmentEnabled] = useState(true);
-    import { seedAssessmentQuestions } from '@/utils/assessmentSeeder';
-    // ... existing imports ...
     const [seeding, setSeeding] = useState(false);
     const queryClient = useQueryClient();
 
