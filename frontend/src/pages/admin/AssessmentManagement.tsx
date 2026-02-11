@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { db, auth } from '@/lib/firebase';
 import { collection, query, where, getDocs } from 'firebase/firestore';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { seedAssessmentQuestions } from '@/utils/assessmentSeeder';
 import { AdminLayout } from '@/components/admin/AdminLayout';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -53,7 +54,28 @@ export default function AssessmentManagement() {
     const [isDialogOpen, setIsDialogOpen] = useState(false);
     const [passingScore, setPassingScore] = useState(75);
     const [assessmentEnabled, setAssessmentEnabled] = useState(true);
+    import { seedAssessmentQuestions } from '@/utils/assessmentSeeder';
+    // ... existing imports ...
+    const [seeding, setSeeding] = useState(false);
     const queryClient = useQueryClient();
+
+    const handleSeedDatabase = async () => {
+        if (!confirm('WARNING: This will DELETE all existing questions and replace them with generated templates. Continue?')) {
+            return;
+        }
+        setSeeding(true);
+        try {
+            await seedAssessmentQuestions();
+            toast.success('Database reseeded successfully!');
+            queryClient.invalidateQueries();
+            setSelectedField(''); // Reset view
+        } catch (err) {
+            toast.error('Failed to seed database');
+            console.error(err);
+        } finally {
+            setSeeding(false);
+        }
+    };
 
     // Form state for question editing
     const [questionForm, setQuestionForm] = useState({
@@ -145,6 +167,12 @@ export default function AssessmentManagement() {
             return;
         }
 
+        // Check for duplicates
+        if (questions.some(q => q.question.toLowerCase() === questionForm.question.toLowerCase() && q.id !== editingQuestion?.id)) {
+            toast.error('This question already exists in this field.');
+            return;
+        }
+
         try {
             const token = await auth.currentUser?.getIdToken();
             const payload = {
@@ -229,6 +257,15 @@ export default function AssessmentManagement() {
                     <p className="text-muted-foreground mt-2">
                         Manage assessment questions, configure settings, and view statistics for all fields.
                     </p>
+                    <div className="mt-4 flex gap-4">
+                        <Button
+                            variant="destructive"
+                            onClick={handleSeedDatabase}
+                            disabled={seeding}
+                        >
+                            {seeding ? 'Seeding...' : 'Reset & Seed Database (Dev Tool)'}
+                        </Button>
+                    </div>
                 </div>
 
                 {/* Statistics Cards */}
