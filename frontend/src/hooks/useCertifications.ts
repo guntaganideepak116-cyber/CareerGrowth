@@ -30,7 +30,7 @@ const generateFallbackCerts = (fieldId: string): Certification[] => {
             industryRecognitionLevel: 'high',
             validity: 'Lifetime',
             skillsCovered: [fieldName, 'Professional Practice', 'Core Concepts', 'Advanced Techniques'],
-            officialLink: '#',
+            officialLink: `https://www.google.com/search?q=${encodeURIComponent(fieldName + ' ' + level + ' certification ' + (i % 2 === 0 ? 'Coursera' : 'Udemy'))}`,
             createdAt: new Date().toISOString(),
             valueScore: 85 + i,
             timeToComplete: '6-8 weeks',

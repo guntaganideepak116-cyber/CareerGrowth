@@ -35,7 +35,7 @@ const generatePlaceholderCertifications = (fieldId: string, fieldName: string): 
             industryRecognitionLevel: 'high',
             validity: 'Lifetime',
             skillsCovered: [fieldName, 'Analysis', 'Professional Practice'],
-            officialLink: 'https://example.com/certification',
+            officialLink: `https://www.google.com/search?q=${encodeURIComponent(fieldName + ' ' + level + ' certification')}`,
             createdAt: new Date().toISOString(),
             // Mapped fields
             valueScore: 80 + i,
