@@ -11,6 +11,7 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { toast } from 'sonner';
 import { Badge } from '@/components/ui/badge';
+import { cn } from '@/lib/utils';
 
 type FilterType = 'all' | 'high' | 'medium' | 'low';
 
@@ -54,29 +55,25 @@ export default function Certifications() {
     }
   };
 
-  const userPlan = (profile?.planType as 'free' | 'pro' | 'premium') || 'free';
+  const userPlan = (profile?.userPlan as 'free' | 'pro' | 'premium') || 'free';
   const planLevels = { 'free': 0, 'pro': 1, 'premium': 2 };
 
   const filteredCertifications = certifications.filter(cert => {
-    const matchesSearch = cert.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    const matchesSearch = !searchQuery ||
+      cert.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
       cert.provider.toLowerCase().includes(searchQuery.toLowerCase());
 
     // Acceptance Level Filter
     const matchesFilter = filterType === 'all' || cert.industryRecognitionLevel === filterType;
 
-    // Plan Access Filter
-    // Strict filtering: Only show if my plan >= cert plan
-    const certLevel = planLevels[cert.planAccess || 'free'];
-    const myLevel = planLevels[userPlan];
-    const matchesPlan = certLevel <= myLevel;
-
-    return matchesSearch && matchesFilter && matchesPlan;
+    // Show ALL certifications as requested, but we will identify which ones are "locked" in the UI
+    return matchesSearch && matchesFilter;
   });
 
   const acceptanceColors = {
-    high: 'bg-success/10 text-success',
-    medium: 'bg-warning/10 text-warning',
-    low: 'bg-muted text-muted-foreground',
+    high: 'bg-green-500/10 text-green-500',
+    medium: 'bg-yellow-500/10 text-yellow-500',
+    low: 'bg-slate-500/10 text-slate-500',
   };
 
   if (profileLoading || loading) {
@@ -86,7 +83,7 @@ export default function Certifications() {
           <div className="text-center">
             <Loader2 className="mx-auto h-12 w-12 animate-spin text-primary" />
             <p className="mt-4 text-sm text-muted-foreground">
-              Loading certifications for {profile?.branch ? profile.branch.toUpperCase() : profile?.field}...
+              Tailoring certifications for your career path...
             </p>
           </div>
         </div>
@@ -103,12 +100,12 @@ export default function Certifications() {
             <div>
               <div className="inline-flex items-center gap-2 px-4 py-2 bg-primary/10 rounded-full text-primary text-sm font-medium mb-4">
                 <Sparkles className="w-4 h-4" />
-                Personalized for {profile?.branch ? profile.branch.toUpperCase() : profile?.field}
+                Personalized for {profile?.specialization || profile?.branch || profile?.field}
               </div>
               <h1 className="text-3xl font-bold text-foreground">Industry Certifications</h1>
               <p className="mt-2 text-muted-foreground">
-                Real-world certifications tailored to accelerate your career in {profile?.field}
-                {profile?.specialization && ` (${profile.specialization})`}
+                High-impact certifications for <strong>{profile?.field}</strong>
+                {profile?.specialization && ` - ${profile.specialization}`}
               </p>
             </div>
             {/* Admin/Debug Action */}
@@ -153,13 +150,8 @@ export default function Certifications() {
           <div className="text-center py-12">
             <Award className="mx-auto h-12 w-12 text-muted-foreground" />
             <p className="mt-4 text-muted-foreground">
-              {searchQuery ? 'No certifications match your search.' : 'No certifications available for your current plan.'}
+              {searchQuery ? 'No certifications match your search.' : 'No certifications available for this field yet.'}
             </p>
-            {userPlan === 'free' && certifications.length > 0 && (
-              <p className="text-sm text-primary mt-2 cursor-pointer" onClick={() => navigate('/subscription')}>
-                Upgrade to Pro to see more advanced certifications.
-              </p>
-            )}
           </div>
         ) : (
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -175,10 +167,17 @@ export default function Certifications() {
                     <div className="flex items-center gap-2 mb-2">
                       <Award className="w-5 h-5 text-primary" />
                       <h3 className="font-semibold text-foreground mr-2">{cert.title}</h3>
-                      {cert.planAccess && cert.planAccess !== 'free' && (
-                        <Badge variant="secondary" className="text-[10px] px-1.5 py-0.5 h-5">
-                          {cert.planAccess.toUpperCase()}
-                        </Badge>
+                      {/* Plan Badge */}
+                      <Badge variant={cert.planAccess === 'free' ? 'secondary' : 'outline'} className={cn(
+                        "text-[10px] px-1.5 py-0.5 h-5 shadow-sm",
+                        cert.planAccess === 'pro' && "border-amber-500 text-amber-500",
+                        cert.planAccess === 'premium' && "border-purple-500 text-purple-500"
+                      )}>
+                        {cert.planAccess?.toUpperCase() || 'FREE'}
+                      </Badge>
+                      {/* Locked Indicator */}
+                      {planLevels[cert.planAccess || 'free'] > planLevels[userPlan] && (
+                        <Lock className="w-3.5 h-3.5 text-muted-foreground ml-1" />
                       )}
                     </div>
                     <p className="text-sm text-muted-foreground">{cert.provider}</p>
@@ -248,11 +247,18 @@ export default function Certifications() {
 
                 {/* Actions */}
                 <div className="flex gap-3 pt-4 border-t border-border">
-                  <Button variant="hero" size="sm" className="flex-1" asChild>
-                    <a href={cert.officialLink} target="_blank" rel="noopener noreferrer">
-                      Enroll Now
-                    </a>
-                  </Button>
+                  {planLevels[cert.planAccess || 'free'] <= planLevels[userPlan] ? (
+                    <Button variant="hero" size="sm" className="flex-1" asChild>
+                      <a href={cert.officialLink} target="_blank" rel="noopener noreferrer">
+                        Enroll Now
+                      </a>
+                    </Button>
+                  ) : (
+                    <Button variant="outline" size="sm" className="flex-1 gap-2 border-primary/50 text-primary hover:bg-primary/5" onClick={() => navigate('/subscription')}>
+                      <Lock className="w-4 h-4" />
+                      Upgrade to Unlock
+                    </Button>
+                  )}
                   <Button variant="outline" size="sm">
                     Save for Later
                   </Button>
@@ -271,7 +277,7 @@ export default function Certifications() {
             <div className="flex-1">
               <h3 className="font-semibold text-foreground mb-1">Certification Roadmap</h3>
               <p className="text-sm text-muted-foreground mb-3">
-                These certifications are ranked by industry acceptance and career impact for professionals in <strong>{profile?.branch ? profile.branch.toUpperCase() : profile?.field}</strong>. Start with high-acceptance certifications to build credibility.
+                These certifications are ranked by industry acceptance and career impact for professionals in <strong>{profile?.field || 'your field'}</strong>. Start with high-acceptance certifications to build credibility.
               </p>
               <Button variant="hero" size="sm">
                 View Recommended Path
