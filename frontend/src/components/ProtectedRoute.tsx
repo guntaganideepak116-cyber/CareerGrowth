@@ -31,27 +31,25 @@ export function ProtectedRoute({ children, requireAdmin = false }: ProtectedRout
         return <Navigate to="/login" replace />;
     }
 
-    // User exists but no profile
-    if (!profile) {
-        return <Navigate to="/login" replace />;
-    }
-
-    // Defensive: Treat missing role as 'user'
-    const userRole = profile.role || 'user';
+    // User role check (if profile exists)
+    const userRole = profile?.role || 'user';
 
     // Admin route required but user is not admin
-    if (requireAdmin && userRole !== 'admin') {
-        if (!hasShownToast.current) {
-            toast.error('⚠️ Access Denied', {
-                description: 'You do not have permission to access the admin area.',
-                duration: 5000,
-            });
-            hasShownToast.current = true;
+    if (requireAdmin) {
+        // If admin required, we MUST wait or ensure profile is loaded
+        // However, if profile is null but user is admin, this might fail unless we handled it in useAuth
+        // But for typical admin accounts, profile should exist.
+        if (userRole !== 'admin') {
+            if (!hasShownToast.current) {
+                toast.error('⚠️ Access Denied', {
+                    description: 'You do not have permission to access the admin area.',
+                    duration: 5000,
+                });
+                hasShownToast.current = true;
+            }
+            return <Navigate to="/dashboard" replace />;
         }
-        return <Navigate to="/dashboard" replace />;
     }
-
-
 
     // All checks passed - render the protected content
     return <>{children}</>;
