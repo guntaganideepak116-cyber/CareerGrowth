@@ -233,6 +233,8 @@ export function useFieldAssessment(fieldId: string) {
                 status: resultData.status as 'passed' | 'needs_improvement',
                 attemptDate: new Date(),
                 timeSpent: resultData.timeSpent,
+                // @ts-ignore: Return questions for review
+                questionsWithAnswers: gradingQuestions
             };
 
             updateLocalStatus(result);

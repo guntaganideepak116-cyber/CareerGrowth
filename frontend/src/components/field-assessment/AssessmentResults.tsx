@@ -221,7 +221,11 @@ export function AssessmentResults({
                                                     Your answer: {question.options[answer?.selectedOption || 0]}
                                                 </p>
                                                 <p className="text-success">
-                                                    Correct answer: {question.options[question.correctAnswer]}
+                                                    Correct answer: {
+                                                        question.correctAnswer !== undefined
+                                                            ? question.options[question.correctAnswer]
+                                                            : 'Not available'
+                                                    }
                                                 </p>
                                                 {question.explanation && (
                                                     <p className="text-muted-foreground italic">

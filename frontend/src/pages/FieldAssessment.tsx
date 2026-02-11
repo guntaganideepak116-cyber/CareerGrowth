@@ -113,6 +113,14 @@ export default function FieldAssessment() {
                 fieldContent.fieldName,
                 metadata
             );
+
+            // If result contains the full questions with answers (from fallback grading), use them to show correct answers
+            // @ts-ignore
+            if (assessmentResult.questionsWithAnswers) {
+                // @ts-ignore
+                setQuestions(assessmentResult.questionsWithAnswers);
+            }
+
             setResult(assessmentResult);
             setStage('results');
         } catch (error) {
