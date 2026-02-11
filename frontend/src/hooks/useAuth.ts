@@ -55,7 +55,7 @@ export interface Profile {
   roadmap_progress: number; // 0-100 percentage
 
   // Subscription Plan Fields
-  userPlan: 'free' | 'premium' | 'enterprise'; // Current subscription plan
+  userPlan: 'free' | 'pro' | 'premium'; // Current subscription plan
   planStartDate: string; // ISO timestamp when plan started
 
   // Onboarding & Flow Control
