@@ -45,6 +45,7 @@ const navItems = [
   { icon: Bell, label: 'Notifications', path: '/notifications' },
 ];
 
+// This is the original sidebar component (restored)
 export function Sidebar() {
   const [collapsed, setCollapsed] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
