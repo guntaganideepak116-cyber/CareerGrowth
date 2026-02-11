@@ -9,34 +9,23 @@ export function useProjects() {
     const { user, profile } = useAuthContext();
     const fieldId = profile?.field;
 
-    // Determine user plan (mocked or actual)
-    // Assuming profile has planType, or we default to free
-    // The prompt says "Get user.planType".
-    const planType: UserPlan = (profile?.planType as UserPlan) || 'free';
-
-    // Determine allowed plans based on user plan
-    const allowedPlans: UserPlan[] = ['free'];
-    if (planType === 'pro') allowedPlans.push('pro');
-    if (planType === 'premium') {
-        allowedPlans.push('pro');
-        allowedPlans.push('premium');
-    }
+    // We fetch all projects for the field to allow upselling (users see locked projects).
+    // Locking logic is handled in the UI/Page component.
 
     return useQuery({
-        queryKey: ['projects', fieldId, planType],
+        queryKey: ['projects', fieldId],
         queryFn: async (): Promise<Project[]> => {
             if (!fieldId) return [];
 
             try {
                 const projectsRef = collection(db, 'projects');
 
-                // Query: fieldId == selectedField AND planAccess in allowedPlans
-                // Note: 'in' query allows up to 10 values, which is fine here (3 max).
+                // Query: fieldId == selectedField
+                // We fetch all tiers (Free, Pro, Premium) so users can see what's available.
                 const q = query(
                     projectsRef,
-                    where('fieldId', '==', fieldId),
-                    where('planAccess', 'in', allowedPlans)
-                    // orderBy('createdAt', 'desc') // Requires index, optional
+                    where('fieldId', '==', fieldId)
+                    // orderBy('resumeStrength', 'desc') // Example sort, requires index
                 );
 
                 const snapshot = await getDocs(q);
