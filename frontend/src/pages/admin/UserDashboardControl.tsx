@@ -157,16 +157,30 @@ export default function UserDashboardControl() {
     // Send notification to user
     const sendNotificationToUser = async (userId: string, userEmail: string) => {
         setProcessingAction(userId);
+        const title = 'Admin Message';
+        const message = 'You have a new message from admin. Please check your dashboard.';
+
         try {
             // Create notification in Firestore
             const notifRef = collection(db, 'notifications');
             await addDoc(notifRef, {
                 userId: userId,
-                title: 'Admin Message',
-                message: 'You have a new message from admin. Please check your dashboard.',
+                title,
+                message,
                 type: 'admin',
                 read: false,
                 createdAt: new Date().toISOString()
+            });
+
+            // Send Email via Vercel Function
+            await fetch('/api/send-email', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    to: userEmail,
+                    title,
+                    message
+                })
             });
 
             toast.success(`Notification sent to ${userEmail}`);
