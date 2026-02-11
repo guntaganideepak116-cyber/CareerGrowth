@@ -1,11 +1,13 @@
+
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useQuery } from '@tanstack/react-query';
 import { DashboardLayout } from '@/components/dashboard/DashboardLayout';
 import { Button } from '@/components/ui/button';
 import { toast } from 'sonner';
 import { useAuthContext } from '@/contexts/AuthContext';
-import { FieldProject } from '@/data/projectsData';
+import { useProjects } from '@/hooks/useProjects';
+import { seedProjects } from '@/utils/seedProjects';
+import { Project } from '@/types/project';
 import {
   Dialog,
   DialogContent,
@@ -25,26 +27,31 @@ import {
   ChevronRight,
   Loader2,
   Lock,
+  Database
 } from 'lucide-react';
 
 export default function Projects() {
   const { user, profile, loading: profileLoading } = useAuthContext();
   const navigate = useNavigate();
 
-  const [filter, setFilter] = useState<'all' | 'Free' | 'Pro' | 'Premium'>('all');
-  const [selectedProject, setSelectedProject] = useState<FieldProject | null>(null);
+  const [filter, setFilter] = useState<'all' | 'free' | 'pro' | 'premium'>('all');
+  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+  const [isSeeding, setIsSeeding] = useState(false);
 
-  const handleStartProject = (project: FieldProject) => {
-    // Check user plan from local storage (simulating auth)
-    const userPlan = localStorage.getItem('userPlan') || 'Free';
+  // Use the new hook for dynamic data
+  const { data: projects = [], isLoading: loading, refetch } = useProjects();
+
+  const handleStartProject = (project: Project) => {
+    // Check user plan from profile, or default to free
+    const userPlan = (profile?.planType as ('free' | 'pro' | 'premium')) || 'free';
 
     // Define access levels
-    const levels = { 'Free': 0, 'Pro': 1, 'Premium': 2 };
-    const userLevel = levels[userPlan as keyof typeof levels] || 0;
-    const projectLevel = levels[project.tier || 'Free'] || 0;
+    const levels = { 'free': 0, 'pro': 1, 'premium': 2 };
+    const userLevel = levels[userPlan];
+    const projectLevel = levels[project.planAccess || 'free'];
 
     if (projectLevel > userLevel) {
-      toast.error(`Upgrade to ${project.tier} to access this project`, {
+      toast.error(`Upgrade to ${project.planAccess} to access this project`, {
         action: {
           label: 'Upgrade',
           onClick: () => navigate('/subscription')
@@ -55,7 +62,23 @@ export default function Projects() {
 
     // Start project workspace
     navigate(`/project/${project.id}`);
-    toast.success(`Opening ${project.name}`);
+    toast.success(`Opening ${project.title}`);
+  };
+
+  const handleSeedDatabase = async () => {
+    if (isSeeding) return;
+    setIsSeeding(true);
+    try {
+      // Double check if we need to pass anything
+      await seedProjects();
+      toast.success('Projects database initialized!');
+      refetch();
+    } catch (e) {
+      console.error(e);
+      toast.error('Failed to seed database');
+    } finally {
+      setIsSeeding(false);
+    }
   };
 
   useEffect(() => {
@@ -72,35 +95,9 @@ export default function Projects() {
     }
   }, [profile?.field, profileLoading, navigate]);
 
-  // Optimized: Load projects based on field & branch using React Query
-  const { data: projects = [], isLoading: loading } = useQuery({
-    queryKey: ['field_projects', profile?.field, profile?.branch],
-    queryFn: async () => {
-      if (!profile?.field) return [];
-
-      const apiBase = import.meta.env.VITE_API_URL || 'http://localhost:5000';
-      const queryParams = new URLSearchParams();
-      queryParams.append('field', profile.field);
-      if (profile.branch) {
-        queryParams.append('branch', profile.branch);
-      }
-
-      const res = await fetch(`${apiBase}/api/projects?${queryParams}`);
-      if (!res.ok) throw new Error('Failed to fetch projects');
-
-      const data = await res.json();
-      if (data.success && Array.isArray(data.data)) {
-        return data.data;
-      }
-      return [];
-    },
-    enabled: !!profile?.field,
-    staleTime: 1000 * 60 * 30, // 30 minutes
-  });
-
   const filteredProjects = filter === 'all'
     ? projects
-    : projects.filter(p => (p.tier || 'Free') === filter);
+    : projects.filter(p => (p.planAccess || 'free') === filter);
 
   const impactColors = {
     high: 'text-success bg-success/10',
@@ -113,6 +110,9 @@ export default function Projects() {
     intermediate: 'text-warning bg-warning/10',
     advanced: 'text-danger bg-danger/10',
   };
+
+  // Format tier name for display (capitalize)
+  const formatTier = (tier: string) => tier.charAt(0).toUpperCase() + tier.slice(1);
 
   if (profileLoading || loading) {
     return (
@@ -144,11 +144,19 @@ export default function Projects() {
               Real-world projects tailored to your field and career goals
             </p>
           </div>
+
+          {/* Admin/Debug Action */}
+          {projects.length === 0 && (
+            <Button variant="outline" onClick={handleSeedDatabase} disabled={isSeeding}>
+              {isSeeding ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : <Database className="w-4 h-4 mr-2" />}
+              Initialize Database
+            </Button>
+          )}
         </div>
 
         {/* Filters */}
         <div className="flex gap-2 overflow-x-auto pb-2">
-          {(['all', 'Free', 'Pro', 'Premium'] as const).map(tier => (
+          {(['all', 'free', 'pro', 'premium'] as const).map(tier => (
             <button
               key={tier}
               onClick={() => setFilter(tier)}
@@ -157,7 +165,7 @@ export default function Projects() {
                 : 'bg-secondary text-muted-foreground hover:text-foreground hover:shadow-sm'
                 }`}
             >
-              {tier === 'all' ? 'All Projects' : `${tier} Projects`}
+              {tier === 'all' ? 'All Projects' : `${formatTier(tier)} Projects`}
             </button>
           ))}
         </div>
@@ -167,8 +175,13 @@ export default function Projects() {
           <div className="text-center py-12">
             <Folder className="mx-auto h-12 w-12 text-muted-foreground" />
             <p className="mt-4 text-muted-foreground">
-              No projects available for this difficulty level.
+              No projects available for this selection.
             </p>
+            {projects.length === 0 && (
+              <p className="text-xs text-muted-foreground mt-2">
+                Tip: Click "Initialize Database" to generate sample projects for your field.
+              </p>
+            )}
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -186,31 +199,34 @@ export default function Projects() {
                     </div>
                     <div className="flex-1">
                       <div className="flex items-center gap-2">
-                        <h3 className="font-semibold text-foreground">{project.name}</h3>
-                        {project.tier && project.tier !== 'Free' && (
+                        <h3 className="font-semibold text-foreground">{project.title}</h3>
+                        {project.planAccess && project.planAccess !== 'free' && (
                           <span className="text-[10px] px-1.5 py-0.5 rounded-full font-medium bg-purple-500/10 text-purple-600 border border-purple-200">
-                            {project.tier}
+                            {formatTier(project.planAccess)}
                           </span>
                         )}
                       </div>
                       <span className={`text-xs px-2 py-0.5 rounded-full ${difficultyColors[project.difficulty]}`}>
-                        {project.difficulty}
+                        {formatTier(project.difficulty)}
                       </span>
                     </div>
                   </div>
                 </div>
 
-                <p className="text-sm text-muted-foreground mb-4">{project.description}</p>
+                <p className="text-sm text-muted-foreground mb-4 line-clamp-2">{project.description}</p>
 
                 {/* Skills - Replaced Tech Stack */}
                 <div className="mb-4">
                   <p className="text-xs font-medium text-muted-foreground mb-2">Key Skills:</p>
                   <div className="flex flex-wrap gap-2">
-                    {project.skills.map((skill) => (
+                    {project.requiredSkills.slice(0, 4).map((skill) => (
                       <span key={skill} className="px-2 py-1 bg-secondary text-muted-foreground text-xs rounded-md">
                         {skill}
                       </span>
                     ))}
+                    {project.requiredSkills.length > 4 && (
+                      <span className="px-2 py-1 bg-secondary text-muted-foreground text-xs rounded-md">+{project.requiredSkills.length - 4}</span>
+                    )}
                   </div>
                 </div>
 
@@ -232,19 +248,20 @@ export default function Projects() {
                 {/* Extra Info */}
                 <div className="space-y-1 mb-4 text-xs text-muted-foreground">
                   <p>⏱️ Estimated Time: {project.estimatedTime}</p>
-                  <p>💼 Real-world: {project.realWorldApplication}</p>
+                  <p>💼 Real-world: {project.industryRelevance}</p>
                 </div>
 
                 {/* Actions */}
                 <div className="flex gap-3 pt-4 border-t border-border">
                   <Button
-                    variant={project.tier && project.tier !== 'Free' ? "outline" : "hero"}
+                    variant={project.planAccess && project.planAccess !== 'free' ? "outline" : "hero"}
                     size="sm"
                     className="flex-1 gap-2"
                     onClick={() => handleStartProject(project)}
                   >
-                    {project.tier && project.tier !== 'Free' ? <Lock className="w-4 h-4" /> : <Plus className="w-4 h-4" />}
-                    {project.tier && project.tier !== 'Free' ? 'Unlock Project' : 'Start Project'}
+                    {project.planAccess && project.planAccess !== 'free' ? <Lock className="w-4 h-4" /> : <Plus className="w-4 h-4" />}
+                    {project.planAccess && project.planAccess !== 'free' ? 'Unlock Project' : 'Start Project'}
+                    {!project.planAccess || project.planAccess === 'free' && <Plus className="w-4 h-4" />}
                   </Button>
                   <Button
                     variant="ghost"
@@ -286,10 +303,10 @@ export default function Projects() {
           <DialogHeader>
             <DialogTitle className="flex items-center gap-2">
               <Folder className="w-5 h-5 text-primary" />
-              {selectedProject?.name}
-              {selectedProject?.tier && selectedProject.tier !== 'Free' && (
+              {selectedProject?.title}
+              {selectedProject?.planAccess && selectedProject.planAccess !== 'free' && (
                 <Badge variant="secondary" className="bg-purple-500/10 text-purple-600 border-purple-200">
-                  {selectedProject.tier}
+                  {formatTier(selectedProject.planAccess)}
                 </Badge>
               )}
             </DialogTitle>
@@ -302,7 +319,7 @@ export default function Projects() {
             <div>
               <h4 className="mb-2 text-sm font-medium">Key Skills</h4>
               <div className="flex flex-wrap gap-2">
-                {selectedProject?.skills.map((skill) => (
+                {selectedProject?.requiredSkills.map((skill) => (
                   <Badge key={skill} variant="outline">{skill}</Badge>
                 ))}
               </div>
@@ -322,15 +339,17 @@ export default function Projects() {
               </div>
             </div>
 
-            <div className="space-y-2">
-              <h4 className="text-sm font-medium flex items-center gap-2">
-                <Sparkles className="w-4 h-4 text-primary" />
-                Real World Application
-              </h4>
-              <p className="text-sm text-muted-foreground bg-primary/5 p-3 rounded-lg border border-primary/10">
-                {selectedProject?.realWorldApplication}
-              </p>
-            </div>
+            {selectedProject?.industryRelevance && (
+              <div className="space-y-2">
+                <h4 className="text-sm font-medium flex items-center gap-2">
+                  <Sparkles className="w-4 h-4 text-primary" />
+                  Real World Application
+                </h4>
+                <p className="text-sm text-muted-foreground bg-primary/5 p-3 rounded-lg border border-primary/10">
+                  {selectedProject.industryRelevance}
+                </p>
+              </div>
+            )}
           </div>
         </DialogContent>
       </Dialog>
