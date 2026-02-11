@@ -72,15 +72,10 @@ export default function FieldAssessment() {
                 where('fieldId', '==', fieldId.toLowerCase().trim())
             );
             const snapshot = await getDocs(q);
-            return snapshot.docs.map(doc => {
-                const data = doc.data();
-                // Security: Do not expose correctAnswer to frontend
-                const { correctAnswer, ...rest } = data;
-                return {
-                    id: doc.id,
-                    ...rest
-                } as AssessmentQuestion;
-            });
+            return snapshot.docs.map(doc => ({
+                id: doc.id,
+                ...doc.data()
+            })) as AssessmentQuestion[];
         },
         enabled: !!fieldId,
         staleTime: Infinity, // Questions don't change often
