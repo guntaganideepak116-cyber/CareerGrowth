@@ -45,8 +45,8 @@ const navItems = [
   { icon: Bell, label: 'Notifications', path: '/notifications' },
 ];
 
-// This is the original sidebar component (restored)
-export function Sidebar() {
+// This is the original sidebar component (restored as UserSidebar to force update)
+export function UserSidebar() {
   const [collapsed, setCollapsed] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const location = useLocation();

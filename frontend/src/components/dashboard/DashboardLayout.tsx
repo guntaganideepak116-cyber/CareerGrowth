@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import { Sidebar } from './Sidebar';
+import { UserSidebar } from './UserSidebar';
 import { useAuthContext } from '@/contexts/AuthContext';
 import { Loader2 } from 'lucide-react';
 import { Navigate } from 'react-router-dom';
@@ -29,7 +29,7 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
   // Regular user - show user sidebar
   return (
     <div className="min-h-screen bg-background">
-      <Sidebar />
+      <UserSidebar />
       <main className="lg:pl-64 transition-all duration-300">
         <div className="p-4 sm:p-6 lg:p-8 pt-20 lg:pt-8">{children}</div>
       </main>
