@@ -115,16 +115,18 @@ export function useAuth() {
       console.log('[Auth State Change]', currentUser ? `User: ${currentUser.email}` : 'Logged out');
 
       setUser(currentUser);
+
+      // Stop loading IMMEDIATELY after getting auth state
+      // This prevents "Redirecting..." loops while waiting for profile
+      setLoading(false);
+
       if (currentUser) {
-        // Fetch the profile for THIS session's user
-        // This won't affect other browsers/tabs at all
+        // Fetch profile in background - does not block UI
         await fetchProfile(currentUser.uid);
       } else {
-        // User logged out in THIS browser only
         setProfile(null);
         localStorage.removeItem('user_profile');
       }
-      setLoading(false);
     });
 
     return () => unsubscribe();
