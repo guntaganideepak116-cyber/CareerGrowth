@@ -58,6 +58,9 @@ export interface Profile {
   userPlan: 'free' | 'pro' | 'premium'; // Current subscription plan
   planStartDate: string; // ISO timestamp when plan started
 
+  // Notifications
+  notificationPreference?: boolean; // Email notification preference
+
   // Onboarding & Flow Control
   onboardingCompleted?: boolean;
   selectedField?: string | null;
@@ -200,6 +203,9 @@ export function useAuth() {
         completed_projects: [],
         roadmap_progress: 0,
 
+        // Notifications
+        notificationPreference: true,
+
         // Initialize Free Plan
         userPlan: 'free',
         planStartDate: new Date().toISOString(),
@@ -321,6 +327,9 @@ export function useAuth() {
           resume_url: null,
           completed_projects: [],
           roadmap_progress: 0,
+
+          // Notifications
+          notificationPreference: true,
 
           // Initialize Free Plan
           userPlan: 'free',

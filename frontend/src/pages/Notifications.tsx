@@ -284,21 +284,26 @@ export default function Notifications() {
                           <h3 className={`font-semibold ${notification.is_read ? 'text-muted-foreground' : 'text-foreground'}`}>
                             {notification.title}
                             {!notification.is_read && (
-                              <span className="ml-2 text-xs font-normal text-primary">(New)</span>
+                              <span className="ml-2 text-xs font-normal text-primary bg-primary/10 px-2 py-0.5 rounded-full inline-flex items-center">
+                                New
+                              </span>
                             )}
                           </h3>
                           <div className="flex items-center gap-2 mt-1 flex-wrap">
-                            <span className="text-xs px-2 py-0.5 rounded-full bg-primary/10 text-primary">
+                            <span className="text-xs px-2 py-0.5 rounded-full bg-secondary text-secondary-foreground border">
                               {notification.category}
                             </span>
                             <span className="text-xs text-muted-foreground">
                               {notification.field_name}
                             </span>
-                            <span className="text-xs text-muted-foreground flex items-center gap-1">
-                              <Clock className="h-3 w-3" />
-                              {formatRelativeIST(notification.created_at)}
-                            </span>
                           </div>
+                        </div>
+                        {/* Timestamp */}
+                        <div className="flex flex-col items-end gap-1">
+                          <span className="text-xs text-muted-foreground flex items-center gap-1 whitespace-nowrap bg-background/50 px-2 py-1 rounded-md border shadow-sm">
+                            <Clock className="h-3 w-3" />
+                            {formatRelativeIST(notification.created_at)}
+                          </span>
                         </div>
                       </div>
 

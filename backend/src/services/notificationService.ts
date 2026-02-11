@@ -49,8 +49,9 @@ export async function createNotification(
 
         if (emailEnabled && userData?.email) {
             // 4. Send Email
-            console.log(`📧 Sending email to ${userData.email}`);
-            await sendNotificationEmail(userData.email, title, message);
+            // console.log(`📧 Sending email to ${userData.email}`);
+            // await sendNotificationEmail(userData.email, title, message);
+            console.log(`📧 Email delivery delegated to Cloud Function for ${userData.email}`);
         }
 
     } catch (error) {
