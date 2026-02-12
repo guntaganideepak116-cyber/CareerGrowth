@@ -85,8 +85,8 @@ export function AdminLayout({ children }: AdminLayoutProps) {
                             to={item.path}
                             onClick={() => setOpen(false)}
                             className={`group flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm transition-all duration-200 ${isActive
-                                ? 'bg-sidebar-primary text-sidebar-primary-foreground shadow-sm'
-                                : 'text-sidebar-foreground/70 hover:bg-white/10 hover:text-sidebar-foreground hover:shadow-sm'
+                                ? 'bg-primary text-primary-foreground shadow-sm'
+                                : 'text-muted-foreground hover:bg-accent hover:text-accent-foreground hover:shadow-sm'
                                 }`}
                         >
                             <Icon className={`h-4 w-4 transition-transform ${!isActive && 'group-hover:scale-110'}`} />
@@ -119,44 +119,45 @@ export function AdminLayout({ children }: AdminLayoutProps) {
         <AdminGuard>
             <div className="flex min-h-screen bg-background">
                 {/* Desktop Sidebar */}
-                <aside className="hidden w-64 border-r bg-sidebar text-sidebar-foreground shadow-sm lg:block fixed h-full">
+                <aside className="hidden w-64 border-r bg-card shadow-sm lg:block fixed h-full">
                     <SidebarContent />
                 </aside>
 
-                {/* Mobile Sidebar */}
-                <Sheet open={open} onOpenChange={setOpen}>
-                    <SheetContent side="left" className="w-64 p-0 bg-sidebar text-sidebar-foreground">
-                        <SidebarContent />
-                    </SheetContent>
-                </Sheet>
-
-                <main className="flex-1 ml-0 lg:ml-64 transition-all duration-300">
-                    <header className="sticky top-0 z-10 border-b bg-sidebar/95 text-sidebar-foreground px-6 py-4 shadow-sm backdrop-blur supports-[backdrop-filter]:bg-sidebar/60">
+                {/* Main Content */}
+                <main className="flex-1 lg:pl-64 flex flex-col min-h-screen">
+                    {/* Top Bar with subtle shadow and gradient */}
+                    <header className="sticky top-0 z-10 border-b bg-card/95 px-4 lg:px-6 py-4 shadow-sm backdrop-blur supports-[backdrop-filter]:bg-card/60">
                         <div className="flex items-center justify-between">
-                            <div className="flex items-center gap-4">
-                                <Sheet>
+                            <div className="flex items-center gap-3">
+                                {/* Mobile Menu Trigger */}
+                                <Sheet open={open} onOpenChange={setOpen}>
                                     <SheetTrigger asChild>
-                                        <Button variant="ghost" size="icon" className="lg:hidden text-sidebar-foreground hover:bg-white/10 hover:text-sidebar-foreground">
+                                        <Button variant="ghost" size="icon" className="lg:hidden">
                                             <Menu className="h-6 w-6" />
-                                            <span className="sr-only">Toggle menu</span>
                                         </Button>
                                     </SheetTrigger>
+                                    <SheetContent side="left" className="p-0 w-72">
+                                        <SidebarContent />
+                                    </SheetContent>
                                 </Sheet>
-                                <h1 className="text-xl font-semibold capitalize">
-                                    {location.pathname.split('/').pop()?.replace(/-/g, ' ') || 'Overview'}
-                                </h1>
+
+                                <div>
+                                    <h1 className="text-lg lg:text-2xl font-bold tracking-tight">
+                                        {adminNavItems.find(item => item.path === location.pathname)?.label || 'Admin Dashboard'}
+                                    </h1>
+                                    <p className="hidden md:block mt-0.5 text-sm text-muted-foreground">
+                                        Platform monitoring and management
+                                    </p>
+                                </div>
                             </div>
-                            <div className="flex items-center gap-4">
-                                <span className="flex items-center gap-2 text-sm text-sidebar-foreground/80">
-                                    <span className="relative flex h-2 w-2">
-                                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-500 opacity-75"></span>
-                                        <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
-                                    </span>
-                                    System Operational
-                                </span>
+                            <div className="flex items-center gap-2 rounded-full border border-green-200 bg-green-50 px-3 py-1.5 lg:px-4 lg:py-2 shadow-sm dark:border-green-900 dark:bg-green-950">
+                                <div className="h-2 w-2 animate-pulse rounded-full bg-green-500 shadow-sm shadow-green-500/50" />
+                                <span className="text-xs lg:text-sm font-medium text-green-700 dark:text-green-300">System Online</span>
                             </div>
                         </div>
                     </header>
+
+                    {/* Content with subtle background */}
                     <div className="bg-gradient-to-br from-background to-muted/20 p-4 lg:p-6 flex-1 overflow-x-hidden">
                         {children}
                     </div>
