@@ -24,29 +24,35 @@ import {
 } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { useAuthContext } from '@/contexts/AuthContext';
+import { useSystem } from '@/contexts/SystemContext';
 import { useNotifications } from '@/hooks/useNotifications';
 import { Button } from '@/components/ui/button';
 import { toast } from 'sonner';
 
-const navItems = [
-  { icon: LayoutDashboard, label: 'Dashboard', path: '/dashboard' },
-  { icon: User, label: 'My Profile', path: '/profile' },
-  { icon: Briefcase, label: 'Portfolio', path: '/portfolio' },
-  { icon: CreditCard, label: 'Upgrade Plan', path: '/subscription' },
-  { icon: GraduationCap, label: 'Field Selection', path: '/fields' },
-  { icon: Compass, label: 'Specializations', path: '/specializations' },
-  { icon: Route, label: 'Career Paths', path: '/career-paths' },
-  { icon: Map, label: 'Roadmap', path: '/roadmap' },
-  { icon: FolderKanban, label: 'Projects', path: '/projects' },
-  { icon: Terminal, label: 'Playground', path: '/playground' },
-  { icon: Award, label: 'Certifications', path: '/certifications' },
-  { icon: MessageSquare, label: 'AI Mentor', path: '/ai-mentor' },
-  { icon: Activity, label: 'Analytics', path: '/analytics' },
-  { icon: Bell, label: 'Notifications', path: '/notifications' },
-];
-
 // This is the original sidebar component (restored as UserSidebar to force update)
 export function UserSidebar() {
+  const { config } = useSystem();
+
+  // Dynamic nav items based on admin feature flags
+  const filteredNavItems = [
+    { icon: LayoutDashboard, label: 'Dashboard', path: '/dashboard' },
+    { icon: User, label: 'My Profile', path: '/profile' },
+    { icon: Briefcase, label: 'Portfolio', path: '/portfolio' },
+    { icon: CreditCard, label: 'Upgrade Plan', path: '/subscription' },
+    { icon: GraduationCap, label: 'Field Selection', path: '/fields' },
+    { icon: Compass, label: 'Specializations', path: '/specializations' },
+    ...(config.careerPathsEnabled ? [
+      { icon: Route, label: 'Career Paths', path: '/career-paths' },
+      { icon: Map, label: 'Roadmap', path: '/roadmap' },
+    ] : []),
+    { icon: FolderKanban, label: 'Projects', path: '/projects' },
+    { icon: Terminal, label: 'Playground', path: '/playground' },
+    { icon: Award, label: 'Certifications', path: '/certifications' },
+    ...(config.aiMentorEnabled ? [{ icon: MessageSquare, label: 'AI Mentor', path: '/ai-mentor' }] : []),
+    ...(config.analyticsEnabled ? [{ icon: Activity, label: 'Analytics', path: '/analytics' }] : []),
+    { icon: Bell, label: 'Notifications', path: '/notifications' },
+  ];
+
   const [collapsed, setCollapsed] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const location = useLocation();
@@ -144,7 +150,7 @@ export function UserSidebar() {
 
         {/* Navigation */}
         <nav className="flex-1 overflow-y-auto p-4 space-y-1">
-          {navItems.map((item) => {
+          {filteredNavItems.map((item) => {
             const isActive = location.pathname === item.path;
             const isNotifications = item.path === '/notifications';
             const showBadge = isNotifications && unreadCount > 0;

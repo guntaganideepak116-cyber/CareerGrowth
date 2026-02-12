@@ -4,6 +4,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "@/contexts/AuthContext";
+import { SystemProvider, useSystem } from "@/contexts/SystemContext";
 import { NotificationProvider } from "@/contexts/NotificationContext";
 import { Suspense, lazy } from "react";
 import { Loader2 } from "lucide-react";
@@ -15,6 +16,7 @@ import Index from "./pages/Index";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Dashboard from "./pages/Dashboard";
+import Maintenance from "./pages/Maintenance";
 
 // Lazy Loaded Routes
 const Profile = lazy(() => import("./pages/Profile"));
@@ -63,63 +65,83 @@ const LoadingFallback = () => (
   </div>
 );
 
+const AppContent = () => {
+  const { config, loading: systemLoading } = useSystem();
+
+  if (systemLoading) {
+    return (
+      <div className="min-h-screen w-full flex items-center justify-center bg-background">
+        <Loader2 className="w-8 h-8 animate-spin text-primary" />
+      </div>
+    );
+  }
+
+  return (
+    <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
+      <Suspense fallback={<LoadingFallback />}>
+        <Routes>
+          {/* Public Routes */}
+          <Route path="/" element={<Index />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={config.registrationEnabled ? <Signup /> : <Login />} />
+          <Route path="/redirect" element={<LoginRedirect />} />
+          <Route path="/maintenance" element={<Maintenance />} />
+
+          {/* Protected User Routes */}
+          <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+          <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
+          <Route path="/portfolio" element={<ProtectedRoute><Portfolio /></ProtectedRoute>} />
+          <Route path="/onboarding" element={<ProtectedRoute><Onboarding /></ProtectedRoute>} />
+          <Route path="/fields" element={<ProtectedRoute><FieldSelection /></ProtectedRoute>} />
+          <Route path="/field-assessment" element={<ProtectedRoute><FieldAssessment /></ProtectedRoute>} />
+          <Route path="/branches" element={<ProtectedRoute><BranchSelection /></ProtectedRoute>} />
+          <Route path="/specializations" element={<ProtectedRoute><Specializations /></ProtectedRoute>} />
+
+          <Route path="/career-paths" element={<ProtectedRoute><CareerPaths /></ProtectedRoute>} />
+          <Route path="/roadmap" element={<ProtectedRoute><Roadmap /></ProtectedRoute>} />
+          <Route path="/projects" element={<ProtectedRoute><Projects /></ProtectedRoute>} />
+          <Route path="/certifications" element={<ProtectedRoute><Certifications /></ProtectedRoute>} />
+          <Route path="/ai-mentor" element={config.aiMentorEnabled ? <ProtectedRoute><AIMentor /></ProtectedRoute> : <NotFound />} />
+          <Route path="/subscription" element={<ProtectedRoute><Subscription /></ProtectedRoute>} />
+          <Route path="/project/:projectId" element={<ProtectedRoute><ProjectWorkspace /></ProtectedRoute>} />
+          <Route path="/playground" element={<ProtectedRoute><CodePlayground /></ProtectedRoute>} />
+          <Route path="/notifications" element={<ProtectedRoute><Notifications /></ProtectedRoute>} />
+          <Route path="/analytics" element={config.analyticsEnabled ? <ProtectedRoute><ProgressAnalytics /></ProtectedRoute> : <NotFound />} />
+
+          {/* Protected Admin Routes */}
+          <Route path="/admin" element={<ProtectedRoute requireAdmin><AdminDashboard /></ProtectedRoute>} />
+          <Route path="/admin/user-dashboard-control" element={<ProtectedRoute requireAdmin><UserDashboardControl /></ProtectedRoute>} />
+          <Route path="/admin/user-activity" element={<ProtectedRoute requireAdmin><UserActivity /></ProtectedRoute>} />
+          <Route path="/admin/field-insights" element={<ProtectedRoute requireAdmin><FieldInsights /></ProtectedRoute>} />
+          <Route path="/admin/roadmaps" element={<ProtectedRoute requireAdmin><RoadmapManager /></ProtectedRoute>} />
+          <Route path="/admin/assessments" element={<ProtectedRoute requireAdmin><AssessmentManagement /></ProtectedRoute>} />
+          <Route path="/admin/ai-usage" element={<ProtectedRoute requireAdmin><AIUsageMonitor /></ProtectedRoute>} />
+
+          <Route path="/admin/notifications" element={<ProtectedRoute requireAdmin><NotificationsControl /></ProtectedRoute>} />
+          <Route path="/admin/feedback" element={<ProtectedRoute requireAdmin><FeedbackReports /></ProtectedRoute>} />
+          <Route path="/admin/career-paths" element={<ProtectedRoute requireAdmin><CareerPathManager /></ProtectedRoute>} />
+          <Route path="/admin/security" element={<ProtectedRoute requireAdmin><SecurityAccess /></ProtectedRoute>} />
+          <Route path="/admin/settings" element={<ProtectedRoute requireAdmin><SystemSettings /></ProtectedRoute>} />
+
+          {/* 404 */}
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </Suspense>
+    </BrowserRouter>
+  );
+};
+
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
       <AuthProvider>
-        <NotificationProvider>
-          <Toaster />
-          <Sonner />
-          <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
-            <Suspense fallback={<LoadingFallback />}>
-              <Routes>
-                {/* Public Routes */}
-                <Route path="/" element={<Index />} />
-                <Route path="/login" element={<Login />} />
-                <Route path="/signup" element={<Signup />} />
-                <Route path="/redirect" element={<LoginRedirect />} />
-                {/* Protected User Routes */}
-                <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
-                <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
-                <Route path="/portfolio" element={<ProtectedRoute><Portfolio /></ProtectedRoute>} />
-                <Route path="/onboarding" element={<ProtectedRoute><Onboarding /></ProtectedRoute>} />
-                <Route path="/fields" element={<ProtectedRoute><FieldSelection /></ProtectedRoute>} />
-                <Route path="/field-assessment" element={<ProtectedRoute><FieldAssessment /></ProtectedRoute>} />
-                <Route path="/branches" element={<ProtectedRoute><BranchSelection /></ProtectedRoute>} />
-                <Route path="/specializations" element={<ProtectedRoute><Specializations /></ProtectedRoute>} />
-
-                <Route path="/career-paths" element={<ProtectedRoute><CareerPaths /></ProtectedRoute>} />
-                <Route path="/roadmap" element={<ProtectedRoute><Roadmap /></ProtectedRoute>} />
-                <Route path="/projects" element={<ProtectedRoute><Projects /></ProtectedRoute>} />
-                <Route path="/certifications" element={<ProtectedRoute><Certifications /></ProtectedRoute>} />
-                <Route path="/ai-mentor" element={<ProtectedRoute><AIMentor /></ProtectedRoute>} />
-                <Route path="/subscription" element={<ProtectedRoute><Subscription /></ProtectedRoute>} />
-                <Route path="/project/:projectId" element={<ProtectedRoute><ProjectWorkspace /></ProtectedRoute>} />
-                <Route path="/playground" element={<ProtectedRoute><CodePlayground /></ProtectedRoute>} />
-                <Route path="/notifications" element={<ProtectedRoute><Notifications /></ProtectedRoute>} />
-                <Route path="/analytics" element={<ProtectedRoute><ProgressAnalytics /></ProtectedRoute>} />
-
-                {/* Protected Admin Routes */}
-                <Route path="/admin" element={<ProtectedRoute requireAdmin><AdminDashboard /></ProtectedRoute>} />
-                <Route path="/admin/user-dashboard-control" element={<ProtectedRoute requireAdmin><UserDashboardControl /></ProtectedRoute>} />
-                <Route path="/admin/user-activity" element={<ProtectedRoute requireAdmin><UserActivity /></ProtectedRoute>} />
-                <Route path="/admin/field-insights" element={<ProtectedRoute requireAdmin><FieldInsights /></ProtectedRoute>} />
-                <Route path="/admin/roadmaps" element={<ProtectedRoute requireAdmin><RoadmapManager /></ProtectedRoute>} />
-                <Route path="/admin/assessments" element={<ProtectedRoute requireAdmin><AssessmentManagement /></ProtectedRoute>} />
-                <Route path="/admin/ai-usage" element={<ProtectedRoute requireAdmin><AIUsageMonitor /></ProtectedRoute>} />
-
-                <Route path="/admin/notifications" element={<ProtectedRoute requireAdmin><NotificationsControl /></ProtectedRoute>} />
-                <Route path="/admin/feedback" element={<ProtectedRoute requireAdmin><FeedbackReports /></ProtectedRoute>} />
-                <Route path="/admin/career-paths" element={<ProtectedRoute requireAdmin><CareerPathManager /></ProtectedRoute>} />
-                <Route path="/admin/security" element={<ProtectedRoute requireAdmin><SecurityAccess /></ProtectedRoute>} />
-                <Route path="/admin/settings" element={<ProtectedRoute requireAdmin><SystemSettings /></ProtectedRoute>} />
-
-                {/* 404 */}
-                <Route path="*" element={<NotFound />} />
-              </Routes>
-            </Suspense>
-          </BrowserRouter>
-        </NotificationProvider>
+        <SystemProvider>
+          <NotificationProvider>
+            <Toaster />
+            <Sonner />
+            <AppContent />
+          </NotificationProvider>
+        </SystemProvider>
       </AuthProvider>
     </TooltipProvider>
   </QueryClientProvider>

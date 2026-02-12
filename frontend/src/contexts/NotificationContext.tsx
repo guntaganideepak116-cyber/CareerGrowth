@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useState, ReactNode, useCallback, useMemo } from 'react';
 import { db } from '@/lib/firebase';
-import { collection, query, orderBy, limit, onSnapshot } from 'firebase/firestore';
+import { collection, query, orderBy, limit, onSnapshot, doc, updateDoc, arrayUnion, getDoc } from 'firebase/firestore';
 import { useAuthContext } from '@/contexts/AuthContext';
 
 export interface Notification {
@@ -52,57 +52,57 @@ export function NotificationProvider({ children }: { children: ReactNode }) {
 
         try {
             // Create query for real-time updates
-            // Sorting by createdAt descending to show latest first
+            // We want notifications where userId is 'all' OR the current user's UID
             const q = query(
                 collection(db, 'notifications'),
                 orderBy('createdAt', 'desc'),
                 limit(50)
             );
 
-            console.log('[NotificationContext] Setting up global listener');
+            console.log('[NotificationContext] Setting up live segmented listener');
 
             const unsubscribe = onSnapshot(q, (snapshot) => {
-                const mappedNotifications: Notification[] = snapshot.docs.map(doc => {
-                    const data = doc.data();
-                    const readBy = data.readBy || [];
+                const mappedNotifications: Notification[] = snapshot.docs
+                    .map(doc => {
+                        const data = doc.data();
+                        const readBy = data.readBy || [];
+                        const targetUserId = data.userId || 'all';
 
-                    return {
-                        id: doc.id,
-                        field_id: data.fieldId || data.field_id || 'general',
-                        field_name: data.fieldName || data.field_name || 'General',
-                        type: (data.type as any) || 'update',
-                        title: data.title || 'Notification',
-                        message: data.message || '',
-                        priority: (data.priority as any) || 'medium',
-                        category: data.category || 'General',
-                        source: data.source || 'System',
-                        action_text: data.actionText || data.action_text,
-                        action_url: data.actionUrl || data.action_url,
-                        action_required: data.action_required || false,
-                        source_url: data.sourceUrl || null,
-                        created_at: data.createdAt || new Date().toISOString(),
-                        generated_date: data.dateKey || new Date().toISOString().split('T')[0],
-                        timestamp: data.timestamp || Date.now(),
-                        is_read: readBy.includes(user.uid)
-                    };
-                });
+                        // Filter in memory for UID or 'all' to avoid complex index requirements initially
+                        // Since limit is 50, this is performant.
+                        if (targetUserId !== 'all' && targetUserId !== user.uid) return null;
+
+                        return {
+                            id: doc.id,
+                            field_id: data.fieldId || 'general',
+                            type: (data.type as any) || 'update',
+                            title: data.title || 'Notification',
+                            message: data.message || '',
+                            priority: (data.priority as any) || 'medium',
+                            action_text: data.actionText,
+                            action_url: data.actionUrl,
+                            action_required: data.actionRequired || false,
+                            source_url: data.sourceUrl || null,
+                            created_at: data.createdAt?.toDate?.()?.toISOString() || data.createdAt || new Date().toISOString(),
+                            timestamp: data.createdAt?.toMillis?.() || Date.now(),
+                            is_read: readBy.includes(user.uid)
+                        };
+                    })
+                    .filter(n => n !== null) as Notification[];
 
                 setNotifications(mappedNotifications);
                 setLoading(false);
                 setError(null);
             }, (err) => {
                 console.error('Firestore snapshot error:', err);
-                setError('Failed to load real-time notifications');
+                setError('Failed to load live notification feed');
                 setLoading(false);
             });
 
-            return () => {
-                console.log('[NotificationContext] Cleaning up listener');
-                unsubscribe();
-            };
+            return () => unsubscribe();
         } catch (err) {
             console.error('Error setting up listener:', err);
-            setError('Failed to setup notification listener');
+            setError('System sync error');
             setLoading(false);
         }
     }, [user]);
@@ -114,16 +114,19 @@ export function NotificationProvider({ children }: { children: ReactNode }) {
             // Optimistic update
             setNotifications(prev => prev.map(n => n.id === notificationId ? { ...n, is_read: true } : n));
 
-            const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
-            // Trigger API in background without blocking UI
-            fetch(`${API_URL}/api/notifications/read/${notificationId}`, {
-                method: 'PUT',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ userId: user.uid })
-            }).catch(err => console.error('Background markAsRead error:', err));
-
+            // Update Firestore directly (readBy array)
+            const docRef = doc(db, 'notifications', notificationId);
+            const docSnap = await getDoc(docRef);
+            if (docSnap.exists()) {
+                const readBy = docSnap.data().readBy || [];
+                if (!readBy.includes(user.uid)) {
+                    await updateDoc(docRef, {
+                        readBy: arrayUnion(user.uid)
+                    });
+                }
+            }
         } catch (err) {
-            console.error('Error in markAsRead logic:', err);
+            console.error('Error marking as read:', err);
         }
     }, [user]);
 
@@ -133,19 +136,21 @@ export function NotificationProvider({ children }: { children: ReactNode }) {
         const unreadIds = notifications.filter(n => !n.is_read).map(n => n.id);
         if (unreadIds.length === 0) return;
 
-        // Optimistic update for all
+        // Optimistic update
         setNotifications(prev => prev.map(n => unreadIds.includes(n.id) ? { ...n, is_read: true } : n));
 
-        // Parallel background requests
-        const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
-        Promise.all(unreadIds.map(id =>
-            fetch(`${API_URL}/api/notifications/read/${id}`, {
-                method: 'PUT',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ userId: user.uid })
-            })
-        )).catch(err => console.error('Batch markAsRead error:', err));
-
+        // Update all in Firestore
+        try {
+            const batch = unreadIds.map(async (id) => {
+                const docRef = doc(db, 'notifications', id);
+                await updateDoc(docRef, {
+                    readBy: arrayUnion(user.uid)
+                });
+            });
+            await Promise.all(batch);
+        } catch (e) {
+            console.error('Batch read update failed:', e);
+        }
     }, [notifications, user]);
 
     const contextValue = useMemo(() => ({

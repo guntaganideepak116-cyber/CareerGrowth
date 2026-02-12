@@ -59,13 +59,24 @@ export default function RoadmapManager() {
 
     // Real-time Items Listener
     useEffect(() => {
-        const q = query(collection(db, 'projects'), orderBy('createdAt', 'desc'));
-        const unsubscribe = onSnapshot(q, (snapshot) => {
-            const data = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as RoadmapItem));
-            setItems(data);
+        // Listen to both collections
+        const unsubs: (() => void)[] = [];
+
+        const qProjects = query(collection(db, 'projects'), orderBy('createdAt', 'desc'));
+        unsubs.push(onSnapshot(qProjects, (snapshot) => {
+            const projects = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data(), type: 'Project' } as RoadmapItem));
+            setItems(prev => [...projects, ...prev.filter(i => i.type === 'Certification')]);
             setLoading(false);
-        });
-        return () => unsubscribe();
+        }));
+
+        const qCerts = query(collection(db, 'certifications'), orderBy('createdAt', 'desc'));
+        unsubs.push(onSnapshot(qCerts, (snapshot) => {
+            const certs = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data(), type: 'Certification' } as RoadmapItem));
+            setItems(prev => [...certs, ...prev.filter(i => i.type === 'Project')]);
+            setLoading(false);
+        }));
+
+        return () => unsubs.forEach(unsub => unsub());
     }, []);
 
     const handleSave = async () => {
@@ -75,26 +86,52 @@ export default function RoadmapManager() {
         }
 
         try {
+            const collectionName = form.type === 'Project' ? 'projects' : 'certifications';
+
+            // Map the simplified Admin form to the robust User schema
             const payload = {
-                ...form,
+                title: form.title,
+                fieldId: form.fieldId.toLowerCase().trim(),
+                planAccess: form.planType,
+                difficulty: form.difficulty.toLowerCase(),
+                level: form.difficulty.toLowerCase(), // for certs
                 status: 'Active',
-                updatedAt: serverTimestamp()
+                updatedAt: serverTimestamp(),
+                // Add default schema fields to prevent crashes in User site
+                ...(form.type === 'Project' ? {
+                    description: `Industry-grade project for ${form.fieldId} professionals.`,
+                    requiredSkills: ['Core Fundamentals', form.fieldId],
+                    toolsRequired: ['Industrial Standard Tools'],
+                    estimatedTime: '4-6 weeks',
+                    resumeStrength: 85,
+                    careerImpact: 'high',
+                    industryRelevance: 'High demand in current market'
+                } : {
+                    provider: 'Industry Accredited',
+                    description: `Global certification node for ${form.fieldId}.`,
+                    industryRecognitionLevel: 'high',
+                    validity: 'Lifetime',
+                    skillsCovered: ['Professional standards', form.fieldId],
+                    officialLink: 'https://google.com',
+                    valueScore: 90
+                })
             };
 
             if (editingId) {
-                await updateDoc(doc(db, 'projects', editingId), payload);
-                toast.success("Catalog entry updated.");
+                await updateDoc(doc(db, collectionName, editingId), payload);
+                toast.success(`${form.type} updated.`);
             } else {
-                await addDoc(collection(db, 'projects'), {
+                await addDoc(collection(db, collectionName), {
                     ...payload,
                     createdAt: serverTimestamp()
                 });
-                toast.success("New asset registered.");
+                toast.success(`New ${form.type} registered.`);
             }
             setIsDialogOpen(false);
             setEditingId(null);
             setForm({ title: '', fieldId: '', type: 'Project', difficulty: 'Intermediate', planType: 'free' });
         } catch (error) {
+            console.error(error);
             toast.error("Database write failed.");
         }
     };
@@ -111,10 +148,11 @@ export default function RoadmapManager() {
         setIsDialogOpen(true);
     };
 
-    const handleDelete = async (id: string) => {
-        if (!confirm("De-register this asset from the career roadmap?")) return;
+    const handleDelete = async (id: string, type: 'Project' | 'Certification') => {
+        if (!confirm(`De-register this ${type} from the career roadmap?`)) return;
         try {
-            await deleteDoc(doc(db, 'projects', id));
+            const collectionName = type === 'Project' ? 'projects' : 'certifications';
+            await deleteDoc(doc(db, collectionName, id));
             toast.success("Asset decommissioned.");
         } catch (e) {
             toast.error("Decommission failed.");
@@ -231,7 +269,7 @@ export default function RoadmapManager() {
                                                     <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => handleEdit(item)}>
                                                         <Edit2 className="h-3.5 w-3.5" />
                                                     </Button>
-                                                    <Button variant="ghost" size="icon" className="h-8 w-8 text-destructive" onClick={() => handleDelete(item.id)}>
+                                                    <Button variant="ghost" size="icon" className="h-8 w-8 text-destructive" onClick={() => handleDelete(item.id, item.type)}>
                                                         <Trash2 className="h-3.5 w-3.5" />
                                                     </Button>
                                                 </div>

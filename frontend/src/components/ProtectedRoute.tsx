@@ -1,5 +1,6 @@
 import { Navigate, useLocation } from 'react-router-dom';
 import { useAuthContext } from '@/contexts/AuthContext';
+import { useSystem } from '@/contexts/SystemContext';
 import { Loader2 } from 'lucide-react';
 import { toast } from 'sonner';
 import { useRef } from 'react';
@@ -11,11 +12,12 @@ interface ProtectedRouteProps {
 
 export function ProtectedRoute({ children, requireAdmin = false }: ProtectedRouteProps) {
     const { user, profile, loading } = useAuthContext();
+    const { config, loading: systemLoading } = useSystem();
     const location = useLocation();
     const hasShownToast = useRef(false);
 
-    // Show loading spinner while auth is initializing
-    if (loading) {
+    // Show loading spinner while auth or system config is initializing
+    if (loading || systemLoading) {
         return (
             <div className="min-h-screen w-full flex items-center justify-center bg-background">
                 <div className="flex flex-col items-center gap-4">
@@ -26,13 +28,23 @@ export function ProtectedRoute({ children, requireAdmin = false }: ProtectedRout
         );
     }
 
+    // Role check
+    const userRole = profile?.role || 'user';
+    const isAdmin = userRole === 'admin';
+
+    // Protocol: Maintenance Mode check
+    // Maintenance mode blocks ALL authenticated non-admin users from accessing protected routes
+    if (config.maintenanceMode && !isAdmin && location.pathname !== '/maintenance') {
+        return <Navigate to="/maintenance" replace />;
+    }
+
     // Not logged in - redirect to login
     if (!user) {
         return <Navigate to="/login" replace />;
     }
 
     // User role check (if profile exists)
-    const userRole = profile?.role || 'user';
+    // userRole is already defined above in the maintenance check
 
     // Admin route required but user is not admin
     if (requireAdmin) {
