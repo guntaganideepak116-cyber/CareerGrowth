@@ -1,11 +1,12 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { DashboardLayout } from '@/components/dashboard/DashboardLayout';
 import { useAuthContext } from '@/contexts/AuthContext';
 import { Button } from '@/components/ui/button';
-import { Check, Info, Shield, Zap, Crown, Star, Sparkles } from 'lucide-react';
+import { Check, Info, Shield, Zap, Crown, Star, Sparkles, Loader2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { toast } from 'sonner';
+import { usePlans } from '@/hooks/usePlans';
 import {
     Dialog,
     DialogContent,
@@ -17,6 +18,7 @@ import {
 export default function Subscription() {
     const navigate = useNavigate();
     const { profile } = useAuthContext();
+    const { plans: remotePlans, loading } = usePlans();
     const [billingCycle, setBillingCycle] = useState<'monthly' | 'yearly'>('monthly');
     const [showComingSoonModal, setShowComingSoonModal] = useState(false);
 
@@ -40,65 +42,42 @@ export default function Subscription() {
         toast.info('You are currently on the Free plan.');
     };
 
-    const plans = [
-        {
-            name: 'Free',
-            description: 'Essential tools for students starting their journey.',
-            price: '₹0',
-            period: '/forever',
-            icon: Star,
-            color: 'bg-blue-500/10 text-blue-500',
-            features: [
-                'Access to basic projects',
-                'Standard career roadmaps',
-                'Community support',
-                'Basic profile analytics',
-                'Career path recommendations',
-                'Skill gap analysis',
-            ],
-            cta: 'Current Plan',
-            current: currentPlan === 'free',
-            popular: false,
-        },
-        {
-            name: 'Pro',
-            description: 'Accelerate your career with advanced resources.',
-            price: billingCycle === 'monthly' ? '₹499' : '₹4999',
-            period: billingCycle === 'monthly' ? '/month' : '/year',
-            icon: Zap,
-            color: 'bg-amber-500/10 text-amber-500',
-            features: [
-                'Everything in Free',
-                'Unlock Pro-tier Projects',
-                'Detailed, AI-assisted roadmaps',
-                'Priority support',
-                'Resume impact analysis',
-                'Mock interview practice',
-            ],
-            cta: currentPlan === 'pro' ? 'Current Plan' : 'Upgrade to Pro',
-            current: currentPlan === 'pro',
-            popular: true,
-        },
-        {
-            name: 'Premium',
-            description: 'The ultimate toolkit for serious career growth.',
-            price: billingCycle === 'monthly' ? '₹999' : '₹9999',
-            period: billingCycle === 'monthly' ? '/month' : '/year',
-            icon: Crown,
-            color: 'bg-purple-500/10 text-purple-500',
-            features: [
-                'Everything in Pro',
-                'Industry-level Premium Projects',
-                '1-on-1 Mentorship (Monthly)',
-                'Mock Interviews with experts',
-                'Exclusive Webinars',
-                'Priority job referrals',
-            ],
-            cta: currentPlan === 'premium' ? 'Current Plan' : 'Upgrade to Premium',
-            current: currentPlan === 'premium',
-            popular: false,
-        },
-    ];
+    const plans = useMemo(() => {
+        if (!remotePlans.length) return [];
+
+        return remotePlans.map(plan => {
+            const isPro = plan.id === 'pro';
+            const isPremium = plan.id === 'premium';
+
+            // Handle yearly discount (simulated based on monthly price if not explicitly stored)
+            let priceVal = parseFloat(plan.price);
+            if (billingCycle === 'yearly') {
+                // Apply 10 months price for 12 months (standard discount)
+                priceVal = Math.round((priceVal * 10));
+            }
+
+            return {
+                ...plan,
+                priceDisplay: `${plan.currency}${priceVal}`,
+                period: billingCycle === 'monthly' ? '/month' : '/year',
+                icon: isPremium ? Crown : isPro ? Zap : Star,
+                color: isPremium ? 'bg-purple-500/10 text-purple-500' : isPro ? 'bg-amber-500/10 text-amber-500' : 'bg-blue-500/10 text-blue-500',
+                cta: plan.id === currentPlan ? 'Current Plan' : `Upgrade to ${plan.name}`,
+                current: plan.id === currentPlan,
+                popular: isPro
+            };
+        });
+    }, [remotePlans, billingCycle, currentPlan]);
+
+    if (loading) {
+        return (
+            <DashboardLayout>
+                <div className="flex h-96 items-center justify-center">
+                    <Loader2 className="h-10 w-10 animate-spin text-primary" />
+                </div>
+            </DashboardLayout>
+        );
+    }
 
     return (
         <DashboardLayout>
@@ -145,7 +124,7 @@ export default function Subscription() {
                 <div className="grid md:grid-cols-3 gap-8 px-4">
                     {plans.map((plan, index) => (
                         <div
-                            key={plan.name}
+                            key={plan.id}
                             className={cn(
                                 "relative flex flex-col p-6 bg-card rounded-2xl border transition-all duration-300 hover:shadow-xl animate-slide-up",
                                 plan.popular ? "border-primary shadow-lg scale-105 z-10" : "border-border hover:border-primary/50"
@@ -165,18 +144,14 @@ export default function Subscription() {
                                 <div>
                                     <h3 className="font-bold text-xl">{plan.name}</h3>
                                     <div className="flex items-baseline gap-1">
-                                        <span className="text-2xl font-bold">{plan.price}</span>
+                                        <span className="text-2xl font-bold">{plan.priceDisplay}</span>
                                         <span className="text-sm text-muted-foreground">{plan.period}</span>
                                     </div>
                                 </div>
                             </div>
 
-                            <p className="text-muted-foreground text-sm mb-6 flex-grow">
-                                {plan.description}
-                            </p>
-
-                            <div className="space-y-4 mb-8">
-                                {plan.features.map((feature) => (
+                            <div className="space-y-4 mb-8 flex-grow">
+                                {(plan.features || []).map((feature) => (
                                     <div key={feature} className="flex items-start gap-3">
                                         <Check className="w-5 h-5 text-primary shrink-0" />
                                         <span className="text-sm text-foreground/80">{feature}</span>

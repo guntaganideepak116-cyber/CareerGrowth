@@ -116,10 +116,17 @@ export default function CareerPathManager() {
         }
     };
 
-    const filteredPaths = paths.filter(p =>
-        p.title?.toLowerCase().includes(search.toLowerCase()) ||
-        p.fieldId?.toLowerCase().includes(search.toLowerCase())
-    );
+    const filteredPaths = paths.filter(p => {
+        if (!p) return false;
+        try {
+            const term = (search || '').toLowerCase().trim();
+            const title = String(p.title || '').toLowerCase();
+            const fieldId = String(p.fieldId || '').toLowerCase();
+            return title.includes(term) || fieldId.includes(term);
+        } catch (e) {
+            return false;
+        }
+    });
 
     return (
         <AdminLayout>

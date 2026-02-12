@@ -43,7 +43,7 @@ export default function Projects() {
 
   const handleStartProject = (project: Project) => {
     // Check user plan from profile, or default to free
-    const userPlan = (profile?.planType as ('free' | 'pro' | 'premium')) || 'free';
+    const userPlan = (profile?.userPlan as ('free' | 'pro' | 'premium')) || 'free';
 
     // Define access levels
     const levels = { 'free': 0, 'pro': 1, 'premium': 2 };
@@ -219,13 +219,13 @@ export default function Projects() {
                 <div className="mb-4">
                   <p className="text-xs font-medium text-muted-foreground mb-2">Key Skills:</p>
                   <div className="flex flex-wrap gap-2">
-                    {project.requiredSkills.slice(0, 4).map((skill) => (
+                    {project.requiredSkills?.slice(0, 4).map((skill) => (
                       <span key={skill} className="px-2 py-1 bg-secondary text-muted-foreground text-xs rounded-md">
                         {skill}
                       </span>
                     ))}
-                    {project.requiredSkills.length > 4 && (
-                      <span className="px-2 py-1 bg-secondary text-muted-foreground text-xs rounded-md">+{project.requiredSkills.length - 4}</span>
+                    {(project.requiredSkills?.length || 0) > 4 && (
+                      <span className="px-2 py-1 bg-secondary text-muted-foreground text-xs rounded-md">+{project.requiredSkills!.length - 4}</span>
                     )}
                   </div>
                 </div>
@@ -234,34 +234,33 @@ export default function Projects() {
                 <div className="flex items-center gap-4 mb-4">
                   <div className="flex items-center gap-1.5">
                     <Star className="w-4 h-4 text-warning" />
-                    <span className="text-sm font-medium text-foreground">{project.resumeStrength}%</span>
+                    <span className="text-sm font-medium text-foreground">{project.resumeStrength || 0}%</span>
                     <span className="text-xs text-muted-foreground">Resume Impact</span>
                   </div>
                   <div className="flex items-center gap-1.5">
-                    <TrendingUp className={`w-4 h-4 ${impactColors[project.careerImpact].split(' ')[0]}`} />
-                    <span className={`text-xs px-2 py-0.5 rounded-full ${impactColors[project.careerImpact]}`}>
-                      {project.careerImpact} impact
+                    <TrendingUp className={`w-4 h-4 ${impactColors[project.careerImpact || 'medium'].split(' ')[0]}`} />
+                    <span className={`text-xs px-2 py-0.5 rounded-full ${impactColors[project.careerImpact || 'medium']}`}>
+                      {project.careerImpact || 'Medium'} impact
                     </span>
                   </div>
                 </div>
 
                 {/* Extra Info */}
                 <div className="space-y-1 mb-4 text-xs text-muted-foreground">
-                  <p>⏱️ Estimated Time: {project.estimatedTime}</p>
-                  <p>💼 Real-world: {project.industryRelevance}</p>
+                  <p>⏱️ Estimated Time: {project.estimatedTime || 'Self-paced'}</p>
+                  <p>💼 Real-world: {project.industryRelevance || 'Standard industry practice'}</p>
                 </div>
 
                 {/* Actions */}
                 <div className="flex gap-3 pt-4 border-t border-border">
                   <Button
-                    variant={project.planAccess && project.planAccess !== 'free' ? "outline" : "hero"}
+                    variant={project.planAccess && project.planAccess !== 'free' ? "outline" : "default"}
                     size="sm"
                     className="flex-1 gap-2"
                     onClick={() => handleStartProject(project)}
                   >
                     {project.planAccess && project.planAccess !== 'free' ? <Lock className="w-4 h-4" /> : <Plus className="w-4 h-4" />}
                     {project.planAccess && project.planAccess !== 'free' ? 'Unlock Project' : 'Start Project'}
-                    {!project.planAccess || project.planAccess === 'free' && <Plus className="w-4 h-4" />}
                   </Button>
                   <Button
                     variant="ghost"
@@ -319,7 +318,7 @@ export default function Projects() {
             <div>
               <h4 className="mb-2 text-sm font-medium">Key Skills</h4>
               <div className="flex flex-wrap gap-2">
-                {selectedProject?.requiredSkills.map((skill) => (
+                {selectedProject?.requiredSkills?.map((skill) => (
                   <Badge key={skill} variant="outline">{skill}</Badge>
                 ))}
               </div>

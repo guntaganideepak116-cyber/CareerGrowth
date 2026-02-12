@@ -132,17 +132,23 @@ export default function UserDashboardControl() {
 
     // Filter logic
     useEffect(() => {
-        if (searchTerm.trim() === '') {
+        const term = (searchTerm || '').toLowerCase().trim();
+        if (!term) {
             setFilteredUsers(users);
         } else {
-            const term = searchTerm.toLowerCase();
             setFilteredUsers(
-                users.filter(user =>
-                    user.email?.toLowerCase().includes(term) ||
-                    user.full_name?.toLowerCase().includes(term) ||
-                    user.field?.toLowerCase().includes(term) ||
-                    user.branch?.toLowerCase().includes(term)
-                )
+                users.filter(user => {
+                    if (!user) return false;
+                    try {
+                        const email = String(user.email || '').toLowerCase();
+                        const name = String(user.full_name || '').toLowerCase();
+                        const field = String(user.field || '').toLowerCase();
+                        const branch = String(user.branch || '').toLowerCase();
+                        return email.includes(term) || name.includes(term) || field.includes(term) || branch.includes(term);
+                    } catch (e) {
+                        return false;
+                    }
+                })
             );
         }
         if (selectedUser) {

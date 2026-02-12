@@ -59,24 +59,61 @@ export default function RoadmapManager() {
 
     // Real-time Items Listener
     useEffect(() => {
-        // Listen to both collections
-        const unsubs: (() => void)[] = [];
+        let allProjects: RoadmapItem[] = [];
+        let allCerts: RoadmapItem[] = [];
+
+        const updateItems = () => {
+            // Filter out any potential non-object debris
+            const sanitizedProjects = allProjects.filter(p => p && typeof p === 'object');
+            const sanitizedCerts = allCerts.filter(c => c && typeof c === 'object');
+            setItems([...sanitizedProjects, ...sanitizedCerts]);
+            setLoading(false);
+        };
 
         const qProjects = query(collection(db, 'projects'), orderBy('createdAt', 'desc'));
-        unsubs.push(onSnapshot(qProjects, (snapshot) => {
-            const projects = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data(), type: 'Project' } as RoadmapItem));
-            setItems(prev => [...projects, ...prev.filter(i => i.type === 'Certification')]);
+        const unsubProjects = onSnapshot(qProjects, (snapshot) => {
+            allProjects = snapshot.docs.map(doc => {
+                const data = doc.data() || {};
+                return {
+                    id: doc.id,
+                    title: String(data.title || ''),
+                    fieldId: String(data.fieldId || ''),
+                    difficulty: data.difficulty || 'Intermediate',
+                    planType: data.planType || data.planAccess || 'free',
+                    status: data.status || 'Active',
+                    type: 'Project'
+                } as RoadmapItem;
+            });
+            updateItems();
+        }, (err) => {
+            console.error("Projects Sync Error:", err);
             setLoading(false);
-        }));
+        });
 
         const qCerts = query(collection(db, 'certifications'), orderBy('createdAt', 'desc'));
-        unsubs.push(onSnapshot(qCerts, (snapshot) => {
-            const certs = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data(), type: 'Certification' } as RoadmapItem));
-            setItems(prev => [...certs, ...prev.filter(i => i.type === 'Project')]);
+        const unsubCerts = onSnapshot(qCerts, (snapshot) => {
+            allCerts = snapshot.docs.map(doc => {
+                const data = doc.data() || {};
+                return {
+                    id: doc.id,
+                    title: String(data.title || ''),
+                    fieldId: String(data.fieldId || ''),
+                    difficulty: data.difficulty || data.level || 'Intermediate',
+                    planType: data.planType || data.planAccess || 'free',
+                    status: data.status || 'Active',
+                    type: 'Certification'
+                } as RoadmapItem;
+            });
+            updateItems();
+        }, (err) => {
+            console.error("Certs Sync Error:", err);
             setLoading(false);
-        }));
+        });
 
-        return () => unsubs.forEach(unsub => unsub());
+        return () => {
+            unsubProjects();
+            unsubCerts();
+        };
     }, []);
 
     const handleSave = async () => {
@@ -87,20 +124,21 @@ export default function RoadmapManager() {
 
         try {
             const collectionName = form.type === 'Project' ? 'projects' : 'certifications';
+            const safeFieldId = String(form.fieldId || '').toLowerCase().trim();
 
             // Map the simplified Admin form to the robust User schema
             const payload = {
-                title: form.title,
-                fieldId: form.fieldId.toLowerCase().trim(),
+                title: String(form.title || '').trim(),
+                fieldId: safeFieldId,
                 planAccess: form.planType,
-                difficulty: form.difficulty.toLowerCase(),
-                level: form.difficulty.toLowerCase(), // for certs
+                difficulty: String(form.difficulty || 'intermediate').toLowerCase(),
+                level: String(form.difficulty || 'intermediate').toLowerCase(), // for certs
                 status: 'Active',
                 updatedAt: serverTimestamp(),
                 // Add default schema fields to prevent crashes in User site
                 ...(form.type === 'Project' ? {
-                    description: `Industry-grade project for ${form.fieldId} professionals.`,
-                    requiredSkills: ['Core Fundamentals', form.fieldId],
+                    description: `Industry-grade project for ${safeFieldId} professionals.`,
+                    requiredSkills: ['Core Fundamentals', safeFieldId],
                     toolsRequired: ['Industrial Standard Tools'],
                     estimatedTime: '4-6 weeks',
                     resumeStrength: 85,
@@ -108,10 +146,10 @@ export default function RoadmapManager() {
                     industryRelevance: 'High demand in current market'
                 } : {
                     provider: 'Industry Accredited',
-                    description: `Global certification node for ${form.fieldId}.`,
+                    description: `Global certification node for ${safeFieldId}.`,
                     industryRecognitionLevel: 'high',
                     validity: 'Lifetime',
-                    skillsCovered: ['Professional standards', form.fieldId],
+                    skillsCovered: ['Professional standards', safeFieldId],
                     officialLink: 'https://google.com',
                     valueScore: 90
                 })
@@ -137,12 +175,13 @@ export default function RoadmapManager() {
     };
 
     const handleEdit = (item: RoadmapItem) => {
+        if (!item) return;
         setEditingId(item.id);
         setForm({
-            title: item.title,
-            fieldId: item.fieldId,
-            type: item.type,
-            difficulty: item.difficulty,
+            title: item.title || '',
+            fieldId: item.fieldId || '',
+            type: item.type || 'Project',
+            difficulty: item.difficulty || 'Intermediate',
             planType: item.planType || 'free'
         });
         setIsDialogOpen(true);
@@ -159,10 +198,20 @@ export default function RoadmapManager() {
         }
     };
 
-    const filteredItems = items.filter(p =>
-        p.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        p.fieldId.toLowerCase().includes(searchTerm.toLowerCase())
-    );
+    const filteredItems = items.filter(p => {
+        if (!p) return false;
+        try {
+            const titleStr = String(p.title || '').toLowerCase();
+            const fieldStr = String(p.fieldId || '').toLowerCase();
+            const searchStr = String(searchTerm || '').toLowerCase().trim();
+
+            if (!searchStr) return true;
+            return titleStr.includes(searchStr) || fieldStr.includes(searchStr);
+        } catch (e) {
+            console.warn("Filter fail-safe triggered:", e);
+            return false;
+        }
+    });
 
     return (
         <AdminLayout>
@@ -192,11 +241,11 @@ export default function RoadmapManager() {
                 {/* Statistics Matrix */}
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
                     <Card><CardHeader className="pb-2"><CardTitle className="text-xs font-bold uppercase text-muted-foreground">Total Assets</CardTitle></CardHeader>
-                        <CardContent><div className="text-3xl font-bold">{items.length}</div></CardContent></Card>
+                        <CardContent><div className="text-3xl font-bold">{items?.length || 0}</div></CardContent></Card>
                     <Card><CardHeader className="pb-2"><CardTitle className="text-xs font-bold uppercase text-muted-foreground">Projects</CardTitle></CardHeader>
-                        <CardContent><div className="text-3xl font-bold text-primary">{items.filter(i => i.type === 'Project').length}</div></CardContent></Card>
+                        <CardContent><div className="text-3xl font-bold text-primary">{items?.filter(i => i?.type === 'Project').length || 0}</div></CardContent></Card>
                     <Card><CardHeader className="pb-2"><CardTitle className="text-xs font-bold uppercase text-muted-foreground">Premium Logic</CardTitle></CardHeader>
-                        <CardContent><div className="text-3xl font-bold text-amber-600">{items.filter(i => i.planType === 'premium').length}</div></CardContent></Card>
+                        <CardContent><div className="text-3xl font-bold text-amber-600">{items?.filter(i => i?.planType === 'premium').length || 0}</div></CardContent></Card>
                     <Card className="border-green-200 bg-green-50/20"><CardHeader className="pb-2"><CardTitle className="text-xs font-bold uppercase text-green-600">Active Node</CardTitle></CardHeader>
                         <CardContent><div className="text-sm font-bold flex items-center gap-2">UP-TO-DATE <ArrowRight className="h-3 w-3" /></div></CardContent></Card>
                 </div>

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { AdminLayout } from '@/components/admin/AdminLayout';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -6,54 +6,59 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Switch } from '@/components/ui/switch';
 import { Badge } from '@/components/ui/badge';
-import { Check, X, CreditCard, DollarSign, Users, Shield } from 'lucide-react';
+import { Check, X, CreditCard, DollarSign, Users, Shield, Loader2, Save } from 'lucide-react';
 import { toast } from 'sonner';
-
-// Mock Plan Data
-const DEFAULT_PLANS = [
-    {
-        id: 'free',
-        name: 'Free Tier',
-        price: '0',
-        features: ['Basic Career Paths', 'Limited Projects', 'Community Access'],
-        active: true,
-        subscribers: 1250
-    },
-    {
-        id: 'pro',
-        name: 'Pro Plan',
-        price: '9.99',
-        features: ['AI Mentor Access', 'Unlimited Projects', 'Priority Support', 'Certification Badges'],
-        active: true,
-        subscribers: 85
-    },
-    {
-        id: 'premium',
-        name: 'Premium Plan',
-        price: '19.99',
-        features: ['1-on-1 Mentorship', 'Job Guarantee Program', 'Exclusive Workshops', 'All Pro Features'],
-        active: true,
-        subscribers: 42
-    }
-];
+import { usePlans, Plan } from '@/hooks/usePlans';
 
 export default function SystemSettings() {
-    const [plans, setPlans] = useState(DEFAULT_PLANS);
+    const { plans: remotePlans, loading, savePlans } = usePlans();
+    const [plans, setPlans] = useState<Plan[]>([]);
     const [editingId, setEditingId] = useState<string | null>(null);
+    const [saving, setSaving] = useState(false);
+
+    useEffect(() => {
+        if (!loading && remotePlans.length > 0) {
+            setPlans(remotePlans);
+        }
+    }, [remotePlans, loading]);
 
     const handleToggleActive = (id: string) => {
-        setPlans(plans.map(p => p.id === id ? { ...p, active: !p.active } : p));
-        toast.success("Plan status updated");
+        const updated = plans.map(p => p.id === id ? { ...p, active: !p.active } : p);
+        setPlans(updated);
     };
 
     const handlePriceChange = (id: string, newPrice: string) => {
-        setPlans(plans.map(p => p.id === id ? { ...p, price: newPrice } : p));
+        const updated = plans.map(p => p.id === id ? { ...p, price: newPrice } : p);
+        setPlans(updated);
     };
 
-    const handleSave = () => {
-        setEditingId(null);
-        toast.success("Pricing updated successfully");
+    const handleCurrencyChange = (id: string, newCurrency: string) => {
+        const updated = plans.map(p => p.id === id ? { ...p, currency: newCurrency } : p);
+        setPlans(updated);
     };
+
+    const handleCommitChanges = async () => {
+        setSaving(true);
+        try {
+            await savePlans(plans);
+            setEditingId(null);
+            toast.success("Pricing architecture synchronized globally");
+        } catch (e) {
+            toast.error("Cloud synchronization failed");
+        } finally {
+            setSaving(false);
+        }
+    };
+
+    if (loading) {
+        return (
+            <AdminLayout>
+                <div className="flex h-96 items-center justify-center">
+                    <Loader2 className="h-10 w-10 animate-spin text-primary" />
+                </div>
+            </AdminLayout>
+        );
+    }
 
     return (
         <AdminLayout>
@@ -65,10 +70,10 @@ export default function SystemSettings() {
                         <p className="text-muted-foreground">Manage subscription tiers, pricing, and feature access.</p>
                     </div>
                     <div className="flex gap-2">
-                        <Badge variant="outline" className="px-3 py-1 flex gap-2">
-                            <Users className="h-3 w-3" />
-                            Total Subscribers: {plans.reduce((acc, p) => acc + (p.id !== 'free' ? p.subscribers : 0), 0)}
-                        </Badge>
+                        <Button onClick={handleCommitChanges} disabled={saving} className="bg-primary shadow-lg">
+                            {saving ? <Loader2 className="h-4 w-4 mr-2 animate-spin" /> : <Save className="h-4 w-4 mr-2" />}
+                            Sync to Cloud
+                        </Button>
                     </div>
                 </div>
 
@@ -90,22 +95,29 @@ export default function SystemSettings() {
                                 <div className="mt-4 flex items-baseline gap-1">
                                     <span className="text-3xl font-bold tracking-tight">
                                         {editingId === plan.id ? (
-                                            <Input
-                                                className="w-24 inline-block h-8 text-lg"
-                                                value={plan.price}
-                                                onChange={(e) => handlePriceChange(plan.id, e.target.value)}
-                                            />
+                                            <div className="flex gap-1 items-center">
+                                                <Input
+                                                    className="w-10 h-8 text-lg px-1"
+                                                    value={plan.currency}
+                                                    onChange={e => handleCurrencyChange(plan.id, e.target.value)}
+                                                />
+                                                <Input
+                                                    className="w-24 inline-block h-8 text-lg"
+                                                    value={plan.price}
+                                                    onChange={(e) => handlePriceChange(plan.id, e.target.value)}
+                                                />
+                                            </div>
                                         ) : (
-                                            `$${plan.price}`
+                                            `${plan.currency}${plan.price}`
                                         )}
                                     </span>
                                     <span className="text-sm font-semibold text-muted-foreground">/month</span>
                                 </div>
-                                <CardDescription>{plan.subscribers} active users</CardDescription>
+                                <CardDescription>{plan.subscribers || 0} active users</CardDescription>
                             </CardHeader>
                             <CardContent className="flex-1">
                                 <ul className="space-y-2 text-sm">
-                                    {plan.features.map((feature, i) => (
+                                    {(plan.features || []).map((feature, i) => (
                                         <li key={i} className="flex items-center gap-2">
                                             <Check className="h-4 w-4 text-green-500 flex-shrink-0" />
                                             <span className="text-muted-foreground">{feature}</span>
@@ -114,11 +126,13 @@ export default function SystemSettings() {
                                 </ul>
                             </CardContent>
                             <CardFooter>
-                                {editingId === plan.id ? (
-                                    <Button className="w-full" onClick={handleSave}>Save Changes</Button>
-                                ) : (
-                                    <Button variant="outline" className="w-full" onClick={() => setEditingId(plan.id)}>Edit Pricing</Button>
-                                )}
+                                <Button
+                                    variant={editingId === plan.id ? "default" : "outline"}
+                                    className="w-full"
+                                    onClick={() => setEditingId(editingId === plan.id ? null : plan.id)}
+                                >
+                                    {editingId === plan.id ? "Done" : "Edit Pricing"}
+                                </Button>
                             </CardFooter>
                         </Card>
                     ))}

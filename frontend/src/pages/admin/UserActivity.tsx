@@ -30,11 +30,22 @@ interface AnalyticsData {
     fieldDistribution: Record<string, number>;
 }
 
+interface UserRecord {
+    id: string;
+    email: string;
+    full_name?: string;
+    field?: string;
+    userPlan?: string;
+    lastLogin?: any;
+    isOnline?: boolean;
+    lastLoginTime?: Date | null;
+}
+
 export default function UserActivity() {
     const { user } = useAuthContext();
     const navigate = useNavigate();
     const [loading, setLoading] = useState(true);
-    const [users, setUsers] = useState<any[]>([]);
+    const [users, setUsers] = useState<UserRecord[]>([]);
     const [progressData, setProgressData] = useState<any[]>([]);
     const [searchTerm, setSearchTerm] = useState('');
 
@@ -67,7 +78,7 @@ export default function UserActivity() {
                     ...data,
                     isOnline: lastLogin && lastLogin >= thirtyMinsAgo,
                     lastLoginTime: lastLogin
-                };
+                } as UserRecord;
             });
 
             setUsers(userData);
@@ -106,10 +117,17 @@ export default function UserActivity() {
         };
     }, [user, navigate]);
 
-    const filteredUsers = users.filter(u =>
-        u.email?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        u.full_name?.toLowerCase().includes(searchTerm.toLowerCase())
-    );
+    const filteredUsers = users.filter(u => {
+        if (!u) return false;
+        try {
+            const term = (searchTerm || '').toLowerCase().trim();
+            const email = String(u.email || '').toLowerCase();
+            const name = String(u.full_name || '').toLowerCase();
+            return email.includes(term) || name.includes(term);
+        } catch (e) {
+            return false;
+        }
+    });
 
     return (
         <AdminLayout>

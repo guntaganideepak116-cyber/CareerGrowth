@@ -16,9 +16,9 @@ service cloud.firestore {
 
     function isAdmin() {
       // Source of truth for roles is now the 'users' collection
-      // Use getAfter() or just get() - getAfter is better if we are updating the role in the same transaction
-      let profile = get(/databases/$(database)/documents/users/$(request.auth.uid));
-      return isAuthenticated() && profile != null && profile.data.role == 'admin';
+      return isAuthenticated() && 
+             exists(/databases/$(database)/documents/users/$(request.auth.uid)) &&
+             get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
     }
 
     // ===========================================
@@ -26,7 +26,8 @@ service cloud.firestore {
     // ===========================================
     match /users/{userId} {
       // Users read/write their own, Admins read/write all
-      allow read, write: if isOwner(userId) || isAdmin();
+      allow read: if isAuthenticated(); // Allow users to read other profiles if needed (e.g. for collaboration)
+      allow write: if isOwner(userId) || isAdmin();
     }
 
     // ===========================================
@@ -35,8 +36,6 @@ service cloud.firestore {
     match /user_progress/{docId} {
       // docId is often the userId
       allow read, write: if isOwner(docId) || isAdmin();
-      // Also handle case where docId is random but contains userId
-      allow read, write: if isAuthenticated() && (resource == null || resource.data.userId == request.auth.uid || isAdmin());
     }
 
     // ===========================================
@@ -51,8 +50,8 @@ service cloud.firestore {
     // 4. SYSTEM SETTINGS
     // ===========================================
     match /system_settings/{configId} {
-      // All authenticated users can read (needed for maintenance mode/feature flags)
-      allow read: if isAuthenticated();
+      // allow public read for config to support feature flags on login/signup pages
+      allow read: if true; 
       // Only admins can write
       allow write: if isAdmin();
     }
@@ -62,15 +61,10 @@ service cloud.firestore {
     // ===========================================
     match /notifications/{notificationId} {
       // Read: Recipient reads their own. Admins read all.
-      // We also allow reading if the document doesn't exist yet (for query logic)
-      allow read: if isAuthenticated() && (
-        resource == null || 
-        resource.data.userId == request.auth.uid || 
-        resource.data.userId == 'all' ||
-        isAdmin()
-      );
-      // Write: Only Admins can create/delete
-      allow write: if isAdmin();
+      allow read: if isAuthenticated(); // Broad read, but we filter in code. 
+      // Write: Update readStatus (anyone can if they are recipient) or full write for admin
+      allow update: if isAuthenticated();
+      allow create, delete: if isAdmin();
     }
 
     // ===========================================

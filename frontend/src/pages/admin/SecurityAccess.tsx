@@ -98,15 +98,35 @@ export default function SecurityAccess() {
             const responseTime = Date.now() - start;
 
             // Check Internal API if exists (simulated since we don't know the exact endpoint status)
-            // But we'll try to fetch the recommended endpoint
-            const apiRes = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/system/health`).catch(() => null);
+            const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+            let apiStatus: 'operational' | 'degraded' | 'offline' = 'offline';
+            let apiError = 'API Node Unreachable';
+
+            try {
+                // Use a short timeout to prevent hanging
+                const controller = new AbortController();
+                const id = setTimeout(() => controller.abort(), 3000);
+
+                const apiRes = await fetch(`${apiUrl}/api/system/health`, { signal: controller.signal }).catch(() => null);
+                clearTimeout(id);
+
+                if (apiRes?.ok) {
+                    apiStatus = 'operational';
+                    apiError = 'None';
+                } else if (apiRes?.status === 404) {
+                    apiStatus = 'degraded';
+                    apiError = 'Health Endpoint 404';
+                }
+            } catch (err) {
+                // Keep default offline/unreachable
+            }
 
             setHealth({
                 firestore: 'online',
                 auth: 'active',
-                api: apiRes?.ok ? 'operational' : 'degraded',
+                api: apiStatus,
                 responseTime,
-                lastError: apiRes?.ok ? 'None' : 'API Node Unreachable'
+                lastError: apiError
             });
         } catch (e: any) {
             setHealth(prev => ({ ...prev, firestore: 'offline', lastError: e.message }));

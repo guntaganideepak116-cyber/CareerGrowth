@@ -112,7 +112,7 @@ export function RoadmapPhaseCard({
                   <h4 className="font-medium text-foreground">Skills</h4>
                 </div>
                 <div className="flex flex-wrap gap-2">
-                  {phase.skills.map(skill => (
+                  {phase.skills?.map(skill => (
                     <span
                       key={skill}
                       className="px-2.5 py-1 bg-primary/10 text-primary text-sm rounded-lg"
@@ -130,7 +130,7 @@ export function RoadmapPhaseCard({
                   <h4 className="font-medium text-foreground">Tools</h4>
                 </div>
                 <div className="flex flex-wrap gap-2">
-                  {phase.tools.map(tool => (
+                  {phase.tools?.map(tool => (
                     <span
                       key={tool}
                       className="px-2.5 py-1 bg-success/10 text-success text-sm rounded-lg"
@@ -148,7 +148,7 @@ export function RoadmapPhaseCard({
                   <h4 className="font-medium text-foreground">Projects</h4>
                 </div>
                 <ul className="space-y-1.5">
-                  {phase.projects.map(project => (
+                  {phase.projects?.map(project => (
                     <li key={project} className="text-sm text-muted-foreground flex items-center gap-2">
                       <div className="w-1.5 h-1.5 bg-warning rounded-full shrink-0" />
                       {project}
@@ -164,7 +164,7 @@ export function RoadmapPhaseCard({
                   <h4 className="font-medium text-foreground">Certifications</h4>
                 </div>
                 <ul className="space-y-1.5">
-                  {phase.certifications.map(cert => (
+                  {phase.certifications?.map(cert => (
                     <li key={cert} className="text-sm text-muted-foreground flex items-center gap-2">
                       <div className="w-1.5 h-1.5 bg-primary rounded-full shrink-0" />
                       {cert}
