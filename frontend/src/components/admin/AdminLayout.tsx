@@ -117,22 +117,21 @@ export function AdminLayout({ children }: AdminLayoutProps) {
                     <SidebarContent />
                 </aside>
 
-                <Sheet open={open} onOpenChange={setOpen}>
-                    <SheetContent side="left" className="w-64 p-0 bg-sidebar text-sidebar-foreground border-sidebar-border">
-                        <SidebarContent />
-                    </SheetContent>
-                </Sheet>
-
                 <main className="flex-1 lg:ml-64 transition-all duration-300 min-w-0">
                     <header className="sticky top-0 z-20 border-b border-sidebar-border bg-sidebar/95 text-sidebar-foreground px-6 py-4 shadow-sm backdrop-blur supports-[backdrop-filter]:bg-sidebar/60">
                         <div className="flex items-center justify-between">
                             <div className="flex items-center gap-4">
-                                <SheetTrigger asChild>
-                                    <Button variant="ghost" size="icon" className="lg:hidden text-sidebar-foreground hover:bg-white/10 hover:text-sidebar-foreground">
-                                        <Menu className="h-6 w-6" />
-                                        <span className="sr-only">Toggle menu</span>
-                                    </Button>
-                                </SheetTrigger>
+                                <Sheet open={open} onOpenChange={setOpen}>
+                                    <SheetTrigger asChild>
+                                        <Button variant="ghost" size="icon" className="lg:hidden text-sidebar-foreground hover:bg-white/10 hover:text-sidebar-foreground">
+                                            <Menu className="h-6 w-6" />
+                                            <span className="sr-only">Toggle menu</span>
+                                        </Button>
+                                    </SheetTrigger>
+                                    <SheetContent side="left" className="w-64 p-0 bg-sidebar text-sidebar-foreground border-sidebar-border">
+                                        <SidebarContent />
+                                    </SheetContent>
+                                </Sheet>
                                 <h1 className="text-xl font-semibold capitalize">
                                     {location.pathname.split('/').pop()?.replace(/-/g, ' ') || 'Overview'}
                                 </h1>
