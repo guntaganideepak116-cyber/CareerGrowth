@@ -236,19 +236,19 @@ export default function AdminDashboard() {
                             <div className="space-y-4">
                                 <div className="flex justify-between items-center">
                                     <span className="text-sm text-muted-foreground">New Today</span>
-                                    <span className="font-bold">{stats?.signups.today}</span>
+                                    <span className="font-bold">{stats?.signups?.today ?? 0}</span>
                                 </div>
                                 <div className="flex justify-between items-center">
                                     <span className="text-sm text-muted-foreground">This Week</span>
-                                    <span className="font-bold">{stats?.signups.thisWeek}</span>
+                                    <span className="font-bold">{stats?.signups?.thisWeek ?? 0}</span>
                                 </div>
                                 <div className="flex justify-between items-center">
                                     <span className="text-sm text-muted-foreground">This Month</span>
-                                    <span className="font-bold">{stats?.signups.thisMonth}</span>
+                                    <span className="font-bold">{stats?.signups?.thisMonth ?? 0}</span>
                                 </div>
                                 <div className="mt-4 pt-4 border-t flex justify-between items-center">
                                     <span className="text-sm font-medium">Total Users</span>
-                                    <span className="text-xl font-bold text-primary">{stats?.totalUsers}</span>
+                                    <span className="text-xl font-bold text-primary">{stats?.totalUsers ?? 0}</span>
                                 </div>
                             </div>
                         </CardContent>
@@ -262,15 +262,15 @@ export default function AdminDashboard() {
                             <div className="space-y-4">
                                 <div className="flex justify-between items-center">
                                     <span className="text-sm text-muted-foreground">Logins Today</span>
-                                    <span className="font-bold">{stats?.logins.today}</span>
+                                    <span className="font-bold">{stats?.logins?.today ?? 0}</span>
                                 </div>
                                 <div className="flex justify-between items-center">
                                     <span className="text-sm text-muted-foreground">Skills Mastered</span>
-                                    <span className="font-bold">{stats?.learning.totalSkills}</span>
+                                    <span className="font-bold">{stats?.learning?.totalSkills ?? 0}</span>
                                 </div>
                                 <div className="flex justify-between items-center">
                                     <span className="text-sm text-muted-foreground">Top Field</span>
-                                    <span className="font-bold text-primary truncate max-w-[120px]">{stats?.popularField}</span>
+                                    <span className="font-bold text-primary truncate max-w-[120px]">{stats?.popularField ?? 'N/A'}</span>
                                 </div>
                             </div>
                         </CardContent>
