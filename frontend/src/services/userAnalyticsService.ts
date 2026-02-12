@@ -153,30 +153,50 @@ export const updateUserProgress = async (userId: string, updates: Partial<UserPr
  */
 export const subscribeToUserProgress = (userId: string, callback: (data: UserProgress | null) => void) => {
     const progressRef = doc(db, COLLECTION_PROGRESS, userId);
-    return onSnapshot(progressRef, (doc) => {
-        if (doc.exists()) {
-            callback(doc.data() as UserProgress);
-        } else {
+    return onSnapshot(progressRef,
+        (doc) => {
+            if (doc.exists()) {
+                callback(doc.data() as UserProgress);
+            } else {
+                // Return null if document doesn't exist yet (user hasn't performed tracked actions)
+                callback(null);
+            }
+        },
+        (error) => {
+            console.error("Error subscribing to user progress:", error);
+            // Ensure UI doesn't hang on loading
             callback(null);
         }
-    });
+    );
 };
 
 /**
  * Subscribe to recent Activity Logs
  */
 export const subscribeToActivityLogs = (userId: string, callback: (logs: UserActivityLog[]) => void) => {
-    const q = query(
-        collection(db, COLLECTION_LOGS),
-        where("userId", "==", userId),
-        orderBy("timestamp", "desc"),
-        limit(20)
-    );
+    try {
+        const q = query(
+            collection(db, COLLECTION_LOGS),
+            where("userId", "==", userId),
+            orderBy("timestamp", "desc"),
+            limit(20)
+        );
 
-    return onSnapshot(q, (snapshot) => {
-        const logs = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as UserActivityLog));
-        callback(logs);
-    });
+        return onSnapshot(q,
+            (snapshot) => {
+                const logs = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as UserActivityLog));
+                callback(logs);
+            },
+            (error) => {
+                console.error("Error subscribing to activity logs (check indexes):", error);
+                callback([]);
+            }
+        );
+    } catch (e) {
+        console.error("Error setup activity logs subscription:", e);
+        callback([]);
+        return () => { };
+    }
 };
 
 /**
