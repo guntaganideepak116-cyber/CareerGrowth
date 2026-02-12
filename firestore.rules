@@ -15,153 +15,99 @@ service cloud.firestore {
     }
 
     function isAdmin() {
-      // Check for 'admin' role in the user_profiles collection
-      let profile = get(/databases/$(database)/documents/user_profiles/$(request.auth.uid));
+      // Source of truth for roles is now the 'users' collection
+      // Use getAfter() or just get() - getAfter is better if we are updating the role in the same transaction
+      let profile = get(/databases/$(database)/documents/users/$(request.auth.uid));
       return isAuthenticated() && profile != null && profile.data.role == 'admin';
     }
 
     // ===========================================
-    // 1. USERS COLLECTION (Consolidated)
+    // 1. USERS COLLECTION
     // ===========================================
     match /users/{userId} {
-      // Allow users to read/write their own user document, Admins can read/write all
+      // Users read/write their own, Admins read/write all
       allow read, write: if isOwner(userId) || isAdmin();
-      
-      // ✅ Assessments Subcollection
-      match /assessments/{assessmentId} {
-        allow read, write: if isOwner(userId) || isAdmin();
-      }
-      
-      // Allow other nested collections
-      match /{document=**} {
-        allow read, write: if isOwner(userId) || isAdmin();
-      }
     }
 
     // ===========================================
-    // 2. PORTFOLIOS COLLECTION
+    // 2. USER PROGRESS (CRITICAL for Dashboard & Admin)
+    // ===========================================
+    match /user_progress/{docId} {
+      // docId is often the userId
+      allow read, write: if isOwner(docId) || isAdmin();
+      // Also handle case where docId is random but contains userId
+      allow read, write: if isAuthenticated() && (resource == null || resource.data.userId == request.auth.uid || isAdmin());
+    }
+
+    // ===========================================
+    // 3. ADMIN ACTIVITY LOGS
+    // ===========================================
+    match /admin_activity_logs/{logId} {
+      // Admins read/write
+      allow read, write: if isAdmin();
+    }
+
+    // ===========================================
+    // 4. SYSTEM SETTINGS
+    // ===========================================
+    match /system_settings/{configId} {
+      // All authenticated users can read (needed for maintenance mode/feature flags)
+      allow read: if isAuthenticated();
+      // Only admins can write
+      allow write: if isAdmin();
+    }
+
+    // ===========================================
+    // 5. NOTIFICATIONS
+    // ===========================================
+    match /notifications/{notificationId} {
+      // Read: Recipient reads their own. Admins read all.
+      // We also allow reading if the document doesn't exist yet (for query logic)
+      allow read: if isAuthenticated() && (
+        resource == null || 
+        resource.data.userId == request.auth.uid || 
+        resource.data.userId == 'all' ||
+        isAdmin()
+      );
+      // Write: Only Admins can create/delete
+      allow write: if isAdmin();
+    }
+
+    // ===========================================
+    // 6. ASSESSMENT QUESTIONS
+    // ===========================================
+    match /assessment_questions/{questionId} {
+      allow read: if isAuthenticated(); 
+      allow write: if isAdmin();
+    }
+
+    // ===========================================
+    // 7. CAREER CONTENT (Paths, Fields, etc.)
+    // ===========================================
+    match /career_paths/{id} { allow read: if isAuthenticated(); allow write: if isAdmin(); }
+    match /fields/{id} { allow read: if isAuthenticated(); allow write: if isAdmin(); }
+    match /specializations/{id} { allow read: if isAuthenticated(); allow write: if isAdmin(); }
+    match /projects/{id} { allow read: if isAuthenticated(); allow write: if isAdmin(); }
+    match /certifications/{id} { allow read: if isAuthenticated(); allow write: if isAdmin(); }
+
+    // ===========================================
+    // 8. PORTFOLIOS
     // ===========================================
     match /portfolios/{userId} {
       allow read, write: if isOwner(userId) || isAdmin();
     }
-    
-    // ===========================================
-    // 3. NOTIFICATIONS
-    // ===========================================
-    match /notifications/{notificationId} {
-      // Read: Users read their own, Admins read all
-      allow read: if isAuthenticated() && (resource.data.userId == request.auth.uid || resource.data.userId == 'all' || isAdmin());
-      // Write: Only Admins can create/delete
-      allow write: if isAdmin();
-    }
-    
-    match /user_notification_reads/{readId} {
-      allow read, create: if isAuthenticated() && request.resource.data.user_id == request.auth.uid;
-      allow read: if isAuthenticated() && resource.data.user_id == request.auth.uid;
-    }
-    
-    // ===========================================
-    // 4. PROFILES (Legacy?)
-    // ===========================================
-    match /profiles/{profileId} {
-      allow read, write: if isAuthenticated() && (resource == null || resource.data.user_id == request.auth.uid);
-    }
 
     // ===========================================
-    // 5. USER PROFILES (CRITICAL for Admin & Dashboard)
-    // ===========================================
-    match /user_profiles/{userId} {
-      // Users read/write own profile, Admins read/write all (needed for Dashboard)
-      allow read: if isOwner(userId) || isAdmin();
-      allow write: if isOwner(userId) || isAdmin();
-      allow create: if isAuthenticated() && request.auth.uid == userId;
-    }
-
-    // ===========================================
-    // 6. ASSESSMENT QUESTIONS (Real-Time Exam)
-    // ===========================================
-    match /assessment_questions/{questionId} {
-      // ✅ User Exam: Read access for all authenticated users
-      allow read: if isAuthenticated(); 
-      // ✅ Admin Panel: Write access for admins only
-      allow write: if isAdmin();
-    }
-
-    // ===========================================
-    // 7. CAREER RECOMMENDATIONS
-    // ===========================================
-    match /career_recommendations/{userId} {
-        allow read: if isOwner(userId) || isAdmin();
-        allow write: if false; 
-    }
-
-    // ===========================================
-    // 8. CAREER PATHS (Public Read)
-    // ===========================================
-    match /career_paths/{pathId} {
-      // Allow all authenticated users to read career paths
-      allow read: if isAuthenticated();
-      // Only admins can write
-      allow write: if isAdmin();
-    }
-
-    // ===========================================
-    // 9. FIELDS (Public Read)
-    // ===========================================
-    match /fields/{fieldId} {
-      // Allow all authenticated users to read fields
-      allow read: if isAuthenticated();
-      // Only admins can write
-      allow write: if isAdmin();
-    }
-
-    // ===========================================
-    // 10. SPECIALIZATIONS (Public Read)
-    // ===========================================
-    match /specializations/{specializationId} {
-      // Allow all authenticated users to read specializations
-      allow read: if isAuthenticated();
-      // Only admins can write
-      allow write: if isAdmin();
-    }
-
-    // ===========================================
-    // 11. PROJECTS (Public Read)
-    // ===========================================
-    match /projects/{projectId} {
-      // Allow all authenticated users to read projects
-      allow read: if isAuthenticated();
-      // Only admins can write
-      allow write: if isAdmin();
-    }
-
-    // ===========================================
-    // 12. CERTIFICATIONS (Public Read)
-    // ===========================================
-    match /certifications/{certificationId} {
-      // Allow all authenticated users to read certifications
-      allow read: if isAuthenticated();
-      // Only admins can write
-      allow write: if isAdmin();
-    }
-
-    // ===========================================
-    // 13. ROADMAPS (User-Specific)
-    // ===========================================
-    match /roadmaps/{userId} {
-      // Users can read/write their own roadmap
-      allow read, write: if isOwner(userId) || isAdmin();
-    }
-
-    // ===========================================
-    // 14. AI MENTOR CONVERSATIONS (User-Specific)
+    // 9. AI MENTOR CONVERSATIONS
     // ===========================================
     match /ai_conversations/{conversationId} {
-      // Users can read/write their own conversations
-      allow read, write: if isAuthenticated() && resource.data.user_id == request.auth.uid;
-      allow create: if isAuthenticated() && request.resource.data.user_id == request.auth.uid;
-      // Admins can read all
-      allow read: if isAdmin();
+      allow read, write: if isAuthenticated() && (resource == null || resource.data.user_id == request.auth.uid || isAdmin());
+      allow create: if isAuthenticated();
+    }
+
+    // Legacy Support (Optional)
+    match /user_profiles/{userId} {
+      allow read, write: if isOwner(userId) || isAdmin();
     }
   }
 }
