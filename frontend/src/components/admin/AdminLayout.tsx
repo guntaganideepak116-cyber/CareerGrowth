@@ -14,7 +14,8 @@ import {
     Target,
     Monitor,
     FileCheck,
-    Menu
+    Menu,
+    BarChart3
 } from 'lucide-react';
 
 import { auth } from '@/lib/firebase';
@@ -28,18 +29,15 @@ interface AdminLayoutProps {
 }
 
 const adminNavItems = [
-    { icon: LayoutDashboard, label: 'Overview', path: '/admin' },
-    { icon: Monitor, label: 'User Dashboard Control', path: '/admin/user-dashboard-control' },
-    { icon: Users, label: 'User Activity', path: '/admin/user-activity' },
-    { icon: Layers, label: 'Field Insights', path: '/admin/field-insights' },
-    { icon: Map, label: 'Roadmap Manager', path: '/admin/roadmaps' },
-    { icon: FileCheck, label: 'Assessment Management', path: '/admin/assessments' },
-    { icon: Cpu, label: 'AI Usage Monitor', path: '/admin/ai-usage' },
-    { icon: Bell, label: 'Notifications', path: '/admin/notifications' },
-    { icon: MessageSquare, label: 'Feedback & Reports', path: '/admin/feedback' },
-    { icon: Target, label: 'Career Paths', path: '/admin/career-paths' },
-    { icon: Shield, label: 'Security & Access', path: '/admin/security' },
-    { icon: Settings, label: 'System Settings', path: '/admin/settings' },
+    { icon: LayoutDashboard, label: 'Dashboard Overview', path: '/admin' },
+    { icon: Users, label: 'User Management', path: '/admin/user-dashboard-control' },
+    { icon: FileCheck, label: 'Assessment Manager', path: '/admin/assessments' },
+    { icon: Layers, label: 'Field & Career Content', path: '/admin/career-paths' },
+    { icon: Map, label: 'Projects & Certifications', path: '/admin/roadmaps' },
+    { icon: BarChart3, label: 'Analytics', path: '/admin/user-activity' },
+    { icon: Bell, label: 'Notifications Manager', path: '/admin/notifications' },
+    { icon: Shield, label: 'Plan & Subscription Manager', path: '/admin/settings' },
+    { icon: Settings, label: 'System Settings', path: '/admin/security' },
 ];
 
 export function AdminLayout({ children }: AdminLayoutProps) {

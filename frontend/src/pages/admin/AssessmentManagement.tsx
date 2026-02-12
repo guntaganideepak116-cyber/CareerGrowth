@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { db, auth } from '@/lib/firebase';
-import { collection, query, where, getDocs, onSnapshot } from 'firebase/firestore';
+import { collection, query, where, getDocs, onSnapshot, addDoc, updateDoc, deleteDoc, doc } from 'firebase/firestore';
 import { useQueryClient } from '@tanstack/react-query';
 import { seedAssessmentQuestions } from '@/utils/assessmentSeeder';
 import { AdminLayout } from '@/components/admin/AdminLayout';
@@ -151,18 +151,8 @@ export default function AssessmentManagement() {
         }
 
         try {
-            const token = await auth.currentUser?.getIdToken();
-            const response = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/assessment/questions/${questionId}`, {
-                method: 'DELETE',
-                headers: {
-                    'Authorization': `Bearer ${token}`
-                }
-            });
-
-            if (!response.ok) throw new Error('Failed to delete');
-
+            await deleteDoc(doc(db, 'assessment_questions', questionId));
             toast.success('Question deleted successfully');
-            // Real-time listener handles update
         } catch (error) {
             console.error('Delete error:', error);
             toast.error('Failed to delete question');
@@ -188,34 +178,24 @@ export default function AssessmentManagement() {
         }
 
         try {
-            const token = await auth.currentUser?.getIdToken();
             const payload = {
-                fieldId: selectedField,
-                ...questionForm
+                fieldId: selectedField.toLowerCase().trim(),
+                ...questionForm,
+                updatedAt: new Date().toISOString()
             };
 
             if (editingQuestion) {
-                toast.error("Edit not fully implemented in API yet. Please Delete and Re-add.");
-                return;
+                await updateDoc(doc(db, 'assessment_questions', editingQuestion.id), payload);
+                toast.success('Question updated successfully');
+            } else {
+                await addDoc(collection(db, 'assessment_questions'), {
+                    ...payload,
+                    createdAt: new Date().toISOString()
+                });
+                toast.success('Question added successfully');
             }
 
-            const response = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/assessment/questions`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`
-                },
-                body: JSON.stringify(payload)
-            });
-
-            if (!response.ok) {
-                const err = await response.json();
-                throw new Error(err.error || 'Failed to save');
-            }
-
-            toast.success('Question saved successfully');
             setIsDialogOpen(false);
-            // Real-time listener handles update
 
         } catch (error) {
             console.error('Save error:', error);
