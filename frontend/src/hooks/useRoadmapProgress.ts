@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useAuthContext } from '@/contexts/AuthContext';
+import { logUserActivity } from '@/services/userAnalyticsService';
 
 export interface RoadmapProgressData {
   id: string;
@@ -110,6 +111,13 @@ export function useRoadmapProgress(fieldId: string, specializationId: string) {
 
       saveProgressToStorage(updatedProgress);
       setProgress(updatedProgress);
+
+      // Log activity for analytics
+      await logUserActivity(user.uid, 'ROADMAP_SEMESTER_COMPLETED', {
+        fieldId: progress.field_id,
+        metadata: { phaseId, totalPhases }
+      });
+
       return updatedProgress;
     } catch (error) {
       console.error('Error updating progress:', error);

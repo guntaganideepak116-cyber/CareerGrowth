@@ -17,6 +17,7 @@ import {
   Sparkles,
   Loader2,
 } from 'lucide-react';
+import { subscribeToUserProgress } from '@/services/userAnalyticsService';
 
 interface DashboardMetrics {
   readinessScore: number;
@@ -36,33 +37,25 @@ export default function Dashboard() {
   const [loadingMetrics, setLoadingMetrics] = useState(true);
 
   useEffect(() => {
-    const fetchAnalytics = async () => {
-      if (!user) return;
+    if (!user) return;
 
-      try {
-        const token = await user.getIdToken();
-        const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
-
-        const response = await fetch(`${API_URL}/api/analytics/dashboard-analytics`, {
-          headers: {
-            'Authorization': `Bearer ${token}`
-          }
+    // Real-time listener for dashboard metrics
+    const unsubscribe = subscribeToUserProgress(user.uid, (data) => {
+      if (data) {
+        setMetrics({
+          readinessScore: data.overallProgress || 0,
+          marketAlignment: Math.min(100, (data.completedSkills?.length || 0) * 5), // Approx 20 skills = 100%
+          aiConfidence: Math.min(100, 50 + ((data.engagementScore || 0) / 2)), // Start at 50%, grow with engagement
+          skillsCompleted: data.completedSkills?.length || 0,
+          totalSkills: 20, // Baseline denominator
+          hasActivity: (data.completedSemesters?.length || 0) > 0 || (data.completedProjects?.length || 0) > 0,
+          fieldId: data.selectedField || null
         });
-
-        if (response.ok) {
-          const data = await response.json();
-          setMetrics(data);
-        } else {
-          console.error('Failed to fetch analytics');
-        }
-      } catch (error) {
-        console.error('Error fetching dashboard analytics:', error);
-      } finally {
-        setLoadingMetrics(false);
       }
-    };
+      setLoadingMetrics(false);
+    });
 
-    fetchAnalytics();
+    return () => unsubscribe();
   }, [user]);
 
   if (authLoading || (loadingMetrics && !metrics)) {

@@ -25,10 +25,13 @@ import {
 } from 'lucide-react';
 import { useQuery } from '@tanstack/react-query';
 import CodeEditor from '@/components/CodeEditor';
+import { useAuthContext } from '@/contexts/AuthContext';
+import { logUserActivity } from '@/services/userAnalyticsService';
 
 export default function ProjectWorkspace() {
     const { projectId } = useParams();
     const navigate = useNavigate();
+    const { user } = useAuthContext();
     const [project, setProject] = useState<FieldProject | null>(null);
 
     // UI States
@@ -104,7 +107,7 @@ export default function ProjectWorkspace() {
 
         setIsSubmitting(true);
         // Simulate API call
-        setTimeout(() => {
+        setTimeout(async () => {
             const history = JSON.parse(localStorage.getItem('myProjects') || '[]');
             // Check if already submitted
             if (!history.find((p: any) => p.id === project?.id)) {
@@ -115,6 +118,14 @@ export default function ProjectWorkspace() {
                     status: 'Completed'
                 });
                 localStorage.setItem('myProjects', JSON.stringify(history));
+
+                // Added: Log Activity for Real-Time Analytics
+                if (user && project) {
+                    await logUserActivity(user.uid, 'PROJECT_COMPLETED', {
+                        relatedId: project.id,
+                        metadata: { title: project.name }
+                    });
+                }
             }
 
             setIsSubmitting(false);
