@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { AdminLayout } from '@/components/admin/AdminLayout';
 import { useAuthContext } from '@/contexts/AuthContext';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
 import { Users, UserCheck, TrendingUp, Activity, Wifi, DollarSign, FileText, BarChart3, Clock } from 'lucide-react';
 import { collection, onSnapshot, query, where, Timestamp, getCountFromServer } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
