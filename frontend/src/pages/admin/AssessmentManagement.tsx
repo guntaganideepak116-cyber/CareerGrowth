@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { db, auth } from '@/lib/firebase';
-import { collection, query, where, getDocs } from 'firebase/firestore';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { collection, query, where, getDocs, onSnapshot } from 'firebase/firestore';
+import { useQueryClient } from '@tanstack/react-query';
 import { seedAssessmentQuestions } from '@/utils/assessmentSeeder';
 import { AdminLayout } from '@/components/admin/AdminLayout';
 import { Button } from '@/components/ui/button';
@@ -55,6 +55,9 @@ export default function AssessmentManagement() {
     const [passingScore, setPassingScore] = useState(75);
     const [assessmentEnabled, setAssessmentEnabled] = useState(true);
     const [seeding, setSeeding] = useState(false);
+    // Real-time state
+    const [questions, setQuestions] = useState<AssessmentQuestion[]>([]);
+    const [loadingQuestions, setLoadingQuestions] = useState(false);
     const queryClient = useQueryClient();
 
     const handleSeedDatabase = async () => {
@@ -65,8 +68,10 @@ export default function AssessmentManagement() {
         try {
             await seedAssessmentQuestions();
             toast.success('Database reseeded successfully!');
-            queryClient.invalidateQueries();
-            setSelectedField(''); // Reset view
+            // No need to invalidate queries if we are listening to changes, IF we were listening to all. 
+            // But we only listen to selectedField. If current view is open, it will update.
+            // If not, it will update when opened.
+            setSelectedField(''); // Reset view to be safe
         } catch (err) {
             toast.error('Failed to seed database');
             console.error(err);
@@ -85,23 +90,34 @@ export default function AssessmentManagement() {
         topic: '',
     });
 
-    // Load questions using React Query
-    const { data: questions = [], isLoading: loadingQuestions } = useQuery({
-        queryKey: ['assessment_questions', selectedField],
-        queryFn: async () => {
-            if (!selectedField) return [];
-            const q = query(
-                collection(db, 'assessment_questions'),
-                where('fieldId', '==', selectedField.toLowerCase().trim())
-            );
-            const snapshot = await getDocs(q);
-            return snapshot.docs.map(doc => ({
+    // Real-time listener for questions
+    useEffect(() => {
+        if (!selectedField) {
+            setQuestions([]);
+            return;
+        }
+
+        setLoadingQuestions(true);
+        const q = query(
+            collection(db, 'assessment_questions'),
+            where('fieldId', '==', selectedField.toLowerCase().trim())
+        );
+
+        const unsubscribe = onSnapshot(q, (snapshot) => {
+            const newQuestions = snapshot.docs.map(doc => ({
                 id: doc.id,
                 ...doc.data()
             })) as AssessmentQuestion[];
-        },
-        enabled: !!selectedField,
-    });
+            setQuestions(newQuestions);
+            setLoadingQuestions(false);
+        }, (error) => {
+            console.error("Error fetching questions:", error);
+            toast.error("Failed to load questions");
+            setLoadingQuestions(false);
+        });
+
+        return () => unsubscribe();
+    }, [selectedField]);
 
     const handleAddQuestion = () => {
         setEditingQuestion(null);
@@ -146,7 +162,7 @@ export default function AssessmentManagement() {
             if (!response.ok) throw new Error('Failed to delete');
 
             toast.success('Question deleted successfully');
-            queryClient.invalidateQueries({ queryKey: ['assessment_questions', selectedField] });
+            // Real-time listener handles update
         } catch (error) {
             console.error('Delete error:', error);
             toast.error('Failed to delete question');
@@ -178,29 +194,6 @@ export default function AssessmentManagement() {
                 ...questionForm
             };
 
-            // If editing, logic forces API to support update? 
-            // My API currently only supports POST (Create) and DELETE.
-            // I should implement PUT if editing is required.
-            // Or for now, DELETE and RE-CREATE properly? No, that loses ID.
-            // I'll stick to Add New (POST) for now as requested by user ("Admin creates a question").
-            // If editing, I might need to add PUT endpoint or just implement Create for this turn.
-            // Wait, editingQuestion ID check implies Update. 
-            // I'll use POST for simplicity or add PUT.
-            // Actually, prompts "Fix Admin Question Saving... POST /api/assessment/questions".
-            // It didn't explicitly ask for Edit.
-            // But UI has "Edit" button.
-            // I'll implement "Add" strictly via API.
-            // For Delete via API.
-
-            // Wait, if I'm editing, I should probably UPDATE.
-            // Since I didn't add PUT endpoint, I'll restrict to CREATE logic or assume POST handles upsert? 
-            // My POST uses .add() (strictly Create).
-            // So Edit will fail or create duplicate?
-
-            // I will implement "Delete" + "Create" logic on frontend for Edit if backend doesn't support it, 
-            // OR I'll just add simple "Create" support and log a warning for Edit.
-            // BETTER: I'll quickly add PUT endpoint in next step if needed, but for now I'll focus on CREATE as per prompt.
-
             if (editingQuestion) {
                 toast.error("Edit not fully implemented in API yet. Please Delete and Re-add.");
                 return;
@@ -222,7 +215,7 @@ export default function AssessmentManagement() {
 
             toast.success('Question saved successfully');
             setIsDialogOpen(false);
-            queryClient.invalidateQueries({ queryKey: ['assessment_questions', selectedField] }); // Refresh list
+            // Real-time listener handles update
 
         } catch (error) {
             console.error('Save error:', error);
@@ -324,7 +317,7 @@ export default function AssessmentManagement() {
                         <CardDescription>Select a field to view and manage its assessment questions</CardDescription>
                     </CardHeader>
                     <CardContent className="space-y-4">
-                        <div className="flex gap-4">
+                        <div className="flex flex-col sm:flex-row gap-4">
                             <div className="flex-1">
                                 <Label htmlFor="field-select">Select Field</Label>
                                 <Select value={selectedField} onValueChange={setSelectedField}>
@@ -342,7 +335,7 @@ export default function AssessmentManagement() {
                             </div>
                             {selectedField && (
                                 <div className="flex items-end gap-2">
-                                    <Button onClick={handleAddQuestion} className="gap-2">
+                                    <Button onClick={handleAddQuestion} className="gap-2 w-full sm:w-auto">
                                         <Plus className="w-4 h-4" />
                                         Add Question
                                     </Button>
@@ -351,70 +344,79 @@ export default function AssessmentManagement() {
                         </div>
 
                         {/* Questions Table */}
-                        {selectedField && questions.length > 0 && (
-                            <div className="border rounded-lg">
-                                <Table>
-                                    <TableHeader>
-                                        <TableRow>
-                                            <TableHead className="w-12">#</TableHead>
-                                            <TableHead>Question</TableHead>
-                                            <TableHead>Difficulty</TableHead>
-                                            <TableHead>Topic</TableHead>
-                                            <TableHead className="w-32">Actions</TableHead>
-                                        </TableRow>
-                                    </TableHeader>
-                                    <TableBody>
-                                        {questions.map((question, index) => (
-                                            <TableRow key={question.id}>
-                                                <TableCell className="font-medium">{index + 1}</TableCell>
-                                                <TableCell className="max-w-md truncate">{question.question}</TableCell>
-                                                <TableCell>
-                                                    <Badge
-                                                        variant={
-                                                            question.difficulty === 'easy'
-                                                                ? 'default'
-                                                                : question.difficulty === 'medium'
-                                                                    ? 'secondary'
-                                                                    : 'destructive'
-                                                        }
-                                                    >
-                                                        {question.difficulty}
-                                                    </Badge>
-                                                </TableCell>
-                                                <TableCell>{question.topic || '-'}</TableCell>
-                                                <TableCell>
-                                                    <div className="flex gap-2">
-                                                        <Button
-                                                            variant="ghost"
-                                                            size="sm"
-                                                            onClick={() => handleEditQuestion(question)}
-                                                        >
-                                                            <Edit className="w-4 h-4" />
-                                                        </Button>
-                                                        <Button
-                                                            variant="ghost"
-                                                            size="sm"
-                                                            onClick={() => handleDeleteQuestion(question.id)}
-                                                        >
-                                                            <Trash2 className="w-4 h-4 text-danger" />
-                                                        </Button>
-                                                    </div>
-                                                </TableCell>
-                                            </TableRow>
-                                        ))}
-                                    </TableBody>
-                                </Table>
-                            </div>
-                        )}
-
-                        {selectedField && questions.length === 0 && (
-                            <div className="text-center py-12 border rounded-lg">
-                                <FileText className="w-12 h-12 text-muted-foreground mx-auto mb-3" />
-                                <p className="text-muted-foreground">No questions found for this field</p>
-                                <Button onClick={handleAddQuestion} className="mt-4 gap-2">
-                                    <Plus className="w-4 h-4" />
-                                    Add First Question
-                                </Button>
+                        {selectedField && (
+                            <div className="border rounded-lg overflow-hidden">
+                                <div className="overflow-x-auto">
+                                    {questions.length > 0 ? (
+                                        <Table>
+                                            <TableHeader>
+                                                <TableRow>
+                                                    <TableHead className="w-12">#</TableHead>
+                                                    <TableHead className="min-w-[200px]">Question</TableHead>
+                                                    <TableHead>Difficulty</TableHead>
+                                                    <TableHead>Topic</TableHead>
+                                                    <TableHead className="w-32">Actions</TableHead>
+                                                </TableRow>
+                                            </TableHeader>
+                                            <TableBody>
+                                                {questions.map((question, index) => (
+                                                    <TableRow key={question.id}>
+                                                        <TableCell className="font-medium">{index + 1}</TableCell>
+                                                        <TableCell className="max-w-md truncate" title={question.question}>
+                                                            {question.question}
+                                                        </TableCell>
+                                                        <TableCell>
+                                                            <Badge
+                                                                variant={
+                                                                    question.difficulty === 'easy'
+                                                                        ? 'default'
+                                                                        : question.difficulty === 'medium'
+                                                                            ? 'secondary'
+                                                                            : 'destructive'
+                                                                }
+                                                            >
+                                                                {question.difficulty}
+                                                            </Badge>
+                                                        </TableCell>
+                                                        <TableCell>{question.topic || '-'}</TableCell>
+                                                        <TableCell>
+                                                            <div className="flex gap-2">
+                                                                <Button
+                                                                    variant="ghost"
+                                                                    size="sm"
+                                                                    onClick={() => handleEditQuestion(question)}
+                                                                >
+                                                                    <Edit className="w-4 h-4" />
+                                                                </Button>
+                                                                <Button
+                                                                    variant="ghost"
+                                                                    size="sm"
+                                                                    onClick={() => handleDeleteQuestion(question.id)}
+                                                                >
+                                                                    <Trash2 className="w-4 h-4 text-danger" />
+                                                                </Button>
+                                                            </div>
+                                                        </TableCell>
+                                                    </TableRow>
+                                                ))}
+                                            </TableBody>
+                                        </Table>
+                                    ) : (
+                                        !loadingQuestions && (
+                                            <div className="text-center py-12">
+                                                <FileText className="w-12 h-12 text-muted-foreground mx-auto mb-3" />
+                                                <p className="text-muted-foreground">No questions found for this field</p>
+                                                <Button onClick={handleAddQuestion} className="mt-4 gap-2">
+                                                    <Plus className="w-4 h-4" />
+                                                    Add First Question
+                                                </Button>
+                                            </div>
+                                        )
+                                    )}
+                                    {loadingQuestions && (
+                                        <div className="p-8 text-center text-muted-foreground">Loading questions...</div>
+                                    )}
+                                </div>
                             </div>
                         )}
                     </CardContent>
@@ -427,51 +429,53 @@ export default function AssessmentManagement() {
                         <CardDescription>Question counts and status for all fields</CardDescription>
                     </CardHeader>
                     <CardContent>
-                        <div className="border rounded-lg">
-                            <Table>
-                                <TableHeader>
-                                    <TableRow>
-                                        <TableHead>Field Name</TableHead>
-                                        <TableHead>Questions</TableHead>
-                                        <TableHead>Status</TableHead>
-                                        <TableHead>Actions</TableHead>
-                                    </TableRow>
-                                </TableHeader>
-                                <TableBody>
-                                    {fieldStats.map((stat) => (
-                                        <TableRow key={stat.fieldId}>
-                                            <TableCell className="font-medium">{stat.fieldName}</TableCell>
-                                            <TableCell>
-                                                <Badge variant={stat.questionCount >= 10 ? 'default' : 'secondary'}>
-                                                    {stat.questionCount} questions
-                                                </Badge>
-                                            </TableCell>
-                                            <TableCell>
-                                                {stat.enabled ? (
-                                                    <span className="flex items-center gap-1 text-success">
-                                                        <CheckCircle2 className="w-4 h-4" />
-                                                        Enabled
-                                                    </span>
-                                                ) : (
-                                                    <span className="flex items-center gap-1 text-muted-foreground">
-                                                        <XCircle className="w-4 h-4" />
-                                                        Disabled
-                                                    </span>
-                                                )}
-                                            </TableCell>
-                                            <TableCell>
-                                                <Button
-                                                    variant="ghost"
-                                                    size="sm"
-                                                    onClick={() => setSelectedField(stat.fieldId)}
-                                                >
-                                                    Manage
-                                                </Button>
-                                            </TableCell>
+                        <div className="border rounded-lg overflow-hidden">
+                            <div className="overflow-x-auto">
+                                <Table>
+                                    <TableHeader>
+                                        <TableRow>
+                                            <TableHead className="whitespace-nowrap">Field Name</TableHead>
+                                            <TableHead className="whitespace-nowrap">Questions</TableHead>
+                                            <TableHead className="whitespace-nowrap">Status</TableHead>
+                                            <TableHead className="whitespace-nowrap">Actions</TableHead>
                                         </TableRow>
-                                    ))}
-                                </TableBody>
-                            </Table>
+                                    </TableHeader>
+                                    <TableBody>
+                                        {fieldStats.map((stat) => (
+                                            <TableRow key={stat.fieldId}>
+                                                <TableCell className="font-medium whitespace-nowrap">{stat.fieldName}</TableCell>
+                                                <TableCell>
+                                                    <Badge variant={stat.questionCount >= 10 ? 'default' : 'secondary'}>
+                                                        {stat.questionCount} questions
+                                                    </Badge>
+                                                </TableCell>
+                                                <TableCell className="whitespace-nowrap">
+                                                    {stat.enabled ? (
+                                                        <span className="flex items-center gap-1 text-success">
+                                                            <CheckCircle2 className="w-4 h-4" />
+                                                            Enabled
+                                                        </span>
+                                                    ) : (
+                                                        <span className="flex items-center gap-1 text-muted-foreground">
+                                                            <XCircle className="w-4 h-4" />
+                                                            Disabled
+                                                        </span>
+                                                    )}
+                                                </TableCell>
+                                                <TableCell>
+                                                    <Button
+                                                        variant="ghost"
+                                                        size="sm"
+                                                        onClick={() => setSelectedField(stat.fieldId)}
+                                                    >
+                                                        Manage
+                                                    </Button>
+                                                </TableCell>
+                                            </TableRow>
+                                        ))}
+                                    </TableBody>
+                                </Table>
+                            </div>
                         </div>
                     </CardContent>
                 </Card>

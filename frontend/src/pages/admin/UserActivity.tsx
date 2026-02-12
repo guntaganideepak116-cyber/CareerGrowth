@@ -6,8 +6,10 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Button } from '@/components/ui/button';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Badge } from '@/components/ui/badge';
-import { Activity, RefreshCw } from 'lucide-react';
+import { Activity, Wifi } from 'lucide-react';
 import { toast } from 'sonner';
+import { collection, onSnapshot, Timestamp } from 'firebase/firestore';
+import { db } from '@/lib/firebase';
 
 interface User {
     id: string;
@@ -31,83 +33,82 @@ interface Stats {
     };
 }
 
-const API_URL = `${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/admin`;
-
 export default function UserActivity() {
     const { user } = useAuthContext();
     const navigate = useNavigate();
     const [loading, setLoading] = useState(true);
     const [users, setUsers] = useState<User[]>([]);
     const [stats, setStats] = useState<Stats | null>(null);
-    const [refreshing, setRefreshing] = useState(false);
 
     useEffect(() => {
-        checkAdminAndLoad();
-    }, []);
-
-    const checkAdminAndLoad = async () => {
         if (!user) {
             navigate('/login');
             return;
         }
 
-        try {
-            const token = await user.getIdToken();
+        const unsubscribe = onSnapshot(collection(db, 'users'), (snapshot) => {
+            try {
+                const now = new Date();
+                const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+                const weekAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+                const monthAgo = new Date(now.getFullYear(), now.getMonth() - 1, now.getDate());
+                const thirtyMinutesAgo = new Date(now.getTime() - 30 * 60 * 1000);
 
-            // Check admin
-            const checkRes = await fetch(`${API_URL}/check`, {
-                headers: { 'Authorization': `Bearer ${token}` },
-            });
+                const allDocs = snapshot.docs.map(doc => {
+                    const data = doc.data();
+                    const lastLogin = data.lastLogin instanceof Timestamp ? data.lastLogin.toDate() : null;
+                    const isOnline = lastLogin && lastLogin >= thirtyMinutesAgo;
+                    const signupDate = data.created_at || null;
 
-            if (!checkRes.ok) {
-                navigate('/dashboard');
-                return;
+                    return {
+                        id: doc.id,
+                        name: data.full_name || 'N/A',
+                        email: data.email || 'N/A',
+                        signupDate: signupDate || 'N/A',
+                        lastLoginTime: lastLogin ? lastLogin.toISOString() : 'Never',
+                        loginStatus: isOnline ? 'online' : 'offline',
+                        rawSignup: signupDate ? new Date(signupDate) : new Date(0), // for sorting
+                        rawLogin: lastLogin || new Date(0) // for calculating stats
+                    };
+                }) as (User & { rawSignup: Date, rawLogin: Date })[];
+
+                // Sort by signup date desc
+                allDocs.sort((a, b) => b.rawSignup.getTime() - a.rawSignup.getTime());
+
+                // Calculate Stats
+                const newStats = {
+                    logins: {
+                        today: allDocs.filter(u => u.rawLogin >= today).length,
+                        thisWeek: allDocs.filter(u => u.rawLogin >= weekAgo).length,
+                        thisMonth: allDocs.filter(u => u.rawLogin >= monthAgo).length,
+                    },
+                    signups: {
+                        today: allDocs.filter(u => u.rawSignup >= today).length,
+                        thisWeek: allDocs.filter(u => u.rawSignup >= weekAgo).length,
+                        thisMonth: allDocs.filter(u => u.rawSignup >= monthAgo).length,
+                    }
+                };
+
+                setUsers(allDocs);
+                setStats(newStats);
+                setLoading(false);
+
+            } catch (error) {
+                console.error("Error processing user activity:", error);
+                toast.error("Error processing real-time data");
             }
-
-            await loadData(token);
-        } catch (error) {
-            toast.error('Failed to load data');
-        } finally {
+        }, (error) => {
+            console.error("Error listening to users:", error);
+            if (error.code !== 'permission-denied') {
+                toast.error("Failed to sync user data");
+            }
             setLoading(false);
-        }
-    };
+        });
 
-    const loadData = async (token: string) => {
-        try {
-            // Load stats
-            const statsRes = await fetch(`${API_URL}/stats`, {
-                headers: { 'Authorization': `Bearer ${token}` },
-            });
-            if (statsRes.ok) {
-                setStats(await statsRes.json());
-            }
+        // Check admin permission is handled by AdminGuard in layout, but double check handled by security rules usually
 
-            // Load users
-            const usersRes = await fetch(`${API_URL}/users`, {
-                headers: { 'Authorization': `Bearer ${token}` },
-            });
-            if (usersRes.ok) {
-                const data = await usersRes.json();
-                setUsers(data.users);
-            }
-        } catch (error) {
-            toast.error('Failed to load data');
-        }
-    };
-
-    const handleRefresh = async () => {
-        if (!user) return;
-        setRefreshing(true);
-        try {
-            const token = await user.getIdToken();
-            await loadData(token);
-            toast.success('Data refreshed');
-        } catch (error) {
-            toast.error('Failed to refresh');
-        } finally {
-            setRefreshing(false);
-        }
-    };
+        return () => unsubscribe();
+    }, [user, navigate]);
 
     if (loading) {
         return (
@@ -122,12 +123,16 @@ export default function UserActivity() {
     return (
         <AdminLayout>
             <div className="space-y-6">
-                {/* Actions */}
-                <div className="flex justify-end">
-                    <Button onClick={handleRefresh} disabled={refreshing} variant="outline">
-                        <RefreshCw className={`mr-2 h-4 w-4 ${refreshing ? 'animate-spin' : ''}`} />
-                        Refresh
-                    </Button>
+                {/* Header with Live Indicator */}
+                <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                    <div>
+                        <h2 className="text-xl font-semibold tracking-tight">User Activity</h2>
+                        <p className="text-sm text-muted-foreground">Real-time user monitoring</p>
+                    </div>
+                    <div className="flex items-center gap-2 px-3 py-1 bg-green-500/10 text-green-600 rounded-full text-xs font-medium animate-pulse">
+                        <Wifi className="h-3 w-3" />
+                        Live Updates Active
+                    </div>
                 </div>
 
                 {/* Activity Stats */}
@@ -199,48 +204,52 @@ export default function UserActivity() {
                         <CardDescription>All registered users with activity status</CardDescription>
                     </CardHeader>
                     <CardContent>
-                        <Table>
-                            <TableHeader>
-                                <TableRow>
-                                    <TableHead>Name</TableHead>
-                                    <TableHead>Email</TableHead>
-                                    <TableHead>Signup Date</TableHead>
-                                    <TableHead>Last Login</TableHead>
-                                    <TableHead>Status</TableHead>
-                                </TableRow>
-                            </TableHeader>
-                            <TableBody>
-                                {users.length === 0 ? (
-                                    <TableRow>
-                                        <TableCell colSpan={5} className="text-center text-muted-foreground">
-                                            No users found
-                                        </TableCell>
-                                    </TableRow>
-                                ) : (
-                                    users.map((user) => (
-                                        <TableRow key={user.id}>
-                                            <TableCell className="font-medium">{user.name}</TableCell>
-                                            <TableCell>{user.email}</TableCell>
-                                            <TableCell>
-                                                {user.signupDate !== 'N/A'
-                                                    ? new Date(user.signupDate).toLocaleDateString()
-                                                    : 'N/A'}
-                                            </TableCell>
-                                            <TableCell>
-                                                {user.lastLoginTime === 'Never'
-                                                    ? 'Never'
-                                                    : new Date(user.lastLoginTime).toLocaleString()}
-                                            </TableCell>
-                                            <TableCell>
-                                                <Badge variant={user.loginStatus === 'online' ? 'default' : 'secondary'}>
-                                                    {user.loginStatus}
-                                                </Badge>
-                                            </TableCell>
+                        <div className="rounded-md border overflow-hidden">
+                            <div className="overflow-x-auto">
+                                <Table>
+                                    <TableHeader>
+                                        <TableRow>
+                                            <TableHead className="whitespace-nowrap">Name</TableHead>
+                                            <TableHead className="whitespace-nowrap">Email</TableHead>
+                                            <TableHead className="whitespace-nowrap">Signup Date</TableHead>
+                                            <TableHead className="whitespace-nowrap">Last Login</TableHead>
+                                            <TableHead className="whitespace-nowrap">Status</TableHead>
                                         </TableRow>
-                                    ))
-                                )}
-                            </TableBody>
-                        </Table>
+                                    </TableHeader>
+                                    <TableBody>
+                                        {users.length === 0 ? (
+                                            <TableRow>
+                                                <TableCell colSpan={5} className="text-center text-muted-foreground h-24">
+                                                    No users found
+                                                </TableCell>
+                                            </TableRow>
+                                        ) : (
+                                            users.map((user) => (
+                                                <TableRow key={user.id}>
+                                                    <TableCell className="font-medium whitespace-nowrap">{user.name}</TableCell>
+                                                    <TableCell className="whitespace-nowrap">{user.email}</TableCell>
+                                                    <TableCell className="whitespace-nowrap">
+                                                        {user.signupDate !== 'N/A'
+                                                            ? new Date(user.signupDate).toLocaleDateString()
+                                                            : 'N/A'}
+                                                    </TableCell>
+                                                    <TableCell className="whitespace-nowrap">
+                                                        {user.lastLoginTime === 'Never'
+                                                            ? 'Never'
+                                                            : new Date(user.lastLoginTime).toLocaleString()}
+                                                    </TableCell>
+                                                    <TableCell className="whitespace-nowrap">
+                                                        <Badge variant={user.loginStatus === 'online' ? 'default' : 'secondary'}>
+                                                            {user.loginStatus}
+                                                        </Badge>
+                                                    </TableCell>
+                                                </TableRow>
+                                            ))
+                                        )}
+                                    </TableBody>
+                                </Table>
+                            </div>
+                        </div>
                     </CardContent>
                 </Card>
             </div>

@@ -3,8 +3,10 @@ import { AdminLayout } from '@/components/admin/AdminLayout';
 import { useAuthContext } from '@/contexts/AuthContext';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Users, UserCheck, TrendingUp, Activity, RefreshCw } from 'lucide-react';
+import { Users, UserCheck, TrendingUp, Activity, Wifi } from 'lucide-react';
 import { toast } from 'sonner';
+import { collection, onSnapshot, Timestamp } from 'firebase/firestore';
+import { db } from '@/lib/firebase';
 
 interface Stats {
     totalUsers: number;
@@ -23,48 +25,92 @@ interface Stats {
     };
 }
 
-const API_URL = 'http://localhost:5000/api/admin';
-
 export default function AdminDashboard() {
     const { user } = useAuthContext();
     const [stats, setStats] = useState<Stats | null>(null);
     const [loading, setLoading] = useState(true);
-    const [refreshing, setRefreshing] = useState(false);
 
     useEffect(() => {
-        if (user) {
-            loadData();
-        }
-    }, [user]);
-
-    const loadData = async () => {
         if (!user) return;
 
-        try {
-            const token = await user.getIdToken(true);
-            const statsRes = await fetch(`${API_URL}/stats`, {
-                headers: { 'Authorization': `Bearer ${token}` },
-            });
+        // specific listeners for real-time updates
+        const unsubscribe = onSnapshot(collection(db, 'users'), (snapshot) => {
+            try {
+                const now = new Date();
+                const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+                const weekAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+                const monthAgo = new Date(now.getFullYear(), now.getMonth() - 1, now.getDate());
+                const yearAgo = new Date(now.getFullYear() - 1, now.getMonth(), now.getDate());
+                const thirtyMinutesAgo = new Date(now.getTime() - 30 * 60 * 1000);
 
-            if (statsRes.ok) {
-                setStats(await statsRes.json());
-            } else {
-                toast.error('Failed to load statistics');
+                const allUsers = snapshot.docs.map(doc => doc.data());
+                const totalUsers = snapshot.size;
+
+                // Active Users (last 30 mins)
+                const activeUsers = allUsers.filter(u => {
+                    const lastLogin = u.lastLogin instanceof Timestamp ? u.lastLogin.toDate() : null;
+                    return lastLogin && lastLogin >= thirtyMinutesAgo;
+                }).length;
+
+                // Signups
+                const signups = {
+                    today: allUsers.filter(u => {
+                        const created = u.created_at ? new Date(u.created_at) : null;
+                        return created && created >= today;
+                    }).length,
+                    thisWeek: allUsers.filter(u => {
+                        const created = u.created_at ? new Date(u.created_at) : null;
+                        return created && created >= weekAgo;
+                    }).length,
+                    thisMonth: allUsers.filter(u => {
+                        const created = u.created_at ? new Date(u.created_at) : null;
+                        return created && created >= monthAgo;
+                    }).length,
+                    thisYear: allUsers.filter(u => {
+                        const created = u.created_at ? new Date(u.created_at) : null;
+                        return created && created >= yearAgo;
+                    }).length,
+                };
+
+                // Logins
+                const logins = {
+                    today: allUsers.filter(u => {
+                        const lastLogin = u.lastLogin instanceof Timestamp ? u.lastLogin.toDate() : null;
+                        return lastLogin && lastLogin >= today;
+                    }).length,
+                    thisWeek: allUsers.filter(u => {
+                        const lastLogin = u.lastLogin instanceof Timestamp ? u.lastLogin.toDate() : null;
+                        return lastLogin && lastLogin >= weekAgo;
+                    }).length,
+                    thisMonth: allUsers.filter(u => {
+                        const lastLogin = u.lastLogin instanceof Timestamp ? u.lastLogin.toDate() : null;
+                        return lastLogin && lastLogin >= monthAgo;
+                    }).length,
+                    thisYear: allUsers.filter(u => {
+                        const lastLogin = u.lastLogin instanceof Timestamp ? u.lastLogin.toDate() : null;
+                        return lastLogin && lastLogin >= yearAgo;
+                    }).length,
+                };
+
+                setStats({
+                    totalUsers,
+                    activeUsers,
+                    signups,
+                    logins
+                });
+                setLoading(false);
+            } catch (error) {
+                console.error("Error processing admin stats:", error);
+                toast.error("Error processing real-time data");
             }
-        } catch (error) {
-            console.error('Error loading admin data:', error);
-            toast.error('Failed to load data');
-        } finally {
+        }, (error) => {
+            console.error("Error listening to users:", error);
+            toast.error("Failed to subscribe to real-time updates");
             setLoading(false);
-        }
-    };
+        });
 
-    const handleRefresh = async () => {
-        setRefreshing(true);
-        await loadData();
-        toast.success('Data refreshed');
-        setRefreshing(false);
-    };
+        return () => unsubscribe();
+    }, [user]);
 
     if (loading) {
         return (
@@ -79,12 +125,16 @@ export default function AdminDashboard() {
     return (
         <AdminLayout>
             <div className="space-y-6">
-                {/* Quick Actions */}
-                <div className="flex justify-end">
-                    <Button onClick={handleRefresh} disabled={refreshing} variant="outline">
-                        <RefreshCw className={`mr-2 h-4 w-4 ${refreshing ? 'animate-spin' : ''}`} />
-                        Refresh
-                    </Button>
+                {/* Header with Live Indicator */}
+                <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                    <div>
+                        <h2 className="text-xl font-semibold tracking-tight">Overview</h2>
+                        <p className="text-sm text-muted-foreground">Real-time platform statistics</p>
+                    </div>
+                    <div className="flex items-center gap-2 px-3 py-1 bg-green-500/10 text-green-600 rounded-full text-xs font-medium animate-pulse">
+                        <Wifi className="h-3 w-3" />
+                        Live Updates Active
+                    </div>
                 </div>
 
                 {/* Overview Stats */}
