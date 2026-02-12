@@ -4,7 +4,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Plus, Map, Search, Edit2, Trash2, FileCheck, ExternalLink } from 'lucide-react';
+import { Plus, Map, Search, Edit2, Trash2, FileCheck, Wifi, Loader2, ArrowRight } from 'lucide-react';
 import {
     Table,
     TableBody,
@@ -13,240 +13,311 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table";
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Badge } from '@/components/ui/badge';
 import { toast } from 'sonner';
+import { db } from '@/lib/firebase';
+import {
+    collection,
+    addDoc,
+    onSnapshot,
+    query,
+    orderBy,
+    deleteDoc,
+    doc,
+    updateDoc,
+    serverTimestamp
+} from 'firebase/firestore';
+import { fields } from '@/data/fieldsData';
 
-// Mock Data for initial display (since backend might be empty)
-const MOCK_PROJECTS = [
-    { id: '1', title: 'E-Commerce Platform', field: 'Computer Science', type: 'Project', difficulty: 'Intermediate', status: 'Active' },
-    { id: '2', title: 'AWS Solutions Architect', field: 'Computer Science', type: 'Certification', difficulty: 'Advanced', status: 'Active' },
-    { id: '3', title: 'Waitbot AI Integration', field: 'Electronics', type: 'Project', difficulty: 'Advanced', status: 'Draft' },
-    { id: '4', title: 'Bridge Construction Analysis', field: 'Civil Engineering', type: 'Project', difficulty: 'Beginner', status: 'Active' },
-];
+interface RoadmapItem {
+    id: string;
+    title: string;
+    fieldId: string;
+    type: 'Project' | 'Certification';
+    difficulty: 'Beginner' | 'Intermediate' | 'Advanced';
+    status: 'Active' | 'Draft';
+    planType: 'free' | 'pro' | 'premium';
+}
 
 export default function RoadmapManager() {
-    const [projects, setProjects] = useState(MOCK_PROJECTS);
+    const [items, setItems] = useState<RoadmapItem[]>([]);
+    const [loading, setLoading] = useState(true);
     const [searchTerm, setSearchTerm] = useState('');
     const [isDialogOpen, setIsDialogOpen] = useState(false);
     const [editingId, setEditingId] = useState<string | null>(null);
 
     // Form Stats
-    const [projectForm, setProjectForm] = useState({
+    const [form, setForm] = useState({
         title: '',
-        field: '',
-        type: 'Project',
-        difficulty: 'Intermediate'
+        fieldId: '',
+        type: 'Project' as 'Project' | 'Certification',
+        difficulty: 'Intermediate' as 'Beginner' | 'Intermediate' | 'Advanced',
+        planType: 'free' as 'free' | 'pro' | 'premium'
     });
 
-    const handleSave = () => {
-        if (!projectForm.title || !projectForm.field) {
-            toast.error("Please fill in all required fields");
+    // Real-time Items Listener
+    useEffect(() => {
+        const q = query(collection(db, 'projects'), orderBy('createdAt', 'desc'));
+        const unsubscribe = onSnapshot(q, (snapshot) => {
+            const data = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as RoadmapItem));
+            setItems(data);
+            setLoading(false);
+        });
+        return () => unsubscribe();
+    }, []);
+
+    const handleSave = async () => {
+        if (!form.title || !form.fieldId) {
+            toast.error("Please fill in all core fields.");
             return;
         }
 
-        if (editingId) {
-            setProjects(projects.map(p => p.id === editingId ? { ...p, ...projectForm, status: 'Active' } : p));
-            toast.success("Item updated successfully");
-        } else {
-            setProjects([...projects, { id: Date.now().toString(), ...projectForm, status: 'Active' }]);
-            toast.success("New item created successfully");
+        try {
+            const payload = {
+                ...form,
+                status: 'Active',
+                updatedAt: serverTimestamp()
+            };
+
+            if (editingId) {
+                await updateDoc(doc(db, 'projects', editingId), payload);
+                toast.success("Catalog entry updated.");
+            } else {
+                await addDoc(collection(db, 'projects'), {
+                    ...payload,
+                    createdAt: serverTimestamp()
+                });
+                toast.success("New asset registered.");
+            }
+            setIsDialogOpen(false);
+            setEditingId(null);
+            setForm({ title: '', fieldId: '', type: 'Project', difficulty: 'Intermediate', planType: 'free' });
+        } catch (error) {
+            toast.error("Database write failed.");
         }
-        setIsDialogOpen(false);
-        setEditingId(null);
-        setProjectForm({ title: '', field: '', type: 'Project', difficulty: 'Intermediate' });
     };
 
-    const handleEdit = (project: any) => {
-        setEditingId(project.id);
-        setProjectForm({
-            title: project.title,
-            field: project.field,
-            type: project.type,
-            difficulty: project.difficulty
+    const handleEdit = (item: RoadmapItem) => {
+        setEditingId(item.id);
+        setForm({
+            title: item.title,
+            fieldId: item.fieldId,
+            type: item.type,
+            difficulty: item.difficulty,
+            planType: item.planType || 'free'
         });
         setIsDialogOpen(true);
     };
 
-    const handleDelete = (id: string) => {
-        if (confirm("Are you sure you want to delete this item?")) {
-            setProjects(projects.filter(p => p.id !== id));
-            toast.success("Item deleted");
+    const handleDelete = async (id: string) => {
+        if (!confirm("De-register this asset from the career roadmap?")) return;
+        try {
+            await deleteDoc(doc(db, 'projects', id));
+            toast.success("Asset decommissioned.");
+        } catch (e) {
+            toast.error("Decommission failed.");
         }
     };
 
-    const filteredProjects = projects.filter(p =>
+    const filteredItems = items.filter(p =>
         p.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        p.field.toLowerCase().includes(searchTerm.toLowerCase())
+        p.fieldId.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
     return (
         <AdminLayout>
-            <div className="space-y-6 animate-fade-in">
+            <div className="max-w-7xl mx-auto space-y-6 animate-fade-in">
                 {/* Header */}
                 <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
                     <div>
-                        <h1 className="text-2xl font-bold tracking-tight">Projects & Certifications</h1>
-                        <p className="text-muted-foreground">Manage ongoing projects, certifications, and learning roadmaps.</p>
+                        <h1 className="text-3xl font-bold tracking-tight">Content Ecosystem</h1>
+                        <p className="text-muted-foreground mt-1">Manage cross-field projects and industry certifications.</p>
                     </div>
-                    <Button onClick={() => {
-                        setEditingId(null);
-                        setProjectForm({ title: '', field: '', type: 'Project', difficulty: 'Intermediate' });
-                        setIsDialogOpen(true);
-                    }}>
-                        <Plus className="h-4 w-4 mr-2" />
-                        Add New Item
-                    </Button>
+                    <div className="flex gap-3">
+                        <Badge variant="outline" className="h-10 px-4 border-primary/20 bg-primary/5 text-primary flex gap-2 items-center">
+                            <Wifi className="h-4 w-4 animate-pulse text-green-500" />
+                            LIVE CATALOG
+                        </Badge>
+                        <Button onClick={() => {
+                            setEditingId(null);
+                            setForm({ title: '', fieldId: '', type: 'Project', difficulty: 'Intermediate', planType: 'free' });
+                            setIsDialogOpen(true);
+                        }} className="shadow-lg hover:shadow-primary/20">
+                            <Plus className="h-4 w-4 mr-2" />
+                            Register Asset
+                        </Button>
+                    </div>
                 </div>
 
-                {/* Filters */}
-                <Card>
-                    <CardHeader className="pb-3">
-                        <CardTitle className="text-sm font-medium">Filter Content</CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                        <div className="flex items-center gap-4">
-                            <div className="relative flex-1">
-                                <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
-                                <Input
-                                    placeholder="Search by title or field..."
-                                    className="pl-9"
-                                    value={searchTerm}
-                                    onChange={(e) => setSearchTerm(e.target.value)}
-                                />
-                            </div>
-                            <Select defaultValue="all">
-                                <SelectTrigger className="w-[180px]">
-                                    <SelectValue placeholder="Type" />
-                                </SelectTrigger>
-                                <SelectContent>
-                                    <SelectItem value="all">All Types</SelectItem>
-                                    <SelectItem value="project">Projects</SelectItem>
-                                    <SelectItem value="certification">Certifications</SelectItem>
-                                </SelectContent>
-                            </Select>
+                {/* Statistics Matrix */}
+                <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+                    <Card><CardHeader className="pb-2"><CardTitle className="text-xs font-bold uppercase text-muted-foreground">Total Assets</CardTitle></CardHeader>
+                        <CardContent><div className="text-3xl font-bold">{items.length}</div></CardContent></Card>
+                    <Card><CardHeader className="pb-2"><CardTitle className="text-xs font-bold uppercase text-muted-foreground">Projects</CardTitle></CardHeader>
+                        <CardContent><div className="text-3xl font-bold text-primary">{items.filter(i => i.type === 'Project').length}</div></CardContent></Card>
+                    <Card><CardHeader className="pb-2"><CardTitle className="text-xs font-bold uppercase text-muted-foreground">Premium Logic</CardTitle></CardHeader>
+                        <CardContent><div className="text-3xl font-bold text-amber-600">{items.filter(i => i.planType === 'premium').length}</div></CardContent></Card>
+                    <Card className="border-green-200 bg-green-50/20"><CardHeader className="pb-2"><CardTitle className="text-xs font-bold uppercase text-green-600">Active Node</CardTitle></CardHeader>
+                        <CardContent><div className="text-sm font-bold flex items-center gap-2">UP-TO-DATE <ArrowRight className="h-3 w-3" /></div></CardContent></Card>
+                </div>
+
+                {/* Workspace */}
+                <Card className="shadow-xl">
+                    <CardHeader className="pb-3 border-b flex flex-row items-center justify-between">
+                        <div>
+                            <CardTitle>Resource Pipeline</CardTitle>
+                            <CardDescription>Managed objects synced with global career engine</CardDescription>
                         </div>
-                    </CardContent>
-                </Card>
-
-                {/* Content Table */}
-                <Card>
+                        <div className="relative w-72">
+                            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                            <Input
+                                placeholder="Search by name or field..."
+                                className="pl-9 h-9"
+                                value={searchTerm}
+                                onChange={(e) => setSearchTerm(e.target.value)}
+                            />
+                        </div>
+                    </CardHeader>
                     <CardContent className="p-0">
-                        <Table>
-                            <TableHeader>
-                                <TableRow>
-                                    <TableHead>Title</TableHead>
-                                    <TableHead>Field</TableHead>
-                                    <TableHead>Type</TableHead>
-                                    <TableHead>Difficulty</TableHead>
-                                    <TableHead>Status</TableHead>
-                                    <TableHead className="text-right">Actions</TableHead>
-                                </TableRow>
-                            </TableHeader>
-                            <TableBody>
-                                {filteredProjects.map((project) => (
-                                    <TableRow key={project.id}>
-                                        <TableCell className="font-medium">
-                                            <div className="flex items-center gap-2">
-                                                {project.type === 'Project' ? <Map className="h-4 w-4 text-primary" /> : <FileCheck className="h-4 w-4 text-amber-500" />}
-                                                {project.title}
-                                            </div>
-                                        </TableCell>
-                                        <TableCell>{project.field}</TableCell>
-                                        <TableCell>
-                                            <Badge variant="outline">{project.type}</Badge>
-                                        </TableCell>
-                                        <TableCell>
-                                            <Badge variant={project.difficulty === 'Beginner' ? 'secondary' : project.difficulty === 'Intermediate' ? 'default' : 'destructive'} className="text-xs">
-                                                {project.difficulty}
-                                            </Badge>
-                                        </TableCell>
-                                        <TableCell>
-                                            <div className="flex items-center gap-2">
-                                                <div className={`h-2 w-2 rounded-full ${project.status === 'Active' ? 'bg-green-500' : 'bg-gray-300'}`} />
-                                                <span className="text-sm text-muted-foreground">{project.status}</span>
-                                            </div>
-                                        </TableCell>
-                                        <TableCell className="text-right">
-                                            <div className="flex justify-end gap-2">
-                                                <Button variant="ghost" size="icon" onClick={() => handleEdit(project)}>
-                                                    <Edit2 className="h-4 w-4" />
-                                                </Button>
-                                                <Button variant="ghost" size="icon" className="text-destructive hover:text-destructive" onClick={() => handleDelete(project.id)}>
-                                                    <Trash2 className="h-4 w-4" />
-                                                </Button>
-                                            </div>
-                                        </TableCell>
-                                    </TableRow>
-                                ))}
-                                {filteredProjects.length === 0 && (
+                        {loading ? (
+                            <div className="p-20 flex flex-col items-center gap-4 text-muted-foreground">
+                                <Loader2 className="h-10 w-10 animate-spin text-primary" />
+                                <p className="text-sm font-medium animate-pulse uppercase tracking-widest text-[10px]">Synchronizing Node...</p>
+                            </div>
+                        ) : (
+                            <Table>
+                                <TableHeader className="bg-muted/30">
                                     <TableRow>
-                                        <TableCell colSpan={6} className="text-center h-24 text-muted-foreground">
-                                            No projects found. Add one to get started.
-                                        </TableCell>
+                                        <TableHead className="w-1/3">Asset Identity</TableHead>
+                                        <TableHead>Target Discipline</TableHead>
+                                        <TableHead>Requirement</TableHead>
+                                        <TableHead>Tier</TableHead>
+                                        <TableHead className="text-right">Operations</TableHead>
                                     </TableRow>
-                                )}
-                            </TableBody>
-                        </Table>
+                                </TableHeader>
+                                <TableBody>
+                                    {filteredItems.map((item) => (
+                                        <TableRow key={item.id} className="group hover:bg-primary/5 transition-colors">
+                                            <TableCell className="font-medium">
+                                                <div className="flex items-center gap-3">
+                                                    <div className={`h-8 w-8 rounded flex items-center justify-center ${item.type === 'Project' ? 'bg-primary/10 text-primary' : 'bg-amber-100 text-amber-600'}`}>
+                                                        {item.type === 'Project' ? <Map className="h-4 w-4" /> : <FileCheck className="h-4 w-4" />}
+                                                    </div>
+                                                    <div className="flex flex-col">
+                                                        <span className="text-sm font-bold">{item.title}</span>
+                                                        <span className="text-[10px] text-muted-foreground uppercase font-bold tracking-tight opacity-70">{item.type} • {item.id}</span>
+                                                    </div>
+                                                </div>
+                                            </TableCell>
+                                            <TableCell>
+                                                <Badge variant="outline" className="text-[10px] uppercase h-5 font-bold">
+                                                    {fields.find(f => f.id === item.fieldId)?.name || item.fieldId}
+                                                </Badge>
+                                            </TableCell>
+                                            <TableCell>
+                                                <Badge className={`text-[10px] uppercase h-5 font-bold ${item.difficulty === 'Beginner' ? 'bg-green-100 text-green-700' : item.difficulty === 'Intermediate' ? 'bg-primary/10 text-primary' : 'bg-red-100 text-red-700'}`}>
+                                                    {item.difficulty}
+                                                </Badge>
+                                            </TableCell>
+                                            <TableCell>
+                                                <Badge variant="secondary" className="text-[10px] uppercase h-5 font-bold">
+                                                    {item.planType || 'FREE'}
+                                                </Badge>
+                                            </TableCell>
+                                            <TableCell className="text-right">
+                                                <div className="flex justify-end gap-1 opacity-10 group-hover:opacity-100 transition-opacity">
+                                                    <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => handleEdit(item)}>
+                                                        <Edit2 className="h-3.5 w-3.5" />
+                                                    </Button>
+                                                    <Button variant="ghost" size="icon" className="h-8 w-8 text-destructive" onClick={() => handleDelete(item.id)}>
+                                                        <Trash2 className="h-3.5 w-3.5" />
+                                                    </Button>
+                                                </div>
+                                            </TableCell>
+                                        </TableRow>
+                                    ))}
+                                    {filteredItems.length === 0 && (
+                                        <TableRow>
+                                            <TableCell colSpan={5} className="text-center h-48 text-muted-foreground italic">
+                                                No resources matched the current filter.
+                                            </TableCell>
+                                        </TableRow>
+                                    )}
+                                </TableBody>
+                            </Table>
+                        )}
                     </CardContent>
                 </Card>
 
-                {/* Add/Edit Dialog */}
+                {/* Asset Editor Dialog */}
                 <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-                    <DialogContent>
+                    <DialogContent className="max-w-md">
                         <DialogHeader>
-                            <DialogTitle>{editingId ? 'Edit Item' : 'Add New Project/Certification'}</DialogTitle>
+                            <DialogTitle className="text-xl font-bold">{editingId ? 'Edit Manifest' : 'Register New Asset'}</DialogTitle>
                             <DialogDescription>
-                                Add details about the project or certification to display in career paths.
+                                Changes manifest across all matching career paths instantly.
                             </DialogDescription>
                         </DialogHeader>
-                        <div className="grid gap-4 py-4">
-                            <div className="grid gap-2">
-                                <Label htmlFor="title">Title</Label>
-                                <Input id="title" value={projectForm.title} onChange={(e) => setProjectForm({ ...projectForm, title: e.target.value })} placeholder="e.g. Full Stack Portfolio" />
+                        <div className="grid gap-6 py-6">
+                            <div className="space-y-2">
+                                <Label className="text-xs uppercase font-bold text-muted-foreground">Asset Title</Label>
+                                <Input value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} placeholder="e.g. System Design Mastery" className="h-10" />
                             </div>
-                            <div className="grid gap-2">
-                                <Label htmlFor="field">Field</Label>
-                                <Select value={projectForm.field} onValueChange={(val) => setProjectForm({ ...projectForm, field: val })}>
-                                    <SelectTrigger>
-                                        <SelectValue placeholder="Select Field" />
-                                    </SelectTrigger>
-                                    <SelectContent>
-                                        <SelectItem value="Computer Science">Computer Science</SelectItem>
-                                        <SelectItem value="Electronics">Electronics</SelectItem>
-                                        <SelectItem value="Mechanical">Mechanical</SelectItem>
-                                        <SelectItem value="Civil Engineering">Civil Engineering</SelectItem>
-                                    </SelectContent>
-                                </Select>
-                            </div>
+
                             <div className="grid grid-cols-2 gap-4">
-                                <div className="grid gap-2">
-                                    <Label>Type</Label>
-                                    <Select value={projectForm.type} onValueChange={(val) => setProjectForm({ ...projectForm, type: val })}>
-                                        <SelectTrigger><SelectValue /></SelectTrigger>
+                                <div className="space-y-2">
+                                    <Label className="text-xs uppercase font-bold text-muted-foreground">Managed Field</Label>
+                                    <Select value={form.fieldId} onValueChange={(val) => setForm({ ...form, fieldId: val })}>
+                                        <SelectTrigger className="h-10"><SelectValue /></SelectTrigger>
                                         <SelectContent>
-                                            <SelectItem value="Project">Project</SelectItem>
-                                            <SelectItem value="Certification">Certification</SelectItem>
+                                            {fields.map(f => (
+                                                <SelectItem key={f.id} value={f.id}>{f.name}</SelectItem>
+                                            ))}
                                         </SelectContent>
                                     </Select>
                                 </div>
-                                <div className="grid gap-2">
-                                    <Label>Difficulty</Label>
-                                    <Select value={projectForm.difficulty} onValueChange={(val) => setProjectForm({ ...projectForm, difficulty: val })}>
-                                        <SelectTrigger><SelectValue /></SelectTrigger>
+                                <div className="space-y-2">
+                                    <Label className="text-xs uppercase font-bold text-muted-foreground">Asset Type</Label>
+                                    <Select value={form.type} onValueChange={(val: any) => setForm({ ...form, type: val })}>
+                                        <SelectTrigger className="h-10"><SelectValue /></SelectTrigger>
                                         <SelectContent>
-                                            <SelectItem value="Beginner">Beginner</SelectItem>
-                                            <SelectItem value="Intermediate">Intermediate</SelectItem>
-                                            <SelectItem value="Advanced">Advanced</SelectItem>
+                                            <SelectItem value="Project">Real-world Project</SelectItem>
+                                            <SelectItem value="Certification">Industry Cert</SelectItem>
+                                        </SelectContent>
+                                    </Select>
+                                </div>
+                            </div>
+
+                            <div className="grid grid-cols-2 gap-4">
+                                <div className="space-y-2">
+                                    <Label className="text-xs uppercase font-bold text-muted-foreground">Complexity Level</Label>
+                                    <Select value={form.difficulty} onValueChange={(val: any) => setForm({ ...form, difficulty: val })}>
+                                        <SelectTrigger className="h-10"><SelectValue /></SelectTrigger>
+                                        <SelectContent>
+                                            <SelectItem value="Beginner">Level 1: Entry</SelectItem>
+                                            <SelectItem value="Intermediate">Level 2: Skilled</SelectItem>
+                                            <SelectItem value="Advanced">Level 3: Mastery</SelectItem>
+                                        </SelectContent>
+                                    </Select>
+                                </div>
+                                <div className="space-y-2">
+                                    <Label className="text-xs uppercase font-bold text-muted-foreground">Access Tier</Label>
+                                    <Select value={form.planType} onValueChange={(val: any) => setForm({ ...form, planType: val })}>
+                                        <SelectTrigger className="h-10"><SelectValue /></SelectTrigger>
+                                        <SelectContent>
+                                            <SelectItem value="free">Free Access</SelectItem>
+                                            <SelectItem value="pro">Pro Analyst</SelectItem>
+                                            <SelectItem value="premium">Premium Expert</SelectItem>
                                         </SelectContent>
                                     </Select>
                                 </div>
                             </div>
                         </div>
-                        <DialogFooter>
-                            <Button variant="outline" onClick={() => setIsDialogOpen(false)}>Cancel</Button>
-                            <Button onClick={handleSave}>Save Item</Button>
+                        <DialogFooter className="bg-muted/30 p-4 -m-6 mt-2 rounded-b-lg border-t">
+                            <Button variant="ghost" onClick={() => setIsDialogOpen(false)}>Abort</Button>
+                            <Button onClick={handleSave} className="min-w-[120px] shadow-lg">Commit to Catalog</Button>
                         </DialogFooter>
                     </DialogContent>
                 </Dialog>

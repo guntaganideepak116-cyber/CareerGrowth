@@ -14,12 +14,13 @@ import {
   getDoc,
   setDoc,
   updateDoc,
-  Timestamp
+  Timestamp,
+  onSnapshot
 } from 'firebase/firestore';
 import { auth, db } from '@/lib/firebase';
 
 // Check if email is admin (matches ADMIN_EMAIL from backend)
-const ADMIN_EMAIL = 'guntaganideepak1234@gmail.com'; // Should match backend .env
+const ADMIN_EMAIL = 'guntaganideepak1234@gmail.com';
 const isAdminEmail = (email: string | null): boolean => {
   return email?.toLowerCase() === ADMIN_EMAIL.toLowerCase();
 };
@@ -32,7 +33,7 @@ export interface Profile {
   phone: string | null;
   date_of_birth: string | null;
   field: string | null;
-  branch: string | null; // Engineering branch (CSE, ECE, EEE, etc.)
+  branch: string | null;
   specialization: string | null;
   career_path: string | null;
   current_semester: number;
@@ -43,23 +44,24 @@ export interface Profile {
   github_url: string | null;
   twitter_url: string | null;
   website_url: string | null;
-  role: 'admin' | 'user'; // User role for access control
+  role: 'admin' | 'user';
+  isBlocked?: boolean;
 
   // Intelligence & Progress Fields
-  skills: string[]; // List of acquired skills
+  skills: string[];
   experience_years: number;
-  preferred_roles: string[]; // Target roles for match scoring
-  skill_gap_analysis: Record<string, any>; // Cached analysis
+  preferred_roles: string[];
+  skill_gap_analysis: Record<string, any>;
   resume_url: string | null;
-  completed_projects: string[]; // IDs of completed projects
-  roadmap_progress: number; // 0-100 percentage
+  completed_projects: string[];
+  roadmap_progress: number;
 
   // Subscription Plan Fields
-  userPlan: 'free' | 'pro' | 'premium'; // Current subscription plan
-  planStartDate: string; // ISO timestamp when plan started
+  userPlan: 'free' | 'pro' | 'premium';
+  planStartDate: string;
 
   // Notifications
-  notificationPreference?: boolean; // Email notification preference
+  notificationPreference?: boolean;
 
   // Onboarding & Flow Control
   onboardingCompleted?: boolean;
@@ -72,68 +74,57 @@ export interface Profile {
 
 export function useAuth() {
   const [user, setUser] = useState<User | null>(null);
-
-  // Initialize from local storage for instant load
   const [profile, setProfile] = useState<Profile | null>(() => {
     try {
       const cached = localStorage.getItem('user_profile');
-      if (!cached) {
-        console.log('[Auth Init] No cached profile');
-        return null;
-      }
-
+      if (!cached) return null;
       const parsed = JSON.parse(cached);
-
-      // Validate cached profile has required fields
-      if (parsed && parsed.id && parsed.email) {
-        // Auto-add role if missing (backward compatibility)
-        if (!parsed.role) {
-          console.log('[Auth Init] Cached profile missing role, will auto-add as "user"');
-          parsed.role = 'user'; // Default to user, will be corrected by server if admin
-        }
-        console.log('[Auth Init] ✅ Using cached profile:', parsed.email, 'Role:', parsed.role);
-        return parsed;
-      }
-
-      // Invalid cache
-      console.log('[Auth Init] Invalid cached profile, clearing');
-      localStorage.removeItem('user_profile');
+      if (parsed && parsed.id && parsed.email) return parsed;
       return null;
     } catch (error) {
-      console.error('[Auth Init] Error parsing cached profile:', error);
-      localStorage.removeItem('user_profile');
       return null;
     }
   });
 
-  // Start as loading=true, will be set to false after Firebase auth initializes
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Firebase Auth listener - this is BROWSER-SPECIFIC
-    // Each browser/tab has its own Firebase auth instance and won't interfere with others
-    // Browser A: User session  -> auth.currentUser = user instance
-    // Browser B: Admin session -> auth.currentUser = admin instance (completely separate)
+    let unsubProfile: (() => void) | undefined;
+
     const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
       console.log('[Auth State Change]', currentUser ? `User: ${currentUser.email}` : 'Logged out');
-
       setUser(currentUser);
-
-      // Stop loading IMMEDIATELY after getting auth state
-      // This prevents "Redirecting..." loops while waiting for profile
       setLoading(false);
 
       if (currentUser) {
-        // Fetch profile in background - does not block UI
+        // Initial Fetch
         await fetchProfile(currentUser.uid);
+
+        // REAL-TIME SYNC & FORCE LOGOUT IF BLOCKED
+        unsubProfile = onSnapshot(doc(db, 'users', currentUser.uid), (snapshot) => {
+          if (snapshot.exists()) {
+            const data = snapshot.data() as Profile;
+            setProfile(data);
+            localStorage.setItem('user_profile', JSON.stringify(data));
+
+            if (data.isBlocked) {
+              console.warn('[AUTH] Session blocked by admin.');
+              firebaseSignOut(auth);
+            }
+          }
+        });
       } else {
+        if (unsubProfile) unsubProfile();
         setProfile(null);
         localStorage.removeItem('user_profile');
       }
     });
 
-    return () => unsubscribe();
-  }, []); // Empty deps is correct - we want this listener to run once per component mount
+    return () => {
+      unsubscribe();
+      if (unsubProfile) unsubProfile();
+    };
+  }, []);
 
 
   const fetchProfile = async (userId: string) => {
@@ -142,22 +133,14 @@ export function useAuth() {
       const docSnap = await getDoc(docRef);
 
       if (docSnap.exists()) {
-        const data = docSnap.data() as any; // Use 'any' temporarily for migration check
-
-        // Auto-migrate: Add role if missing (for existing users)
+        const data = docSnap.data() as any;
         if (!data.role) {
-          console.log('[Migration] Adding role field to existing user profile');
           const role = isAdminEmail(data.email) ? 'admin' : 'user';
           const updatedData = { ...data, role } as Profile;
-
-          // Update in Firestore
           await updateDoc(docRef, { role });
-
-          // Update local state
           setProfile(updatedData);
           localStorage.setItem('user_profile', JSON.stringify(updatedData));
         } else {
-          // Profile already has role
           setProfile(data as Profile);
           localStorage.setItem('user_profile', JSON.stringify(data));
         }
@@ -172,7 +155,6 @@ export function useAuth() {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
 
-      // Create profile in Firestore
       const newProfile: Profile = {
         id: user.uid,
         user_id: user.uid,
@@ -193,8 +175,8 @@ export function useAuth() {
         twitter_url: null,
         website_url: null,
         role: isAdminEmail(user.email) ? 'admin' : 'user',
+        isBlocked: false,
 
-        // Initialize new fields
         skills: [],
         experience_years: 0,
         preferred_roles: [],
@@ -203,10 +185,7 @@ export function useAuth() {
         completed_projects: [],
         roadmap_progress: 0,
 
-        // Notifications
         notificationPreference: true,
-
-        // Initialize Free Plan
         userPlan: 'free',
         planStartDate: new Date().toISOString(),
 
@@ -215,8 +194,6 @@ export function useAuth() {
       };
 
       await setDoc(doc(db, 'users', user.uid), newProfile);
-
-      // Update display name in Auth
       await updateFirebaseProfile(user, { displayName: fullName });
 
       setProfile(newProfile);
@@ -232,16 +209,16 @@ export function useAuth() {
 
   const signIn = async (email: string, password: string) => {
     try {
-      // Sign in creates a session ONLY for this browser/tab
-      // Multiple independent sessions are fully supported:
-      // - Browser A: user@example.com logged in
-      // - Browser B: admin@example.com logged in
-      // Both remain active simultaneously without interference
       const result = await signInWithEmailAndPassword(auth, email, password);
-
-      // Update lastLogin timestamp in Firestore
-      // Fire and forget - don't await this
       const userRef = doc(db, 'users', result.user.uid);
+
+      // Check if blocked before allowing entry
+      const snap = await getDoc(userRef);
+      if (snap.exists() && snap.data().isBlocked) {
+        await firebaseSignOut(auth);
+        throw new Error('This account has been disabled by an administrator.');
+      }
+
       updateDoc(userRef, {
         lastLogin: Timestamp.now(),
       }).catch(err => console.error('Error updating lastLogin:', err));
@@ -256,9 +233,6 @@ export function useAuth() {
   };
 
   const signOut = async () => {
-    // Sign out ONLY in this browser/tab
-    // This will NOT affect any other browser where the user (or admin) is logged in
-    // Each browser has its own Firebase auth token
     await firebaseSignOut(auth);
     setProfile(null);
     localStorage.removeItem('user_profile');
@@ -270,15 +244,11 @@ export function useAuth() {
     try {
       const docRef = doc(db, 'users', user.uid);
       const updatedData = { ...updates, updated_at: new Date().toISOString() };
-
       await updateDoc(docRef, updatedData);
-
-      // Refresh local state
       const newItem = { ...profile, ...updatedData } as Profile;
       setProfile(newItem);
       localStorage.setItem('user_profile', JSON.stringify(newItem));
       return newItem;
-
     } catch (error) {
       console.error("Error updating profile:", error);
       throw error;
@@ -287,13 +257,10 @@ export function useAuth() {
 
   const signInWithGoogle = async () => {
     try {
-      // Google sign-in creates a session ONLY for this browser/tab
-      // Same independence as email/password login
       const provider = new GoogleAuthProvider();
       const result = await signInWithPopup(auth, provider);
       const user = result.user;
 
-      // Check if profile exists, if not create one
       const docRef = doc(db, 'users', user.uid);
       const docSnap = await getDoc(docRef);
 
@@ -318,8 +285,8 @@ export function useAuth() {
           twitter_url: null,
           website_url: null,
           role: isAdminEmail(user.email) ? 'admin' : 'user',
+          isBlocked: false,
 
-          // Initialize new fields
           skills: [],
           experience_years: 0,
           preferred_roles: [],
@@ -328,10 +295,7 @@ export function useAuth() {
           completed_projects: [],
           roadmap_progress: 0,
 
-          // Notifications
           notificationPreference: true,
-
-          // Initialize Free Plan
           userPlan: 'free',
           planStartDate: new Date().toISOString(),
 
@@ -343,6 +307,10 @@ export function useAuth() {
         localStorage.setItem('user_profile', JSON.stringify(newProfile));
       } else {
         const data = docSnap.data() as Profile;
+        if (data.isBlocked) {
+          await firebaseSignOut(auth);
+          throw new Error('This account has been disabled by an administrator.');
+        }
         setProfile(data);
         localStorage.setItem('user_profile', JSON.stringify(data));
       }
@@ -358,7 +326,7 @@ export function useAuth() {
 
   return {
     user,
-    session: null, // Deprecated in Firebase, keeping for compatibility if needed
+    session: null,
     profile,
     loading,
     signUp,

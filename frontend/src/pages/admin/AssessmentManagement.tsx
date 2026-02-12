@@ -1,8 +1,17 @@
 import { useState, useEffect } from 'react';
-import { db, auth } from '@/lib/firebase';
-import { collection, query, where, getDocs, onSnapshot, addDoc, updateDoc, deleteDoc, doc } from 'firebase/firestore';
-import { useQueryClient } from '@tanstack/react-query';
-import { seedAssessmentQuestions } from '@/utils/assessmentSeeder';
+import { db } from '@/lib/firebase';
+import {
+    collection,
+    query,
+    where,
+    onSnapshot,
+    addDoc,
+    updateDoc,
+    deleteDoc,
+    doc,
+    serverTimestamp,
+    getDocs
+} from 'firebase/firestore';
 import { AdminLayout } from '@/components/admin/AdminLayout';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -38,49 +47,27 @@ import {
     Plus,
     Edit,
     Trash2,
-    Settings,
-    BarChart3,
-    FileText,
     CheckCircle2,
     XCircle,
+    Loader2,
+    FileSearch,
+    BrainCircuit,
+    Wand2
 } from 'lucide-react';
 import { fields } from '@/data/fieldsData';
-import { assessmentQuestions } from '@/data/assessmentQuestions';
 import { AssessmentQuestion } from '@/types/assessment';
+import { seedAssessmentQuestions } from '@/utils/assessmentSeeder';
 
 export default function AssessmentManagement() {
     const [selectedField, setSelectedField] = useState<string>('');
     const [editingQuestion, setEditingQuestion] = useState<AssessmentQuestion | null>(null);
     const [isDialogOpen, setIsDialogOpen] = useState(false);
-    const [passingScore, setPassingScore] = useState(75);
-    const [assessmentEnabled, setAssessmentEnabled] = useState(true);
     const [seeding, setSeeding] = useState(false);
-    // Real-time state
     const [questions, setQuestions] = useState<AssessmentQuestion[]>([]);
     const [loadingQuestions, setLoadingQuestions] = useState(false);
-    const queryClient = useQueryClient();
+    const [fieldStats, setFieldStats] = useState<Record<string, number>>({});
 
-    const handleSeedDatabase = async () => {
-        if (!confirm('WARNING: This will DELETE all existing questions and replace them with generated templates. Continue?')) {
-            return;
-        }
-        setSeeding(true);
-        try {
-            await seedAssessmentQuestions();
-            toast.success('Database reseeded successfully!');
-            // No need to invalidate queries if we are listening to changes, IF we were listening to all. 
-            // But we only listen to selectedField. If current view is open, it will update.
-            // If not, it will update when opened.
-            setSelectedField(''); // Reset view to be safe
-        } catch (err) {
-            toast.error('Failed to seed database');
-            console.error(err);
-        } finally {
-            setSeeding(false);
-        }
-    };
-
-    // Form state for question editing
+    // Question Form State
     const [questionForm, setQuestionForm] = useState({
         question: '',
         options: ['', '', '', ''],
@@ -90,7 +77,21 @@ export default function AssessmentManagement() {
         topic: '',
     });
 
-    // Real-time listener for questions
+    // 1. Listen for ALL questions to build dynamic field stats
+    useEffect(() => {
+        const unsubscribe = onSnapshot(collection(db, 'assessment_questions'), (snapshot) => {
+            const stats: Record<string, number> = {};
+            snapshot.docs.forEach(doc => {
+                const data = doc.data();
+                const fid = data.fieldId;
+                if (fid) stats[fid] = (stats[fid] || 0) + 1;
+            });
+            setFieldStats(stats);
+        });
+        return () => unsubscribe();
+    }, []);
+
+    // 2. Listen for questions of SELECTED field
     useEffect(() => {
         if (!selectedField) {
             setQuestions([]);
@@ -112,12 +113,26 @@ export default function AssessmentManagement() {
             setLoadingQuestions(false);
         }, (error) => {
             console.error("Error fetching questions:", error);
-            toast.error("Failed to load questions");
+            toast.error("Failed to load field questions");
             setLoadingQuestions(false);
         });
 
         return () => unsubscribe();
     }, [selectedField]);
+
+    const handleSeedDatabase = async () => {
+        if (!confirm('This will wipe all existing questions and reset them from templates. Continue?')) return;
+        setSeeding(true);
+        try {
+            await seedAssessmentQuestions();
+            toast.success('Assessment database reseeded');
+            setSelectedField('');
+        } catch (err) {
+            toast.error('Seed operation failed');
+        } finally {
+            setSeeding(false);
+        }
+    };
 
     const handleAddQuestion = () => {
         setEditingQuestion(null);
@@ -146,34 +161,18 @@ export default function AssessmentManagement() {
     };
 
     const handleDeleteQuestion = async (questionId: string) => {
-        if (!confirm('Are you sure you want to delete this question?')) {
-            return;
-        }
-
+        if (!confirm('Permanently remove this question from the bank?')) return;
         try {
             await deleteDoc(doc(db, 'assessment_questions', questionId));
-            toast.success('Question deleted successfully');
+            toast.success('Question removed');
         } catch (error) {
-            console.error('Delete error:', error);
-            toast.error('Failed to delete question');
+            toast.error('Delete operation failed');
         }
     };
 
     const handleSaveQuestion = async () => {
-        // Validation
-        if (!questionForm.question.trim()) {
-            toast.error('Question text is required');
-            return;
-        }
-
-        if (questionForm.options.some((opt) => !opt.trim())) {
-            toast.error('All options must be filled');
-            return;
-        }
-
-        // Check for duplicates
-        if (questions.some(q => q.question.toLowerCase() === questionForm.question.toLowerCase() && q.id !== editingQuestion?.id)) {
-            toast.error('This question already exists in this field.');
+        if (!questionForm.question.trim() || questionForm.options.some(o => !o.trim())) {
+            toast.error('All fields and options are mandatory');
             return;
         }
 
@@ -181,387 +180,231 @@ export default function AssessmentManagement() {
             const payload = {
                 fieldId: selectedField.toLowerCase().trim(),
                 ...questionForm,
-                updatedAt: new Date().toISOString()
+                updatedAt: serverTimestamp()
             };
 
             if (editingQuestion) {
                 await updateDoc(doc(db, 'assessment_questions', editingQuestion.id), payload);
-                toast.success('Question updated successfully');
+                toast.success('Question updated');
             } else {
                 await addDoc(collection(db, 'assessment_questions'), {
                     ...payload,
-                    createdAt: new Date().toISOString()
+                    createdAt: serverTimestamp()
                 });
-                toast.success('Question added successfully');
+                toast.success('Question added to bank');
             }
-
             setIsDialogOpen(false);
-
         } catch (error) {
-            console.error('Save error:', error);
-            toast.error('Failed to save question');
+            toast.error('Failed to commit question');
         }
     };
 
-    const handleUpdateOption = (index: number, value: string) => {
-        const newOptions = [...questionForm.options];
-        newOptions[index] = value;
-        setQuestionForm({ ...questionForm, options: newOptions });
-    };
-
-    const fieldStats = fields.map((field) => {
-        const fieldQuestions = assessmentQuestions[field.id] || [];
-        return {
-            fieldId: field.id,
-            fieldName: field.name,
-            questionCount: fieldQuestions.length,
-            enabled: true, // In production, fetch from config
-        };
-    });
-
     return (
         <AdminLayout>
-            <div className="max-w-7xl mx-auto space-y-6 p-6">
+            <div className="max-w-7xl mx-auto space-y-6 animate-fade-in">
                 {/* Header */}
-                <div>
-                    <h1 className="text-3xl font-bold text-foreground">Assessment Management</h1>
-                    <p className="text-muted-foreground mt-2">
-                        Manage assessment questions, configure settings, and view statistics for all fields.
-                    </p>
-                    <div className="mt-4 flex gap-4">
-                        <Button
-                            variant="destructive"
-                            onClick={handleSeedDatabase}
-                            disabled={seeding}
-                        >
-                            {seeding ? 'Seeding...' : 'Reset & Seed Database (Dev Tool)'}
-                        </Button>
+                <div className="flex flex-col md:flex-row justify-between items-start gap-4">
+                    <div>
+                        <h1 className="text-3xl font-bold">Assessment Knowledge Hub</h1>
+                        <p className="text-muted-foreground mt-1">
+                            Configure adaptive assessment engines and manage knowledge banks.
+                        </p>
                     </div>
+                    <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={handleSeedDatabase}
+                        disabled={seeding}
+                        className="bg-red-50 text-red-600 hover:bg-red-100 border-red-200"
+                    >
+                        {seeding ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : <Wand2 className="h-4 w-4 mr-2" />}
+                        Rebuild Core Bank
+                    </Button>
                 </div>
 
-                {/* Statistics Cards */}
+                {/* Real-time Stats */}
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-                    <Card>
-                        <CardHeader className="pb-3">
-                            <CardTitle className="text-sm font-medium text-muted-foreground">
-                                Total Fields
-                            </CardTitle>
-                        </CardHeader>
-                        <CardContent>
-                            <div className="text-3xl font-bold text-foreground">{fields.length}</div>
-                        </CardContent>
-                    </Card>
-                    <Card>
-                        <CardHeader className="pb-3">
-                            <CardTitle className="text-sm font-medium text-muted-foreground">
-                                Total Questions
-                            </CardTitle>
-                        </CardHeader>
-                        <CardContent>
-                            <div className="text-3xl font-bold text-foreground">
-                                {Object.values(assessmentQuestions).reduce((sum, qs) => sum + qs.length, 0)}
-                            </div>
-                        </CardContent>
-                    </Card>
-                    <Card>
-                        <CardHeader className="pb-3">
-                            <CardTitle className="text-sm font-medium text-muted-foreground">
-                                Avg Questions/Field
-                            </CardTitle>
-                        </CardHeader>
-                        <CardContent>
-                            <div className="text-3xl font-bold text-foreground">
-                                {Math.round(
-                                    Object.values(assessmentQuestions).reduce((sum, qs) => sum + qs.length, 0) /
-                                    fields.length
-                                )}
-                            </div>
-                        </CardContent>
-                    </Card>
-                    <Card>
-                        <CardHeader className="pb-3">
-                            <CardTitle className="text-sm font-medium text-muted-foreground">
-                                Passing Score
-                            </CardTitle>
-                        </CardHeader>
-                        <CardContent>
-                            <div className="text-3xl font-bold text-foreground">{passingScore}%</div>
-                        </CardContent>
-                    </Card>
+                    <Card><CardHeader className="pb-2"><CardTitle className="text-xs uppercase font-bold text-muted-foreground">Managed Fields</CardTitle></CardHeader>
+                        <CardContent><div className="text-3xl font-bold">{fields.length}</div></CardContent></Card>
+
+                    <Card><CardHeader className="pb-2"><CardTitle className="text-xs uppercase font-bold text-muted-foreground">Global Question Count</CardTitle></CardHeader>
+                        <CardContent><div className="text-3xl font-bold text-primary">
+                            {Object.values(fieldStats).reduce((a, b) => a + b, 0)}
+                        </div></CardContent></Card>
+
+                    <Card><CardHeader className="pb-2"><CardTitle className="text-xs uppercase font-bold text-muted-foreground">Avg Density</CardTitle></CardHeader>
+                        <CardContent><div className="text-3xl font-bold text-purple-600">
+                            {Math.round(Object.values(fieldStats).reduce((a, b) => a + b, 0) / (fields.length || 1))}
+                        </div></CardContent></Card>
+
+                    <Card className="bg-primary/5"><CardHeader className="pb-2"><CardTitle className="text-xs uppercase font-bold text-primary">Sync Status</CardTitle></CardHeader>
+                        <CardContent><div className="text-sm font-bold flex items-center gap-2"><div className="h-2 w-2 rounded-full bg-green-500 animate-ping" /> REAL-TIME</div></CardContent></Card>
                 </div>
 
-                {/* Field Selection and Actions */}
-                <Card>
-                    <CardHeader>
-                        <CardTitle>Question Management</CardTitle>
-                        <CardDescription>Select a field to view and manage its assessment questions</CardDescription>
-                    </CardHeader>
-                    <CardContent className="space-y-4">
-                        <div className="flex flex-col sm:flex-row gap-4">
-                            <div className="flex-1">
-                                <Label htmlFor="field-select">Select Field</Label>
-                                <Select value={selectedField} onValueChange={setSelectedField}>
-                                    <SelectTrigger id="field-select">
-                                        <SelectValue placeholder="Choose a field..." />
-                                    </SelectTrigger>
-                                    <SelectContent>
-                                        {fields.map((field) => (
-                                            <SelectItem key={field.id} value={field.id}>
-                                                {field.name} ({assessmentQuestions[field.id]?.length || 0} questions)
-                                            </SelectItem>
-                                        ))}
-                                    </SelectContent>
-                                </Select>
-                            </div>
-                            {selectedField && (
-                                <div className="flex items-end gap-2">
-                                    <Button onClick={handleAddQuestion} className="gap-2 w-full sm:w-auto">
-                                        <Plus className="w-4 h-4" />
-                                        Add Question
-                                    </Button>
-                                </div>
-                            )}
-                        </div>
-
-                        {/* Questions Table */}
-                        {selectedField && (
-                            <div className="border rounded-lg overflow-hidden">
-                                <div className="overflow-x-auto">
-                                    {questions.length > 0 ? (
-                                        <Table>
-                                            <TableHeader>
-                                                <TableRow>
-                                                    <TableHead className="w-12">#</TableHead>
-                                                    <TableHead className="min-w-[200px]">Question</TableHead>
-                                                    <TableHead>Difficulty</TableHead>
-                                                    <TableHead>Topic</TableHead>
-                                                    <TableHead className="w-32">Actions</TableHead>
-                                                </TableRow>
-                                            </TableHeader>
-                                            <TableBody>
-                                                {questions.map((question, index) => (
-                                                    <TableRow key={question.id}>
-                                                        <TableCell className="font-medium">{index + 1}</TableCell>
-                                                        <TableCell className="max-w-md truncate" title={question.question}>
-                                                            {question.question}
-                                                        </TableCell>
-                                                        <TableCell>
-                                                            <Badge
-                                                                variant={
-                                                                    question.difficulty === 'easy'
-                                                                        ? 'default'
-                                                                        : question.difficulty === 'medium'
-                                                                            ? 'secondary'
-                                                                            : 'destructive'
-                                                                }
-                                                            >
-                                                                {question.difficulty}
-                                                            </Badge>
-                                                        </TableCell>
-                                                        <TableCell>{question.topic || '-'}</TableCell>
-                                                        <TableCell>
-                                                            <div className="flex gap-2">
-                                                                <Button
-                                                                    variant="ghost"
-                                                                    size="sm"
-                                                                    onClick={() => handleEditQuestion(question)}
-                                                                >
-                                                                    <Edit className="w-4 h-4" />
-                                                                </Button>
-                                                                <Button
-                                                                    variant="ghost"
-                                                                    size="sm"
-                                                                    onClick={() => handleDeleteQuestion(question.id)}
-                                                                >
-                                                                    <Trash2 className="w-4 h-4 text-danger" />
-                                                                </Button>
-                                                            </div>
-                                                        </TableCell>
-                                                    </TableRow>
-                                                ))}
-                                            </TableBody>
-                                        </Table>
-                                    ) : (
-                                        !loadingQuestions && (
-                                            <div className="text-center py-12">
-                                                <FileText className="w-12 h-12 text-muted-foreground mx-auto mb-3" />
-                                                <p className="text-muted-foreground">No questions found for this field</p>
-                                                <Button onClick={handleAddQuestion} className="mt-4 gap-2">
-                                                    <Plus className="w-4 h-4" />
-                                                    Add First Question
-                                                </Button>
-                                            </div>
-                                        )
-                                    )}
-                                    {loadingQuestions && (
-                                        <div className="p-8 text-center text-muted-foreground">Loading questions...</div>
-                                    )}
-                                </div>
-                            </div>
-                        )}
-                    </CardContent>
-                </Card>
-
-                {/* Field Overview Table */}
-                <Card>
-                    <CardHeader>
-                        <CardTitle>Field Overview</CardTitle>
-                        <CardDescription>Question counts and status for all fields</CardDescription>
-                    </CardHeader>
-                    <CardContent>
-                        <div className="border rounded-lg overflow-hidden">
-                            <div className="overflow-x-auto">
-                                <Table>
-                                    <TableHeader>
-                                        <TableRow>
-                                            <TableHead className="whitespace-nowrap">Field Name</TableHead>
-                                            <TableHead className="whitespace-nowrap">Questions</TableHead>
-                                            <TableHead className="whitespace-nowrap">Status</TableHead>
-                                            <TableHead className="whitespace-nowrap">Actions</TableHead>
-                                        </TableRow>
-                                    </TableHeader>
-                                    <TableBody>
-                                        {fieldStats.map((stat) => (
-                                            <TableRow key={stat.fieldId}>
-                                                <TableCell className="font-medium whitespace-nowrap">{stat.fieldName}</TableCell>
-                                                <TableCell>
-                                                    <Badge variant={stat.questionCount >= 10 ? 'default' : 'secondary'}>
-                                                        {stat.questionCount} questions
-                                                    </Badge>
-                                                </TableCell>
-                                                <TableCell className="whitespace-nowrap">
-                                                    {stat.enabled ? (
-                                                        <span className="flex items-center gap-1 text-success">
-                                                            <CheckCircle2 className="w-4 h-4" />
-                                                            Enabled
-                                                        </span>
-                                                    ) : (
-                                                        <span className="flex items-center gap-1 text-muted-foreground">
-                                                            <XCircle className="w-4 h-4" />
-                                                            Disabled
-                                                        </span>
-                                                    )}
-                                                </TableCell>
-                                                <TableCell>
-                                                    <Button
-                                                        variant="ghost"
-                                                        size="sm"
-                                                        onClick={() => setSelectedField(stat.fieldId)}
-                                                    >
-                                                        Manage
-                                                    </Button>
-                                                </TableCell>
-                                            </TableRow>
-                                        ))}
-                                    </TableBody>
-                                </Table>
-                            </div>
-                        </div>
-                    </CardContent>
-                </Card>
-
-                {/* Question Edit Dialog */}
-                <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-                    <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
-                        <DialogHeader>
-                            <DialogTitle>
-                                {editingQuestion ? 'Edit Question' : 'Add New Question'}
-                            </DialogTitle>
-                            <DialogDescription>
-                                {editingQuestion
-                                    ? 'Update the question details below'
-                                    : 'Create a new assessment question for ' + fields.find((f) => f.id === selectedField)?.name}
-                            </DialogDescription>
-                        </DialogHeader>
-
-                        <div className="space-y-4 py-4">
-                            {/* Question Text */}
-                            <div className="space-y-2">
-                                <Label htmlFor="question">Question *</Label>
-                                <Textarea
-                                    id="question"
-                                    value={questionForm.question}
-                                    onChange={(e) => setQuestionForm({ ...questionForm, question: e.target.value })}
-                                    placeholder="Enter the question..."
-                                    rows={3}
-                                />
-                            </div>
-
-                            {/* Options */}
-                            <div className="space-y-2">
-                                <Label>Options *</Label>
-                                {questionForm.options.map((option, index) => (
-                                    <div key={index} className="flex gap-2 items-center">
-                                        <Input
-                                            value={option}
-                                            onChange={(e) => handleUpdateOption(index, e.target.value)}
-                                            placeholder={`Option ${index + 1}`}
-                                        />
-                                        <Button
-                                            variant={questionForm.correctAnswer === index ? 'default' : 'outline'}
-                                            size="sm"
-                                            onClick={() => setQuestionForm({ ...questionForm, correctAnswer: index })}
-                                        >
-                                            {questionForm.correctAnswer === index ? 'Correct' : 'Mark Correct'}
-                                        </Button>
+                {/* Workspace */}
+                <div className="grid lg:grid-cols-3 gap-6">
+                    {/* Field Overview */}
+                    <Card className="lg:col-span-1 border-primary/10">
+                        <CardHeader className="pb-2"><CardTitle className="text-lg">Field Banks</CardTitle></CardHeader>
+                        <CardContent className="p-0">
+                            <div className="max-h-[500px] overflow-y-auto divide-y">
+                                {fields.map((field) => (
+                                    <div
+                                        key={field.id}
+                                        onClick={() => setSelectedField(field.id)}
+                                        className={`p-3 flex items-center justify-between cursor-pointer transition-colors hover:bg-muted/50 ${selectedField === field.id ? 'bg-primary/5 border-l-4 border-primary' : ''}`}
+                                    >
+                                        <div className="flex flex-col">
+                                            <span className="text-sm font-semibold">{field.name}</span>
+                                            <span className="text-[10px] text-muted-foreground uppercase opacity-70">{field.id}</span>
+                                        </div>
+                                        <Badge variant={fieldStats[field.id] > 0 ? 'default' : 'outline'} className="h-5 px-1.5 min-w-[30px] justify-center">
+                                            {fieldStats[field.id] || 0}
+                                        </Badge>
                                     </div>
                                 ))}
                             </div>
+                        </CardContent>
+                    </Card>
 
-                            {/* Difficulty and Topic */}
+                    {/* Question Repository */}
+                    <Card className="lg:col-span-2 shadow-xl">
+                        <CardHeader className="flex flex-row items-center justify-between border-b bg-muted/20">
+                            <div>
+                                <CardTitle>{selectedField ? `Repository: ${fields.find(f => f.id === selectedField)?.name}` : 'Select a Field'}</CardTitle>
+                                <CardDescription>Direct database interaction layer</CardDescription>
+                            </div>
+                            {selectedField && (
+                                <Button onClick={handleAddQuestion} size="sm" className="gap-2">
+                                    <Plus className="h-4 w-4" /> Add Logic
+                                </Button>
+                            )}
+                        </CardHeader>
+                        <CardContent className="p-0">
+                            {!selectedField ? (
+                                <div className="p-12 text-center text-muted-foreground space-y-4">
+                                    <BrainCircuit className="h-12 w-12 mx-auto opacity-10" />
+                                    <p className="text-sm">Initialize field selection to access knowledge bank.</p>
+                                </div>
+                            ) : loadingQuestions ? (
+                                <div className="p-12 flex justify-center"><Loader2 className="h-8 w-8 animate-spin text-primary" /></div>
+                            ) : (
+                                <div className="overflow-x-auto">
+                                    <Table>
+                                        <TableHeader>
+                                            <TableRow className="bg-muted/30">
+                                                <TableHead>Question Metadata</TableHead>
+                                                <TableHead>Difficulty</TableHead>
+                                                <TableHead className="w-24 text-right">Actions</TableHead>
+                                            </TableRow>
+                                        </TableHeader>
+                                        <TableBody>
+                                            {questions.map((q) => (
+                                                <TableRow key={q.id} className="group">
+                                                    <TableCell className="max-w-md">
+                                                        <p className="font-medium text-sm leading-tight text-foreground truncate">{q.question}</p>
+                                                        <p className="text-[10px] text-muted-foreground mt-1 uppercase font-bold tracking-wider">{q.topic || 'General'}</p>
+                                                    </TableCell>
+                                                    <TableCell>
+                                                        <Badge className={`uppercase text-[9px] ${q.difficulty === 'easy' ? 'bg-green-100 text-green-700' : q.difficulty === 'medium' ? 'bg-amber-100 text-amber-700' : 'bg-red-100 text-red-700'}`} variant="outline">
+                                                            {q.difficulty}
+                                                        </Badge>
+                                                    </TableCell>
+                                                    <TableCell>
+                                                        <div className="flex gap-1 justify-end opacity-0 group-hover:opacity-100 transition-opacity">
+                                                            <Button size="icon" variant="ghost" className="h-7 w-7" onClick={() => handleEditQuestion(q)}>
+                                                                <Edit className="h-3.5 w-3.5" />
+                                                            </Button>
+                                                            <Button size="icon" variant="ghost" className="h-7 w-7 text-red-500" onClick={() => handleDeleteQuestion(q.id)}>
+                                                                <Trash2 className="h-3.5 w-3.5" />
+                                                            </Button>
+                                                        </div>
+                                                    </TableCell>
+                                                </TableRow>
+                                            ))}
+                                            {questions.length === 0 && (
+                                                <TableRow>
+                                                    <TableCell colSpan={3} className="h-32 text-center text-muted-foreground italic">
+                                                        No logic nodes found for this cluster.
+                                                    </TableCell>
+                                                </TableRow>
+                                            )}
+                                        </TableBody>
+                                    </Table>
+                                </div>
+                            )}
+                        </CardContent>
+                    </Card>
+                </div>
+
+                {/* Form Dialog */}
+                <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+                    <DialogContent className="max-w-2xl">
+                        <DialogHeader>
+                            <DialogTitle>{editingQuestion ? 'Modify Logic Node' : 'Register New Question'}</DialogTitle>
+                            <DialogDescription>Knowledge bank updates propagate instantly to user sessions.</DialogDescription>
+                        </DialogHeader>
+                        <div className="space-y-4 py-4">
+                            <div className="space-y-2">
+                                <Label>Question Text</Label>
+                                <Textarea
+                                    value={questionForm.question}
+                                    onChange={e => setQuestionForm({ ...questionForm, question: e.target.value })}
+                                    placeholder="Enter the assessment prompt..."
+                                    className="min-h-[80px]"
+                                />
+                            </div>
+                            <div className="grid grid-cols-2 gap-4">
+                                {questionForm.options.map((opt, i) => (
+                                    <div key={i} className="space-y-1">
+                                        <Label className="text-[10px] uppercase font-bold">Option {i + 1}</Label>
+                                        <div className="flex gap-2">
+                                            <Input
+                                                value={opt}
+                                                onChange={e => {
+                                                    const newOpts = [...questionForm.options];
+                                                    newOpts[i] = e.target.value;
+                                                    setQuestionForm({ ...questionForm, options: newOpts });
+                                                }}
+                                                className={questionForm.correctAnswer === i ? 'border-green-500 bg-green-50/50' : ''}
+                                            />
+                                            <Button
+                                                size="sm"
+                                                variant={questionForm.correctAnswer === i ? 'default' : 'outline'}
+                                                className={`px-2 h-10 ${questionForm.correctAnswer === i ? 'bg-green-600' : ''}`}
+                                                onClick={() => setQuestionForm({ ...questionForm, correctAnswer: i })}
+                                            >
+                                                {questionForm.correctAnswer === i ? <CheckCircle2 className="h-4 w-4" /> : 'SET'}
+                                            </Button>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
                             <div className="grid grid-cols-2 gap-4">
                                 <div className="space-y-2">
-                                    <Label htmlFor="difficulty">Difficulty</Label>
-                                    <Select
-                                        value={questionForm.difficulty}
-                                        onValueChange={(value: any) =>
-                                            setQuestionForm({ ...questionForm, difficulty: value })
-                                        }
-                                    >
-                                        <SelectTrigger id="difficulty">
-                                            <SelectValue />
-                                        </SelectTrigger>
+                                    <Label>Complexity</Label>
+                                    <Select value={questionForm.difficulty} onValueChange={(v: any) => setQuestionForm({ ...questionForm, difficulty: v })}>
+                                        <SelectTrigger><SelectValue /></SelectTrigger>
                                         <SelectContent>
-                                            <SelectItem value="easy">Easy</SelectItem>
-                                            <SelectItem value="medium">Medium</SelectItem>
-                                            <SelectItem value="hard">Hard</SelectItem>
+                                            <SelectItem value="easy">Easy (Fundamentals)</SelectItem>
+                                            <SelectItem value="medium">Medium (Intermediate)</SelectItem>
+                                            <SelectItem value="hard">Hard (Advanced)</SelectItem>
                                         </SelectContent>
                                     </Select>
                                 </div>
-
                                 <div className="space-y-2">
-                                    <Label htmlFor="topic">Topic (Optional)</Label>
+                                    <Label>Topic Segment</Label>
                                     <Input
-                                        id="topic"
                                         value={questionForm.topic}
-                                        onChange={(e) => setQuestionForm({ ...questionForm, topic: e.target.value })}
-                                        placeholder="e.g., Fundamentals, Advanced"
+                                        onChange={e => setQuestionForm({ ...questionForm, topic: e.target.value })}
+                                        placeholder="e.g. Core Java, UI Design"
                                     />
                                 </div>
                             </div>
-
-                            {/* Explanation */}
-                            <div className="space-y-2">
-                                <Label htmlFor="explanation">Explanation (Optional)</Label>
-                                <Textarea
-                                    id="explanation"
-                                    value={questionForm.explanation}
-                                    onChange={(e) =>
-                                        setQuestionForm({ ...questionForm, explanation: e.target.value })
-                                    }
-                                    placeholder="Explain why this is the correct answer..."
-                                    rows={2}
-                                />
-                            </div>
                         </div>
-
                         <DialogFooter>
-                            <Button variant="outline" onClick={() => setIsDialogOpen(false)}>
-                                Cancel
-                            </Button>
-                            <Button onClick={handleSaveQuestion}>
-                                {editingQuestion ? 'Update Question' : 'Add Question'}
-                            </Button>
+                            <Button variant="outline" onClick={() => setIsDialogOpen(false)}>Abort</Button>
+                            <Button onClick={handleSaveQuestion}>Commit to Database</Button>
                         </DialogFooter>
                     </DialogContent>
                 </Dialog>

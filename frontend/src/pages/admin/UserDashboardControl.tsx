@@ -23,23 +23,37 @@ import {
     UserCheck,
     Eye,
     CreditCard,
-    Wifi
+    Wifi,
+    ShieldAlert,
+    Trash2
 } from 'lucide-react';
 import { toast } from 'sonner';
 import { db } from '@/lib/firebase';
-import { collection, doc, updateDoc, addDoc, onSnapshot, Timestamp } from 'firebase/firestore';
+import {
+    collection,
+    doc,
+    updateDoc,
+    addDoc,
+    onSnapshot,
+    Timestamp,
+    deleteDoc,
+    serverTimestamp,
+    query,
+    orderBy,
+    limit
+} from 'firebase/firestore';
+import { useAuthContext } from '@/contexts/AuthContext';
 
 interface UserData {
     id: string;
     email: string;
-    name?: string;
+    full_name?: string;
     field?: string;
     branch?: string;
-    skills?: string[];
-    isActive?: boolean;
+    role?: 'admin' | 'user';
     isBlocked?: boolean;
-    lastActive?: any;
-    createdAt?: any;
+    lastLogin?: any;
+    created_at?: any;
     roadmap_progress?: number;
     userPlan?: 'free' | 'pro' | 'premium';
 }
@@ -52,6 +66,7 @@ interface DashboardStats {
 }
 
 export default function UserDashboardControl() {
+    const { profile: adminProfile } = useAuthContext();
     const [users, setUsers] = useState<UserData[]>([]);
     const [filteredUsers, setFilteredUsers] = useState<UserData[]>([]);
     const [stats, setStats] = useState<DashboardStats>({
@@ -65,6 +80,22 @@ export default function UserDashboardControl() {
     const [selectedUser, setSelectedUser] = useState<UserData | null>(null);
     const [processingAction, setProcessingAction] = useState<string | null>(null);
 
+    // Logger Utility
+    const logAdminAction = async (action: string, targetId: string, details: string) => {
+        try {
+            await addDoc(collection(db, 'admin_activity_logs'), {
+                adminId: adminProfile?.id || 'unknown',
+                adminEmail: adminProfile?.email || 'unknown',
+                action,
+                targetId,
+                details,
+                timestamp: serverTimestamp()
+            });
+        } catch (e) {
+            console.error("Log error:", e);
+        }
+    };
+
     // Real-time Users Listener
     useEffect(() => {
         setLoading(true);
@@ -76,7 +107,6 @@ export default function UserDashboardControl() {
 
             setUsers(userData);
 
-            // Calculate stats immediately
             const now = new Date();
             const todayStart = new Date(now.setHours(0, 0, 0, 0));
 
@@ -85,7 +115,7 @@ export default function UserDashboardControl() {
                 activeUsers: userData.filter(u => !u.isBlocked).length,
                 blockedUsers: userData.filter(u => u.isBlocked).length,
                 newUsersToday: userData.filter(u => {
-                    const created = u.createdAt instanceof Timestamp ? u.createdAt.toDate() : u.createdAt ? new Date(u.createdAt) : new Date(0);
+                    const created = u.created_at instanceof Timestamp ? u.created_at.toDate() : u.created_at ? new Date(u.created_at) : new Date(0);
                     return created >= todayStart;
                 }).length
             };
@@ -109,13 +139,12 @@ export default function UserDashboardControl() {
             setFilteredUsers(
                 users.filter(user =>
                     user.email?.toLowerCase().includes(term) ||
-                    user.name?.toLowerCase().includes(term) ||
+                    user.full_name?.toLowerCase().includes(term) ||
                     user.field?.toLowerCase().includes(term) ||
                     user.branch?.toLowerCase().includes(term)
                 )
             );
         }
-        // Update selected user reference if it exists in new data
         if (selectedUser) {
             const updated = users.find(u => u.id === selectedUser.id);
             if (updated) setSelectedUser(updated);
@@ -129,12 +158,28 @@ export default function UserDashboardControl() {
             const userRef = doc(db, 'users', userId);
             await updateDoc(userRef, {
                 isBlocked: !currentlyBlocked,
-                updatedAt: new Date().toISOString()
+                updated_at: new Date().toISOString()
             });
-            toast.success(currentlyBlocked ? 'User unblocked' : 'User blocked');
+            await logAdminAction(currentlyBlocked ? 'UNBLOCK' : 'BLOCK', userId, `User ${currentlyBlocked ? 'unblocked' : 'disabled'}`);
+            toast.success(currentlyBlocked ? 'User access restored' : 'User access revoked');
         } catch (error) {
-            console.error('Error toggling block:', error);
             toast.error('Failed to update status');
+        } finally {
+            setProcessingAction(null);
+        }
+    };
+
+    const updateUserRole = async (userId: string, newRole: 'admin' | 'user') => {
+        setProcessingAction(userId);
+        try {
+            await updateDoc(doc(db, 'users', userId), {
+                role: newRole,
+                updated_at: new Date().toISOString()
+            });
+            await logAdminAction('ROLE_CHANGE', userId, `Role changed to ${newRole}`);
+            toast.success(`Role updated to ${newRole}`);
+        } catch (error) {
+            toast.error('Failed to update role');
         } finally {
             setProcessingAction(null);
         }
@@ -143,91 +188,32 @@ export default function UserDashboardControl() {
     const updateUserPlan = async (userId: string, newPlan: string) => {
         setProcessingAction(userId);
         try {
-            const userRef = doc(db, 'users', userId);
-            await updateDoc(userRef, {
+            await updateDoc(doc(db, 'users', userId), {
                 userPlan: newPlan,
-                updatedAt: new Date().toISOString()
+                updated_at: new Date().toISOString()
             });
+            await logAdminAction('PLAN_UPGRADE', userId, `Plan updated to ${newPlan}`);
             toast.success(`Plan updated to ${newPlan}`);
         } catch (error) {
-            console.error('Error updating plan:', error);
             toast.error('Failed to update plan');
         } finally {
             setProcessingAction(null);
         }
     };
 
-    const sendNotificationToUser = async (userId: string, userEmail: string) => {
+    const deleteUserAccount = async (userId: string) => {
+        if (!confirm('CRITICAL ACTION: This will permanently delete this user from Firestore. This cannot be undone. Continue?')) return;
         setProcessingAction(userId);
         try {
-            await addDoc(collection(db, 'notifications'), {
-                userId,
-                title: 'Admin Message',
-                message: 'You have a new message from admin.',
-                type: 'admin',
-                read: false,
-                createdAt: new Date().toISOString()
-            });
-            toast.success(`Notification sent to ${userEmail}`);
+            await deleteDoc(doc(db, 'users', userId));
+            await logAdminAction('DELETE_USER', userId, 'Permanently deleted user record');
+            toast.success('User deleted successfully');
+            setSelectedUser(null);
         } catch (error) {
-            console.error('Error sending notification:', error);
-            toast.error('Failed to send notification');
+            toast.error('Failed to delete user');
         } finally {
             setProcessingAction(null);
         }
-    };
-
-    const resetUserProgress = async (userId: string) => {
-        if (!confirm('Are you sure? This resets all progress.')) return;
-        setProcessingAction(userId);
-        try {
-            const userRef = doc(db, 'users', userId);
-            await updateDoc(userRef, {
-                roadmap_progress: 0,
-                completed_projects: [],
-                skills: [],
-                updatedAt: new Date().toISOString()
-            });
-            // Also reset user_progress doc? Yes if strict.
-            const progressRef = doc(db, 'user_progress', userId);
-            await updateDoc(progressRef, {
-                completedSemesters: [],
-                completedProjects: [],
-                completedSkills: [],
-                completedCertifications: [],
-                assessmentScore: { lastScore: 0, attempts: 0, history: [] },
-                overallProgress: 0,
-                skillGrowth: 0,
-                engagementScore: 0
-            }).catch(() => { }); // Ignore if doc doesn't exist
-
-            toast.success('Progress reset');
-        } catch (error) {
-            console.error('Error resetting:', error);
-            toast.error('Failed to reset');
-        } finally {
-            setProcessingAction(null);
-        }
-    };
-
-    const exportUserData = () => {
-        const csvContent = [
-            ['Email', 'Name', 'Field', 'Branch', 'Plan', 'Progress', 'Status'].join(','),
-            ...filteredUsers.map(u => [
-                u.email || '',
-                u.name || '',
-                u.field || '',
-                u.branch || '',
-                u.userPlan || 'free',
-                `${u.roadmap_progress || 0}%`,
-                u.isBlocked ? 'Blocked' : 'Active'
-            ].join(','))
-        ].join('\n');
-        const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-        const link = document.createElement('a');
-        link.href = URL.createObjectURL(blob);
-        link.download = `users_${new Date().toISOString().split('T')[0]}.csv`;
-        link.click();
     };
 
     return (
@@ -236,132 +222,190 @@ export default function UserDashboardControl() {
                 {/* Header */}
                 <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
                     <div>
-                        <h1 className="text-3xl font-bold tracking-tight">User Management</h1>
+                        <h1 className="text-3xl font-bold tracking-tight">Active Control Center</h1>
                         <p className="text-muted-foreground mt-2">
-                            Real-time user control & monitoring
+                            Manage permissions, roles, and access in real-time.
                         </p>
                     </div>
                     <div className="flex gap-2 items-center">
-                        <div className="flex items-center gap-2 px-3 py-1 bg-green-500/10 text-green-600 rounded-full text-xs font-medium animate-pulse mr-2">
+                        <div className="flex items-center gap-2 px-3 py-1 bg-green-500/10 text-green-600 rounded-full text-xs font-medium animate-pulse shadow-sm">
                             <Wifi className="h-3 w-3" />
-                            Live
+                            Live Sync Active
                         </div>
-                        <Button onClick={exportUserData} variant="outline" size="sm">
-                            <Download className="h-4 w-4 mr-2" /> Export
-                        </Button>
                     </div>
                 </div>
 
-                {/* Stats */}
+                {/* Stats Matrix */}
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-                    <Card><CardHeader className="pb-2"><CardTitle className="text-sm">Total Users</CardTitle></CardHeader><CardContent><div className="text-2xl font-bold">{stats.totalUsers}</div></CardContent></Card>
-                    <Card><CardHeader className="pb-2"><CardTitle className="text-sm">Active</CardTitle></CardHeader><CardContent><div className="text-2xl font-bold">{stats.activeUsers}</div></CardContent></Card>
-                    <Card><CardHeader className="pb-2"><CardTitle className="text-sm">Blocked</CardTitle></CardHeader><CardContent><div className="text-2xl font-bold text-red-500">{stats.blockedUsers}</div></CardContent></Card>
-                    <Card><CardHeader className="pb-2"><CardTitle className="text-sm">New Today</CardTitle></CardHeader><CardContent><div className="text-2xl font-bold text-green-500">{stats.newUsersToday}</div></CardContent></Card>
+                    <Card><CardHeader className="pb-2"><CardTitle className="text-sm font-medium">Total Accounts</CardTitle></CardHeader><CardContent><div className="text-3xl font-bold">{stats.totalUsers}</div></CardContent></Card>
+                    <Card><CardHeader className="pb-2"><CardTitle className="text-sm font-medium">Active Nodes</CardTitle></CardHeader><CardContent><div className="text-3xl font-bold text-green-600">{stats.activeUsers}</div></CardContent></Card>
+                    <Card><CardHeader className="pb-2"><CardTitle className="text-sm font-medium">Disabled</CardTitle></CardHeader><CardContent><div className="text-3xl font-bold text-red-500">{stats.blockedUsers}</div></CardContent></Card>
+                    <Card><CardHeader className="pb-2"><CardTitle className="text-sm font-medium">Daily Ingress</CardTitle></CardHeader><CardContent><div className="text-3xl font-bold text-primary">+{stats.newUsersToday}</div></CardContent></Card>
                 </div>
 
-                {/* Search */}
-                <div className="flex gap-4">
-                    <div className="flex-1 relative">
-                        <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                        <Input placeholder="Search users..." value={searchTerm} onChange={e => setSearchTerm(e.target.value)} className="pl-10" />
-                    </div>
-                </div>
-
-                {/* Table */}
-                <Card>
-                    <CardContent className="p-0">
-                        {loading ? (
-                            <div className="p-8 flex justify-center"><Loader2 className="animate-spin" /></div>
-                        ) : (
-                            <div className="divide-y max-h-[600px] overflow-y-auto">
-                                {filteredUsers.map(user => (
-                                    <div key={user.id} className="p-4 flex items-center justify-between hover:bg-muted/50 transition-colors">
-                                        <div className="flex items-center gap-3">
-                                            <div className="h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold">
-                                                {user.email[0].toUpperCase()}
-                                            </div>
-                                            <div>
-                                                <p className="font-medium">{user.email}</p>
-                                                <div className="flex gap-2 text-xs text-muted-foreground">
-                                                    <span className="capitalize">{user.userPlan || 'free'}</span>
-                                                    <span>•</span>
-                                                    <span>{user.field || 'No Field'}</span>
+                {/* Management Interface */}
+                <div className="grid lg:grid-cols-3 gap-8">
+                    {/* User Feed */}
+                    <Card className="lg:col-span-2">
+                        <CardHeader className="flex flex-row items-center justify-between">
+                            <div>
+                                <CardTitle>Identity Feed</CardTitle>
+                                <CardDescription>All registered entities on the grid</CardDescription>
+                            </div>
+                            <div className="relative w-64">
+                                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                                <Input
+                                    placeholder="UUID or Email..."
+                                    value={searchTerm}
+                                    onChange={e => setSearchTerm(e.target.value)}
+                                    className="pl-9 h-9"
+                                />
+                            </div>
+                        </CardHeader>
+                        <CardContent className="p-0">
+                            {loading ? (
+                                <div className="p-12 flex justify-center"><Loader2 className="animate-spin h-8 w-8 text-primary" /></div>
+                            ) : (
+                                <div className="divide-y max-h-[600px] overflow-y-auto">
+                                    {filteredUsers.map(user => (
+                                        <div
+                                            key={user.id}
+                                            onClick={() => setSelectedUser(user)}
+                                            className={`p-4 flex items-center justify-between hover:bg-muted/50 transition-all cursor-pointer ${selectedUser?.id === user.id ? 'bg-primary/5 border-l-4 border-primary' : ''}`}
+                                        >
+                                            <div className="flex items-center gap-4">
+                                                <div className={`h-11 w-11 rounded-full flex items-center justify-center font-bold text-lg ${user.role === 'admin' ? 'bg-amber-100 text-amber-700' : 'bg-primary/10 text-primary'}`}>
+                                                    {user.email[0].toUpperCase()}
+                                                </div>
+                                                <div>
+                                                    <div className="flex items-center gap-2">
+                                                        <p className="font-semibold text-sm">{user.email}</p>
+                                                        {user.role === 'admin' && <Badge className="bg-amber-500 hover:bg-amber-600 scale-75 h-5 px-1 origin-left">ADMIN</Badge>}
+                                                    </div>
+                                                    <div className="flex gap-2 text-[11px] text-muted-foreground mt-0.5">
+                                                        <span className="uppercase font-bold tracking-tighter">{user.userPlan || 'free'}</span>
+                                                        <span>•</span>
+                                                        <span>{user.field || 'UNASSIGNED'}</span>
+                                                    </div>
                                                 </div>
                                             </div>
+                                            <div className="flex items-center gap-3">
+                                                {user.isBlocked && <Badge variant="destructive" className="h-5 px-2">BLOCKED</Badge>}
+                                                <Button
+                                                    variant="ghost"
+                                                    size="sm"
+                                                    className="h-8 px-2"
+                                                >
+                                                    <Eye className="h-4 w-4" />
+                                                </Button>
+                                            </div>
                                         </div>
-                                        <div className="flex items-center gap-2">
-                                            {user.isBlocked && <Badge variant="destructive" className="mr-2">Blocked</Badge>}
-                                            <Button variant="ghost" size="sm" onClick={() => setSelectedUser(selectedUser?.id === user.id ? null : user)}>
-                                                {selectedUser?.id === user.id ? 'Close' : 'Manage'}
-                                            </Button>
-                                        </div>
-                                    </div>
-                                ))}
-                                {filteredUsers.length === 0 && <div className="p-8 text-center text-muted-foreground">No users found</div>}
-                            </div>
-                        )}
-                    </CardContent>
-                </Card>
-
-                {/* Detailed View */}
-                {selectedUser && (
-                    <Card className="border-primary border-2 shadow-lg animate-in slide-in-from-bottom-4">
-                        <CardHeader>
-                            <CardTitle>Managing: {selectedUser.email}</CardTitle>
-                            <CardDescription>Full control over user account</CardDescription>
-                        </CardHeader>
-                        <CardContent className="space-y-6">
-                            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                                <div className="space-y-2">
-                                    <Label>User Plan</Label>
-                                    <Select
-                                        defaultValue={selectedUser.userPlan || 'free'}
-                                        onValueChange={(val) => updateUserPlan(selectedUser.id, val)}
-                                        disabled={processingAction === selectedUser.id}
-                                    >
-                                        <SelectTrigger>
-                                            <SelectValue />
-                                        </SelectTrigger>
-                                        <SelectContent>
-                                            <SelectItem value="free">Free</SelectItem>
-                                            <SelectItem value="pro">Pro ($9.99)</SelectItem>
-                                            <SelectItem value="premium">Premium ($19.99)</SelectItem>
-                                        </SelectContent>
-                                    </Select>
+                                    ))}
+                                    {filteredUsers.length === 0 && <div className="p-12 text-center text-muted-foreground">Empty Matrix Results</div>}
                                 </div>
-                                <div><Label>Name</Label><p className="pt-2 font-medium">{selectedUser.name || '-'}</p></div>
-                                <div><Label>Field</Label><p className="pt-2 font-medium">{selectedUser.field || '-'}</p></div>
-                                <div><Label>Progress</Label><p className="pt-2 font-medium">{selectedUser.roadmap_progress || 0}%</p></div>
-                            </div>
-
-                            <div className="flex flex-wrap gap-2 pt-4 border-t">
-                                <Button
-                                    variant={selectedUser.isBlocked ? "default" : "secondary"}
-                                    onClick={() => toggleUserBlock(selectedUser.id, selectedUser.isBlocked || false)}
-                                    disabled={processingAction === selectedUser.id}
-                                >
-                                    {selectedUser.isBlocked ? <Unlock className="h-4 w-4 mr-2" /> : <Ban className="h-4 w-4 mr-2" />}
-                                    {selectedUser.isBlocked ? 'Unblock Account' : 'Block Access'}
-                                </Button>
-                                <Button
-                                    variant="outline"
-                                    onClick={() => sendNotificationToUser(selectedUser.id, selectedUser.email)}
-                                    disabled={processingAction === selectedUser.id}
-                                >
-                                    <Send className="h-4 w-4 mr-2" /> Message
-                                </Button>
-                                <Button
-                                    variant="destructive"
-                                    onClick={() => resetUserProgress(selectedUser.id)}
-                                    disabled={processingAction === selectedUser.id}
-                                >
-                                    <AlertCircle className="h-4 w-4 mr-2" /> Reset Data
-                                </Button>
-                            </div>
+                            )}
                         </CardContent>
                     </Card>
-                )}
+
+                    {/* Command Console */}
+                    <div className="space-y-6">
+                        {selectedUser ? (
+                            <Card className="border-primary shadow-2xl animate-in slide-in-from-right-4">
+                                <CardHeader className="bg-primary/5 border-b">
+                                    <div className="flex justify-between items-start">
+                                        <div>
+                                            <CardTitle className="text-lg">Command Console</CardTitle>
+                                            <CardDescription className="text-xs truncate max-w-[200px]">{selectedUser.id}</CardDescription>
+                                        </div>
+                                        <Button variant="ghost" size="sm" onClick={() => setSelectedUser(null)} className="h-6 w-6 p-0">&times;</Button>
+                                    </div>
+                                </CardHeader>
+                                <CardContent className="p-6 space-y-6">
+                                    <div className="space-y-4">
+                                        <div className="space-y-2">
+                                            <Label className="text-xs font-bold uppercase text-muted-foreground">Access Protocol</Label>
+                                            <div className="grid grid-cols-2 gap-2">
+                                                <Button
+                                                    size="sm"
+                                                    variant={selectedUser.isBlocked ? "default" : "secondary"}
+                                                    className="h-9 justify-start"
+                                                    disabled={processingAction === selectedUser.id}
+                                                    onClick={() => toggleUserBlock(selectedUser.id, selectedUser.isBlocked || false)}
+                                                >
+                                                    {selectedUser.isBlocked ? <Unlock className="h-3.5 w-3.5 mr-2 text-green-500" /> : <Ban className="h-3.5 w-3.5 mr-2" />}
+                                                    {selectedUser.isBlocked ? 'Restore' : 'Revoke'}
+                                                </Button>
+                                                <Button
+                                                    size="sm"
+                                                    variant="destructive"
+                                                    className="h-9 justify-start"
+                                                    disabled={processingAction === selectedUser.id}
+                                                    onClick={() => deleteUserAccount(selectedUser.id)}
+                                                >
+                                                    <Trash2 className="h-3.5 w-3.5 mr-2" /> Delete
+                                                </Button>
+                                            </div>
+                                        </div>
+
+                                        <div className="space-y-2">
+                                            <Label className="text-xs font-bold uppercase text-muted-foreground">Security Role</Label>
+                                            <Select
+                                                value={selectedUser.role || 'user'}
+                                                onValueChange={(v: any) => updateUserRole(selectedUser.id, v)}
+                                                disabled={processingAction === selectedUser.id}
+                                            >
+                                                <SelectTrigger className="h-9">
+                                                    <SelectValue />
+                                                </SelectTrigger>
+                                                <SelectContent>
+                                                    <SelectItem value="user">Standard User</SelectItem>
+                                                    <SelectItem value="admin">Administrator</SelectItem>
+                                                </SelectContent>
+                                            </Select>
+                                        </div>
+
+                                        <div className="space-y-2">
+                                            <Label className="text-xs font-bold uppercase text-muted-foreground">Subscription Tier</Label>
+                                            <Select
+                                                value={selectedUser.userPlan || 'free'}
+                                                onValueChange={(v) => updateUserPlan(selectedUser.id, v)}
+                                                disabled={processingAction === selectedUser.id}
+                                            >
+                                                <SelectTrigger className="h-9">
+                                                    <SelectValue />
+                                                </SelectTrigger>
+                                                <SelectContent>
+                                                    <SelectItem value="free">Free Forever</SelectItem>
+                                                    <SelectItem value="pro">Pro Analyst</SelectItem>
+                                                    <SelectItem value="premium">Premium Expert</SelectItem>
+                                                </SelectContent>
+                                            </Select>
+                                        </div>
+                                    </div>
+
+                                    <div className="pt-6 border-t space-y-3">
+                                        <div className="flex justify-between text-xs">
+                                            <span className="text-muted-foreground">Sync Status:</span>
+                                            <span className="font-bold text-green-500 flex items-center gap-1">
+                                                <Wifi className="h-3 w-3" /> VERIFIED
+                                            </span>
+                                        </div>
+                                        <p className="text-[10px] text-muted-foreground p-3 bg-muted rounded leading-relaxed border italic">
+                                            "Protocol updates applied here manifest instantly across geographical clusters using Firestore real-time propagation."
+                                        </p>
+                                    </div>
+                                </CardContent>
+                            </Card>
+                        ) : (
+                            <Card className="border-dashed bg-muted/30 flex items-center justify-center p-12 text-center h-[400px]">
+                                <div className="space-y-3">
+                                    <ShieldAlert className="h-12 w-12 text-muted-foreground/30 mx-auto" />
+                                    <p className="text-sm text-muted-foreground">Select an entity from the feed<br />to initialize command override.</p>
+                                </div>
+                            </Card>
+                        )}
+                    </div>
+                </div>
             </div>
         </AdminLayout>
     );
