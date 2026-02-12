@@ -48,7 +48,6 @@ export function AdminLayout({ children }: AdminLayoutProps) {
 
     const handleLogout = async () => {
         try {
-            // Signs out ONLY this browser session with role-specific cleanup
             await signOut();
             navigate('/login');
         } catch (error) {
@@ -58,7 +57,6 @@ export function AdminLayout({ children }: AdminLayoutProps) {
 
     const SidebarContent = () => (
         <div className="flex h-full flex-col">
-            {/* Header with subtle gradient background */}
             <div className="border-b bg-gradient-to-br from-primary/5 to-primary/10 p-6">
                 <div className="flex items-center gap-3">
                     <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary shadow-md transition-transform hover:scale-105">
@@ -71,12 +69,10 @@ export function AdminLayout({ children }: AdminLayoutProps) {
                 </div>
             </div>
 
-            {/* Navigation with hover effects */}
             <nav className="flex-1 space-y-1 p-4 overflow-y-auto">
                 {adminNavItems.map((item) => {
                     const Icon = item.icon;
                     const isActive = location.pathname === item.path;
-
                     return (
                         <Link
                             key={item.path}
@@ -87,14 +83,15 @@ export function AdminLayout({ children }: AdminLayoutProps) {
                                 : 'text-sidebar-foreground/70 hover:bg-white/10 hover:text-sidebar-foreground hover:shadow-sm'
                                 }`}
                         >
-                            <Icon className={`h-4 w-4 transition-transform ${!isActive && 'group-hover:scale-110'}`} />
+                            <div className="w-5 h-5 flex items-center justify-center">
+                                <Icon className={`h-4 w-4 transition-transform ${!isActive && 'group-hover:scale-110'}`} />
+                            </div>
                             <span className="font-medium">{item.label}</span>
                         </Link>
                     );
                 })}
             </nav>
 
-            {/* Footer with enhanced styling */}
             <div className="border-t bg-muted/30 p-4">
                 <div className="mb-3 rounded-lg border bg-background/50 p-3 shadow-sm backdrop-blur-sm">
                     <p className="text-xs font-medium text-muted-foreground">Logged in as</p>
@@ -115,21 +112,19 @@ export function AdminLayout({ children }: AdminLayoutProps) {
 
     return (
         <AdminGuard>
-            <div className="flex min-h-screen bg-background">
-                {/* Desktop Sidebar */}
-                <aside className="hidden w-64 border-r border-sidebar-border bg-sidebar text-sidebar-foreground shadow-sm lg:block fixed h-full">
+            <div className="flex min-h-screen bg-background text-foreground">
+                <aside className="hidden w-64 border-r border-sidebar-border bg-sidebar text-sidebar-foreground shadow-sm lg:block fixed h-full z-30">
                     <SidebarContent />
                 </aside>
 
-                {/* Mobile Sidebar */}
                 <Sheet open={open} onOpenChange={setOpen}>
                     <SheetContent side="left" className="w-64 p-0 bg-sidebar text-sidebar-foreground border-sidebar-border">
                         <SidebarContent />
                     </SheetContent>
                 </Sheet>
 
-                <main className="flex-1 ml-0 lg:ml-64 transition-all duration-300">
-                    <header className="sticky top-0 z-10 border-b border-sidebar-border bg-sidebar/95 text-sidebar-foreground px-6 py-4 shadow-sm backdrop-blur supports-[backdrop-filter]:bg-sidebar/60">
+                <main className="flex-1 lg:ml-64 transition-all duration-300 min-w-0">
+                    <header className="sticky top-0 z-20 border-b border-sidebar-border bg-sidebar/95 text-sidebar-foreground px-6 py-4 shadow-sm backdrop-blur supports-[backdrop-filter]:bg-sidebar/60">
                         <div className="flex items-center justify-between">
                             <div className="flex items-center gap-4">
                                 <SheetTrigger asChild>
@@ -153,7 +148,7 @@ export function AdminLayout({ children }: AdminLayoutProps) {
                             </div>
                         </div>
                     </header>
-                    <div className="bg-gradient-to-br from-background to-muted/20 p-4 lg:p-6 flex-1 overflow-x-hidden">
+                    <div className="p-4 lg:p-6 w-full">
                         {children}
                     </div>
                 </main>
