@@ -21,6 +21,7 @@ interface CareerPath {
   id: string;
   title: string;
   fieldId: string;
+  specializationId?: string;
   requiredSkills: string[];
   level: string;
 }
@@ -59,17 +60,44 @@ export default function CareerPaths() {
 
     setPathsLoading(true);
     try {
-      // Connect to the same 'career_paths' collection used in Admin Panel
+      const fieldId = profile.field.toLowerCase().trim();
+      const specializationId = (profile.branch || profile.specialization || '').toLowerCase().trim();
+
+      console.log(`🔍 Fetching career paths for: ${fieldId} / ${specializationId}`);
+
+      // Query by field first
       const q = query(
         collection(db, 'career_paths'),
-        where('fieldId', '==', profile.field.toLowerCase().trim())
+        where('fieldId', '==', fieldId)
       );
 
       const querySnapshot = await getDocs(q);
-      const paths = querySnapshot.docs.map(doc => ({
+      let paths = querySnapshot.docs.map(doc => ({
         id: doc.id,
         ...doc.data()
       })) as CareerPath[];
+
+      console.log(`📊 Found ${paths.length} paths for field: ${fieldId}`);
+
+      // CRITICAL: Filter by specialization if available
+      if (specializationId) {
+        const specializationPaths = paths.filter(path => {
+          const pathSpec = (path.specializationId || '').toLowerCase().trim();
+          return pathSpec === specializationId || pathSpec === fieldId;
+        });
+
+        // Only use specialization filter if we found matches
+        if (specializationPaths.length > 0) {
+          paths = specializationPaths;
+          console.log(`✅ Filtered to ${paths.length} paths for specialization: ${specializationId}`);
+        }
+      }
+
+      // LIMIT to 2-3 most relevant paths (not all!)
+      if (paths.length > 3) {
+        paths = paths.slice(0, 3);
+        console.log(`📌 Limited to top 3 most relevant paths`);
+      }
 
       setCareerPaths(paths);
     } catch (error) {
@@ -152,8 +180,8 @@ export default function CareerPaths() {
             <div
               key={path.id}
               className={`group bg-card rounded-2xl border-2 p-8 transition-all duration-500 overflow-hidden relative ${selectedPath === path.id
-                  ? 'border-primary shadow-2xl scale-[1.01]'
-                  : 'border-border hover:border-primary/40 hover:shadow-xl'
+                ? 'border-primary shadow-2xl scale-[1.01]'
+                : 'border-border hover:border-primary/40 hover:shadow-xl'
                 }`}
               style={{ animationDelay: `${index * 0.1}s` }}
             >

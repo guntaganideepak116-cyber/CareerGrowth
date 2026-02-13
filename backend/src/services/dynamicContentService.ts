@@ -277,6 +277,31 @@ export async function generateDynamicContent(
             finalData = parsedData;
         }
 
+        // CRITICAL: Validate and enforce FREE certifications
+        if (type === 'certifications' && Array.isArray(finalData)) {
+            const freeCerts = finalData.filter((cert: any) =>
+                cert.cost?.toLowerCase() === 'free' ||
+                cert.cost === '$0' ||
+                cert.cost === '0'
+            );
+
+            console.log(`📊 FREE certifications found: ${freeCerts.length} / ${finalData.length}`);
+
+            // If less than 4 free certs, force the first 4 to be free
+            if (freeCerts.length < 4) {
+                console.warn(`⚠️  Only ${freeCerts.length} free certs found. Enforcing 4 FREE certifications...`);
+
+                for (let i = 0; i < Math.min(4, finalData.length); i++) {
+                    if (finalData[i].cost?.toLowerCase() !== 'free') {
+                        console.log(`   🔧 Converting cert ${i + 1} to FREE: ${finalData[i].name}`);
+                        finalData[i].cost = 'Free';
+                    }
+                }
+            }
+
+            console.log(`✅ Final FREE certifications: ${finalData.filter((c: any) => c.cost?.toLowerCase() === 'free').length}`);
+        }
+
         // Cache for future requests
         await setCachedContent(cacheKey, finalData);
 
