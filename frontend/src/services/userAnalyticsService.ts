@@ -117,20 +117,32 @@ export const logUserActivity = async (
                 if (payload.relatedId) {
                     updates.completedProjects = arrayUnion(payload.relatedId);
                 }
+                if (payload.fieldId) {
+                    updates.selectedField = payload.fieldId;
+                }
                 break;
             case 'SKILL_MARKED_COMPLETE':
                 if (payload.relatedId) {
                     updates.completedSkills = arrayUnion(payload.relatedId);
+                }
+                if (payload.fieldId) {
+                    updates.selectedField = payload.fieldId;
                 }
                 break;
             case 'CERTIFICATION_COMPLETED':
                 if (payload.relatedId) {
                     updates.completedCertifications = arrayUnion(payload.relatedId);
                 }
+                if (payload.fieldId) {
+                    updates.selectedField = payload.fieldId;
+                }
                 break;
             case 'ROADMAP_SEMESTER_COMPLETED':
                 if (payload.metadata?.phaseId) {
                     updates.completedSemesters = arrayUnion(payload.metadata.phaseId);
+                }
+                if (payload.fieldId) {
+                    updates.selectedField = payload.fieldId;
                 }
                 break;
             case 'ASSESSMENT_COMPLETED':
@@ -142,6 +154,9 @@ export const logUserActivity = async (
                         score: payload.metadata.score,
                         date: new Date().toISOString()
                     });
+                }
+                if (payload.fieldId) {
+                    updates.selectedField = payload.fieldId;
                 }
                 break;
         }
@@ -216,6 +231,18 @@ export const syncUserProgress = async (userId: string) => {
             userId,
             lastUpdated: serverTimestamp(),
         };
+
+        // Sync field if available in local state/context (caller can pass it or we fetch it)
+        const userDoc = await getDoc(doc(db, 'users', userId));
+        if (userDoc.exists()) {
+            const userData = userDoc.data();
+            if (userData.field) {
+                updates.selectedField = userData.field;
+            }
+            if (userData.skills && Array.isArray(userData.skills)) {
+                updates.completedSkills = arrayUnion(...userData.skills);
+            }
+        }
 
         if (attempts > 0) {
             updates['assessmentScore.attempts'] = attempts;
