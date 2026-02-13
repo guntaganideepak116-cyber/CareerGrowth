@@ -19,6 +19,7 @@ app.use(express.json());
 
 // Routes
 import contentRoutes from './routes/content';
+import strictContentRoutes from './routes/strictContent';
 import adminRoutes from './routes/adminRoutes';
 import notificationRoutes from './routes/notifications';
 import aiMentorRoutes from './routes/ai-mentor';
@@ -40,6 +41,9 @@ app.get('/api/health', (req, res) => {
 
 // Content generation routes
 app.use('/api/content', contentRoutes);
+
+// STRICT content routes (database-first)
+app.use('/api/strict-content', strictContentRoutes);
 
 // Admin routes
 app.use('/api/admin', adminRoutes);
