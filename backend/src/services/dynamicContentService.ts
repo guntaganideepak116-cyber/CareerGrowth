@@ -61,118 +61,137 @@ async function setCachedContent(cacheKey: string, content: any): Promise<void> {
 // ============================================
 
 function createRoadmapPrompt(fieldId: string, specializationId: string, userProfile?: any): string {
-    return `You are an expert career advisor. Generate a detailed 5-phase learning roadmap for ${fieldId} - ${specializationId}.
+    return `You are an expert career advisor specializing in ${specializationId} within the ${fieldId} field.
+
+CRITICAL: Generate a UNIQUE roadmap specifically for "${specializationId}" that is DIFFERENT from other specializations in ${fieldId}.
 
 Student Context:
+- Field: ${fieldId}
+- Specialization: ${specializationId}
 - Current Semester: ${userProfile?.semester || 1}
 - Career Goal: ${userProfile?.careerGoal || 'Not specified'}
 
-Requirements:
-1. Generate exactly 5 phases (Beginner to Advanced)
-2. Each phase should be 2-4 months
-3. Include REAL 2024-2025 technologies and tools
-4. Include actual certifications (AWS, Google Cloud, Microsoft, etc.)
-5. Include specific project ideas for portfolio
+STRICT Requirements:
+1. Generate exactly 5 phases (Beginner to Advanced) SPECIFIC to ${specializationId}
+2. Each phase must be 2-4 months
+3. Use ONLY technologies/tools that are SPECIFIC to ${specializationId} (NOT generic ${fieldId} tools)
+4. Include certifications that are SPECIFIC to ${specializationId} (e.g., for "Robotics Engineering" use ROS, Arduino, not generic "Python")
+5. Include project ideas that are UNIQUE to ${specializationId}
+6. Phase titles must reflect ${specializationId} progression (not generic titles)
 
-Return ONLY valid JSON with this structure:
+Example for Robotics Engineering:
+- Phase 1: "Robot Fundamentals & Kinematics" (NOT "Programming Basics")
+- Tools: ROS2, Gazebo, Arduino, Raspberry Pi (NOT just "Python, Git")
+- Projects: "Autonomous Line Following Robot" (NOT "Build a Website")
+
+Return ONLY valid JSON:
 {
   "phases": [
     {
       "id": 1,
-      "title": "Foundation Phase",
+      "title": "SPECIFIC to ${specializationId}",
       "duration": "2-3 months",
-      "focus": "Core fundamentals",
-      "skills": ["skill1", "skill2"],
-      "tools": ["tool1", "tool2"],
-      "projects": ["project1", "project2"],
-      "certifications": ["cert1", "cert2"],
-      "careerRelevance": "Why this matters"
+      "focus": "Core ${specializationId} fundamentals",
+      "skills": ["${specializationId}-specific skill1", "${specializationId}-specific skill2"],
+      "tools": ["${specializationId}-specific tool1", "${specializationId}-specific tool2"],
+      "projects": ["${specializationId}-specific project1"],
+      "certifications": ["${specializationId}-relevant cert1"],
+      "careerRelevance": "Why this matters for ${specializationId} careers"
     }
   ]
 }`;
 }
 
 function createProjectsPrompt(fieldId: string, specializationId: string): string {
-    return `Generate 6 real-world portfolio projects for ${fieldId} - ${specializationId}.
+    return `Generate 6 UNIQUE portfolio projects specifically for "${specializationId}" professionals in ${fieldId}.
 
-Requirements:
-1. Mix of beginner (2), intermediate (3), and advanced (1) difficulty
-2. Use current 2024-2025 tech stacks
-3. Projects should be resume-worthy
-4. Include real-world applications
+CRITICAL: These projects must be SPECIFIC to ${specializationId}, NOT generic ${fieldId} projects.
+
+STRICT Requirements:
+1. ALL 6 projects must be DIRECTLY related to ${specializationId}
+2. Mix: 2 beginner, 3 intermediate, 1 advanced
+3. Use ONLY ${specializationId}-specific technologies (NOT generic tools)
+4. Each project must solve a REAL ${specializationId} industry problem
+5. NO generic projects (e.g., for "Robotics" don't suggest "Build a Calculator")
+
+Example for Robotics Engineering:
+✅ GOOD: "Autonomous Warehouse Navigation Robot using ROS2 and LiDAR"
+❌ BAD: "Build a Web Dashboard" (too generic)
 
 Return ONLY valid JSON array:
 [
   {
     "id": "proj1",
-    "name": "Project Name",
-    "description": "Brief description",
-    "difficulty": "intermediate",
-    "techStack": ["React", "Node.js"],
+    "name": "${specializationId}-SPECIFIC project name",
+    "description": "Solves a REAL ${specializationId} problem",
+    "difficulty": "beginner/intermediate/advanced",
+    "techStack": ["${specializationId}-specific tech1", "${specializationId}-specific tech2"],
     "estimatedTime": "2-3 weeks",
-    "skills": ["skill1", "skill2"],
-    "careerImpact": "high",
-    "realWorldApplication": "How this is used in industry"
+    "skills": ["${specializationId}-specific skill1"],
+    "careerImpact": "high/medium/low",
+    "realWorldApplication": "How ${specializationId} professionals use this in industry"
   }
 ]`;
 }
 
 function createCertificationsPrompt(fieldId: string, specializationId: string): string {
-    return `You are an expert career advisor with access to real-time web search. Generate 8 valuable certifications for ${fieldId} - ${specializationId}.
+    return `Generate 8 REAL certifications specifically for "${specializationId}" professionals in ${fieldId}.
 
-IMPORTANT: Use Google Search to verify:
-- Current certification names and availability
-- Official URLs (must be real and working)
-- Current pricing (2024-2025)
-- Provider information
-
-Requirements:
-1. **MUST include at least 4 FREE certifications** (from Coursera, edX, Google, Microsoft, etc.)
+CRITICAL REQUIREMENTS:
+1. **MUST include EXACTLY 4 FREE certifications** (Coursera, edX, Google, Microsoft, FreeCodeCamp, YouTube courses)
 2. Include 2-3 affordable paid certifications ($50-$200)
 3. Include 1-2 premium certifications ($200+)
-4. Only real certifications from known providers (Google, AWS, Microsoft, Coursera, Udacity, edX, FreeCodeCamp, etc.)
-5. Verify official URLs are current and working
-6. Use real current pricing
-7. Specify difficulty levels accurately (beginner, intermediate, advanced)
+4. ALL certifications must be SPECIFIC to ${specializationId} (NOT generic ${fieldId} certs)
+5. Use REAL certification names that exist in 2024-2025
+6. Include REAL official URLs
 
-Return ONLY valid JSON array:
+Example for Robotics Engineering:
+✅ GOOD FREE: "ROS for Beginners" (Udemy/Coursera), "Arduino Robotics" (edX)
+✅ GOOD PAID: "Certified Robotics System Architect" (Robotics Industries Association)
+❌ BAD: Generic "Python Programming" (not specific to robotics)
+
+STRICT Format - Return ONLY valid JSON array:
 [
   {
     "id": "cert1",
-    "name": "Certification Name",
-    "provider": "Google/AWS/Microsoft/Coursera/edX",
-    "cost": "Free" or "$299",
+    "name": "${specializationId}-SPECIFIC certification name",
+    "provider": "Coursera/edX/Google/AWS/Microsoft/Udacity/FreeCodeCamp",
+    "cost": "Free" (for first 4) or "$99" (for paid),
     "timeToComplete": "2-3 months",
-    "difficulty": "beginner",
-    "skills": ["skill1", "skill2"],
-    "industryValue": "high",
-    "officialUrl": "https://...",
+    "difficulty": "beginner/intermediate/advanced",
+    "skills": ["${specializationId}-specific skill1"],
+    "industryValue": "high/medium/low",
+    "officialUrl": "https://real-url-to-certification",
     "prerequisites": ["prereq1"],
     "salaryImpact": "+15%"
   }
-]`;
+]
+
+REMEMBER: First 4 MUST have cost: "Free"`;
 }
 
 function createSpecializationsPrompt(fieldId: string): string {
-    return `Generate 8 career specializations within the ${fieldId} field.
+    return `Generate 8 UNIQUE career specializations within the ${fieldId} field.
+
+CRITICAL: Each specialization must be DISTINCT and SPECIFIC to ${fieldId}.
 
 Requirements:
 1. Mix of core, emerging, and hybrid specializations
-2. Include market demand scores (0-100)
+2. Include market demand scores (0-100) based on 2024-2025 trends
 3. Realistic growth potential
-4. Current 2024-2025 market trends
+4. Current market data
 
 Return ONLY valid JSON array:
 [
   {
     "id": "spec1",
-    "name": "Specialization Name",
-    "type": "core" or "emerging" or "hybrid",
+    "name": "Specialization Name SPECIFIC to ${fieldId}",
+    "type": "core/emerging/hybrid",
     "description": "Brief description",
     "marketDemand": 85,
-    "growthPotential": "high",
-    "riskLevel": "low",
-    "skills": ["skill1", "skill2"],
+    "growthPotential": "high/medium/low",
+    "riskLevel": "low/medium/high",
+    "skills": ["${fieldId}-specific skill1", "${fieldId}-specific skill2"],
     "avgSalary": "₹8-15 LPA"
   }
 ]`;

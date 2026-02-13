@@ -1,4 +1,4 @@
-// Quick script to clear AI cache
+// Enhanced cache clearing script
 const admin = require('firebase-admin');
 
 // Initialize Firebase Admin
@@ -10,8 +10,8 @@ admin.initializeApp({
 
 const db = admin.firestore();
 
-async function clearCache() {
-    console.log('🗑️ Clearing AI cache...');
+async function clearAllCache() {
+    console.log('🗑️  CLEARING ALL AI CACHE...\n');
 
     try {
         const snapshot = await db.collection('ai_generated_content').get();
@@ -21,17 +21,39 @@ async function clearCache() {
             process.exit(0);
         }
 
-        console.log(`Found ${snapshot.size} cached items. Deleting...`);
+        console.log(`📊 Found ${snapshot.size} cached items:\n`);
+
+        // Group by type
+        const byType = {};
+        snapshot.docs.forEach(doc => {
+            const type = doc.id.split('_')[0];
+            byType[type] = (byType[type] || 0) + 1;
+        });
+
+        Object.entries(byType).forEach(([type, count]) => {
+            console.log(`   ${type}: ${count} items`);
+        });
+
+        console.log('\n🔥 Deleting all cached content...\n');
 
         const batch = db.batch();
         snapshot.docs.forEach(doc => {
             batch.delete(doc.ref);
-            console.log(`  - Deleting: ${doc.id}`);
+            console.log(`   ✓ Deleted: ${doc.id}`);
         });
 
         await batch.commit();
-        console.log('✅ Cache cleared successfully!');
-        console.log('💡 Now refresh your Certifications page to see FREE certifications!');
+
+        console.log('\n✅ ALL CACHE CLEARED SUCCESSFULLY!');
+        console.log('\n💡 Next steps:');
+        console.log('   1. Refresh your website');
+        console.log('   2. Select a field + specialization');
+        console.log('   3. Wait 10 seconds for AI to generate NEW, SPECIFIC content');
+        console.log('   4. You should see:');
+        console.log('      - FREE certifications (4+)');
+        console.log('      - Specialization-specific roadmaps');
+        console.log('      - Unique projects for each specialization');
+        console.log('      - Different content for different specializations\n');
 
         process.exit(0);
     } catch (error) {
@@ -40,4 +62,4 @@ async function clearCache() {
     }
 }
 
-clearCache();
+clearAllCache();
