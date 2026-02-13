@@ -79,21 +79,27 @@ export default function CareerPaths() {
 
       console.log(`📊 Found ${paths.length} paths for field: ${fieldId}`);
 
-      // CRITICAL: Filter by specialization if available
+      // CRITICAL: Filter by EXACT specialization match ONLY
       if (specializationId) {
         const specializationPaths = paths.filter(path => {
           const pathSpec = (path.specializationId || '').toLowerCase().trim();
-          return pathSpec === specializationId || pathSpec === fieldId;
+
+          // STRICT MATCH: Only paths that EXACTLY match the specialization
+          // DO NOT include generic field-level paths
+          return pathSpec === specializationId;
         });
 
-        // Only use specialization filter if we found matches
         if (specializationPaths.length > 0) {
           paths = specializationPaths;
-          console.log(`✅ Filtered to ${paths.length} paths for specialization: ${specializationId}`);
+          console.log(`✅ Filtered to ${paths.length} EXACT matches for specialization: ${specializationId}`);
+        } else {
+          // If no exact matches, show message instead of all field paths
+          console.warn(`⚠️  No career paths found for ${specializationId}`);
+          paths = [];
         }
       }
 
-      // LIMIT to 2-3 most relevant paths (not all!)
+      // LIMIT to 3 most relevant paths
       if (paths.length > 3) {
         paths = paths.slice(0, 3);
         console.log(`📌 Limited to top 3 most relevant paths`);
