@@ -44,7 +44,15 @@ service cloud.firestore {
     }
 
     // ===========================================
-    // 3. ADMIN ACTIVITY LOGS
+    // 3. USER ACTIVITY LOGS
+    // ===========================================
+    match /user_activity_logs/{logId} {
+      allow create: if isAuthenticated() && request.resource.data.userId == request.auth.uid;
+      allow read: if isAuthenticated() && (resource.data.userId == request.auth.uid || isAdmin());
+    }
+
+    // ===========================================
+    // 4. ADMIN ACTIVITY LOGS
     // ===========================================
     match /admin_activity_logs/{logId} {
       // Admins read/write

@@ -18,7 +18,7 @@ import {
 } from 'lucide-react';
 import { toast } from 'sonner';
 import { useNavigate } from 'react-router-dom';
-import { subscribeToUserProgress } from '@/services/userAnalyticsService';
+import { subscribeToUserProgress, syncUserProgress } from '@/services/userAnalyticsService';
 
 export default function ProgressAnalytics() {
     const { user, profile } = useAuthContext();
@@ -44,6 +44,9 @@ export default function ProgressAnalytics() {
 
     useEffect(() => {
         if (!user) return;
+
+        // One-time sync of legacy data
+        syncUserProgress(user.uid);
 
         // Real-time listener for user progress
         const unsubscribe = subscribeToUserProgress(user.uid, (data) => {

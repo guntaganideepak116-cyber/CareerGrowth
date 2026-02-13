@@ -91,6 +91,24 @@ export function useRoadmapProgress(fieldId: string, specializationId: string) {
     fetchProgress();
   }, [fetchProgress]);
 
+  // Sync effect: Push local progress to analytics if missing
+  useEffect(() => {
+    if (user && progress && progress.completed_phases.length > 0) {
+      const syncLocalData = async () => {
+        // Log each phase as a completed semester if not already done
+        for (const phaseId of progress.completed_phases) {
+          await logUserActivity(user.uid, 'ROADMAP_SEMESTER_COMPLETED', {
+            fieldId,
+            metadata: { phaseId, isSync: true }
+          });
+        }
+      };
+      // We only run this once or when progress changes, but logUserActivity uses arrayUnion 
+      // so duplicate IDs won't be added to the array.
+      syncLocalData();
+    }
+  }, [user, progress, fieldId]);
+
   const markPhaseComplete = async (phaseId: number, totalPhases: number, skills: string[] = []) => {
     if (!user || !progress) return;
 

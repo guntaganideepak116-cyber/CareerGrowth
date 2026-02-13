@@ -188,6 +188,49 @@ export const subscribeToUserProgress = (userId: string, callback: (data: UserPro
 };
 
 /**
+ * Sync pre-existing data into user_progress (One-time migration helper)
+ */
+export const syncUserProgress = async (userId: string) => {
+    try {
+        const progressRef = doc(db, COLLECTION_PROGRESS, userId);
+        const progressSnap = await getDoc(progressRef);
+
+        // Even if it exists, we might want to check for missing assessments
+        // Fetch assessments from subcollection
+        const assessmentsRef = collection(db, 'users', userId, 'assessments');
+        const q = query(assessmentsRef);
+        const qSnap = await import('firebase/firestore').then(mod => mod.getDocs(q));
+
+        const assessmentsData: any[] = [];
+        let totalScore = 0;
+        let attempts = 0;
+
+        qSnap.forEach(doc => {
+            const data = doc.data();
+            assessmentsData.push({ score: data.score, date: data.attemptDate?.toDate()?.toISOString() || new Date().toISOString() });
+            totalScore = Math.max(totalScore, data.score); // Keep highest score as lastScore for now or most recent
+            attempts++;
+        });
+
+        const updates: any = {
+            userId,
+            lastUpdated: serverTimestamp(),
+        };
+
+        if (attempts > 0) {
+            updates['assessmentScore.attempts'] = attempts;
+            updates['assessmentScore.lastScore'] = totalScore;
+            // history merge logic could be added here if needed
+        }
+
+        await setDoc(progressRef, updates, { merge: true });
+        console.log("Synced user progress for", userId);
+    } catch (e) {
+        console.error("Critical: Sync failed", e);
+    }
+};
+
+/**
  * Subscribe to recent Activity Logs
  */
 export const subscribeToActivityLogs = (userId: string, callback: (logs: UserActivityLog[]) => void) => {
