@@ -125,7 +125,7 @@ router.get('/questions/:fieldId', verifyToken, async (req, res) => {
  */
 router.post('/questions', verifyToken, async (req, res) => {
     try {
-        const { fieldId, question, options, correctAnswerIndex, difficulty, topic, explanation } = req.body;
+        const { fieldId, question, options, correctAnswerIndex, correctAnswer, difficulty, topic, explanation } = req.body;
         const userId = (req as any).user.uid;
 
         // Verify Admin Role
@@ -134,7 +134,10 @@ router.post('/questions', verifyToken, async (req, res) => {
             return res.status(403).json({ error: 'Unauthorized', message: 'Admin access required' });
         }
 
-        if (!fieldId || !question || !options || correctAnswerIndex === undefined) {
+        // Use either field
+        const finalCorrectAnswer = correctAnswer !== undefined ? correctAnswer : correctAnswerIndex;
+
+        if (!fieldId || !question || !options || finalCorrectAnswer === undefined) {
             return res.status(400).json({ error: 'Missing required fields' });
         }
 
@@ -145,7 +148,7 @@ router.post('/questions', verifyToken, async (req, res) => {
             fieldId: normalizedFieldId,
             question,
             options,
-            correctAnswerIndex,
+            correctAnswerIndex: finalCorrectAnswer,
             difficulty: difficulty || 'medium',
             topic: topic || '',
             explanation: explanation || '',
@@ -224,12 +227,28 @@ router.post('/submit', verifyToken, async (req, res) => {
             });
         }
 
-        // Build correct answers map
+        // Build correct answers map and full questions list for review
         const correctAnswersMap: Record<string, number> = {};
+        const questionsDataMap: Record<string, any> = {};
+
         questionsSnapshot.docs.forEach(doc => {
             const data = doc.data();
-            correctAnswersMap[doc.id] = data.correctAnswerIndex;
+            const correctAnswer = data.correctAnswerIndex !== undefined ? data.correctAnswerIndex : data.correctAnswer;
+            correctAnswersMap[doc.id] = correctAnswer;
+
+            questionsDataMap[doc.id] = {
+                id: doc.id,
+                question: data.question,
+                options: data.options,
+                correctAnswer: correctAnswer,
+                explanation: data.explanation || '',
+                difficulty: data.difficulty || 'medium',
+                topic: data.topic || ''
+            };
         });
+
+        // Maintain order based on user's answers (which matches original questions)
+        const fullQuestionsWithAnswers = questionIds.map(id => questionsDataMap[id]);
 
         // Calculate score
         let correctCount = 0;
@@ -303,7 +322,8 @@ router.post('/submit', verifyToken, async (req, res) => {
                 answers: evaluatedAnswers,
                 timeSpent: timeSpent || 0,
                 attemptDate: new Date(),
-                attemptsCount
+                attemptsCount,
+                questionsWithAnswers: fullQuestionsWithAnswers
             },
             message: status === 'passed'
                 ? 'Congratulations! You passed the assessment!'

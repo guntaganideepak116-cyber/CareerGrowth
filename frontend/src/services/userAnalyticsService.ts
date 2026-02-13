@@ -13,7 +13,8 @@ import {
     query,
     orderBy,
     limit,
-    where
+    where,
+    arrayUnion
 } from 'firebase/firestore';
 
 // Types
@@ -108,26 +109,42 @@ export const logUserActivity = async (
 
         const updates: any = {
             lastUpdated: serverTimestamp(),
-            engagementScore: increment(5) // Simple gamification: +5 per action
+            engagementScore: increment(5) // +5 per action
         };
 
         switch (actionType) {
             case 'PROJECT_COMPLETED':
                 if (payload.relatedId) {
-                    // Arrays union is cleaner but requires 'arrayUnion' import. 
-                    // We'll read-modify-write for complex logic or use arrayUnion if imported.
-                    // Let's use simple logic for now.
-                    updates[`completedProjects`] = increment(0); // Dummy to trigger type check logic if implemented
-                    // Ideally use arrayUnion from firestore
+                    updates.completedProjects = arrayUnion(payload.relatedId);
                 }
                 break;
-            // ... handle other cases if needed or just rely on specific update functions
+            case 'SKILL_MARKED_COMPLETE':
+                if (payload.relatedId) {
+                    updates.completedSkills = arrayUnion(payload.relatedId);
+                }
+                break;
+            case 'CERTIFICATION_COMPLETED':
+                if (payload.relatedId) {
+                    updates.completedCertifications = arrayUnion(payload.relatedId);
+                }
+                break;
+            case 'ROADMAP_SEMESTER_COMPLETED':
+                if (payload.metadata?.phaseId) {
+                    updates.completedSemesters = arrayUnion(payload.metadata.phaseId);
+                }
+                break;
+            case 'ASSESSMENT_COMPLETED':
+                if (payload.metadata?.score !== undefined) {
+                    // Update assessment history and last score
+                    updates['assessmentScore.lastScore'] = payload.metadata.score;
+                    updates['assessmentScore.attempts'] = increment(1);
+                    updates['assessmentScore.history'] = arrayUnion({
+                        score: payload.metadata.score,
+                        date: new Date().toISOString()
+                    });
+                }
+                break;
         }
-
-        // Note: For array updates (projects, skills), we often call specific helper methods
-        // OR we rely on the component to call `updateUserProgress` with the new list.
-        // For this implementation, we will perform specific atomic updates here if possible, 
-        // or rely on the caller to provide the new state.
 
         await updateDoc(progressRef, updates);
 

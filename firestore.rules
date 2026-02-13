@@ -28,6 +28,11 @@ service cloud.firestore {
       // Users read/write their own, Admins read/write all
       allow read: if isAuthenticated(); // Allow users to read other profiles if needed (e.g. for collaboration)
       allow write: if isOwner(userId) || isAdmin();
+
+      // Assessment attempts for this user
+      match /assessments/{assessmentId} {
+        allow read, write: if isOwner(userId) || isAdmin();
+      }
     }
 
     // ===========================================

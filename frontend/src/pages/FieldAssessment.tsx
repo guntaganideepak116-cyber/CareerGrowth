@@ -57,7 +57,11 @@ export default function FieldAssessment() {
             const apiBase = import.meta.env.VITE_API_URL || 'http://localhost:5000';
             try {
                 // Try backend first
-                const res = await fetch(`${apiBase}/api/assessment/questions/${fieldId}`);
+                const token = await user?.getIdToken();
+                const res = await fetch(`${apiBase}/api/assessment/questions/${fieldId}`, {
+                    headers: token ? { 'Authorization': `Bearer ${token}` } : {}
+                });
+
                 if (res.ok) {
                     const data = await res.json();
                     return data.questions || [];

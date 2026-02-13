@@ -132,7 +132,9 @@ export default function Roadmap() {
   // Handle marking phase complete
   const handleMarkComplete = async (phaseId: number) => {
     try {
-      await markPhaseComplete(phaseId, phases.length);
+      const phase = phases.find(p => p.id === phaseId);
+      const skills = phase?.skills || [];
+      await markPhaseComplete(phaseId, phases.length, skills);
       toast.success(`Phase ${phaseId} marked as complete!`);
       // Expand next phase
       if (phaseId < phases.length) {

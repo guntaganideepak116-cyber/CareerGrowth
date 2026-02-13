@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useAuthContext } from '@/contexts/AuthContext';
+import { logUserActivity } from '@/services/userAnalyticsService';
 import {
     AssessmentResult,
     AssessmentAnswer,
@@ -10,7 +11,7 @@ import { db } from '@/lib/firebase';
 import { doc, getDoc, setDoc, serverTimestamp } from 'firebase/firestore';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 
-const API_URL = 'http://localhost:5000/api/assessment';
+const API_URL = `${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/assessment`;
 
 export function useFieldAssessment(fieldId: string) {
     const { user } = useAuthContext();
@@ -153,6 +154,13 @@ export function useFieldAssessment(fieldId: string) {
                     const result = data.result;
                     updateLocalStatus(result);
                     showCompletionToast(result);
+
+                    // Log activity for real-time analytics
+                    await logUserActivity(user.uid, 'ASSESSMENT_COMPLETED', {
+                        fieldId,
+                        metadata: { score: result.score, fieldName }
+                    });
+
                     return { ...result, attemptsCount: result.attemptsCount || 0 };
                 }
             } catch (backendError) {
@@ -168,16 +176,18 @@ export function useFieldAssessment(fieldId: string) {
 
             if (needsFetching) {
                 try {
-                    // Since we are now "backend" logic in fallback, we fetch full questions with answers
-                    // Note: We need a secure way, but if using Firestore direct access, we might need a separate query 
-                    // or assume the previously fetched questions might be sufficient if I hadn't stripped them.
-                    // But I DID strip them in FieldAssessment.tsx.
-                    // So we must fetch them again here.
                     const qQuery = await import('firebase/firestore').then(mod => {
                         return mod.query(mod.collection(db, 'assessment_questions'), mod.where('fieldId', '==', fieldId));
                     });
                     const snapshot = await import('firebase/firestore').then(mod => mod.getDocs(qQuery));
-                    gradingQuestions = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as AssessmentQuestion));
+                    gradingQuestions = snapshot.docs.map(doc => {
+                        const data = doc.data();
+                        return {
+                            id: doc.id,
+                            ...data,
+                            correctAnswer: data.correctAnswer !== undefined ? data.correctAnswer : data.correctAnswerIndex
+                        } as AssessmentQuestion;
+                    });
                 } catch (e) {
                     console.error("Failed to fetch grading key", e);
                 }
@@ -240,6 +250,12 @@ export function useFieldAssessment(fieldId: string) {
             updateLocalStatus(result);
             showCompletionToast(result);
 
+            // Log activity for real-time analytics
+            await logUserActivity(user.uid, 'ASSESSMENT_COMPLETED', {
+                fieldId,
+                metadata: { score: resultData.score, fieldName }
+            });
+
             return result;
         } catch (error) {
             console.error('Error submitting assessment:', error);
@@ -247,26 +263,6 @@ export function useFieldAssessment(fieldId: string) {
             throw error;
         } finally {
             setSubmitting(false);
-        }
-    };
-
-    // Fetch questions from backend with frontend fallback (already handled in Page, but keeping helper here)
-    const fetchQuestions = async (): Promise<AssessmentQuestion[]> => {
-        if (!user) throw new Error('User not authenticated');
-
-        try {
-            const token = await user.getIdToken();
-            const response = await fetch(`${API_URL}/questions/${fieldId}`, {
-                headers: { 'Authorization': `Bearer ${token}` },
-            });
-
-            if (!response.ok) throw new Error('Failed to fetch questions');
-
-            const data = await response.json();
-            return data.questions;
-        } catch (error) {
-            console.error('Error fetching questions:', error);
-            throw error;
         }
     };
 

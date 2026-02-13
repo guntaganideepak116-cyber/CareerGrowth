@@ -25,11 +25,12 @@ console.log("Initializing Firebase with project:", firebaseConfig.projectId);
 const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 
-// Initialize Firestore with persistent cache (replaces deprecated enableIndexedDbPersistence)
+// Initialize Firestore with persistent cache and long-polling for better stability
 export const db = initializeFirestore(app, {
     localCache: persistentLocalCache({
         tabManager: persistentMultipleTabManager()
-    })
+    }),
+    experimentalForceLongPolling: true
 });
 
 // Enable persistence to maintain auth state across refreshes

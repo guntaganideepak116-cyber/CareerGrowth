@@ -91,7 +91,7 @@ export function useRoadmapProgress(fieldId: string, specializationId: string) {
     fetchProgress();
   }, [fetchProgress]);
 
-  const markPhaseComplete = async (phaseId: number, totalPhases: number) => {
+  const markPhaseComplete = async (phaseId: number, totalPhases: number, skills: string[] = []) => {
     if (!user || !progress) return;
 
     const newCompletedPhases = [...progress.completed_phases, phaseId].filter(
@@ -117,6 +117,16 @@ export function useRoadmapProgress(fieldId: string, specializationId: string) {
         fieldId: progress.field_id,
         metadata: { phaseId, totalPhases }
       });
+
+      // Log skills as completed if any
+      if (skills && skills.length > 0) {
+        for (const skill of skills) {
+          await logUserActivity(user.uid, 'SKILL_MARKED_COMPLETE', {
+            relatedId: skill,
+            fieldId: progress.field_id
+          });
+        }
+      }
 
       return updatedProgress;
     } catch (error) {
