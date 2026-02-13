@@ -6,7 +6,7 @@ import { DashboardLayout } from '@/components/dashboard/DashboardLayout';
 import { useAuthContext } from '@/contexts/AuthContext';
 import { useCertifications } from '@/hooks/useCertifications';
 import { seedCertifications } from '@/utils/seedCertifications';
-import { Sparkles, Search, Star, Zap, Target, AlertCircle, Loader2, Award, Database, Lock } from 'lucide-react';
+import { Sparkles, Search, Star, Zap, Target, AlertCircle, Loader2, Award, Database, Lock, ExternalLink } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { toast } from 'sonner';
@@ -315,20 +315,32 @@ export default function Certifications() {
                 {/* Actions */}
                 <div className="flex gap-3 pt-4 border-t border-border">
                   {planLevels[(cert.planAccess || 'free') as keyof typeof planLevels] <= planLevels[userPlan as keyof typeof planLevels] ? (
-                    <Button variant="default" size="sm" className="flex-1" asChild>
-                      <a href={cert.officialLink || 'https://google.com'} target="_blank" rel="noopener noreferrer">
-                        Enroll Now
-                      </a>
-                    </Button>
+                    <>
+                      <Button variant="default" size="sm" className="flex-1 gap-2" asChild>
+                        <a href={cert.officialLink || 'https://google.com'} target="_blank" rel="noopener noreferrer">
+                          <ExternalLink className="w-4 h-4" />
+                          Enroll Now
+                        </a>
+                      </Button>
+                      <Button variant="outline" size="sm" className="gap-2">
+                        <Star className="w-4 h-4" />
+                        Save
+                      </Button>
+                    </>
                   ) : (
-                    <Button variant="outline" size="sm" className="flex-1 gap-2 border-primary/50 text-primary hover:bg-primary/5" onClick={() => navigate('/subscription')}>
-                      <Lock className="w-4 h-4" />
-                      Upgrade to Unlock
-                    </Button>
+                    <>
+                      <Button variant="outline" size="sm" className="flex-1 gap-2 border-primary/50 text-primary hover:bg-primary/5" onClick={() => navigate('/subscription')}>
+                        <Lock className="w-4 h-4" />
+                        Upgrade to Unlock
+                      </Button>
+                      <Button variant="ghost" size="sm" className="gap-2" asChild>
+                        <a href={cert.officialLink || 'https://google.com'} target="_blank" rel="noopener noreferrer">
+                          <ExternalLink className="w-4 h-4" />
+                          View
+                        </a>
+                      </Button>
+                    </>
                   )}
-                  <Button variant="outline" size="sm">
-                    Save for Later
-                  </Button>
                 </div>
               </div>
             ))}

@@ -38,8 +38,8 @@ export default function Roadmap() {
   // Expanded phase
   const [expandedPhase, setExpandedPhase] = useState<number | null>(null);
 
-  // Toggle for dynamic vs static content (Default to static until API is ready)
-  const [useDynamicContent, setUseDynamicContent] = useState(false);
+  // Toggle for dynamic vs static content (Default to DYNAMIC - AI powered!)
+  const [useDynamicContent, setUseDynamicContent] = useState(true);
 
   // Get specializations for selected field
   const specializations = selectedField ? specializationsMap[selectedField] || [] : [];
@@ -263,12 +263,29 @@ export default function Roadmap() {
           </div>
         )}
 
-        {/* Error Display */}
-        {dynamicError && useDynamicContent && (
-          <div className="bg-destructive/10 border border-destructive/20 rounded-lg p-4 animate-fade-in">
-            <p className="text-destructive text-sm">
-              Unable to load AI-generated roadmap. Showing static content instead.
-            </p>
+        {/* Error Display - Only show if dynamic mode AND there's an error AND no fallback data */}
+        {dynamicError && useDynamicContent && staticPhases.length === 0 && (
+          <div className="bg-amber-500/10 border border-amber-500/20 rounded-lg p-4 animate-fade-in">
+            <div className="flex items-start gap-3">
+              <div className="w-10 h-10 rounded-full bg-amber-500/20 flex items-center justify-center flex-shrink-0">
+                <Sparkles className="w-5 h-5 text-amber-500" />
+              </div>
+              <div className="flex-1">
+                <p className="font-medium text-foreground mb-1">Generating your personalized roadmap...</p>
+                <p className="text-sm text-muted-foreground">
+                  Our AI is creating a custom learning path based on current industry trends. This may take a few moments.
+                </p>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={handleRefresh}
+                  className="mt-3 gap-2"
+                >
+                  <RefreshCw className="w-4 h-4" />
+                  Retry Generation
+                </Button>
+              </div>
+            </div>
           </div>
         )}
 
