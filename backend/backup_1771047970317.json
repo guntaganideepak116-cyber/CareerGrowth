@@ -1,0 +1,5140 @@
+{
+  "career_paths": [
+    {
+      "id": "1xXBetucj6MQPCMZokwQ",
+      "title": "Platform Engineer",
+      "fieldId": "engineering",
+      "specializationId": "devops-site-reliability",
+      "level": "mid",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771047642,
+        "_nanoseconds": 412000000
+      }
+    },
+    {
+      "id": "26VzyBAn2gkIHcbxYwxo",
+      "title": "DevOps Engineer",
+      "fieldId": "engineering",
+      "specializationId": "devops-site-reliability",
+      "level": "mid",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771047642,
+        "_nanoseconds": 262000000
+      }
+    },
+    {
+      "id": "2NL5VeRl1OsivAtSnJBv",
+      "title": "Web3 Developer",
+      "fieldId": "engineering",
+      "specializationId": "blockchain-web3",
+      "level": "mid",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771047642,
+        "_nanoseconds": 611000000
+      }
+    },
+    {
+      "id": "35Om7cD1EIg7BWxEwb2h",
+      "title": "Data Analyst",
+      "fieldId": "engineering",
+      "specializationId": "data-science-analytics",
+      "level": "mid",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771047641,
+        "_nanoseconds": 476000000
+      }
+    },
+    {
+      "id": "35ei1STXzVZCaUFEK68H",
+      "title": "Pathology Technician",
+      "fieldId": "medical",
+      "specializationId": "microbiology",
+      "level": "mid",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771047644,
+        "_nanoseconds": 863000000
+      }
+    },
+    {
+      "id": "3ASIDDr0dSe13Tl3Ap39",
+      "title": "IoT Engineer",
+      "fieldId": "engineering",
+      "specializationId": "internet-of-things",
+      "level": "mid",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771047642,
+        "_nanoseconds": 691000000
+      }
+    },
+    {
+      "id": "3kf6Fbvuh1YqjRFOqNVm",
+      "title": "Epidemiologist",
+      "fieldId": "medical",
+      "specializationId": "public-health",
+      "level": "mid",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771047644,
+        "_nanoseconds": 367000000
+      }
+    },
+    {
+      "id": "5eTO2BH5dfV11a2MvDkX",
+      "title": "Healthcare IT Consultant",
+      "fieldId": "medical",
+      "specializationId": "health-informatics",
+      "level": "mid",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771047644,
+        "_nanoseconds": 649000000
+      }
+    },
+    {
+      "id": "68v0rRnmo2GTkFYdTE7u",
+      "title": "Data Scientist",
+      "fieldId": "engineering",
+      "specializationId": "data-science-analytics",
+      "level": "mid",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771047641,
+        "_nanoseconds": 582000000
+      }
+    },
+    {
+      "id": "9alOpAQewBJzWjh6sp1l",
+      "title": "Android Developer",
+      "fieldId": "engineering",
+      "specializationId": "mobile-app-development",
+      "level": "mid",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771047643,
+        "_nanoseconds": 101000000
+      }
+    },
+    {
+      "id": "AnZCTFutliN7MSir09mO",
+      "title": "DevOps Engineer",
+      "fieldId": "engineering",
+      "specializationId": "cloud-computing",
+      "level": "mid",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771047642,
+        "_nanoseconds": 125000000
+      }
+    },
+    {
+      "id": "BOe9IX3F9NM2hSF7tfda",
+      "title": "Nurse Administrator",
+      "fieldId": "medical",
+      "specializationId": "nursing-clinical-practice",
+      "level": "mid",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771047645,
+        "_nanoseconds": 865000000
+      }
+    },
+    {
+      "id": "EIVc4byyZyitlddmIfYN",
+      "title": "Quantum Research Scientist",
+      "fieldId": "engineering",
+      "specializationId": "quantum-computing",
+      "level": "mid",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771047643,
+        "_nanoseconds": 826000000
+      }
+    },
+    {
+      "id": "F03AjTZG6dCTkBnztc2U",
+      "title": "Pharmacist",
+      "fieldId": "medical",
+      "specializationId": "pharmaceutical-sciences",
+      "level": "mid",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771047645,
+        "_nanoseconds": 322000000
+      }
+    },
+    {
+      "id": "I0iGj0bftWWgR7e2m2yu",
+      "title": "Robotics Engineer",
+      "fieldId": "engineering",
+      "specializationId": "robotics-automation",
+      "level": "mid",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771047642,
+        "_nanoseconds": 897000000
+      }
+    },
+    {
+      "id": "Ijl8xvMk17bEU6bIVQsT",
+      "title": "BI Developer",
+      "fieldId": "engineering",
+      "specializationId": "data-science-analytics",
+      "level": "mid",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771047641,
+        "_nanoseconds": 690000000
+      }
+    },
+    {
+      "id": "IpDRIuK8aknffeFhhhBe",
+      "title": "Occupational Therapist",
+      "fieldId": "medical",
+      "specializationId": "allied-health",
+      "level": "mid",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771047645,
+        "_nanoseconds": 194000000
+      }
+    },
+    {
+      "id": "JXH55J896xA51Eddzdc8",
+      "title": "Health Informatics Specialist",
+      "fieldId": "medical",
+      "specializationId": "health-informatics",
+      "level": "mid",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771047644,
+        "_nanoseconds": 500000000
+      }
+    },
+    {
+      "id": "LOpXsDgxTX3krnfEOoGJ",
+      "title": "Quantum Computing Engineer",
+      "fieldId": "engineering",
+      "specializationId": "quantum-computing",
+      "level": "mid",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771047643,
+        "_nanoseconds": 676000000
+      }
+    },
+    {
+      "id": "MXZEA5PK9onjyMd2UDQy",
+      "title": "Medical Superintendent",
+      "fieldId": "medical",
+      "specializationId": "hospital-administration",
+      "level": "mid",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771047644,
+        "_nanoseconds": 38000000
+      }
+    },
+    {
+      "id": "MjVkGUBcjc0dNeM8LJhn",
+      "title": "Quantum Software Developer",
+      "fieldId": "engineering",
+      "specializationId": "quantum-computing",
+      "level": "mid",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771047643,
+        "_nanoseconds": 739000000
+      }
+    },
+    {
+      "id": "Mk4y6wnNFTckU0OtYIPZ",
+      "title": "Pharma Production Manager",
+      "fieldId": "medical",
+      "specializationId": "pharmaceutical-sciences",
+      "level": "mid",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771047645,
+        "_nanoseconds": 450000000
+      }
+    },
+    {
+      "id": "Mt49rYxDJItkU1buCiil",
+      "title": "Public Health Officer",
+      "fieldId": "medical",
+      "specializationId": "public-health",
+      "level": "mid",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771047644,
+        "_nanoseconds": 296000000
+      }
+    },
+    {
+      "id": "NBs3cjaiCDUjfAb5QgUp",
+      "title": "Registered Nurse",
+      "fieldId": "medical",
+      "specializationId": "nursing-clinical-practice",
+      "level": "mid",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771047645,
+        "_nanoseconds": 721000000
+      }
+    },
+    {
+      "id": "NS6hOTlUfMB2yHNmQyNt",
+      "title": "Genetic Analyst",
+      "fieldId": "medical",
+      "specializationId": "medical-biotechnology",
+      "level": "mid",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771047645,
+        "_nanoseconds": 581000000
+      }
+    },
+    {
+      "id": "OIqMACpWDocruk5Y6Jts",
+      "title": "Clinical Trial Coordinator",
+      "fieldId": "medical",
+      "specializationId": "clinical-research",
+      "level": "mid",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771047644,
+        "_nanoseconds": 232000000
+      }
+    },
+    {
+      "id": "OVHtRRMH1LxtuBTuop8k",
+      "title": "Backend Developer",
+      "fieldId": "engineering",
+      "specializationId": "full-stack-web-development",
+      "level": "mid",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771047640,
+        "_nanoseconds": 943000000
+      }
+    },
+    {
+      "id": "OfPl1yLasreTWkcFLsxf",
+      "title": "Computer Vision Engineer",
+      "fieldId": "engineering",
+      "specializationId": "computer-vision",
+      "level": "mid",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771047643,
+        "_nanoseconds": 546000000
+      }
+    },
+    {
+      "id": "PHW7LpuMpiLw25Ca0IUi",
+      "title": "Security Engineer",
+      "fieldId": "engineering",
+      "specializationId": "cybersecurity",
+      "level": "mid",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771047641,
+        "_nanoseconds": 942000000
+      }
+    },
+    {
+      "id": "Pl8EqQ4JzZBO7KVDJpRE",
+      "title": "Automation Engineer",
+      "fieldId": "engineering",
+      "specializationId": "internet-of-things",
+      "level": "mid",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771047642,
+        "_nanoseconds": 827000000
+      }
+    },
+    {
+      "id": "Q1ByPscVKmT1SDiP3wUi",
+      "title": "Frontend Developer",
+      "fieldId": "engineering",
+      "specializationId": "full-stack-web-development",
+      "level": "mid",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771047640,
+        "_nanoseconds": 743000000
+      }
+    },
+    {
+      "id": "Q6o1S2MeI6CspmJMrxDb",
+      "title": "Health Policy Analyst",
+      "fieldId": "medical",
+      "specializationId": "public-health",
+      "level": "mid",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771047644,
+        "_nanoseconds": 434000000
+      }
+    },
+    {
+      "id": "QHjOq22tfkMQ742oMEEZ",
+      "title": "Hospital Administrator",
+      "fieldId": "medical",
+      "specializationId": "hospital-administration",
+      "level": "mid",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771047643,
+        "_nanoseconds": 891000000
+      }
+    },
+    {
+      "id": "RhMOKfx07mOezGSFsU5w",
+      "title": "Smart Contract Engineer",
+      "fieldId": "engineering",
+      "specializationId": "blockchain-web3",
+      "level": "mid",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771047642,
+        "_nanoseconds": 547000000
+      }
+    },
+    {
+      "id": "Ti9GFuS6LzXZzSK549bE",
+      "title": "Biomedical Scientist",
+      "fieldId": "medical",
+      "specializationId": "medical-biotechnology",
+      "level": "mid",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771047645,
+        "_nanoseconds": 645000000
+      }
+    },
+    {
+      "id": "UCaPrRhRbJ2yijraIJj0",
+      "title": "Medical Data Analyst",
+      "fieldId": "medical",
+      "specializationId": "health-informatics",
+      "level": "mid",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771047644,
+        "_nanoseconds": 577000000
+      }
+    },
+    {
+      "id": "UTyMPmd0jzFvDAngnocu",
+      "title": "AI Engineer",
+      "fieldId": "engineering",
+      "specializationId": "artificial-intelligence-machine-learning",
+      "level": "mid",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771047641,
+        "_nanoseconds": 166000000
+      }
+    },
+    {
+      "id": "V38bartaBavtLZ1R7Lym",
+      "title": "Full Stack Developer",
+      "fieldId": "engineering",
+      "specializationId": "full-stack-web-development",
+      "level": "mid",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771047641,
+        "_nanoseconds": 60000000
+      }
+    },
+    {
+      "id": "WrMgF4garEEQPwX8ulX5",
+      "title": "Microbiologist",
+      "fieldId": "medical",
+      "specializationId": "microbiology",
+      "level": "mid",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771047644,
+        "_nanoseconds": 718000000
+      }
+    },
+    {
+      "id": "ZRcfSMviylyGZpHQzo5K",
+      "title": "Physiotherapist",
+      "fieldId": "medical",
+      "specializationId": "allied-health",
+      "level": "mid",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771047645,
+        "_nanoseconds": 126000000
+      }
+    },
+    {
+      "id": "ZaOBheoFlUhnM5txlE2T",
+      "title": "NLP Engineer",
+      "fieldId": "engineering",
+      "specializationId": "artificial-intelligence-machine-learning",
+      "level": "mid",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771047641,
+        "_nanoseconds": 382000000
+      }
+    },
+    {
+      "id": "aJ8339haM1m1miOhkR0M",
+      "title": "Embedded Systems Developer",
+      "fieldId": "engineering",
+      "specializationId": "internet-of-things",
+      "level": "mid",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771047642,
+        "_nanoseconds": 758000000
+      }
+    },
+    {
+      "id": "anvDm10GNaZs3OAHuAAm",
+      "title": "iOS Developer",
+      "fieldId": "engineering",
+      "specializationId": "mobile-app-development",
+      "level": "mid",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771047643,
+        "_nanoseconds": 172000000
+      }
+    },
+    {
+      "id": "c6oRYTu9RlCR5Cqfgepn",
+      "title": "Automation Engineer",
+      "fieldId": "engineering",
+      "specializationId": "robotics-automation",
+      "level": "mid",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771047642,
+        "_nanoseconds": 970000000
+      }
+    },
+    {
+      "id": "cU8dQbrA6UtRAf2drDk7",
+      "title": "Clinical Nurse Specialist",
+      "fieldId": "medical",
+      "specializationId": "nursing-clinical-practice",
+      "level": "mid",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771047645,
+        "_nanoseconds": 794000000
+      }
+    },
+    {
+      "id": "clhgURHxeK694y97UHzN",
+      "title": "Biotech Researcher",
+      "fieldId": "medical",
+      "specializationId": "medical-biotechnology",
+      "level": "mid",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771047645,
+        "_nanoseconds": 515000000
+      }
+    },
+    {
+      "id": "f8EN6bkWDcWZshkNQ8Dl",
+      "title": "Flutter Developer",
+      "fieldId": "engineering",
+      "specializationId": "mobile-app-development",
+      "level": "mid",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771047643,
+        "_nanoseconds": 250000000
+      }
+    },
+    {
+      "id": "fzaqV1sl2bUxVwvw4E0C",
+      "title": "Unreal Developer",
+      "fieldId": "engineering",
+      "specializationId": "game-development",
+      "level": "mid",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771047643,
+        "_nanoseconds": 403000000
+      }
+    },
+    {
+      "id": "g47fbZcQblu5ZhkLOr9l",
+      "title": "Cloud Engineer",
+      "fieldId": "engineering",
+      "specializationId": "cloud-computing",
+      "level": "mid",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771047642,
+        "_nanoseconds": 36000000
+      }
+    },
+    {
+      "id": "gVN91v13tTKNiRus3fHG",
+      "title": "Ethical Hacker",
+      "fieldId": "engineering",
+      "specializationId": "cybersecurity",
+      "level": "mid",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771047641,
+        "_nanoseconds": 770000000
+      }
+    },
+    {
+      "id": "gxug3YXw9Qlq0z8diwzj",
+      "title": "Medical Coder",
+      "fieldId": "medical",
+      "specializationId": "medical-coding",
+      "level": "mid",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771047644,
+        "_nanoseconds": 928000000
+      }
+    },
+    {
+      "id": "jRhVORY3abpyBBITX16e",
+      "title": "Health Insurance Analyst",
+      "fieldId": "medical",
+      "specializationId": "medical-coding",
+      "level": "mid",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771047645,
+        "_nanoseconds": 0
+      }
+    },
+    {
+      "id": "jknjLGetdNmPIwy0Zlvn",
+      "title": "Lab Technologist",
+      "fieldId": "medical",
+      "specializationId": "microbiology",
+      "level": "mid",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771047644,
+        "_nanoseconds": 799000000
+      }
+    },
+    {
+      "id": "lZTCqi725T3dsxdxc5xK",
+      "title": "Unity Developer",
+      "fieldId": "engineering",
+      "specializationId": "game-development",
+      "level": "mid",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771047643,
+        "_nanoseconds": 328000000
+      }
+    },
+    {
+      "id": "nrBOoHMPIjHyn6fTLWi6",
+      "title": "Medical Research Analyst",
+      "fieldId": "medical",
+      "specializationId": "clinical-research",
+      "level": "mid",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771047644,
+        "_nanoseconds": 166000000
+      }
+    },
+    {
+      "id": "oEn3cQWw2xxe8JBXOqUu",
+      "title": "Cloud Architect",
+      "fieldId": "engineering",
+      "specializationId": "cloud-computing",
+      "level": "mid",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771047642,
+        "_nanoseconds": 193000000
+      }
+    },
+    {
+      "id": "ozKdAXi9b1bWz34qNGsf",
+      "title": "Blockchain Developer",
+      "fieldId": "engineering",
+      "specializationId": "blockchain-web3",
+      "level": "mid",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771047642,
+        "_nanoseconds": 478000000
+      }
+    },
+    {
+      "id": "qVr4wq2MIkDrCPv1BWOY",
+      "title": "Rehabilitation Specialist",
+      "fieldId": "medical",
+      "specializationId": "allied-health",
+      "level": "mid",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771047645,
+        "_nanoseconds": 258000000
+      }
+    },
+    {
+      "id": "tleStg9mgdCQp5Uy8FXm",
+      "title": "Drug Safety Officer",
+      "fieldId": "medical",
+      "specializationId": "pharmaceutical-sciences",
+      "level": "mid",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771047645,
+        "_nanoseconds": 385000000
+      }
+    },
+    {
+      "id": "vEGuJFd5p6rHsBsfaBKr",
+      "title": "Claims Processing Officer",
+      "fieldId": "medical",
+      "specializationId": "medical-coding",
+      "level": "mid",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771047645,
+        "_nanoseconds": 62000000
+      }
+    },
+    {
+      "id": "vLKkmP9HJIX72hwV5bAL",
+      "title": "SOC Analyst",
+      "fieldId": "engineering",
+      "specializationId": "cybersecurity",
+      "level": "mid",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771047641,
+        "_nanoseconds": 865000000
+      }
+    },
+    {
+      "id": "vZQEVo9sVUJQj4ZbVKZg",
+      "title": "Healthcare Operations Manager",
+      "fieldId": "medical",
+      "specializationId": "hospital-administration",
+      "level": "mid",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771047643,
+        "_nanoseconds": 965000000
+      }
+    },
+    {
+      "id": "x7L0hdx0pb6EtWXzLhJK",
+      "title": "Control Systems Engineer",
+      "fieldId": "engineering",
+      "specializationId": "robotics-automation",
+      "level": "mid",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771047643,
+        "_nanoseconds": 36000000
+      }
+    },
+    {
+      "id": "yH3apMfHCuvHFScY6yhv",
+      "title": "Gameplay Engineer",
+      "fieldId": "engineering",
+      "specializationId": "game-development",
+      "level": "mid",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771047643,
+        "_nanoseconds": 478000000
+      }
+    },
+    {
+      "id": "yWWaxmQLF4oqSpxMMy60",
+      "title": "AI Vision Specialist",
+      "fieldId": "engineering",
+      "specializationId": "computer-vision",
+      "level": "mid",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771047643,
+        "_nanoseconds": 609000000
+      }
+    },
+    {
+      "id": "yuRhAuaA5c6BNJs6ZZS9",
+      "title": "Clinical Research Associate",
+      "fieldId": "medical",
+      "specializationId": "clinical-research",
+      "level": "mid",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771047644,
+        "_nanoseconds": 102000000
+      }
+    },
+    {
+      "id": "zb1pXDbE2ke8dTjnGa1D",
+      "title": "ML Engineer",
+      "fieldId": "engineering",
+      "specializationId": "artificial-intelligence-machine-learning",
+      "level": "mid",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771047641,
+        "_nanoseconds": 278000000
+      }
+    },
+    {
+      "id": "zwKzjv7xJf5yZ59f6VWv",
+      "title": "SRE Engineer",
+      "fieldId": "engineering",
+      "specializationId": "devops-site-reliability",
+      "level": "mid",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771047642,
+        "_nanoseconds": 344000000
+      }
+    }
+  ],
+  "projects": [],
+  "certifications": [
+    {
+      "id": "0DFSH26WgIHXX5X6F4dy",
+      "field": "law",
+      "branch": "general",
+      "certificationName": "Law Professional Certification Level 1",
+      "provider": "Law Global Institute",
+      "level": "Professional",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303341,
+        "_nanoseconds": 384000000
+      }
+    },
+    {
+      "id": "1MaLZmrXpJ9t7D5wI5y6",
+      "field": "product-management",
+      "branch": "general",
+      "certificationName": "Product Management Professional Certification Level 2",
+      "provider": "Product Management Global Institute",
+      "level": "Beginner",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303381,
+        "_nanoseconds": 764000000
+      }
+    },
+    {
+      "id": "1Uo4wg4PN4sah2hsQ8er",
+      "field": "bioinformatics-compbio",
+      "branch": "general",
+      "certificationName": "Bioinformatics Compbio Professional Certification Level 1",
+      "provider": "Bioinformatics Compbio Global Institute",
+      "level": "Professional",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303379,
+        "_nanoseconds": 172000000
+      }
+    },
+    {
+      "id": "1qgV0JGNmTiCZp1oPfsI",
+      "field": "arts",
+      "branch": "general",
+      "certificationName": "Arts Professional Certification Level 4",
+      "provider": "Arts Global Institute",
+      "level": "Professional",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303336,
+        "_nanoseconds": 377000000
+      }
+    },
+    {
+      "id": "1vKpHtOLESNSv80pqA0Z",
+      "field": "quantum-computing",
+      "branch": "general",
+      "certificationName": "Quantum Computing Professional Certification Level 6",
+      "provider": "Quantum Computing Global Institute",
+      "level": "Beginner",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303374,
+        "_nanoseconds": 859000000
+      }
+    },
+    {
+      "id": "2Pkpq9ROKCLw3gUBShio",
+      "field": "ar-vr-mr",
+      "branch": "general",
+      "certificationName": "Ar Vr Mr Professional Certification Level 9",
+      "provider": "Ar Vr Mr Global Institute",
+      "level": "Associate",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303372,
+        "_nanoseconds": 785000000
+      }
+    },
+    {
+      "id": "2YoF2HT7hxgSWxGKlvdF",
+      "field": "law",
+      "branch": "general",
+      "certificationName": "Law Professional Certification Level 2",
+      "provider": "Law Global Institute",
+      "level": "Beginner",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303341,
+        "_nanoseconds": 470000000
+      }
+    },
+    {
+      "id": "34kznA06czX8GWoICzeF",
+      "field": "law",
+      "branch": "general",
+      "certificationName": "Law Professional Certification Level 6",
+      "provider": "Law Global Institute",
+      "level": "Beginner",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303342,
+        "_nanoseconds": 477000000
+      }
+    },
+    {
+      "id": "38Io6A0bhSNmI6AVmKKG",
+      "field": "product-management",
+      "branch": "general",
+      "certificationName": "Product Management Professional Certification Level 1",
+      "provider": "Product Management Global Institute",
+      "level": "Professional",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303381,
+        "_nanoseconds": 621000000
+      }
+    },
+    {
+      "id": "3Dxicn9AVN6PkIzP6ItB",
+      "field": "commerce",
+      "branch": "general",
+      "certificationName": "Commerce Professional Certification Level 5",
+      "provider": "Commerce Global Institute",
+      "level": "Associate",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303339,
+        "_nanoseconds": 62000000
+      }
+    },
+    {
+      "id": "3JDtP9x16pX28RQfVXDp",
+      "field": "bioinformatics-compbio",
+      "branch": "general",
+      "certificationName": "Bioinformatics Compbio Professional Certification Level 6",
+      "provider": "Bioinformatics Compbio Global Institute",
+      "level": "Beginner",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303379,
+        "_nanoseconds": 638000000
+      }
+    },
+    {
+      "id": "3jZulMrMUpdsfMFv5ge0",
+      "field": "sports",
+      "branch": "general",
+      "certificationName": "Sports Professional Certification Level 3",
+      "provider": "Sports Global Institute",
+      "level": "Associate",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303358,
+        "_nanoseconds": 551000000
+      }
+    },
+    {
+      "id": "41ibTKq5E4eqQIDKbyn9",
+      "field": "arts",
+      "branch": "general",
+      "certificationName": "Arts Professional Certification Level 9",
+      "provider": "Arts Global Institute",
+      "level": "Associate",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303336,
+        "_nanoseconds": 955000000
+      }
+    },
+    {
+      "id": "45ixQ6KXo3ghAQkSwXYD",
+      "field": "law",
+      "branch": "general",
+      "certificationName": "Law Professional Certification Level 4",
+      "provider": "Law Global Institute",
+      "level": "Professional",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303341,
+        "_nanoseconds": 693000000
+      }
+    },
+    {
+      "id": "47887HNH5UflilEt3ri6",
+      "field": "quantum-computing",
+      "branch": "general",
+      "certificationName": "Quantum Computing Professional Certification Level 10",
+      "provider": "Quantum Computing Global Institute",
+      "level": "Professional",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303375,
+        "_nanoseconds": 215000000
+      }
+    },
+    {
+      "id": "4XUmPOu1kix8ku5NkMo7",
+      "field": "education",
+      "branch": "general",
+      "certificationName": "Education Professional Certification Level 5",
+      "provider": "Education Global Institute",
+      "level": "Associate",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303345,
+        "_nanoseconds": 551000000
+      }
+    },
+    {
+      "id": "4g0ecW140rc7WF6HQp2i",
+      "field": "defense",
+      "branch": "general",
+      "certificationName": "Defense Professional Certification Level 8",
+      "provider": "Defense Global Institute",
+      "level": "Beginner",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303351,
+        "_nanoseconds": 636000000
+      }
+    },
+    {
+      "id": "573DcUcsPhUwhoX2C7vA",
+      "field": "robotics-automation",
+      "branch": "general",
+      "certificationName": "Robotics Automation Professional Certification Level 5",
+      "provider": "Robotics Automation Global Institute",
+      "level": "Associate",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303377,
+        "_nanoseconds": 85000000
+      }
+    },
+    {
+      "id": "5Af0CBQau5k3U9LpVMs4",
+      "field": "design",
+      "branch": "general",
+      "certificationName": "Design Professional Certification Level 3",
+      "provider": "Design Global Institute",
+      "level": "Associate",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303347,
+        "_nanoseconds": 816000000
+      }
+    },
+    {
+      "id": "5DI6ZIV0p3FpqUSvZYue",
+      "field": "product-management",
+      "branch": "general",
+      "certificationName": "Product Management Professional Certification Level 4",
+      "provider": "Product Management Global Institute",
+      "level": "Professional",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303381,
+        "_nanoseconds": 944000000
+      }
+    },
+    {
+      "id": "5fWa4QhMWmLQ2FWFBjWv",
+      "field": "medical",
+      "branch": "general",
+      "certificationName": "Medical Professional Certification Level 1",
+      "provider": "Medical Global Institute",
+      "level": "Professional",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303331,
+        "_nanoseconds": 126000000
+      }
+    },
+    {
+      "id": "5j9pWRUNJNefV7CBYyur",
+      "field": "robotics-automation",
+      "branch": "general",
+      "certificationName": "Robotics Automation Professional Certification Level 1",
+      "provider": "Robotics Automation Global Institute",
+      "level": "Professional",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303376,
+        "_nanoseconds": 719000000
+      }
+    },
+    {
+      "id": "5lAR0X6GtFY4CYW13cYs",
+      "field": "blockchain-web3",
+      "branch": "general",
+      "certificationName": "Blockchain Web3 Professional Certification Level 10",
+      "provider": "Blockchain Web3 Global Institute",
+      "level": "Professional",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303369,
+        "_nanoseconds": 658000000
+      }
+    },
+    {
+      "id": "5qRBCn1gHoaq4qp493AF",
+      "field": "agriculture",
+      "branch": "general",
+      "certificationName": "Agriculture Professional Certification Level 6",
+      "provider": "Agriculture Global Institute",
+      "level": "Beginner",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303353,
+        "_nanoseconds": 963000000
+      }
+    },
+    {
+      "id": "5tg3AdjdyFbPVA5yW1og",
+      "field": "law",
+      "branch": "general",
+      "certificationName": "Law Professional Certification Level 9",
+      "provider": "Law Global Institute",
+      "level": "Associate",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303343,
+        "_nanoseconds": 372000000
+      }
+    },
+    {
+      "id": "66IdBXqBbeH7i840eS3O",
+      "field": "arts",
+      "branch": "general",
+      "certificationName": "Arts Professional Certification Level 5",
+      "provider": "Arts Global Institute",
+      "level": "Associate",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303336,
+        "_nanoseconds": 478000000
+      }
+    },
+    {
+      "id": "6BmhtN2DAeMr1gVAcQkN",
+      "field": "product-management",
+      "branch": "general",
+      "certificationName": "Product Management Professional Certification Level 3",
+      "provider": "Product Management Global Institute",
+      "level": "Associate",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303381,
+        "_nanoseconds": 860000000
+      }
+    },
+    {
+      "id": "7POitFnj1XYhxKeEBRCr",
+      "field": "education",
+      "branch": "general",
+      "certificationName": "Education Professional Certification Level 6",
+      "provider": "Education Global Institute",
+      "level": "Beginner",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303345,
+        "_nanoseconds": 634000000
+      }
+    },
+    {
+      "id": "7leayfRIbv2YUVNvdvMT",
+      "field": "sports",
+      "branch": "general",
+      "certificationName": "Sports Professional Certification Level 10",
+      "provider": "Sports Global Institute",
+      "level": "Professional",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303359,
+        "_nanoseconds": 209000000
+      }
+    },
+    {
+      "id": "7qqs0hFXekS4p45AbLNy",
+      "field": "blockchain-web3",
+      "branch": "general",
+      "certificationName": "Blockchain Web3 Professional Certification Level 2",
+      "provider": "Blockchain Web3 Global Institute",
+      "level": "Beginner",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303368,
+        "_nanoseconds": 827000000
+      }
+    },
+    {
+      "id": "7qu8PWwe9lOmINkKm2De",
+      "field": "law",
+      "branch": "general",
+      "certificationName": "Law Professional Certification Level 3",
+      "provider": "Law Global Institute",
+      "level": "Associate",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303341,
+        "_nanoseconds": 581000000
+      }
+    },
+    {
+      "id": "827XASVuFIzq7MTpptYc",
+      "field": "sports",
+      "branch": "general",
+      "certificationName": "Sports Professional Certification Level 5",
+      "provider": "Sports Global Institute",
+      "level": "Associate",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303358,
+        "_nanoseconds": 732000000
+      }
+    },
+    {
+      "id": "8eGcE8s6wmQRHGd5JZJZ",
+      "field": "law",
+      "branch": "general",
+      "certificationName": "Law Professional Certification Level 10",
+      "provider": "Law Global Institute",
+      "level": "Professional",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303343,
+        "_nanoseconds": 473000000
+      }
+    },
+    {
+      "id": "96jegZAyLWOiFEud4KLS",
+      "field": "cloud-computing",
+      "branch": "general",
+      "certificationName": "Cloud Computing Professional Certification Level 2",
+      "provider": "Cloud Computing Global Institute",
+      "level": "Beginner",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303364,
+        "_nanoseconds": 30000000
+      }
+    },
+    {
+      "id": "9j6PjgZf5FUcOwXhczEx",
+      "field": "arts",
+      "branch": "general",
+      "certificationName": "Arts Professional Certification Level 1",
+      "provider": "Arts Global Institute",
+      "level": "Professional",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303336,
+        "_nanoseconds": 71000000
+      }
+    },
+    {
+      "id": "A2VYuyKNH6zheHqzEkx9",
+      "field": "defense",
+      "branch": "general",
+      "certificationName": "Defense Professional Certification Level 5",
+      "provider": "Defense Global Institute",
+      "level": "Associate",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303351,
+        "_nanoseconds": 360000000
+      }
+    },
+    {
+      "id": "AH0OIhzbMRoCr6uZsZqX",
+      "field": "vocational",
+      "branch": "general",
+      "certificationName": "Vocational Professional Certification Level 6",
+      "provider": "Vocational Global Institute",
+      "level": "Beginner",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303361,
+        "_nanoseconds": 227000000
+      }
+    },
+    {
+      "id": "AX92urbbkYQfuc4XEts4",
+      "field": "ar-vr-mr",
+      "branch": "general",
+      "certificationName": "Ar Vr Mr Professional Certification Level 2",
+      "provider": "Ar Vr Mr Global Institute",
+      "level": "Beginner",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303372,
+        "_nanoseconds": 144000000
+      }
+    },
+    {
+      "id": "AfJQE8Jgfr54yrbiQG6c",
+      "field": "agriculture",
+      "branch": "general",
+      "certificationName": "Agriculture Professional Certification Level 7",
+      "provider": "Agriculture Global Institute",
+      "level": "Professional",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303354,
+        "_nanoseconds": 51000000
+      }
+    },
+    {
+      "id": "Aq16qeUGfr1qgrTVG6mw",
+      "field": "quantum-computing",
+      "branch": "general",
+      "certificationName": "Quantum Computing Professional Certification Level 9",
+      "provider": "Quantum Computing Global Institute",
+      "level": "Associate",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303375,
+        "_nanoseconds": 125000000
+      }
+    },
+    {
+      "id": "BCc8KcuOOcysvutBa4C4",
+      "field": "engineering",
+      "branch": "general",
+      "certificationName": "Engineering Professional Certification Level 1",
+      "provider": "Engineering Global Institute",
+      "level": "Professional",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303327,
+        "_nanoseconds": 506000000
+      }
+    },
+    {
+      "id": "BDdOpKhN8ytF6Q33YAOp",
+      "field": "quantum-computing",
+      "branch": "general",
+      "certificationName": "Quantum Computing Professional Certification Level 5",
+      "provider": "Quantum Computing Global Institute",
+      "level": "Associate",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303374,
+        "_nanoseconds": 778000000
+      }
+    },
+    {
+      "id": "BUjBjbepC2m8ZoFBpESL",
+      "field": "science",
+      "branch": "general",
+      "certificationName": "Science Professional Certification Level 3",
+      "provider": "Science Global Institute",
+      "level": "Associate",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303333,
+        "_nanoseconds": 827000000
+      }
+    },
+    {
+      "id": "BZL0DKpW6uOQE0TP6AAc",
+      "field": "blockchain-web3",
+      "branch": "general",
+      "certificationName": "Blockchain Web3 Professional Certification Level 4",
+      "provider": "Blockchain Web3 Global Institute",
+      "level": "Professional",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303369,
+        "_nanoseconds": 17000000
+      }
+    },
+    {
+      "id": "BsrFhMOpiwz0sLRifJIA",
+      "field": "agriculture",
+      "branch": "general",
+      "certificationName": "Agriculture Professional Certification Level 3",
+      "provider": "Agriculture Global Institute",
+      "level": "Associate",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303353,
+        "_nanoseconds": 617000000
+      }
+    },
+    {
+      "id": "C0Q8084EEyV02lCyorxv",
+      "field": "uiux-hci",
+      "branch": "general",
+      "certificationName": "Uiux Hci Professional Certification Level 2",
+      "provider": "Uiux Hci Global Institute",
+      "level": "Beginner",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303384,
+        "_nanoseconds": 684000000
+      }
+    },
+    {
+      "id": "CEI01nG7TCAWK1Kvz0ce",
+      "field": "ar-vr-mr",
+      "branch": "general",
+      "certificationName": "Ar Vr Mr Professional Certification Level 1",
+      "provider": "Ar Vr Mr Global Institute",
+      "level": "Professional",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303372,
+        "_nanoseconds": 49000000
+      }
+    },
+    {
+      "id": "CwiD1pezpt4XIfcvk9ij",
+      "field": "robotics-automation",
+      "branch": "general",
+      "certificationName": "Robotics Automation Professional Certification Level 9",
+      "provider": "Robotics Automation Global Institute",
+      "level": "Associate",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303377,
+        "_nanoseconds": 490000000
+      }
+    },
+    {
+      "id": "DPV4n7N3CZKNN5E1gJBm",
+      "field": "education",
+      "branch": "general",
+      "certificationName": "Education Professional Certification Level 1",
+      "provider": "Education Global Institute",
+      "level": "Professional",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303345,
+        "_nanoseconds": 120000000
+      }
+    },
+    {
+      "id": "DoDDvrzEnO9pLMwYIHVZ",
+      "field": "devops-sre",
+      "branch": "general",
+      "certificationName": "Devops Sre Professional Certification Level 3",
+      "provider": "Devops Sre Global Institute",
+      "level": "Associate",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303366,
+        "_nanoseconds": 544000000
+      }
+    },
+    {
+      "id": "DropI4MC6GWgv1c5IGj0",
+      "field": "education",
+      "branch": "general",
+      "certificationName": "Education Professional Certification Level 8",
+      "provider": "Education Global Institute",
+      "level": "Beginner",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303345,
+        "_nanoseconds": 833000000
+      }
+    },
+    {
+      "id": "EK91e3QQEw8KmYh3HaRS",
+      "field": "blockchain-web3",
+      "branch": "general",
+      "certificationName": "Blockchain Web3 Professional Certification Level 6",
+      "provider": "Blockchain Web3 Global Institute",
+      "level": "Beginner",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303369,
+        "_nanoseconds": 256000000
+      }
+    },
+    {
+      "id": "Eb5KbNOeaQMlxBezIueq",
+      "field": "devops-sre",
+      "branch": "general",
+      "certificationName": "Devops Sre Professional Certification Level 6",
+      "provider": "Devops Sre Global Institute",
+      "level": "Beginner",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303366,
+        "_nanoseconds": 818000000
+      }
+    },
+    {
+      "id": "EoGVb1c4ZrJvsT2bd2WK",
+      "field": "design",
+      "branch": "general",
+      "certificationName": "Design Professional Certification Level 4",
+      "provider": "Design Global Institute",
+      "level": "Professional",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303347,
+        "_nanoseconds": 923000000
+      }
+    },
+    {
+      "id": "ErGEFj09QKGbC94ZOrcM",
+      "field": "engineering",
+      "branch": "general",
+      "certificationName": "Engineering Professional Certification Level 8",
+      "provider": "Engineering Global Institute",
+      "level": "Beginner",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303329,
+        "_nanoseconds": 171000000
+      }
+    },
+    {
+      "id": "FLV6uo5gMRxmwsYMA2LD",
+      "field": "robotics-automation",
+      "branch": "general",
+      "certificationName": "Robotics Automation Professional Certification Level 8",
+      "provider": "Robotics Automation Global Institute",
+      "level": "Beginner",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303377,
+        "_nanoseconds": 407000000
+      }
+    },
+    {
+      "id": "FaG7NGWve4YdAus7GX9y",
+      "field": "education",
+      "branch": "general",
+      "certificationName": "Education Professional Certification Level 4",
+      "provider": "Education Global Institute",
+      "level": "Professional",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303345,
+        "_nanoseconds": 450000000
+      }
+    },
+    {
+      "id": "GBrsMdyevH6OZf7D6ZQC",
+      "field": "medical",
+      "branch": "general",
+      "certificationName": "Medical Professional Certification Level 8",
+      "provider": "Medical Global Institute",
+      "level": "Beginner",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303331,
+        "_nanoseconds": 862000000
+      }
+    },
+    {
+      "id": "GXl3SisAj18N21ito9N6",
+      "field": "uiux-hci",
+      "branch": "general",
+      "certificationName": "Uiux Hci Professional Certification Level 7",
+      "provider": "Uiux Hci Global Institute",
+      "level": "Professional",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303385,
+        "_nanoseconds": 128000000
+      }
+    },
+    {
+      "id": "GiGiWFXuiSnZk4N8CWOV",
+      "field": "uiux-hci",
+      "branch": "general",
+      "certificationName": "Uiux Hci Professional Certification Level 3",
+      "provider": "Uiux Hci Global Institute",
+      "level": "Associate",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303384,
+        "_nanoseconds": 770000000
+      }
+    },
+    {
+      "id": "H2FezUHQ5YCEeFl6O5or",
+      "field": "defense",
+      "branch": "general",
+      "certificationName": "Defense Professional Certification Level 1",
+      "provider": "Defense Global Institute",
+      "level": "Professional",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303350,
+        "_nanoseconds": 997000000
+      }
+    },
+    {
+      "id": "HOmf4gCJJvDau0Je0gKh",
+      "field": "arts",
+      "branch": "general",
+      "certificationName": "Arts Professional Certification Level 3",
+      "provider": "Arts Global Institute",
+      "level": "Associate",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303336,
+        "_nanoseconds": 273000000
+      }
+    },
+    {
+      "id": "HPiTDgVAqfBL0cFOwX4m",
+      "field": "hospitality",
+      "branch": "general",
+      "certificationName": "Hospitality Professional Certification Level 4",
+      "provider": "Hospitality Global Institute",
+      "level": "Professional",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303356,
+        "_nanoseconds": 147000000
+      }
+    },
+    {
+      "id": "HQyIWorSJYEOCtmjTYhv",
+      "field": "commerce",
+      "branch": "general",
+      "certificationName": "Commerce Professional Certification Level 7",
+      "provider": "Commerce Global Institute",
+      "level": "Professional",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303339,
+        "_nanoseconds": 525000000
+      }
+    },
+    {
+      "id": "HT8nCAYNDmu5EN7uENmF",
+      "field": "cloud-computing",
+      "branch": "general",
+      "certificationName": "Cloud Computing Professional Certification Level 5",
+      "provider": "Cloud Computing Global Institute",
+      "level": "Associate",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303364,
+        "_nanoseconds": 301000000
+      }
+    },
+    {
+      "id": "HmPNZoCm11qRBvo6yAKc",
+      "field": "education",
+      "branch": "general",
+      "certificationName": "Education Professional Certification Level 2",
+      "provider": "Education Global Institute",
+      "level": "Beginner",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303345,
+        "_nanoseconds": 218000000
+      }
+    },
+    {
+      "id": "HwmiMJb2fL30qtF8phgc",
+      "field": "agriculture",
+      "branch": "general",
+      "certificationName": "Agriculture Professional Certification Level 5",
+      "provider": "Agriculture Global Institute",
+      "level": "Associate",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303353,
+        "_nanoseconds": 877000000
+      }
+    },
+    {
+      "id": "IASjfD7mIkJ2DZ60CctZ",
+      "field": "cloud-computing",
+      "branch": "general",
+      "certificationName": "Cloud Computing Professional Certification Level 1",
+      "provider": "Cloud Computing Global Institute",
+      "level": "Professional",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303363,
+        "_nanoseconds": 934000000
+      }
+    },
+    {
+      "id": "IDpd5riRdbr0n9rEpqLf",
+      "field": "vocational",
+      "branch": "general",
+      "certificationName": "Vocational Professional Certification Level 10",
+      "provider": "Vocational Global Institute",
+      "level": "Professional",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303361,
+        "_nanoseconds": 573000000
+      }
+    },
+    {
+      "id": "IKcLeWzn5e7XZDfMspgy",
+      "field": "commerce",
+      "branch": "general",
+      "certificationName": "Commerce Professional Certification Level 8",
+      "provider": "Commerce Global Institute",
+      "level": "Beginner",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303339,
+        "_nanoseconds": 637000000
+      }
+    },
+    {
+      "id": "IML8lTzgKRbXjuHLqrp8",
+      "field": "vocational",
+      "branch": "general",
+      "certificationName": "Vocational Professional Certification Level 5",
+      "provider": "Vocational Global Institute",
+      "level": "Associate",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303361,
+        "_nanoseconds": 138000000
+      }
+    },
+    {
+      "id": "IQ4z67Awt1tOHGhYLyf4",
+      "field": "bioinformatics-compbio",
+      "branch": "general",
+      "certificationName": "Bioinformatics Compbio Professional Certification Level 10",
+      "provider": "Bioinformatics Compbio Global Institute",
+      "level": "Professional",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303380,
+        "_nanoseconds": 28000000
+      }
+    },
+    {
+      "id": "IoOh9EVga0oPOrMIXymj",
+      "field": "education",
+      "branch": "general",
+      "certificationName": "Education Professional Certification Level 3",
+      "provider": "Education Global Institute",
+      "level": "Associate",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303345,
+        "_nanoseconds": 360000000
+      }
+    },
+    {
+      "id": "JDTn5FEah6ftAWojxaKQ",
+      "field": "uiux-hci",
+      "branch": "general",
+      "certificationName": "Uiux Hci Professional Certification Level 10",
+      "provider": "Uiux Hci Global Institute",
+      "level": "Professional",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303385,
+        "_nanoseconds": 394000000
+      }
+    },
+    {
+      "id": "JDYup0e5zIZbx5k89nco",
+      "field": "ar-vr-mr",
+      "branch": "general",
+      "certificationName": "Ar Vr Mr Professional Certification Level 4",
+      "provider": "Ar Vr Mr Global Institute",
+      "level": "Professional",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303372,
+        "_nanoseconds": 327000000
+      }
+    },
+    {
+      "id": "JF1jCgww0s8pWjERFEY8",
+      "field": "vocational",
+      "branch": "general",
+      "certificationName": "Vocational Professional Certification Level 4",
+      "provider": "Vocational Global Institute",
+      "level": "Professional",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303361,
+        "_nanoseconds": 31000000
+      }
+    },
+    {
+      "id": "JNJyYDGvRBBV8nHhDzh1",
+      "field": "education",
+      "branch": "general",
+      "certificationName": "Education Professional Certification Level 10",
+      "provider": "Education Global Institute",
+      "level": "Professional",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303346,
+        "_nanoseconds": 8000000
+      }
+    },
+    {
+      "id": "JYkxlF1GFl7ibxGYtKdU",
+      "field": "science",
+      "branch": "general",
+      "certificationName": "Science Professional Certification Level 6",
+      "provider": "Science Global Institute",
+      "level": "Beginner",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303334,
+        "_nanoseconds": 164000000
+      }
+    },
+    {
+      "id": "JaQ1c1IopqSytmyD4HKR",
+      "field": "cloud-computing",
+      "branch": "general",
+      "certificationName": "Cloud Computing Professional Certification Level 8",
+      "provider": "Cloud Computing Global Institute",
+      "level": "Beginner",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303364,
+        "_nanoseconds": 619000000
+      }
+    },
+    {
+      "id": "JoBJoIDNwnpOVH5WVR6a",
+      "field": "product-management",
+      "branch": "general",
+      "certificationName": "Product Management Professional Certification Level 10",
+      "provider": "Product Management Global Institute",
+      "level": "Professional",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303382,
+        "_nanoseconds": 822000000
+      }
+    },
+    {
+      "id": "JrrLXLPk3mFjOQyXmIKo",
+      "field": "science",
+      "branch": "general",
+      "certificationName": "Science Professional Certification Level 7",
+      "provider": "Science Global Institute",
+      "level": "Professional",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303334,
+        "_nanoseconds": 255000000
+      }
+    },
+    {
+      "id": "KBXGQZQ6m5AX6zO9thGx",
+      "field": "ar-vr-mr",
+      "branch": "general",
+      "certificationName": "Ar Vr Mr Professional Certification Level 3",
+      "provider": "Ar Vr Mr Global Institute",
+      "level": "Associate",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303372,
+        "_nanoseconds": 244000000
+      }
+    },
+    {
+      "id": "KQyLgGzczUUGfCHCcTU8",
+      "field": "agriculture",
+      "branch": "general",
+      "certificationName": "Agriculture Professional Certification Level 8",
+      "provider": "Agriculture Global Institute",
+      "level": "Beginner",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303354,
+        "_nanoseconds": 153000000
+      }
+    },
+    {
+      "id": "KdKg4IWpRyKB54Yk1WV0",
+      "field": "quantum-computing",
+      "branch": "general",
+      "certificationName": "Quantum Computing Professional Certification Level 4",
+      "provider": "Quantum Computing Global Institute",
+      "level": "Professional",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303374,
+        "_nanoseconds": 690000000
+      }
+    },
+    {
+      "id": "KgDijNHKxAY1sxweYWEx",
+      "field": "science",
+      "branch": "general",
+      "certificationName": "Science Professional Certification Level 5",
+      "provider": "Science Global Institute",
+      "level": "Associate",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303334,
+        "_nanoseconds": 15000000
+      }
+    },
+    {
+      "id": "KhsHZqVQhBBPTscyTPzB",
+      "field": "ar-vr-mr",
+      "branch": "general",
+      "certificationName": "Ar Vr Mr Professional Certification Level 5",
+      "provider": "Ar Vr Mr Global Institute",
+      "level": "Associate",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303372,
+        "_nanoseconds": 422000000
+      }
+    },
+    {
+      "id": "LErczf1vPClcjbRyGMkw",
+      "field": "sports",
+      "branch": "general",
+      "certificationName": "Sports Professional Certification Level 4",
+      "provider": "Sports Global Institute",
+      "level": "Professional",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303358,
+        "_nanoseconds": 647000000
+      }
+    },
+    {
+      "id": "LKbKksu0heruO8w4PBhw",
+      "field": "cloud-computing",
+      "branch": "general",
+      "certificationName": "Cloud Computing Professional Certification Level 3",
+      "provider": "Cloud Computing Global Institute",
+      "level": "Associate",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303364,
+        "_nanoseconds": 120000000
+      }
+    },
+    {
+      "id": "LQjfCafatFTwe5yupgZr",
+      "field": "devops-sre",
+      "branch": "general",
+      "certificationName": "Devops Sre Professional Certification Level 7",
+      "provider": "Devops Sre Global Institute",
+      "level": "Professional",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303366,
+        "_nanoseconds": 904000000
+      }
+    },
+    {
+      "id": "LfMPXkemJNm2I3rAMQZD",
+      "field": "engineering",
+      "branch": "general",
+      "certificationName": "Engineering Professional Certification Level 10",
+      "provider": "Engineering Global Institute",
+      "level": "Professional",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303329,
+        "_nanoseconds": 415000000
+      }
+    },
+    {
+      "id": "LxncdnaZ0LpjViFkm6kp",
+      "field": "vocational",
+      "branch": "general",
+      "certificationName": "Vocational Professional Certification Level 9",
+      "provider": "Vocational Global Institute",
+      "level": "Associate",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303361,
+        "_nanoseconds": 487000000
+      }
+    },
+    {
+      "id": "MFJEjoP98UU6H2UvrCDg",
+      "field": "blockchain-web3",
+      "branch": "general",
+      "certificationName": "Blockchain Web3 Professional Certification Level 3",
+      "provider": "Blockchain Web3 Global Institute",
+      "level": "Associate",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303368,
+        "_nanoseconds": 916000000
+      }
+    },
+    {
+      "id": "MeoXBWvUJLB3XruFEMZr",
+      "field": "law",
+      "branch": "general",
+      "certificationName": "Law Professional Certification Level 8",
+      "provider": "Law Global Institute",
+      "level": "Beginner",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303343,
+        "_nanoseconds": 61000000
+      }
+    },
+    {
+      "id": "NosNSQGN9rNalws6ciCO",
+      "field": "arts",
+      "branch": "general",
+      "certificationName": "Arts Professional Certification Level 7",
+      "provider": "Arts Global Institute",
+      "level": "Professional",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303336,
+        "_nanoseconds": 722000000
+      }
+    },
+    {
+      "id": "PFt5FNQARVvCrYR5Z95Y",
+      "field": "design",
+      "branch": "general",
+      "certificationName": "Design Professional Certification Level 8",
+      "provider": "Design Global Institute",
+      "level": "Beginner",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303348,
+        "_nanoseconds": 269000000
+      }
+    },
+    {
+      "id": "Q4Lh3HWayYglfnX2U7Hu",
+      "field": "devops-sre",
+      "branch": "general",
+      "certificationName": "Devops Sre Professional Certification Level 9",
+      "provider": "Devops Sre Global Institute",
+      "level": "Associate",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303367,
+        "_nanoseconds": 81000000
+      }
+    },
+    {
+      "id": "Q73494FoyLbp9O0wrIJc",
+      "field": "design",
+      "branch": "general",
+      "certificationName": "Design Professional Certification Level 5",
+      "provider": "Design Global Institute",
+      "level": "Associate",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303348,
+        "_nanoseconds": 9000000
+      }
+    },
+    {
+      "id": "QAIno6PZ3XK1rbHmrbDG",
+      "field": "defense",
+      "branch": "general",
+      "certificationName": "Defense Professional Certification Level 6",
+      "provider": "Defense Global Institute",
+      "level": "Beginner",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303351,
+        "_nanoseconds": 451000000
+      }
+    },
+    {
+      "id": "QC81bZ7qU153mG4bOiz9",
+      "field": "engineering",
+      "branch": "general",
+      "certificationName": "Engineering Professional Certification Level 9",
+      "provider": "Engineering Global Institute",
+      "level": "Associate",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303329,
+        "_nanoseconds": 293000000
+      }
+    },
+    {
+      "id": "QEZwZf0ZPepYRZb2QZ3h",
+      "field": "product-management",
+      "branch": "general",
+      "certificationName": "Product Management Professional Certification Level 9",
+      "provider": "Product Management Global Institute",
+      "level": "Associate",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303382,
+        "_nanoseconds": 573000000
+      }
+    },
+    {
+      "id": "QzgFeZ5qqeAJ2FqTkEBb",
+      "field": "commerce",
+      "branch": "general",
+      "certificationName": "Commerce Professional Certification Level 9",
+      "provider": "Commerce Global Institute",
+      "level": "Associate",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303339,
+        "_nanoseconds": 763000000
+      }
+    },
+    {
+      "id": "RLgidMwOFfdjKACjjEKs",
+      "field": "commerce",
+      "branch": "general",
+      "certificationName": "Commerce Professional Certification Level 1",
+      "provider": "Commerce Global Institute",
+      "level": "Professional",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303338,
+        "_nanoseconds": 657000000
+      }
+    },
+    {
+      "id": "RcfNDKIoz3XOkJc0Mvcy",
+      "field": "devops-sre",
+      "branch": "general",
+      "certificationName": "Devops Sre Professional Certification Level 10",
+      "provider": "Devops Sre Global Institute",
+      "level": "Professional",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303367,
+        "_nanoseconds": 169000000
+      }
+    },
+    {
+      "id": "Rhy8PpE8own5vfVyvVi6",
+      "field": "medical",
+      "branch": "general",
+      "certificationName": "Medical Professional Certification Level 9",
+      "provider": "Medical Global Institute",
+      "level": "Associate",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303331,
+        "_nanoseconds": 947000000
+      }
+    },
+    {
+      "id": "RvR6EZMKwCtN6iURK9JA",
+      "field": "engineering",
+      "branch": "general",
+      "certificationName": "Engineering Professional Certification Level 2",
+      "provider": "Engineering Global Institute",
+      "level": "Beginner",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303327,
+        "_nanoseconds": 634000000
+      }
+    },
+    {
+      "id": "SzYmOF26EInRawW1x0xI",
+      "field": "blockchain-web3",
+      "branch": "general",
+      "certificationName": "Blockchain Web3 Professional Certification Level 8",
+      "provider": "Blockchain Web3 Global Institute",
+      "level": "Beginner",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303369,
+        "_nanoseconds": 450000000
+      }
+    },
+    {
+      "id": "TFFXJW6ljGyfkbAQzSlw",
+      "field": "design",
+      "branch": "general",
+      "certificationName": "Design Professional Certification Level 7",
+      "provider": "Design Global Institute",
+      "level": "Professional",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303348,
+        "_nanoseconds": 183000000
+      }
+    },
+    {
+      "id": "TJSxjMEQbpE5BaO97DbY",
+      "field": "sports",
+      "branch": "general",
+      "certificationName": "Sports Professional Certification Level 2",
+      "provider": "Sports Global Institute",
+      "level": "Beginner",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303358,
+        "_nanoseconds": 447000000
+      }
+    },
+    {
+      "id": "TShxE5OwSbvSTun244iY",
+      "field": "design",
+      "branch": "general",
+      "certificationName": "Design Professional Certification Level 10",
+      "provider": "Design Global Institute",
+      "level": "Professional",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303348,
+        "_nanoseconds": 434000000
+      }
+    },
+    {
+      "id": "TTTXKZWPBRsIjKxnn4k3",
+      "field": "commerce",
+      "branch": "general",
+      "certificationName": "Commerce Professional Certification Level 10",
+      "provider": "Commerce Global Institute",
+      "level": "Professional",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303339,
+        "_nanoseconds": 857000000
+      }
+    },
+    {
+      "id": "Tary83QQY5xX9aUZDWH5",
+      "field": "uiux-hci",
+      "branch": "general",
+      "certificationName": "Uiux Hci Professional Certification Level 8",
+      "provider": "Uiux Hci Global Institute",
+      "level": "Beginner",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303385,
+        "_nanoseconds": 224000000
+      }
+    },
+    {
+      "id": "U2fcPk7V9h0LRUKrTeGo",
+      "field": "blockchain-web3",
+      "branch": "general",
+      "certificationName": "Blockchain Web3 Professional Certification Level 1",
+      "provider": "Blockchain Web3 Global Institute",
+      "level": "Professional",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303368,
+        "_nanoseconds": 716000000
+      }
+    },
+    {
+      "id": "U7hMCHF8NnFRyZGJLs67",
+      "field": "product-management",
+      "branch": "general",
+      "certificationName": "Product Management Professional Certification Level 6",
+      "provider": "Product Management Global Institute",
+      "level": "Beginner",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303382,
+        "_nanoseconds": 123000000
+      }
+    },
+    {
+      "id": "UCyF1Hfc7cBQE8vygvr0",
+      "field": "cloud-computing",
+      "branch": "general",
+      "certificationName": "Cloud Computing Professional Certification Level 9",
+      "provider": "Cloud Computing Global Institute",
+      "level": "Associate",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303364,
+        "_nanoseconds": 721000000
+      }
+    },
+    {
+      "id": "UPZekIZBSPtxfAQpWGRs",
+      "field": "science",
+      "branch": "general",
+      "certificationName": "Science Professional Certification Level 2",
+      "provider": "Science Global Institute",
+      "level": "Beginner",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303333,
+        "_nanoseconds": 686000000
+      }
+    },
+    {
+      "id": "UbvMw4dbsb03Q3yPKMGO",
+      "field": "agriculture",
+      "branch": "general",
+      "certificationName": "Agriculture Professional Certification Level 9",
+      "provider": "Agriculture Global Institute",
+      "level": "Associate",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303354,
+        "_nanoseconds": 232000000
+      }
+    },
+    {
+      "id": "VAsMC7oCVMRUONvtQsJZ",
+      "field": "quantum-computing",
+      "branch": "general",
+      "certificationName": "Quantum Computing Professional Certification Level 2",
+      "provider": "Quantum Computing Global Institute",
+      "level": "Beginner",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303374,
+        "_nanoseconds": 526000000
+      }
+    },
+    {
+      "id": "VHvGHjhtvTHBK08KkE0y",
+      "field": "ar-vr-mr",
+      "branch": "general",
+      "certificationName": "Ar Vr Mr Professional Certification Level 6",
+      "provider": "Ar Vr Mr Global Institute",
+      "level": "Beginner",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303372,
+        "_nanoseconds": 507000000
+      }
+    },
+    {
+      "id": "Wn8j0M8MlVZIGaEu9sE6",
+      "field": "devops-sre",
+      "branch": "general",
+      "certificationName": "Devops Sre Professional Certification Level 1",
+      "provider": "Devops Sre Global Institute",
+      "level": "Professional",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303366,
+        "_nanoseconds": 364000000
+      }
+    },
+    {
+      "id": "XthgpNBpZ0DizJ1BeEb3",
+      "field": "medical",
+      "branch": "general",
+      "certificationName": "Medical Professional Certification Level 3",
+      "provider": "Medical Global Institute",
+      "level": "Associate",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303331,
+        "_nanoseconds": 361000000
+      }
+    },
+    {
+      "id": "XvWfM42UuiNMu1Kg70qx",
+      "field": "vocational",
+      "branch": "general",
+      "certificationName": "Vocational Professional Certification Level 1",
+      "provider": "Vocational Global Institute",
+      "level": "Professional",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303360,
+        "_nanoseconds": 766000000
+      }
+    },
+    {
+      "id": "Xy00pZqZVo2vYWIHA7WN",
+      "field": "uiux-hci",
+      "branch": "general",
+      "certificationName": "Uiux Hci Professional Certification Level 5",
+      "provider": "Uiux Hci Global Institute",
+      "level": "Associate",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303384,
+        "_nanoseconds": 953000000
+      }
+    },
+    {
+      "id": "Y9tC74WoCnt7jV2Tpxu8",
+      "field": "commerce",
+      "branch": "general",
+      "certificationName": "Commerce Professional Certification Level 2",
+      "provider": "Commerce Global Institute",
+      "level": "Beginner",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303338,
+        "_nanoseconds": 762000000
+      }
+    },
+    {
+      "id": "YEvNTFNQipw0oEUSllne",
+      "field": "engineering",
+      "branch": "general",
+      "certificationName": "Engineering Professional Certification Level 4",
+      "provider": "Engineering Global Institute",
+      "level": "Professional",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303327,
+        "_nanoseconds": 897000000
+      }
+    },
+    {
+      "id": "YL4Xo8ekFdPanzavroQx",
+      "field": "education",
+      "branch": "general",
+      "certificationName": "Education Professional Certification Level 9",
+      "provider": "Education Global Institute",
+      "level": "Associate",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303345,
+        "_nanoseconds": 914000000
+      }
+    },
+    {
+      "id": "YftE1SD19JQnHhppTfCj",
+      "field": "sports",
+      "branch": "general",
+      "certificationName": "Sports Professional Certification Level 1",
+      "provider": "Sports Global Institute",
+      "level": "Professional",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303358,
+        "_nanoseconds": 362000000
+      }
+    },
+    {
+      "id": "YvrYjlEjK5O4rBuECuvo",
+      "field": "defense",
+      "branch": "general",
+      "certificationName": "Defense Professional Certification Level 4",
+      "provider": "Defense Global Institute",
+      "level": "Professional",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303351,
+        "_nanoseconds": 276000000
+      }
+    },
+    {
+      "id": "Z4GWKHi5NSH7tA4Een7E",
+      "field": "science",
+      "branch": "general",
+      "certificationName": "Science Professional Certification Level 1",
+      "provider": "Science Global Institute",
+      "level": "Professional",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303333,
+        "_nanoseconds": 589000000
+      }
+    },
+    {
+      "id": "ZQnwVwU1TY88SWTzKoUq",
+      "field": "law",
+      "branch": "general",
+      "certificationName": "Law Professional Certification Level 5",
+      "provider": "Law Global Institute",
+      "level": "Associate",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303342,
+        "_nanoseconds": 154000000
+      }
+    },
+    {
+      "id": "ZpTkGWJCHY7sidt33Ko2",
+      "field": "hospitality",
+      "branch": "general",
+      "certificationName": "Hospitality Professional Certification Level 2",
+      "provider": "Hospitality Global Institute",
+      "level": "Beginner",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303355,
+        "_nanoseconds": 971000000
+      }
+    },
+    {
+      "id": "ZzJTSORbPD8q08pjLlTJ",
+      "field": "bioinformatics-compbio",
+      "branch": "general",
+      "certificationName": "Bioinformatics Compbio Professional Certification Level 4",
+      "provider": "Bioinformatics Compbio Global Institute",
+      "level": "Professional",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303379,
+        "_nanoseconds": 447000000
+      }
+    },
+    {
+      "id": "a2tEpc3qYg1GZr581Ewk",
+      "field": "bioinformatics-compbio",
+      "branch": "general",
+      "certificationName": "Bioinformatics Compbio Professional Certification Level 3",
+      "provider": "Bioinformatics Compbio Global Institute",
+      "level": "Associate",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303379,
+        "_nanoseconds": 357000000
+      }
+    },
+    {
+      "id": "aX4H3kbf04o2s0IgpL5D",
+      "field": "product-management",
+      "branch": "general",
+      "certificationName": "Product Management Professional Certification Level 7",
+      "provider": "Product Management Global Institute",
+      "level": "Professional",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303382,
+        "_nanoseconds": 211000000
+      }
+    },
+    {
+      "id": "aar5VAERwoFuYU79D42V",
+      "field": "agriculture",
+      "branch": "general",
+      "certificationName": "Agriculture Professional Certification Level 2",
+      "provider": "Agriculture Global Institute",
+      "level": "Beginner",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303353,
+        "_nanoseconds": 514000000
+      }
+    },
+    {
+      "id": "alMTMSBhnFYAMIwZN173",
+      "field": "engineering",
+      "branch": "general",
+      "certificationName": "Engineering Professional Certification Level 6",
+      "provider": "Engineering Global Institute",
+      "level": "Beginner",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303328,
+        "_nanoseconds": 180000000
+      }
+    },
+    {
+      "id": "bDrIl4NjZPVE9Mp6I3eL",
+      "field": "science",
+      "branch": "general",
+      "certificationName": "Science Professional Certification Level 8",
+      "provider": "Science Global Institute",
+      "level": "Beginner",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303334,
+        "_nanoseconds": 353000000
+      }
+    },
+    {
+      "id": "bSPeupCFATgMXtDIvbul",
+      "field": "devops-sre",
+      "branch": "general",
+      "certificationName": "Devops Sre Professional Certification Level 2",
+      "provider": "Devops Sre Global Institute",
+      "level": "Beginner",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303366,
+        "_nanoseconds": 449000000
+      }
+    },
+    {
+      "id": "beTI9NJUVUuRMIeBMH8j",
+      "field": "robotics-automation",
+      "branch": "general",
+      "certificationName": "Robotics Automation Professional Certification Level 6",
+      "provider": "Robotics Automation Global Institute",
+      "level": "Beginner",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303377,
+        "_nanoseconds": 220000000
+      }
+    },
+    {
+      "id": "bzmFrSndPUu0vPgzkfJ3",
+      "field": "product-management",
+      "branch": "general",
+      "certificationName": "Product Management Professional Certification Level 5",
+      "provider": "Product Management Global Institute",
+      "level": "Associate",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303382,
+        "_nanoseconds": 38000000
+      }
+    },
+    {
+      "id": "c3lSdoI6CwRwGlFFLkZ1",
+      "field": "design",
+      "branch": "general",
+      "certificationName": "Design Professional Certification Level 2",
+      "provider": "Design Global Institute",
+      "level": "Beginner",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303347,
+        "_nanoseconds": 712000000
+      }
+    },
+    {
+      "id": "c6BBeZc1X0yrwEIXxbuk",
+      "field": "hospitality",
+      "branch": "general",
+      "certificationName": "Hospitality Professional Certification Level 8",
+      "provider": "Hospitality Global Institute",
+      "level": "Beginner",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303356,
+        "_nanoseconds": 555000000
+      }
+    },
+    {
+      "id": "cfNMYZdgW2LYP77Nc53N",
+      "field": "defense",
+      "branch": "general",
+      "certificationName": "Defense Professional Certification Level 2",
+      "provider": "Defense Global Institute",
+      "level": "Beginner",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303351,
+        "_nanoseconds": 86000000
+      }
+    },
+    {
+      "id": "ct5E3ehDxc2e446Rp5wA",
+      "field": "hospitality",
+      "branch": "general",
+      "certificationName": "Hospitality Professional Certification Level 6",
+      "provider": "Hospitality Global Institute",
+      "level": "Beginner",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303356,
+        "_nanoseconds": 330000000
+      }
+    },
+    {
+      "id": "djwBnhHYEgXzrnBs5qxd",
+      "field": "commerce",
+      "branch": "general",
+      "certificationName": "Commerce Professional Certification Level 3",
+      "provider": "Commerce Global Institute",
+      "level": "Associate",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303338,
+        "_nanoseconds": 861000000
+      }
+    },
+    {
+      "id": "doT2XCjMIevwOf60gEhY",
+      "field": "hospitality",
+      "branch": "general",
+      "certificationName": "Hospitality Professional Certification Level 1",
+      "provider": "Hospitality Global Institute",
+      "level": "Professional",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303355,
+        "_nanoseconds": 893000000
+      }
+    },
+    {
+      "id": "ekxCLM3KpxQxkzdTInq2",
+      "field": "robotics-automation",
+      "branch": "general",
+      "certificationName": "Robotics Automation Professional Certification Level 7",
+      "provider": "Robotics Automation Global Institute",
+      "level": "Professional",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303377,
+        "_nanoseconds": 320000000
+      }
+    },
+    {
+      "id": "f8EWleC8EfS3HJfj2onk",
+      "field": "devops-sre",
+      "branch": "general",
+      "certificationName": "Devops Sre Professional Certification Level 5",
+      "provider": "Devops Sre Global Institute",
+      "level": "Associate",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303366,
+        "_nanoseconds": 716000000
+      }
+    },
+    {
+      "id": "fBwIvYoVIeWeKwNRaQrT",
+      "field": "devops-sre",
+      "branch": "general",
+      "certificationName": "Devops Sre Professional Certification Level 8",
+      "provider": "Devops Sre Global Institute",
+      "level": "Beginner",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303366,
+        "_nanoseconds": 991000000
+      }
+    },
+    {
+      "id": "fjFaHU5jWDqtEfHLU41G",
+      "field": "design",
+      "branch": "general",
+      "certificationName": "Design Professional Certification Level 1",
+      "provider": "Design Global Institute",
+      "level": "Professional",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303347,
+        "_nanoseconds": 627000000
+      }
+    },
+    {
+      "id": "fnshqrN3WedFzB91NZbA",
+      "field": "bioinformatics-compbio",
+      "branch": "general",
+      "certificationName": "Bioinformatics Compbio Professional Certification Level 9",
+      "provider": "Bioinformatics Compbio Global Institute",
+      "level": "Associate",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303379,
+        "_nanoseconds": 911000000
+      }
+    },
+    {
+      "id": "frRcuoV1Nxno05jXGvuf",
+      "field": "commerce",
+      "branch": "general",
+      "certificationName": "Commerce Professional Certification Level 4",
+      "provider": "Commerce Global Institute",
+      "level": "Professional",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303338,
+        "_nanoseconds": 961000000
+      }
+    },
+    {
+      "id": "gSuq8ori2yCi3b3shNvc",
+      "field": "vocational",
+      "branch": "general",
+      "certificationName": "Vocational Professional Certification Level 3",
+      "provider": "Vocational Global Institute",
+      "level": "Associate",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303360,
+        "_nanoseconds": 947000000
+      }
+    },
+    {
+      "id": "gcTa3q0BHwKdVqLebxnK",
+      "field": "bioinformatics-compbio",
+      "branch": "general",
+      "certificationName": "Bioinformatics Compbio Professional Certification Level 7",
+      "provider": "Bioinformatics Compbio Global Institute",
+      "level": "Professional",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303379,
+        "_nanoseconds": 733000000
+      }
+    },
+    {
+      "id": "gtnTr0ruEY0BnlnLGogI",
+      "field": "science",
+      "branch": "general",
+      "certificationName": "Science Professional Certification Level 10",
+      "provider": "Science Global Institute",
+      "level": "Professional",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303334,
+        "_nanoseconds": 536000000
+      }
+    },
+    {
+      "id": "hj5sOelqmFaOjdbwAc9i",
+      "field": "agriculture",
+      "branch": "general",
+      "certificationName": "Agriculture Professional Certification Level 4",
+      "provider": "Agriculture Global Institute",
+      "level": "Professional",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303353,
+        "_nanoseconds": 769000000
+      }
+    },
+    {
+      "id": "iGhrovFgAzzAdcNouCWb",
+      "field": "cloud-computing",
+      "branch": "general",
+      "certificationName": "Cloud Computing Professional Certification Level 6",
+      "provider": "Cloud Computing Global Institute",
+      "level": "Beginner",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303364,
+        "_nanoseconds": 389000000
+      }
+    },
+    {
+      "id": "iVC0LNeZkX1WnLgxReZk",
+      "field": "design",
+      "branch": "general",
+      "certificationName": "Design Professional Certification Level 9",
+      "provider": "Design Global Institute",
+      "level": "Associate",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303348,
+        "_nanoseconds": 350000000
+      }
+    },
+    {
+      "id": "iY1JuWrcpxPKxpp7WDn3",
+      "field": "robotics-automation",
+      "branch": "general",
+      "certificationName": "Robotics Automation Professional Certification Level 2",
+      "provider": "Robotics Automation Global Institute",
+      "level": "Beginner",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303376,
+        "_nanoseconds": 818000000
+      }
+    },
+    {
+      "id": "j0BKzEVk3n5dzHlxrzu2",
+      "field": "hospitality",
+      "branch": "general",
+      "certificationName": "Hospitality Professional Certification Level 10",
+      "provider": "Hospitality Global Institute",
+      "level": "Professional",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303356,
+        "_nanoseconds": 748000000
+      }
+    },
+    {
+      "id": "jZdXfivt4L21WqzJCdeU",
+      "field": "defense",
+      "branch": "general",
+      "certificationName": "Defense Professional Certification Level 3",
+      "provider": "Defense Global Institute",
+      "level": "Associate",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303351,
+        "_nanoseconds": 186000000
+      }
+    },
+    {
+      "id": "kDOGcpToASHPciyLZ92z",
+      "field": "arts",
+      "branch": "general",
+      "certificationName": "Arts Professional Certification Level 6",
+      "provider": "Arts Global Institute",
+      "level": "Beginner",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303336,
+        "_nanoseconds": 616000000
+      }
+    },
+    {
+      "id": "kZY2vK8o6cw2V1HrUWkl",
+      "field": "education",
+      "branch": "general",
+      "certificationName": "Education Professional Certification Level 7",
+      "provider": "Education Global Institute",
+      "level": "Professional",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303345,
+        "_nanoseconds": 739000000
+      }
+    },
+    {
+      "id": "kj2PTbP3qEmxz3oVAeRg",
+      "field": "vocational",
+      "branch": "general",
+      "certificationName": "Vocational Professional Certification Level 8",
+      "provider": "Vocational Global Institute",
+      "level": "Beginner",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303361,
+        "_nanoseconds": 401000000
+      }
+    },
+    {
+      "id": "kr7RXz8IGrkzMBajGaf3",
+      "field": "product-management",
+      "branch": "general",
+      "certificationName": "Product Management Professional Certification Level 8",
+      "provider": "Product Management Global Institute",
+      "level": "Beginner",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303382,
+        "_nanoseconds": 292000000
+      }
+    },
+    {
+      "id": "lICg9EZH10liVyBSqQyE",
+      "field": "blockchain-web3",
+      "branch": "general",
+      "certificationName": "Blockchain Web3 Professional Certification Level 9",
+      "provider": "Blockchain Web3 Global Institute",
+      "level": "Associate",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303369,
+        "_nanoseconds": 533000000
+      }
+    },
+    {
+      "id": "lLs2ZpN84ogkWcfU09MN",
+      "field": "law",
+      "branch": "general",
+      "certificationName": "Law Professional Certification Level 7",
+      "provider": "Law Global Institute",
+      "level": "Professional",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303342,
+        "_nanoseconds": 767000000
+      }
+    },
+    {
+      "id": "lZtAtRGU4EF4sor2covx",
+      "field": "defense",
+      "branch": "general",
+      "certificationName": "Defense Professional Certification Level 10",
+      "provider": "Defense Global Institute",
+      "level": "Professional",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303351,
+        "_nanoseconds": 827000000
+      }
+    },
+    {
+      "id": "mDiErUYDYy6QKIY9Ipdw",
+      "field": "cloud-computing",
+      "branch": "general",
+      "certificationName": "Cloud Computing Professional Certification Level 7",
+      "provider": "Cloud Computing Global Institute",
+      "level": "Professional",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303364,
+        "_nanoseconds": 486000000
+      }
+    },
+    {
+      "id": "mOISHdGSnywmD3LfZQqD",
+      "field": "vocational",
+      "branch": "general",
+      "certificationName": "Vocational Professional Certification Level 2",
+      "provider": "Vocational Global Institute",
+      "level": "Beginner",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303360,
+        "_nanoseconds": 858000000
+      }
+    },
+    {
+      "id": "mns460pWbHwmx6eqBWrk",
+      "field": "medical",
+      "branch": "general",
+      "certificationName": "Medical Professional Certification Level 4",
+      "provider": "Medical Global Institute",
+      "level": "Professional",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303331,
+        "_nanoseconds": 463000000
+      }
+    },
+    {
+      "id": "mtvUT0bDxKd3TLhYUbqK",
+      "field": "medical",
+      "branch": "general",
+      "certificationName": "Medical Professional Certification Level 5",
+      "provider": "Medical Global Institute",
+      "level": "Associate",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303331,
+        "_nanoseconds": 563000000
+      }
+    },
+    {
+      "id": "mxfSqAsEd59ZDrlA1sPf",
+      "field": "science",
+      "branch": "general",
+      "certificationName": "Science Professional Certification Level 4",
+      "provider": "Science Global Institute",
+      "level": "Professional",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303333,
+        "_nanoseconds": 923000000
+      }
+    },
+    {
+      "id": "nXIdMdJJX04x2AEESXi3",
+      "field": "arts",
+      "branch": "general",
+      "certificationName": "Arts Professional Certification Level 2",
+      "provider": "Arts Global Institute",
+      "level": "Beginner",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303336,
+        "_nanoseconds": 164000000
+      }
+    },
+    {
+      "id": "o7i8aX49RUWpivWVlQos",
+      "field": "bioinformatics-compbio",
+      "branch": "general",
+      "certificationName": "Bioinformatics Compbio Professional Certification Level 8",
+      "provider": "Bioinformatics Compbio Global Institute",
+      "level": "Beginner",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303379,
+        "_nanoseconds": 828000000
+      }
+    },
+    {
+      "id": "oIw32Tfl5tOqMxNZ5pBT",
+      "field": "ar-vr-mr",
+      "branch": "general",
+      "certificationName": "Ar Vr Mr Professional Certification Level 7",
+      "provider": "Ar Vr Mr Global Institute",
+      "level": "Professional",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303372,
+        "_nanoseconds": 612000000
+      }
+    },
+    {
+      "id": "oQfgLDTfTTMmifb74WKc",
+      "field": "robotics-automation",
+      "branch": "general",
+      "certificationName": "Robotics Automation Professional Certification Level 3",
+      "provider": "Robotics Automation Global Institute",
+      "level": "Associate",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303376,
+        "_nanoseconds": 907000000
+      }
+    },
+    {
+      "id": "oj8TJ1Lqekh0mYeRlmPd",
+      "field": "science",
+      "branch": "general",
+      "certificationName": "Science Professional Certification Level 9",
+      "provider": "Science Global Institute",
+      "level": "Associate",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303334,
+        "_nanoseconds": 439000000
+      }
+    },
+    {
+      "id": "oy7nqdG2gfjI84oymXGN",
+      "field": "robotics-automation",
+      "branch": "general",
+      "certificationName": "Robotics Automation Professional Certification Level 10",
+      "provider": "Robotics Automation Global Institute",
+      "level": "Professional",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303377,
+        "_nanoseconds": 586000000
+      }
+    },
+    {
+      "id": "p4xpYW7jQNrABJOiy2X4",
+      "field": "agriculture",
+      "branch": "general",
+      "certificationName": "Agriculture Professional Certification Level 1",
+      "provider": "Agriculture Global Institute",
+      "level": "Professional",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303353,
+        "_nanoseconds": 418000000
+      }
+    },
+    {
+      "id": "pDMMkD64xE9TA5pDmft9",
+      "field": "ar-vr-mr",
+      "branch": "general",
+      "certificationName": "Ar Vr Mr Professional Certification Level 10",
+      "provider": "Ar Vr Mr Global Institute",
+      "level": "Professional",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303372,
+        "_nanoseconds": 882000000
+      }
+    },
+    {
+      "id": "ploGLdhqcsvryDuo4vHm",
+      "field": "ar-vr-mr",
+      "branch": "general",
+      "certificationName": "Ar Vr Mr Professional Certification Level 8",
+      "provider": "Ar Vr Mr Global Institute",
+      "level": "Beginner",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303372,
+        "_nanoseconds": 697000000
+      }
+    },
+    {
+      "id": "pmdTkRe0APPh8nqFnUB6",
+      "field": "hospitality",
+      "branch": "general",
+      "certificationName": "Hospitality Professional Certification Level 5",
+      "provider": "Hospitality Global Institute",
+      "level": "Associate",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303356,
+        "_nanoseconds": 244000000
+      }
+    },
+    {
+      "id": "pt44VygLh5C2ifjEpIHm",
+      "field": "engineering",
+      "branch": "general",
+      "certificationName": "Engineering Professional Certification Level 7",
+      "provider": "Engineering Global Institute",
+      "level": "Professional",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303329,
+        "_nanoseconds": 46000000
+      }
+    },
+    {
+      "id": "q4QNN3dNaJVd8IbpbpkA",
+      "field": "devops-sre",
+      "branch": "general",
+      "certificationName": "Devops Sre Professional Certification Level 4",
+      "provider": "Devops Sre Global Institute",
+      "level": "Professional",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303366,
+        "_nanoseconds": 635000000
+      }
+    },
+    {
+      "id": "q8JEQ31h21YVLsbSLtF5",
+      "field": "quantum-computing",
+      "branch": "general",
+      "certificationName": "Quantum Computing Professional Certification Level 1",
+      "provider": "Quantum Computing Global Institute",
+      "level": "Professional",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303374,
+        "_nanoseconds": 420000000
+      }
+    },
+    {
+      "id": "q8NQLEt4SJj96EuEiYXd",
+      "field": "medical",
+      "branch": "general",
+      "certificationName": "Medical Professional Certification Level 2",
+      "provider": "Medical Global Institute",
+      "level": "Beginner",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303331,
+        "_nanoseconds": 228000000
+      }
+    },
+    {
+      "id": "qEzGgiKWBvj1LywGzzDP",
+      "field": "bioinformatics-compbio",
+      "branch": "general",
+      "certificationName": "Bioinformatics Compbio Professional Certification Level 5",
+      "provider": "Bioinformatics Compbio Global Institute",
+      "level": "Associate",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303379,
+        "_nanoseconds": 547000000
+      }
+    },
+    {
+      "id": "qUUGsHspNziS6Wroh2N8",
+      "field": "agriculture",
+      "branch": "general",
+      "certificationName": "Agriculture Professional Certification Level 10",
+      "provider": "Agriculture Global Institute",
+      "level": "Professional",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303354,
+        "_nanoseconds": 326000000
+      }
+    },
+    {
+      "id": "r474F1LqEn6USlriNvJd",
+      "field": "quantum-computing",
+      "branch": "general",
+      "certificationName": "Quantum Computing Professional Certification Level 3",
+      "provider": "Quantum Computing Global Institute",
+      "level": "Associate",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303374,
+        "_nanoseconds": 605000000
+      }
+    },
+    {
+      "id": "rXIqRpubepbmxSTcgyXd",
+      "field": "bioinformatics-compbio",
+      "branch": "general",
+      "certificationName": "Bioinformatics Compbio Professional Certification Level 2",
+      "provider": "Bioinformatics Compbio Global Institute",
+      "level": "Beginner",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303379,
+        "_nanoseconds": 261000000
+      }
+    },
+    {
+      "id": "ruAS0Vc44OGOcWsGLRRu",
+      "field": "sports",
+      "branch": "general",
+      "certificationName": "Sports Professional Certification Level 7",
+      "provider": "Sports Global Institute",
+      "level": "Professional",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303358,
+        "_nanoseconds": 908000000
+      }
+    },
+    {
+      "id": "s744mvT5QdfrsXjzN9pa",
+      "field": "uiux-hci",
+      "branch": "general",
+      "certificationName": "Uiux Hci Professional Certification Level 6",
+      "provider": "Uiux Hci Global Institute",
+      "level": "Beginner",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303385,
+        "_nanoseconds": 40000000
+      }
+    },
+    {
+      "id": "sGInU9ie4ysCyEiadLpK",
+      "field": "quantum-computing",
+      "branch": "general",
+      "certificationName": "Quantum Computing Professional Certification Level 7",
+      "provider": "Quantum Computing Global Institute",
+      "level": "Professional",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303374,
+        "_nanoseconds": 942000000
+      }
+    },
+    {
+      "id": "sXQiRH39ZaemCOk4GjCz",
+      "field": "blockchain-web3",
+      "branch": "general",
+      "certificationName": "Blockchain Web3 Professional Certification Level 7",
+      "provider": "Blockchain Web3 Global Institute",
+      "level": "Professional",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303369,
+        "_nanoseconds": 356000000
+      }
+    },
+    {
+      "id": "sc2sw5ZDQk7J5iCkH40o",
+      "field": "hospitality",
+      "branch": "general",
+      "certificationName": "Hospitality Professional Certification Level 3",
+      "provider": "Hospitality Global Institute",
+      "level": "Associate",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303356,
+        "_nanoseconds": 55000000
+      }
+    },
+    {
+      "id": "sgVLJVAyI7fe07DwPRyL",
+      "field": "sports",
+      "branch": "general",
+      "certificationName": "Sports Professional Certification Level 9",
+      "provider": "Sports Global Institute",
+      "level": "Associate",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303359,
+        "_nanoseconds": 118000000
+      }
+    },
+    {
+      "id": "situc6lGiAzcdw7nIls3",
+      "field": "medical",
+      "branch": "general",
+      "certificationName": "Medical Professional Certification Level 7",
+      "provider": "Medical Global Institute",
+      "level": "Professional",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303331,
+        "_nanoseconds": 762000000
+      }
+    },
+    {
+      "id": "soMYaGldhwnuf0MTgUvg",
+      "field": "cloud-computing",
+      "branch": "general",
+      "certificationName": "Cloud Computing Professional Certification Level 10",
+      "provider": "Cloud Computing Global Institute",
+      "level": "Professional",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303364,
+        "_nanoseconds": 808000000
+      }
+    },
+    {
+      "id": "tFK60CtpMBLFT4n8OaCW",
+      "field": "blockchain-web3",
+      "branch": "general",
+      "certificationName": "Blockchain Web3 Professional Certification Level 5",
+      "provider": "Blockchain Web3 Global Institute",
+      "level": "Associate",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303369,
+        "_nanoseconds": 166000000
+      }
+    },
+    {
+      "id": "tPUlLpwjpjucFBj2wmhp",
+      "field": "robotics-automation",
+      "branch": "general",
+      "certificationName": "Robotics Automation Professional Certification Level 4",
+      "provider": "Robotics Automation Global Institute",
+      "level": "Professional",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303376,
+        "_nanoseconds": 999000000
+      }
+    },
+    {
+      "id": "tRYPDJOnWKygiKjokK8x",
+      "field": "uiux-hci",
+      "branch": "general",
+      "certificationName": "Uiux Hci Professional Certification Level 1",
+      "provider": "Uiux Hci Global Institute",
+      "level": "Professional",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303384,
+        "_nanoseconds": 603000000
+      }
+    },
+    {
+      "id": "tgJrYHsLlQZOeSEF9aa7",
+      "field": "defense",
+      "branch": "general",
+      "certificationName": "Defense Professional Certification Level 9",
+      "provider": "Defense Global Institute",
+      "level": "Associate",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303351,
+        "_nanoseconds": 728000000
+      }
+    },
+    {
+      "id": "uSqB2J0in5d9OJTSe52M",
+      "field": "design",
+      "branch": "general",
+      "certificationName": "Design Professional Certification Level 6",
+      "provider": "Design Global Institute",
+      "level": "Beginner",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303348,
+        "_nanoseconds": 92000000
+      }
+    },
+    {
+      "id": "uX4n5Gi7Gh0YdELz7FOT",
+      "field": "hospitality",
+      "branch": "general",
+      "certificationName": "Hospitality Professional Certification Level 9",
+      "provider": "Hospitality Global Institute",
+      "level": "Associate",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303356,
+        "_nanoseconds": 660000000
+      }
+    },
+    {
+      "id": "v8CfYOQcNk4feFjL0h6p",
+      "field": "quantum-computing",
+      "branch": "general",
+      "certificationName": "Quantum Computing Professional Certification Level 8",
+      "provider": "Quantum Computing Global Institute",
+      "level": "Beginner",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303375,
+        "_nanoseconds": 29000000
+      }
+    },
+    {
+      "id": "v9alZIX6AbDoKuYDU7O9",
+      "field": "engineering",
+      "branch": "general",
+      "certificationName": "Engineering Professional Certification Level 3",
+      "provider": "Engineering Global Institute",
+      "level": "Associate",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303327,
+        "_nanoseconds": 769000000
+      }
+    },
+    {
+      "id": "vI9cmaDJdvFxrC0eaNPN",
+      "field": "medical",
+      "branch": "general",
+      "certificationName": "Medical Professional Certification Level 10",
+      "provider": "Medical Global Institute",
+      "level": "Professional",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303332,
+        "_nanoseconds": 43000000
+      }
+    },
+    {
+      "id": "vUmhwtb2uRHQ7jbGQ5p8",
+      "field": "uiux-hci",
+      "branch": "general",
+      "certificationName": "Uiux Hci Professional Certification Level 9",
+      "provider": "Uiux Hci Global Institute",
+      "level": "Associate",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303385,
+        "_nanoseconds": 308000000
+      }
+    },
+    {
+      "id": "vg94VBjiQS8jNuAFiUlY",
+      "field": "engineering",
+      "branch": "general",
+      "certificationName": "Engineering Professional Certification Level 5",
+      "provider": "Engineering Global Institute",
+      "level": "Associate",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303328,
+        "_nanoseconds": 40000000
+      }
+    },
+    {
+      "id": "vssu6lqm4XwmuINXxlSf",
+      "field": "hospitality",
+      "branch": "general",
+      "certificationName": "Hospitality Professional Certification Level 7",
+      "provider": "Hospitality Global Institute",
+      "level": "Professional",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303356,
+        "_nanoseconds": 417000000
+      }
+    },
+    {
+      "id": "vzn4qFdy1tmJesKaNAw8",
+      "field": "sports",
+      "branch": "general",
+      "certificationName": "Sports Professional Certification Level 6",
+      "provider": "Sports Global Institute",
+      "level": "Beginner",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303358,
+        "_nanoseconds": 822000000
+      }
+    },
+    {
+      "id": "w9ciA14QVBBnGtbrSKTy",
+      "field": "uiux-hci",
+      "branch": "general",
+      "certificationName": "Uiux Hci Professional Certification Level 4",
+      "provider": "Uiux Hci Global Institute",
+      "level": "Professional",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303384,
+        "_nanoseconds": 861000000
+      }
+    },
+    {
+      "id": "xHICtagYeu2HkMtCRTwj",
+      "field": "vocational",
+      "branch": "general",
+      "certificationName": "Vocational Professional Certification Level 7",
+      "provider": "Vocational Global Institute",
+      "level": "Professional",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303361,
+        "_nanoseconds": 312000000
+      }
+    },
+    {
+      "id": "xmVod1sT4gIsznk3rLw9",
+      "field": "medical",
+      "branch": "general",
+      "certificationName": "Medical Professional Certification Level 6",
+      "provider": "Medical Global Institute",
+      "level": "Beginner",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303331,
+        "_nanoseconds": 677000000
+      }
+    },
+    {
+      "id": "xvZBqU9HWJFLwk26crrZ",
+      "field": "sports",
+      "branch": "general",
+      "certificationName": "Sports Professional Certification Level 8",
+      "provider": "Sports Global Institute",
+      "level": "Beginner",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303359,
+        "_nanoseconds": 22000000
+      }
+    },
+    {
+      "id": "y73nE4bmwUFL2dXm0xgQ",
+      "field": "arts",
+      "branch": "general",
+      "certificationName": "Arts Professional Certification Level 10",
+      "provider": "Arts Global Institute",
+      "level": "Professional",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303337,
+        "_nanoseconds": 50000000
+      }
+    },
+    {
+      "id": "yjs3vBozYvgJt5ur4hCh",
+      "field": "arts",
+      "branch": "general",
+      "certificationName": "Arts Professional Certification Level 8",
+      "provider": "Arts Global Institute",
+      "level": "Beginner",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303336,
+        "_nanoseconds": 814000000
+      }
+    },
+    {
+      "id": "z4KHNNR7OrEDMnQmoMMk",
+      "field": "defense",
+      "branch": "general",
+      "certificationName": "Defense Professional Certification Level 7",
+      "provider": "Defense Global Institute",
+      "level": "Professional",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303351,
+        "_nanoseconds": 545000000
+      }
+    },
+    {
+      "id": "zi0OuuR6LcUjewPIP9H8",
+      "field": "cloud-computing",
+      "branch": "general",
+      "certificationName": "Cloud Computing Professional Certification Level 4",
+      "provider": "Cloud Computing Global Institute",
+      "level": "Professional",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303364,
+        "_nanoseconds": 213000000
+      }
+    },
+    {
+      "id": "zvX6Vz8Tmf3GzsDh8zjp",
+      "field": "commerce",
+      "branch": "general",
+      "certificationName": "Commerce Professional Certification Level 6",
+      "provider": "Commerce Global Institute",
+      "level": "Beginner",
+      "skillsValidated": [
+        "Core Methodology",
+        "Domain Knowledge",
+        "Ethics"
+      ],
+      "officialLink": "https://official-org.com/certify",
+      "verified": true,
+      "createdAt": {
+        "_seconds": 1770303339,
+        "_nanoseconds": 392000000
+      }
+    }
+  ],
+  "roadmaps": []
+}
