@@ -79,7 +79,7 @@ async function clearOldData() {
 // STEP 3: MIGRATE REAL-WORLD DATA
 // ============================================
 
-async function migrateCareerPaths(fieldId, specializationId, careerPaths) {
+async function migrateCareerPaths(fieldId, specializationId, branch, careerPaths) {
     const batch = db.batch();
 
     careerPaths.forEach(path => {
@@ -91,6 +91,7 @@ async function migrateCareerPaths(fieldId, specializationId, careerPaths) {
             title: title,
             fieldId: fieldId,
             specializationId: specializationId,
+            branch: branch || null,
             level: level,
             requiredSkills: path.requiredSkills || [],
             industryValue: 'high',
@@ -102,7 +103,7 @@ async function migrateCareerPaths(fieldId, specializationId, careerPaths) {
     await batch.commit();
 }
 
-async function migrateProjects(fieldId, specializationId, projects) {
+async function migrateProjects(fieldId, specializationId, branch, projects) {
     const batch = db.batch();
 
     // Beginner projects
@@ -112,6 +113,7 @@ async function migrateProjects(fieldId, specializationId, projects) {
             name: proj.name || proj,
             fieldId: fieldId,
             specializationId: specializationId,
+            branch: branch || null,
             difficulty: 'beginner',
             techStack: proj.techStack || [],
             description: `Build ${proj.name || proj}`,
@@ -153,7 +155,7 @@ async function migrateProjects(fieldId, specializationId, projects) {
     await batch.commit();
 }
 
-async function migrateCertifications(fieldId, specializationId, certifications) {
+async function migrateCertifications(fieldId, specializationId, branch, certifications) {
     const batch = db.collection('certifications');
     const batchWrite = db.batch();
 
@@ -166,6 +168,7 @@ async function migrateCertifications(fieldId, specializationId, certifications) 
             cost: 'Free',
             fieldId: fieldId,
             specializationId: specializationId,
+            branch: branch || null,
             difficulty: 'beginner',
             officialUrl: cert.url || '#',
             timeToComplete: cert.timeToComplete || '40 hours',
@@ -244,29 +247,29 @@ async function runMigration() {
 
                 // Migrate career paths
                 if (specData.careerPaths && specData.careerPaths.length > 0) {
-                    await migrateCareerPaths(fieldId, specId, specData.careerPaths);
+                    await migrateCareerPaths(fieldId, specId, specData.branch, specData.careerPaths);
                     totalCareerPaths += specData.careerPaths.length;
                     console.log(`      ✅ Career Paths: ${specData.careerPaths.length}`);
                 }
 
                 // Migrate projects
                 if (specData.projects) {
-                    await migrateProjects(fieldId, specId, specData.projects);
-                    const projectCount = (specData.projects.beginner?.length || 0) +
+                    await migrateProjects(fieldId, specId, specData.branch, specData.projects);
+                    const pCount = (specData.projects.beginner?.length || 0) +
                         (specData.projects.intermediate?.length || 0) +
                         (specData.projects.advanced?.length || 0);
-                    totalProjects += projectCount;
-                    console.log(`      ✅ Projects: ${projectCount}`);
+                    totalProjects += pCount;
+                    console.log(`      ✅ Projects: ${pCount}`);
                 }
 
                 // Migrate certifications
                 if (specData.certifications) {
-                    await migrateCertifications(fieldId, specId, specData.certifications);
-                    const certCount = (specData.certifications.free?.length || 0) +
+                    await migrateCertifications(fieldId, specId, specData.branch, specData.certifications);
+                    const cCount = (specData.certifications.free?.length || 0) +
                         (specData.certifications.pro?.length || 0) +
                         (specData.certifications.premium?.length || 0);
-                    totalCertifications += certCount;
-                    console.log(`      ✅ Certifications: ${certCount}`);
+                    totalCertifications += cCount;
+                    console.log(`      ✅ Certifications: ${cCount}`);
                 }
             }
         }

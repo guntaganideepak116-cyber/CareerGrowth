@@ -61,7 +61,7 @@ export default function CareerPaths() {
     setPathsLoading(true);
     try {
       const fieldId = profile.field.toLowerCase().trim();
-      const specializationId = (profile.branch || profile.specialization || '').toLowerCase().trim();
+      const specializationId = (profile.specialization || profile.branch || '').toLowerCase().trim();
 
       console.log(`🔍 Fetching career paths for: ${fieldId} / ${specializationId}`);
 
@@ -79,22 +79,21 @@ export default function CareerPaths() {
 
       console.log(`📊 Found ${paths.length} paths for field: ${fieldId}`);
 
-      // CRITICAL: Filter by EXACT specialization match ONLY
+      // Filter by specialization/branch ID if provided
       if (specializationId) {
-        const specializationPaths = paths.filter(path => {
+        const filteredPaths = paths.filter(path => {
           const pathSpec = (path.specializationId || '').toLowerCase().trim();
+          const pathBranch = (path.branch || '').toLowerCase().trim();
 
-          // STRICT MATCH: Only paths that EXACTLY match the specialization
-          // DO NOT include generic field-level paths
-          return pathSpec === specializationId;
+          // Match if it's the specific specialization OR if it's the broader branch
+          return pathSpec === specializationId || pathBranch === specializationId;
         });
 
-        if (specializationPaths.length > 0) {
-          paths = specializationPaths;
-          console.log(`✅ Filtered to ${paths.length} EXACT matches for specialization: ${specializationId}`);
+        if (filteredPaths.length > 0) {
+          paths = filteredPaths;
+          console.log(`✅ Filtered to ${paths.length} matches for: ${specializationId}`);
         } else {
-          // If no exact matches, show message instead of all field paths
-          console.warn(`⚠️  No career paths found for ${specializationId}`);
+          console.warn(`⚠️ No career paths found for ${specializationId}`);
           paths = [];
         }
       }

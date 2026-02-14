@@ -1,0 +1,6741 @@
+{
+  "career_paths": [
+    {
+      "id": "097idCT9NUIsBGlYI4qe",
+      "title": "Strategy Head",
+      "fieldId": "commerce",
+      "specializationId": "business-analytics",
+      "level": "Intermediate",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771057127,
+        "_nanoseconds": 302000000
+      }
+    },
+    {
+      "id": "16HanXTl0oMNCO9ZfbUN",
+      "title": "Clinical Psychologist",
+      "fieldId": "arts",
+      "specializationId": "psychology",
+      "level": "Intermediate",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771057128,
+        "_nanoseconds": 102000000
+      }
+    },
+    {
+      "id": "1RFFGUbNHVBBYULYwXtO",
+      "title": "Anchor",
+      "fieldId": "media",
+      "specializationId": "media-journalism",
+      "level": "Intermediate",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771057129,
+        "_nanoseconds": 532000000
+      }
+    },
+    {
+      "id": "2zuix2XvoeTqdg6sDBZF",
+      "title": "Sub-Collector",
+      "fieldId": "civil-services",
+      "specializationId": "civil-admin",
+      "level": "Intermediate",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771057130,
+        "_nanoseconds": 247000000
+      }
+    },
+    {
+      "id": "3FL27f0T0Bo2ONvy4jlu",
+      "title": "Workshop owner",
+      "fieldId": "vocational",
+      "specializationId": "ev-tech",
+      "level": "Intermediate",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771057135,
+        "_nanoseconds": 726000000
+      }
+    },
+    {
+      "id": "4RdvFA2Rx1uzQorL7QsS",
+      "title": "Quantum Researcher",
+      "fieldId": "emerging-tech",
+      "specializationId": "tech-quantum",
+      "level": "Intermediate",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771057134,
+        "_nanoseconds": 398000000
+      }
+    },
+    {
+      "id": "5EJbXmAs9jNbhJxHpHZQ",
+      "title": "Cyber Lawyer",
+      "fieldId": "law",
+      "specializationId": "cyber-law",
+      "level": "Intermediate",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771057127,
+        "_nanoseconds": 779000000
+      }
+    },
+    {
+      "id": "5M5E5bikcI4856gXUHOK",
+      "title": "Legal Compliance Head",
+      "fieldId": "law",
+      "specializationId": "corporate-law",
+      "level": "Intermediate",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771057127,
+        "_nanoseconds": 538000000
+      }
+    },
+    {
+      "id": "66IOjGCG5b4HPLcqCJ36",
+      "title": "Production Manager",
+      "fieldId": "engineering",
+      "specializationId": "mech-design",
+      "level": "Intermediate",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771057122,
+        "_nanoseconds": 684000000
+      }
+    },
+    {
+      "id": "66Tw4xWQEHUPpkDNEbsM",
+      "title": "Analytics Head",
+      "fieldId": "ai-ml",
+      "specializationId": "ai-ds",
+      "level": "Intermediate",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771057132,
+        "_nanoseconds": 733000000
+      }
+    },
+    {
+      "id": "67YZi0VJZxgcvMp26Ze2",
+      "title": "Smart Farming Specialist",
+      "fieldId": "agriculture",
+      "specializationId": "agritech",
+      "level": "Intermediate",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771057135,
+        "_nanoseconds": 57000000
+      }
+    },
+    {
+      "id": "6Tfq3dbxdMCCwFSDarMX",
+      "title": "Mechatronics Expert",
+      "fieldId": "engineering",
+      "specializationId": "mech-robotics",
+      "level": "Intermediate",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771057123,
+        "_nanoseconds": 197000000
+      }
+    },
+    {
+      "id": "6dNDcPrxDmyhRqklvDyY",
+      "title": "Fullstack Web3 Dev",
+      "fieldId": "blockchain-web3",
+      "specializationId": "web3-dapps",
+      "level": "Intermediate",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771057134,
+        "_nanoseconds": 139000000
+      }
+    },
+    {
+      "id": "75yVkusHXWq4MUp23LEV",
+      "title": "Backend Developer",
+      "fieldId": "engineering",
+      "specializationId": "cse-software-dev",
+      "level": "Intermediate",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771057118,
+        "_nanoseconds": 504000000
+      }
+    },
+    {
+      "id": "7Om2hcdT5XxWpefJEsRp",
+      "title": "E-Learning Lead",
+      "fieldId": "education",
+      "specializationId": "edtech",
+      "level": "Intermediate",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771057134,
+        "_nanoseconds": 840000000
+      }
+    },
+    {
+      "id": "7Xxc41HAvFZAncrKPJo9",
+      "title": "Scientist",
+      "fieldId": "science",
+      "specializationId": "rnd",
+      "level": "Intermediate",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771057125,
+        "_nanoseconds": 766000000
+      }
+    },
+    {
+      "id": "7zAhWKF8Q4NtNXPMeaEV",
+      "title": "Game Designer",
+      "fieldId": "design",
+      "specializationId": "game-design",
+      "level": "Intermediate",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771057128,
+        "_nanoseconds": 854000000
+      }
+    },
+    {
+      "id": "9MTug4XG8DhcyqEYeT8H",
+      "title": "Bio-IT Developer",
+      "fieldId": "science",
+      "specializationId": "bioinformatics",
+      "level": "Intermediate",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771057126,
+        "_nanoseconds": 349000000
+      }
+    },
+    {
+      "id": "AIyJ84Pmw0QYELR960C1",
+      "title": "Research Lead",
+      "fieldId": "science",
+      "specializationId": "rnd",
+      "level": "Intermediate",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771057125,
+        "_nanoseconds": 766000000
+      }
+    },
+    {
+      "id": "AQpHVrByXOtINV2WCh5S",
+      "title": "Data Scientist",
+      "fieldId": "engineering",
+      "specializationId": "cse-ai-ml",
+      "level": "Intermediate",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771057120,
+        "_nanoseconds": 678000000
+      }
+    },
+    {
+      "id": "ATB8POV5rSbkHig3QoIm",
+      "title": "Data Analyst",
+      "fieldId": "commerce",
+      "specializationId": "business-analytics",
+      "level": "Intermediate",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771057127,
+        "_nanoseconds": 302000000
+      }
+    },
+    {
+      "id": "AqW2khdK3aqkwf6YbMdJ",
+      "title": "Warehouse Manager",
+      "fieldId": "logistics",
+      "specializationId": "warehouse-transport-management",
+      "level": "Intermediate",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771057131,
+        "_nanoseconds": 298000000
+      }
+    },
+    {
+      "id": "BjnD8u4bkSGja5NfvPzT",
+      "title": "Infrastructure Head",
+      "fieldId": "cloud-computing",
+      "specializationId": "cloud-architecture",
+      "level": "Intermediate",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771057132,
+        "_nanoseconds": 54000000
+      }
+    },
+    {
+      "id": "C0cx0845paytC30IPQl8",
+      "title": "Cloud Web Architect",
+      "fieldId": "engineering",
+      "specializationId": "cse-web-dev",
+      "level": "Intermediate",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771057119,
+        "_nanoseconds": 30000000
+      }
+    },
+    {
+      "id": "CRPUnKEWbvdOgs2QHNxT",
+      "title": "Product Lead",
+      "fieldId": "design",
+      "specializationId": "ui-ux",
+      "level": "Intermediate",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771057128,
+        "_nanoseconds": 604000000
+      }
+    },
+    {
+      "id": "CxniNHhzbr9qlrEWSjEI",
+      "title": "Hotel GM",
+      "fieldId": "hospitality",
+      "specializationId": "hotel-mgmt",
+      "level": "Intermediate",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771057135,
+        "_nanoseconds": 270000000
+      }
+    },
+    {
+      "id": "DLwBqANjd69hLf48MN3l",
+      "title": "CAD Specialist",
+      "fieldId": "engineering",
+      "specializationId": "mech-design",
+      "level": "Intermediate",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771057122,
+        "_nanoseconds": 684000000
+      }
+    },
+    {
+      "id": "DUxwnjdokQoDCnGpz9Qf",
+      "title": "Construction Manager",
+      "fieldId": "engineering",
+      "specializationId": "civil-construction",
+      "level": "Intermediate",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771057124,
+        "_nanoseconds": 417000000
+      }
+    },
+    {
+      "id": "DrVpbjZJeKB8aV0MstRe",
+      "title": "Web3 Frontend Engineer",
+      "fieldId": "blockchain-web3",
+      "specializationId": "web3-dapps",
+      "level": "Intermediate",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771057134,
+        "_nanoseconds": 139000000
+      }
+    },
+    {
+      "id": "EDn8f5nKGi3DSt0YnxvG",
+      "title": "Android Developer",
+      "fieldId": "engineering",
+      "specializationId": "cse-mobile-dev",
+      "level": "Intermediate",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771057120,
+        "_nanoseconds": 99000000
+      }
+    },
+    {
+      "id": "EHG86YX9imV9Cr3Y0acm",
+      "title": "Protocol Designer",
+      "fieldId": "medical",
+      "specializationId": "clinical-research",
+      "level": "Intermediate",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771057125,
+        "_nanoseconds": 39000000
+      }
+    },
+    {
+      "id": "EoN7nYwx3EbXhaFjmhBI",
+      "title": "SP",
+      "fieldId": "civil-services",
+      "specializationId": "civil-police",
+      "level": "Intermediate",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771057130,
+        "_nanoseconds": 845000000
+      }
+    },
+    {
+      "id": "FEYD1nwfuvYcyvBmfJMA",
+      "title": "Grid Manager",
+      "fieldId": "engineering",
+      "specializationId": "eee-power-systems",
+      "level": "Intermediate",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771057121,
+        "_nanoseconds": 756000000
+      }
+    },
+    {
+      "id": "FX1Z6CjJ8SfJXnz3h7sk",
+      "title": "Electrical Consultant",
+      "fieldId": "engineering",
+      "specializationId": "eee-power-systems",
+      "level": "Intermediate",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771057121,
+        "_nanoseconds": 756000000
+      }
+    },
+    {
+      "id": "G0lwnPL0wuZLEy8zAV8o",
+      "title": "EV Powertrain Engineer",
+      "fieldId": "engineering",
+      "specializationId": "eee-ev",
+      "level": "Intermediate",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771057122,
+        "_nanoseconds": 173000000
+      }
+    },
+    {
+      "id": "GNKPCyVTQZSDjahE6lgy",
+      "title": "Cold Chain Lead",
+      "fieldId": "logistics",
+      "specializationId": "warehouse-transport-management",
+      "level": "Intermediate",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771057131,
+        "_nanoseconds": 298000000
+      }
+    },
+    {
+      "id": "Git0P1Zt0xhDTGiMDOMT",
+      "title": "Captain",
+      "fieldId": "aviation",
+      "specializationId": "commercial-pilot-operations",
+      "level": "Intermediate",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771057131,
+        "_nanoseconds": 566000000
+      }
+    },
+    {
+      "id": "GraXa1wx8rbEIubUZiKo",
+      "title": "Master Mariner",
+      "fieldId": "aviation",
+      "specializationId": "merchant-navy-deck-engine",
+      "level": "Intermediate",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771057131,
+        "_nanoseconds": 820000000
+      }
+    },
+    {
+      "id": "GsU6tgDJuKjs2CvcAuFH",
+      "title": "SoC Architect",
+      "fieldId": "engineering",
+      "specializationId": "ece-vlsi",
+      "level": "Intermediate",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771057121,
+        "_nanoseconds": 68000000
+      }
+    },
+    {
+      "id": "HA5ZWHw5BnZpYjYe6eUp",
+      "title": "DL Engineer",
+      "fieldId": "ai-ml",
+      "specializationId": "ai-deep-learning",
+      "level": "Intermediate",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771057132,
+        "_nanoseconds": 494000000
+      }
+    },
+    {
+      "id": "I2lmofmGyZs6m0iV8vlZ",
+      "title": "Chartered Accountant",
+      "fieldId": "commerce",
+      "specializationId": "accounting",
+      "level": "Intermediate",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771057127,
+        "_nanoseconds": 28000000
+      }
+    },
+    {
+      "id": "IGVd2Zp84hVQgI0huwVA",
+      "title": "Ethical Hacker",
+      "fieldId": "cybersecurity",
+      "specializationId": "cyber-offensive",
+      "level": "Intermediate",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771057133,
+        "_nanoseconds": 208000000
+      }
+    },
+    {
+      "id": "JB3ftnQBlAmvVDeq9yxh",
+      "title": "Battery Scientist",
+      "fieldId": "engineering",
+      "specializationId": "eee-ev",
+      "level": "Intermediate",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771057122,
+        "_nanoseconds": 173000000
+      }
+    },
+    {
+      "id": "JPfdfrPzYdHCQmL3Zpe6",
+      "title": "BI Developer",
+      "fieldId": "ai-ml",
+      "specializationId": "ai-ds",
+      "level": "Intermediate",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771057132,
+        "_nanoseconds": 733000000
+      }
+    },
+    {
+      "id": "JSPFGZJucC2b1sAoE9gi",
+      "title": "Airline Pilot",
+      "fieldId": "aviation",
+      "specializationId": "commercial-pilot-operations",
+      "level": "Intermediate",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771057131,
+        "_nanoseconds": 566000000
+      }
+    },
+    {
+      "id": "K6HjnMaea50ZfWq4WegD",
+      "title": "Auditor",
+      "fieldId": "commerce",
+      "specializationId": "accounting",
+      "level": "Intermediate",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771057127,
+        "_nanoseconds": 28000000
+      }
+    },
+    {
+      "id": "L8Zi5k5HeA2CSijjnsCg",
+      "title": "Hardware Designer",
+      "fieldId": "engineering",
+      "specializationId": "ece-embedded",
+      "level": "Intermediate",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771057121,
+        "_nanoseconds": 372000000
+      }
+    },
+    {
+      "id": "LizYOq2DioG141HhNGBA",
+      "title": "Satellite Engineer",
+      "fieldId": "emerging-tech",
+      "specializationId": "tech-robotics",
+      "level": "Intermediate",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771057134,
+        "_nanoseconds": 617000000
+      }
+    },
+    {
+      "id": "MQ2Z15au8RVh5gMSfdQh",
+      "title": "Strength Coach",
+      "fieldId": "sports",
+      "specializationId": "sports-science",
+      "level": "Intermediate",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771057135,
+        "_nanoseconds": 496000000
+      }
+    },
+    {
+      "id": "McyGSsJzYbuwJMbmfcJn",
+      "title": "Tax Consultant",
+      "fieldId": "commerce",
+      "specializationId": "accounting",
+      "level": "Intermediate",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771057127,
+        "_nanoseconds": 28000000
+      }
+    },
+    {
+      "id": "Md4IHBlrhMpidPrsutZ9",
+      "title": "VLSI Design Engineer",
+      "fieldId": "engineering",
+      "specializationId": "ece-vlsi",
+      "level": "Intermediate",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771057121,
+        "_nanoseconds": 68000000
+      }
+    },
+    {
+      "id": "Mnrp1wbezLmf7AuV9FoO",
+      "title": "Conversation AI Lead",
+      "fieldId": "ai-ml",
+      "specializationId": "ai-nlp",
+      "level": "Intermediate",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771057132,
+        "_nanoseconds": 971000000
+      }
+    },
+    {
+      "id": "MoCxluu8cmDzvWPtKzv3",
+      "title": "Quantitative Analyst",
+      "fieldId": "science",
+      "specializationId": "applied-math",
+      "level": "Intermediate",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771057126,
+        "_nanoseconds": 66000000
+      }
+    },
+    {
+      "id": "OHzdCXL8jzpYt52kKKL5",
+      "title": "EVM Specialist",
+      "fieldId": "blockchain-web3",
+      "specializationId": "web3-dapps",
+      "level": "Intermediate",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771057134,
+        "_nanoseconds": 139000000
+      }
+    },
+    {
+      "id": "ObH31ArEGWYAJrC2xbNE",
+      "title": "IT Healthcare Lead",
+      "fieldId": "medical",
+      "specializationId": "health-informatics",
+      "level": "Intermediate",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771057125,
+        "_nanoseconds": 521000000
+      }
+    },
+    {
+      "id": "Oy0ojh9c2KoobiK0RpHX",
+      "title": "Corporate Counsel",
+      "fieldId": "law",
+      "specializationId": "corporate-law",
+      "level": "Intermediate",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771057127,
+        "_nanoseconds": 538000000
+      }
+    },
+    {
+      "id": "PKrEU5nYF8AQhoZfT1TP",
+      "title": "IAS Officer",
+      "fieldId": "civil-services",
+      "specializationId": "civil-admin",
+      "level": "Intermediate",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771057130,
+        "_nanoseconds": 247000000
+      }
+    },
+    {
+      "id": "PTzqIBT9rD3dRckV2jZJ",
+      "title": "Embedded Systems Engineer",
+      "fieldId": "engineering",
+      "specializationId": "ece-embedded",
+      "level": "Intermediate",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771057121,
+        "_nanoseconds": 372000000
+      }
+    },
+    {
+      "id": "Q4piFyZnijRuBebNGyz2",
+      "title": "Security Researcher",
+      "fieldId": "cybersecurity",
+      "specializationId": "cyber-offensive",
+      "level": "Intermediate",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771057133,
+        "_nanoseconds": 208000000
+      }
+    },
+    {
+      "id": "QUEJuUiShIal73ohX5lZ",
+      "title": "Drug Safety Physician",
+      "fieldId": "medical",
+      "specializationId": "clinical-research",
+      "level": "Intermediate",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771057125,
+        "_nanoseconds": 39000000
+      }
+    },
+    {
+      "id": "QWkKs1cPFBfQwbGMLIE2",
+      "title": "Portfolio Manager",
+      "fieldId": "commerce",
+      "specializationId": "financial-analysis",
+      "level": "Intermediate",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771057126,
+        "_nanoseconds": 582000000
+      }
+    },
+    {
+      "id": "S67WS5LaOlU0w0U83P1H",
+      "title": "Informatics Specialist",
+      "fieldId": "medical",
+      "specializationId": "health-informatics",
+      "level": "Intermediate",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771057125,
+        "_nanoseconds": 521000000
+      }
+    },
+    {
+      "id": "SpTS8B6rYibeUPNX0kRO",
+      "title": "Full Stack Developer",
+      "fieldId": "engineering",
+      "specializationId": "cse-web-dev",
+      "level": "Intermediate",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771057119,
+        "_nanoseconds": 30000000
+      }
+    },
+    {
+      "id": "T0015vlJ2ahFV1UGeZEM",
+      "title": "Frontend Developer",
+      "fieldId": "engineering",
+      "specializationId": "cse-web-dev",
+      "level": "Intermediate",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771057119,
+        "_nanoseconds": 30000000
+      }
+    },
+    {
+      "id": "TINsSh20xiXwrduoSuW3",
+      "title": "Cross-platform Mobile Lead",
+      "fieldId": "engineering",
+      "specializationId": "cse-mobile-dev",
+      "level": "Intermediate",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771057120,
+        "_nanoseconds": 99000000
+      }
+    },
+    {
+      "id": "TQztFeIv1GQLq4KvBYA4",
+      "title": "Supply Chain Head",
+      "fieldId": "logistics",
+      "specializationId": "supply-chain-analytics",
+      "level": "Intermediate",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771057131,
+        "_nanoseconds": 62000000
+      }
+    },
+    {
+      "id": "TY01QAni9waCpRzRPXU5",
+      "title": "Design Engineer",
+      "fieldId": "engineering",
+      "specializationId": "mech-design",
+      "level": "Intermediate",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771057122,
+        "_nanoseconds": 684000000
+      }
+    },
+    {
+      "id": "TtyfKOmzdl995QsFWdK3",
+      "title": "Project Manager",
+      "fieldId": "engineering",
+      "specializationId": "civil-structural",
+      "level": "Intermediate",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771057123,
+        "_nanoseconds": 993000000
+      }
+    },
+    {
+      "id": "UuHF4AoWpJ5SToUeq4ZF",
+      "title": "IoT Solutions Architect",
+      "fieldId": "engineering",
+      "specializationId": "ece-embedded",
+      "level": "Intermediate",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771057121,
+        "_nanoseconds": 372000000
+      }
+    },
+    {
+      "id": "VHyQvoRq9ut5UMWTqtBO",
+      "title": "Actuary",
+      "fieldId": "science",
+      "specializationId": "applied-math",
+      "level": "Intermediate",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771057126,
+        "_nanoseconds": 66000000
+      }
+    },
+    {
+      "id": "W912GEk2WbfIr2ZxwesP",
+      "title": "Sports Scientist",
+      "fieldId": "sports",
+      "specializationId": "sports-science",
+      "level": "Intermediate",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771057135,
+        "_nanoseconds": 496000000
+      }
+    },
+    {
+      "id": "WMSiSktNxY8x8kMljGF0",
+      "title": "LLM Scientist",
+      "fieldId": "ai-ml",
+      "specializationId": "ai-nlp",
+      "level": "Intermediate",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771057132,
+        "_nanoseconds": 971000000
+      }
+    },
+    {
+      "id": "WlxOkxK4MBvVmoftxklN",
+      "title": "BRP Manager",
+      "fieldId": "cybersecurity",
+      "specializationId": "cyber-defensive",
+      "level": "Intermediate",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771057133,
+        "_nanoseconds": 524000000
+      }
+    },
+    {
+      "id": "Wx6mySnITq5aMp01fvtZ",
+      "title": "Blockchain Engineer",
+      "fieldId": "blockchain-web3",
+      "specializationId": "web3-smart-contracts",
+      "level": "Intermediate",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771057133,
+        "_nanoseconds": 843000000
+      }
+    },
+    {
+      "id": "XixTd8XDxb0LSZXRMzWF",
+      "title": "Genomics Analyst",
+      "fieldId": "science",
+      "specializationId": "bioinformatics",
+      "level": "Intermediate",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771057126,
+        "_nanoseconds": 349000000
+      }
+    },
+    {
+      "id": "Y0V18YHhkPO9cqyuANKN",
+      "title": "News Reporter",
+      "fieldId": "media",
+      "specializationId": "media-journalism",
+      "level": "Intermediate",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771057129,
+        "_nanoseconds": 532000000
+      }
+    },
+    {
+      "id": "YWCAe4aBOxthiBJYk8eY",
+      "title": "Chief Secretary",
+      "fieldId": "civil-services",
+      "specializationId": "civil-admin",
+      "level": "Intermediate",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771057130,
+        "_nanoseconds": 247000000
+      }
+    },
+    {
+      "id": "YjuIXo0r2nuhhZSMcSBj",
+      "title": "SRE",
+      "fieldId": "cloud-computing",
+      "specializationId": "cloud-devops",
+      "level": "Intermediate",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771057132,
+        "_nanoseconds": 282000000
+      }
+    },
+    {
+      "id": "Z799y9JWz1oGar8pP8rU",
+      "title": "F&B Director",
+      "fieldId": "hospitality",
+      "specializationId": "hotel-mgmt",
+      "level": "Intermediate",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771057135,
+        "_nanoseconds": 270000000
+      }
+    },
+    {
+      "id": "ZC5KtgukKhKrXPnFfcD1",
+      "title": "Researcher",
+      "fieldId": "ai-ml",
+      "specializationId": "ai-deep-learning",
+      "level": "Intermediate",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771057132,
+        "_nanoseconds": 494000000
+      }
+    },
+    {
+      "id": "ZPVEMhgeI9zlGEQB5X9z",
+      "title": "Counselor",
+      "fieldId": "arts",
+      "specializationId": "psychology",
+      "level": "Intermediate",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771057128,
+        "_nanoseconds": 102000000
+      }
+    },
+    {
+      "id": "a0qcdkeWpg4mVmZT4ebr",
+      "title": "Data Scientist",
+      "fieldId": "science",
+      "specializationId": "bioinformatics",
+      "level": "Intermediate",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771057126,
+        "_nanoseconds": 349000000
+      }
+    },
+    {
+      "id": "aUAONKoivm1yyDsIlxPT",
+      "title": "HR Specialist",
+      "fieldId": "arts",
+      "specializationId": "psychology",
+      "level": "Intermediate",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771057128,
+        "_nanoseconds": 102000000
+      }
+    },
+    {
+      "id": "aUw13S5FF4Lg04XnRi5S",
+      "title": "Performance Analyst",
+      "fieldId": "sports",
+      "specializationId": "sports-science",
+      "level": "Intermediate",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771057135,
+        "_nanoseconds": 496000000
+      }
+    },
+    {
+      "id": "bH2jPwWEHEOAGw1io9E7",
+      "title": "Deck Officer",
+      "fieldId": "aviation",
+      "specializationId": "merchant-navy-deck-engine",
+      "level": "Intermediate",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771057131,
+        "_nanoseconds": 820000000
+      }
+    },
+    {
+      "id": "bR26WPnulqVKMxbNRuRT",
+      "title": "Patient Relation Manager",
+      "fieldId": "medical",
+      "specializationId": "hospital-admin",
+      "level": "Intermediate",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771057124,
+        "_nanoseconds": 753000000
+      }
+    },
+    {
+      "id": "bsyLmTppMqSEa7gpHRKB",
+      "title": "Robotics Engineer",
+      "fieldId": "engineering",
+      "specializationId": "mech-robotics",
+      "level": "Intermediate",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771057123,
+        "_nanoseconds": 197000000
+      }
+    },
+    {
+      "id": "c4HG4pC9Iz0YrjxQWEkL",
+      "title": "iOS Developer",
+      "fieldId": "engineering",
+      "specializationId": "cse-mobile-dev",
+      "level": "Intermediate",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771057120,
+        "_nanoseconds": 99000000
+      }
+    },
+    {
+      "id": "cZlNql3McWrkdoHplafE",
+      "title": "Regional Ops Head",
+      "fieldId": "logistics",
+      "specializationId": "warehouse-transport-management",
+      "level": "Intermediate",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771057131,
+        "_nanoseconds": 298000000
+      }
+    },
+    {
+      "id": "e7ZwJzMzyTisZiV3w8yA",
+      "title": "Computer Vision Expert",
+      "fieldId": "ai-ml",
+      "specializationId": "ai-deep-learning",
+      "level": "Intermediate",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771057132,
+        "_nanoseconds": 494000000
+      }
+    },
+    {
+      "id": "eGvoApccFcPUoum9T6iK",
+      "title": "SOC Analyst",
+      "fieldId": "cybersecurity",
+      "specializationId": "cyber-defensive",
+      "level": "Intermediate",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771057133,
+        "_nanoseconds": 524000000
+      }
+    },
+    {
+      "id": "eb5xT0XGf0nZ8lIFFwks",
+      "title": "Influencer Lead",
+      "fieldId": "media",
+      "specializationId": "media-digital",
+      "level": "Intermediate",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771057129,
+        "_nanoseconds": 804000000
+      }
+    },
+    {
+      "id": "eeBlG1hwcjBxrT5Vwifj",
+      "title": "DevSecOps Manager",
+      "fieldId": "cloud-computing",
+      "specializationId": "cloud-devops",
+      "level": "Intermediate",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771057132,
+        "_nanoseconds": 282000000
+      }
+    },
+    {
+      "id": "ez4p1OHk7kuZ7YHEsYsi",
+      "title": "Solidity Dev",
+      "fieldId": "blockchain-web3",
+      "specializationId": "web3-smart-contracts",
+      "level": "Intermediate",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771057133,
+        "_nanoseconds": 843000000
+      }
+    },
+    {
+      "id": "fnPTbEgQbgp4PGsyQr8h",
+      "title": "Content Strategist",
+      "fieldId": "media",
+      "specializationId": "media-digital",
+      "level": "Intermediate",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771057129,
+        "_nanoseconds": 804000000
+      }
+    },
+    {
+      "id": "fpDk0NcVeAQNRYF904W3",
+      "title": "Automation Lead",
+      "fieldId": "engineering",
+      "specializationId": "mech-robotics",
+      "level": "Intermediate",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771057123,
+        "_nanoseconds": 197000000
+      }
+    },
+    {
+      "id": "gEX4nswo7xtCot7bU6f1",
+      "title": "Luxury Concierge",
+      "fieldId": "hospitality",
+      "specializationId": "hotel-mgmt",
+      "level": "Intermediate",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771057135,
+        "_nanoseconds": 270000000
+      }
+    },
+    {
+      "id": "gVmheCW2pJbpbXO3vuwP",
+      "title": "Chief Engineer",
+      "fieldId": "aviation",
+      "specializationId": "merchant-navy-deck-engine",
+      "level": "Intermediate",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771057131,
+        "_nanoseconds": 820000000
+      }
+    },
+    {
+      "id": "gZzMjhBEINB5hwavwgXe",
+      "title": "DGP",
+      "fieldId": "civil-services",
+      "specializationId": "civil-police",
+      "level": "Intermediate",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771057130,
+        "_nanoseconds": 845000000
+      }
+    },
+    {
+      "id": "gjcBGYLTgJLzpWHo1auG",
+      "title": "Site Engineer",
+      "fieldId": "engineering",
+      "specializationId": "civil-construction",
+      "level": "Intermediate",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771057124,
+        "_nanoseconds": 417000000
+      }
+    },
+    {
+      "id": "glyUFslmyrXp0SODhUUl",
+      "title": "Clinical Trial Manager",
+      "fieldId": "medical",
+      "specializationId": "clinical-research",
+      "level": "Intermediate",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771057125,
+        "_nanoseconds": 39000000
+      }
+    },
+    {
+      "id": "gyVZL0VQwRtd7mmnstRN",
+      "title": "Indie Dev",
+      "fieldId": "design",
+      "specializationId": "game-design",
+      "level": "Intermediate",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771057128,
+        "_nanoseconds": 854000000
+      }
+    },
+    {
+      "id": "hZkpEJzKY8sIY7EIsW5J",
+      "title": "UI Designer",
+      "fieldId": "design",
+      "specializationId": "ui-ux",
+      "level": "Intermediate",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771057128,
+        "_nanoseconds": 604000000
+      }
+    },
+    {
+      "id": "htr2qDDB3k80vHNYCCT3",
+      "title": "Robotics Researcher",
+      "fieldId": "emerging-tech",
+      "specializationId": "tech-robotics",
+      "level": "Intermediate",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771057134,
+        "_nanoseconds": 617000000
+      }
+    },
+    {
+      "id": "i6ykABySYhdLHsVBevOh",
+      "title": "Lab Director",
+      "fieldId": "science",
+      "specializationId": "rnd",
+      "level": "Intermediate",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771057125,
+        "_nanoseconds": 766000000
+      }
+    },
+    {
+      "id": "i7LqfGN21wIDPC52eWx0",
+      "title": "Investment Banker",
+      "fieldId": "commerce",
+      "specializationId": "financial-analysis",
+      "level": "Intermediate",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771057126,
+        "_nanoseconds": 582000000
+      }
+    },
+    {
+      "id": "iC5aCAsb2qu9KYZbF6Tt",
+      "title": "Navy Pilot",
+      "fieldId": "defense",
+      "specializationId": "armed-forces",
+      "level": "Intermediate",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771057129,
+        "_nanoseconds": 223000000
+      }
+    },
+    {
+      "id": "iPOuWc07o7bqkcTfhOS7",
+      "title": "AI Research Scientist",
+      "fieldId": "engineering",
+      "specializationId": "cse-ai-ml",
+      "level": "Intermediate",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771057120,
+        "_nanoseconds": 678000000
+      }
+    },
+    {
+      "id": "iaYJjUH1f7JF5BO516Hf",
+      "title": "EdTech Product Manager",
+      "fieldId": "education",
+      "specializationId": "edtech",
+      "level": "Intermediate",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771057134,
+        "_nanoseconds": 840000000
+      }
+    },
+    {
+      "id": "ischCP8GFnGfaTMSFLJV",
+      "title": "Agri Data Scientist",
+      "fieldId": "agriculture",
+      "specializationId": "agritech",
+      "level": "Intermediate",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771057135,
+        "_nanoseconds": 57000000
+      }
+    },
+    {
+      "id": "jGaajswdKYj0mmEsG0sW",
+      "title": "EV Fleet Repair",
+      "fieldId": "vocational",
+      "specializationId": "ev-tech",
+      "level": "Intermediate",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771057135,
+        "_nanoseconds": 726000000
+      }
+    },
+    {
+      "id": "jGnDMUTv0BscoFTzBQf4",
+      "title": "Army Officer",
+      "fieldId": "defense",
+      "specializationId": "armed-forces",
+      "level": "Intermediate",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771057129,
+        "_nanoseconds": 223000000
+      }
+    },
+    {
+      "id": "jmFck4va4He2IJ2YwibW",
+      "title": "Instructional Designer",
+      "fieldId": "education",
+      "specializationId": "edtech",
+      "level": "Intermediate",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771057134,
+        "_nanoseconds": 840000000
+      }
+    },
+    {
+      "id": "jpsruY0DwxACrE3Suqsx",
+      "title": "Cloud Architect",
+      "fieldId": "cloud-computing",
+      "specializationId": "cloud-architecture",
+      "level": "Intermediate",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771057132,
+        "_nanoseconds": 54000000
+      }
+    },
+    {
+      "id": "jvps6rNFcaNvne7TQ8Fg",
+      "title": "NLP Engineer",
+      "fieldId": "ai-ml",
+      "specializationId": "ai-nlp",
+      "level": "Intermediate",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771057132,
+        "_nanoseconds": 971000000
+      }
+    },
+    {
+      "id": "k7jdClfNyfnRS0n0EPa4",
+      "title": "Policy Researcher",
+      "fieldId": "law",
+      "specializationId": "cyber-law",
+      "level": "Intermediate",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771057127,
+        "_nanoseconds": 779000000
+      }
+    },
+    {
+      "id": "kICbg9KmJchuBaPTA7c8",
+      "title": "Quantity Surveyor",
+      "fieldId": "engineering",
+      "specializationId": "civil-construction",
+      "level": "Intermediate",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771057124,
+        "_nanoseconds": 417000000
+      }
+    },
+    {
+      "id": "kLkMGco1zhHiV0t6ofGy",
+      "title": "Systems Architect",
+      "fieldId": "engineering",
+      "specializationId": "cse-software-dev",
+      "level": "Intermediate",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771057118,
+        "_nanoseconds": 504000000
+      }
+    },
+    {
+      "id": "kX1QlJJswKlx7RVbGlxE",
+      "title": "Web3 Architect",
+      "fieldId": "blockchain-web3",
+      "specializationId": "web3-smart-contracts",
+      "level": "Intermediate",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771057133,
+        "_nanoseconds": 843000000
+      }
+    },
+    {
+      "id": "ktnklJKWDtjZQ3gnZs69",
+      "title": "Commando",
+      "fieldId": "defense",
+      "specializationId": "armed-forces",
+      "level": "Intermediate",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771057129,
+        "_nanoseconds": 223000000
+      }
+    },
+    {
+      "id": "l90eq2cLMpV0kN7lPryn",
+      "title": "M&A Lawyer",
+      "fieldId": "law",
+      "specializationId": "corporate-law",
+      "level": "Intermediate",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771057127,
+        "_nanoseconds": 538000000
+      }
+    },
+    {
+      "id": "lTgIA5xLq5V3kDGsJRio",
+      "title": "BMS Designer",
+      "fieldId": "engineering",
+      "specializationId": "eee-ev",
+      "level": "Intermediate",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771057122,
+        "_nanoseconds": 173000000
+      }
+    },
+    {
+      "id": "mB30VZGHE7OEJKItChXq",
+      "title": "Space Ops",
+      "fieldId": "emerging-tech",
+      "specializationId": "tech-robotics",
+      "level": "Intermediate",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771057134,
+        "_nanoseconds": 617000000
+      }
+    },
+    {
+      "id": "mOA2EsUwyA1IerMOaOkA",
+      "title": "Health Data Analyst",
+      "fieldId": "medical",
+      "specializationId": "health-informatics",
+      "level": "Intermediate",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771057125,
+        "_nanoseconds": 521000000
+      }
+    },
+    {
+      "id": "mkXD3EJW29qJr5XAUIik",
+      "title": "Bridge Designer",
+      "fieldId": "engineering",
+      "specializationId": "civil-structural",
+      "level": "Intermediate",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771057123,
+        "_nanoseconds": 993000000
+      }
+    },
+    {
+      "id": "o4qhq3npzsp0z8eP0IMR",
+      "title": "Quantum Algorithms Lead",
+      "fieldId": "emerging-tech",
+      "specializationId": "tech-quantum",
+      "level": "Intermediate",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771057134,
+        "_nanoseconds": 398000000
+      }
+    },
+    {
+      "id": "o7bpTQLtOdDNCs9GKQBx",
+      "title": "Level Designer",
+      "fieldId": "design",
+      "specializationId": "game-design",
+      "level": "Intermediate",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771057128,
+        "_nanoseconds": 854000000
+      }
+    },
+    {
+      "id": "oRo8WW3pZx8kG0U0QQOR",
+      "title": "Solutions Architect",
+      "fieldId": "cloud-computing",
+      "specializationId": "cloud-architecture",
+      "level": "Intermediate",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771057132,
+        "_nanoseconds": 54000000
+      }
+    },
+    {
+      "id": "oegz8uw2cemX28ODZQ6f",
+      "title": "EV Technician",
+      "fieldId": "vocational",
+      "specializationId": "ev-tech",
+      "level": "Intermediate",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771057135,
+        "_nanoseconds": 726000000
+      }
+    },
+    {
+      "id": "ogzT1djxjp8CLVnlP6Vh",
+      "title": "Privacy Consultant",
+      "fieldId": "law",
+      "specializationId": "cyber-law",
+      "level": "Intermediate",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771057127,
+        "_nanoseconds": 779000000
+      }
+    },
+    {
+      "id": "olKgog79QfIc1Q6B1baV",
+      "title": "DevOps Engineer",
+      "fieldId": "cloud-computing",
+      "specializationId": "cloud-devops",
+      "level": "Intermediate",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771057132,
+        "_nanoseconds": 282000000
+      }
+    },
+    {
+      "id": "otDgq5KPrJOJbd0AFzZk",
+      "title": "Data Scientist",
+      "fieldId": "ai-ml",
+      "specializationId": "ai-ds",
+      "level": "Intermediate",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771057132,
+        "_nanoseconds": 733000000
+      }
+    },
+    {
+      "id": "pAXLw8lbr72p3AnhUDF3",
+      "title": "UX Researcher",
+      "fieldId": "design",
+      "specializationId": "ui-ux",
+      "level": "Intermediate",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771057128,
+        "_nanoseconds": 604000000
+      }
+    },
+    {
+      "id": "px9jEEsN8Vo8GNEmwscP",
+      "title": "First Officer",
+      "fieldId": "aviation",
+      "specializationId": "commercial-pilot-operations",
+      "level": "Intermediate",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771057131,
+        "_nanoseconds": 566000000
+      }
+    },
+    {
+      "id": "qSG6qa4RcA8ONbLO0eKF",
+      "title": "Computational Math",
+      "fieldId": "science",
+      "specializationId": "applied-math",
+      "level": "Intermediate",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771057126,
+        "_nanoseconds": 66000000
+      }
+    },
+    {
+      "id": "qdFKSLghdJkOAP2Aol3W",
+      "title": "Chief Operations Officer",
+      "fieldId": "medical",
+      "specializationId": "hospital-admin",
+      "level": "Intermediate",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771057124,
+        "_nanoseconds": 753000000
+      }
+    },
+    {
+      "id": "qf4BPna4ALIxUgIPVvxb",
+      "title": "Red Team Lead",
+      "fieldId": "cybersecurity",
+      "specializationId": "cyber-offensive",
+      "level": "Intermediate",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771057133,
+        "_nanoseconds": 208000000
+      }
+    },
+    {
+      "id": "rQV6MQuoSEdF7kup7Ijc",
+      "title": "IPS Officer",
+      "fieldId": "civil-services",
+      "specializationId": "civil-police",
+      "level": "Intermediate",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771057130,
+        "_nanoseconds": 845000000
+      }
+    },
+    {
+      "id": "s3VSQaoSUiWLDtfAN6q2",
+      "title": "Hospital Manager",
+      "fieldId": "medical",
+      "specializationId": "hospital-admin",
+      "level": "Intermediate",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771057124,
+        "_nanoseconds": 753000000
+      }
+    },
+    {
+      "id": "sRZUOdnwMZSM0CjdiW83",
+      "title": "Digital Editor",
+      "fieldId": "media",
+      "specializationId": "media-journalism",
+      "level": "Intermediate",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771057129,
+        "_nanoseconds": 532000000
+      }
+    },
+    {
+      "id": "uc1mpi0h7ocR4V8TNk6Z",
+      "title": "Power Systems Engineer",
+      "fieldId": "engineering",
+      "specializationId": "eee-power-systems",
+      "level": "Intermediate",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771057121,
+        "_nanoseconds": 756000000
+      }
+    },
+    {
+      "id": "vGFTgZ2JTvGeQZb2ApdA",
+      "title": "ASIC Designer",
+      "fieldId": "engineering",
+      "specializationId": "ece-vlsi",
+      "level": "Intermediate",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771057121,
+        "_nanoseconds": 68000000
+      }
+    },
+    {
+      "id": "vhVCgzXvfrcJ1fO5winV",
+      "title": "Sustainability Lead",
+      "fieldId": "logistics",
+      "specializationId": "supply-chain-analytics",
+      "level": "Intermediate",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771057131,
+        "_nanoseconds": 62000000
+      }
+    },
+    {
+      "id": "wC8mBQqSrCdYxHoXkKya",
+      "title": "SCM Consultant",
+      "fieldId": "logistics",
+      "specializationId": "supply-chain-analytics",
+      "level": "Intermediate",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771057131,
+        "_nanoseconds": 62000000
+      }
+    },
+    {
+      "id": "whEjiykMvNoR46RjvW9o",
+      "title": "ML Engineer",
+      "fieldId": "engineering",
+      "specializationId": "cse-ai-ml",
+      "level": "Intermediate",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771057120,
+        "_nanoseconds": 678000000
+      }
+    },
+    {
+      "id": "wvx6U1b77ax1FP9zJEBs",
+      "title": "CISO",
+      "fieldId": "cybersecurity",
+      "specializationId": "cyber-defensive",
+      "level": "Intermediate",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771057133,
+        "_nanoseconds": 524000000
+      }
+    },
+    {
+      "id": "xAsqddlOxeJDK5FFNkc6",
+      "title": "Structural Engineer",
+      "fieldId": "engineering",
+      "specializationId": "civil-structural",
+      "level": "Intermediate",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771057123,
+        "_nanoseconds": 993000000
+      }
+    },
+    {
+      "id": "xMrnXG7GixSOr5dGFfBD",
+      "title": "Financial Analyst",
+      "fieldId": "commerce",
+      "specializationId": "financial-analysis",
+      "level": "Intermediate",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771057126,
+        "_nanoseconds": 582000000
+      }
+    },
+    {
+      "id": "ySgVTzJUCICgAlDinNeF",
+      "title": "Software Engineer",
+      "fieldId": "engineering",
+      "specializationId": "cse-software-dev",
+      "level": "Intermediate",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771057118,
+        "_nanoseconds": 504000000
+      }
+    },
+    {
+      "id": "zVPY4FsNKJ31hU9HwBPr",
+      "title": "Social Media Head",
+      "fieldId": "media",
+      "specializationId": "media-digital",
+      "level": "Intermediate",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771057129,
+        "_nanoseconds": 804000000
+      }
+    },
+    {
+      "id": "zezD0s90nWQhvCGlbMQl",
+      "title": "Agri-Tech Founder",
+      "fieldId": "agriculture",
+      "specializationId": "agritech",
+      "level": "Intermediate",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771057135,
+        "_nanoseconds": 57000000
+      }
+    },
+    {
+      "id": "zt4wdawVZ6mXhjwxq5en",
+      "title": "Business Intelligence Developer",
+      "fieldId": "commerce",
+      "specializationId": "business-analytics",
+      "level": "Intermediate",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "salaryImpact": "+15%",
+      "createdAt": {
+        "_seconds": 1771057127,
+        "_nanoseconds": 302000000
+      }
+    }
+  ],
+  "projects": [
+    {
+      "id": "0RvMg7Wn31VaepOSWWZo",
+      "name": "Custom GPT",
+      "fieldId": "ai-ml",
+      "specializationId": "ai-nlp",
+      "difficulty": "advanced",
+      "techStack": [],
+      "description": "Build Custom GPT",
+      "estimatedTime": "2-3 months",
+      "createdAt": {
+        "_seconds": 1771057133,
+        "_nanoseconds": 57000000
+      }
+    },
+    {
+      "id": "0bZqbQ7xv55t8ArXdFar",
+      "name": "Big Data Pipeline",
+      "fieldId": "ai-ml",
+      "specializationId": "ai-ds",
+      "difficulty": "advanced",
+      "techStack": [],
+      "description": "Build Big Data Pipeline",
+      "estimatedTime": "2-3 months",
+      "createdAt": {
+        "_seconds": 1771057132,
+        "_nanoseconds": 807000000
+      }
+    },
+    {
+      "id": "1lCGP9xBkL5qqfR92K4U",
+      "name": "BIM model",
+      "fieldId": "engineering",
+      "specializationId": "civil-construction",
+      "difficulty": "intermediate",
+      "techStack": [],
+      "description": "Build BIM model",
+      "estimatedTime": "3-4 weeks",
+      "createdAt": {
+        "_seconds": 1771057124,
+        "_nanoseconds": 505000000
+      }
+    },
+    {
+      "id": "2f1HnTsG1Es2FtuvzU02",
+      "name": "VPC Setup",
+      "fieldId": "cloud-computing",
+      "specializationId": "cloud-architecture",
+      "difficulty": "beginner",
+      "techStack": [],
+      "description": "Build VPC Setup",
+      "estimatedTime": "1-2 weeks",
+      "createdAt": {
+        "_seconds": 1771057132,
+        "_nanoseconds": 132000000
+      }
+    },
+    {
+      "id": "2mO6wR88plQa7KqeXGh8",
+      "name": "Incident Response Pro",
+      "fieldId": "cybersecurity",
+      "specializationId": "cyber-defensive",
+      "difficulty": "advanced",
+      "techStack": [],
+      "description": "Build Incident Response Pro",
+      "estimatedTime": "2-3 months",
+      "createdAt": {
+        "_seconds": 1771057133,
+        "_nanoseconds": 606000000
+      }
+    },
+    {
+      "id": "2qYfSWDtVeKgy6BCk1c2",
+      "name": "Sea Log",
+      "fieldId": "aviation",
+      "specializationId": "merchant-navy-deck-engine",
+      "difficulty": "beginner",
+      "techStack": [],
+      "description": "Build Sea Log",
+      "estimatedTime": "1-2 weeks",
+      "createdAt": {
+        "_seconds": 1771057131,
+        "_nanoseconds": 911000000
+      }
+    },
+    {
+      "id": "2xItzPZMV9HoS9KEv5mQ",
+      "name": "Crime Data Hub",
+      "fieldId": "civil-services",
+      "specializationId": "civil-police",
+      "difficulty": "advanced",
+      "techStack": [],
+      "description": "Build Crime Data Hub",
+      "estimatedTime": "2-3 months",
+      "createdAt": {
+        "_seconds": 1771057130,
+        "_nanoseconds": 918000000
+      }
+    },
+    {
+      "id": "3lGoRK17x1MKdzaMllCi",
+      "name": "3D Bridge",
+      "fieldId": "engineering",
+      "specializationId": "mech-design",
+      "difficulty": "beginner",
+      "techStack": [],
+      "description": "Build 3D Bridge",
+      "estimatedTime": "1-2 weeks",
+      "createdAt": {
+        "_seconds": 1771057122,
+        "_nanoseconds": 813000000
+      }
+    },
+    {
+      "id": "415XzSiRXNciNtvjICeT",
+      "name": "Fitness Plan",
+      "fieldId": "defense",
+      "specializationId": "armed-forces",
+      "difficulty": "beginner",
+      "techStack": [],
+      "description": "Build Fitness Plan",
+      "estimatedTime": "1-2 weeks",
+      "createdAt": {
+        "_seconds": 1771057129,
+        "_nanoseconds": 314000000
+      }
+    },
+    {
+      "id": "41ZZhcUtjD1MGWB7ZVDw",
+      "name": "Brand Pivot",
+      "fieldId": "media",
+      "specializationId": "media-digital",
+      "difficulty": "advanced",
+      "techStack": [],
+      "description": "Build Brand Pivot",
+      "estimatedTime": "2-3 months",
+      "createdAt": {
+        "_seconds": 1771057129,
+        "_nanoseconds": 953000000
+      }
+    },
+    {
+      "id": "4AnHcwMM7YVH5HmpOT7c",
+      "name": "Sentiment Bot",
+      "fieldId": "engineering",
+      "specializationId": "cse-ai-ml",
+      "difficulty": "intermediate",
+      "techStack": [],
+      "description": "Build Sentiment Bot",
+      "estimatedTime": "3-4 weeks",
+      "createdAt": {
+        "_seconds": 1771057120,
+        "_nanoseconds": 837000000
+      }
+    },
+    {
+      "id": "4VRtsRIA42g0cvCo77fQ",
+      "name": "UPSC Mock",
+      "fieldId": "civil-services",
+      "specializationId": "civil-admin",
+      "difficulty": "beginner",
+      "techStack": [],
+      "description": "Build UPSC Mock",
+      "estimatedTime": "1-2 weeks",
+      "createdAt": {
+        "_seconds": 1771057130,
+        "_nanoseconds": 339000000
+      }
+    },
+    {
+      "id": "5S0v8DkFlstMWwjSmf3m",
+      "name": "SQLi Lab",
+      "fieldId": "cybersecurity",
+      "specializationId": "cyber-offensive",
+      "difficulty": "beginner",
+      "techStack": [],
+      "description": "Build SQLi Lab",
+      "estimatedTime": "1-2 weeks",
+      "createdAt": {
+        "_seconds": 1771057133,
+        "_nanoseconds": 300000000
+      }
+    },
+    {
+      "id": "5vBeP4LRZ8NWJOgHadsD",
+      "name": "Property Setup",
+      "fieldId": "hospitality",
+      "specializationId": "hotel-mgmt",
+      "difficulty": "advanced",
+      "techStack": [],
+      "description": "Build Property Setup",
+      "estimatedTime": "2-3 months",
+      "createdAt": {
+        "_seconds": 1771057135,
+        "_nanoseconds": 354000000
+      }
+    },
+    {
+      "id": "6JWlq49MWYFCbTSsWqOP",
+      "name": "Cyber Crime Case",
+      "fieldId": "law",
+      "specializationId": "cyber-law",
+      "difficulty": "advanced",
+      "techStack": [],
+      "description": "Build Cyber Crime Case",
+      "estimatedTime": "2-3 months",
+      "createdAt": {
+        "_seconds": 1771057127,
+        "_nanoseconds": 928000000
+      }
+    },
+    {
+      "id": "6zYCYWtWFvsWEhdONUDB",
+      "name": "Market Sim",
+      "fieldId": "science",
+      "specializationId": "applied-math",
+      "difficulty": "intermediate",
+      "techStack": [],
+      "description": "Build Market Sim",
+      "estimatedTime": "3-4 weeks",
+      "createdAt": {
+        "_seconds": 1771057126,
+        "_nanoseconds": 145000000
+      }
+    },
+    {
+      "id": "7MdVpUHYvazipPOZtpyO",
+      "name": "Autonomous Bot",
+      "fieldId": "engineering",
+      "specializationId": "cse-ai-ml",
+      "difficulty": "advanced",
+      "techStack": [],
+      "description": "Build Autonomous Bot",
+      "estimatedTime": "2-3 months",
+      "createdAt": {
+        "_seconds": 1771057120,
+        "_nanoseconds": 837000000
+      }
+    },
+    {
+      "id": "7iErlEf2pmjXUwgn5CIm",
+      "name": "Stock Valuation",
+      "fieldId": "commerce",
+      "specializationId": "financial-analysis",
+      "difficulty": "intermediate",
+      "techStack": [],
+      "description": "Build Stock Valuation",
+      "estimatedTime": "3-4 weeks",
+      "createdAt": {
+        "_seconds": 1771057126,
+        "_nanoseconds": 659000000
+      }
+    },
+    {
+      "id": "7pAE5qANomrZjSWjCx9P",
+      "name": "ATPL Theory",
+      "fieldId": "aviation",
+      "specializationId": "commercial-pilot-operations",
+      "difficulty": "advanced",
+      "techStack": [],
+      "description": "Build ATPL Theory",
+      "estimatedTime": "2-3 months",
+      "createdAt": {
+        "_seconds": 1771057131,
+        "_nanoseconds": 664000000
+      }
+    },
+    {
+      "id": "7xVSiTpnfoalbDMiiea1",
+      "name": "Design System",
+      "fieldId": "design",
+      "specializationId": "ui-ux",
+      "difficulty": "intermediate",
+      "techStack": [],
+      "description": "Build Design System",
+      "estimatedTime": "3-4 weeks",
+      "createdAt": {
+        "_seconds": 1771057128,
+        "_nanoseconds": 693000000
+      }
+    },
+    {
+      "id": "8iy1MTrZikI6ztWClryo",
+      "name": "Mobile App Mockup",
+      "fieldId": "design",
+      "specializationId": "ui-ux",
+      "difficulty": "beginner",
+      "techStack": [],
+      "description": "Build Mobile App Mockup",
+      "estimatedTime": "1-2 weeks",
+      "createdAt": {
+        "_seconds": 1771057128,
+        "_nanoseconds": 693000000
+      }
+    },
+    {
+      "id": "8ye5Z5zsZxtxQEgna5BC",
+      "name": "Micro-grid model",
+      "fieldId": "engineering",
+      "specializationId": "eee-power-systems",
+      "difficulty": "intermediate",
+      "techStack": [],
+      "description": "Build Micro-grid model",
+      "estimatedTime": "3-4 weeks",
+      "createdAt": {
+        "_seconds": 1771057121,
+        "_nanoseconds": 874000000
+      }
+    },
+    {
+      "id": "9ZxAGtHtSp0cS3dHasCW",
+      "name": "District Plan",
+      "fieldId": "civil-services",
+      "specializationId": "civil-admin",
+      "difficulty": "intermediate",
+      "techStack": [],
+      "description": "Build District Plan",
+      "estimatedTime": "3-4 weeks",
+      "createdAt": {
+        "_seconds": 1771057130,
+        "_nanoseconds": 339000000
+      }
+    },
+    {
+      "id": "9x6ABB5KFNZMa1hWvS2v",
+      "name": "EHR Mockup",
+      "fieldId": "medical",
+      "specializationId": "health-informatics",
+      "difficulty": "beginner",
+      "techStack": [],
+      "description": "Build EHR Mockup",
+      "estimatedTime": "1-2 weeks",
+      "createdAt": {
+        "_seconds": 1771057125,
+        "_nanoseconds": 603000000
+      }
+    },
+    {
+      "id": "AEPElgCIcQxyKGxAd9dT",
+      "name": "LMS Course",
+      "fieldId": "education",
+      "specializationId": "edtech",
+      "difficulty": "intermediate",
+      "techStack": [],
+      "description": "Build LMS Course",
+      "estimatedTime": "3-4 weeks",
+      "createdAt": {
+        "_seconds": 1771057134,
+        "_nanoseconds": 912000000
+      }
+    },
+    {
+      "id": "BSAvOCxR9Goz4mUDHR6v",
+      "name": "FDA Filing Mockup",
+      "fieldId": "medical",
+      "specializationId": "clinical-research",
+      "difficulty": "intermediate",
+      "techStack": [],
+      "description": "Build FDA Filing Mockup",
+      "estimatedTime": "3-4 weeks",
+      "createdAt": {
+        "_seconds": 1771057125,
+        "_nanoseconds": 266000000
+      }
+    },
+    {
+      "id": "BYVkltKa8cej37xNizZ8",
+      "name": "Predictive Model",
+      "fieldId": "ai-ml",
+      "specializationId": "ai-ds",
+      "difficulty": "intermediate",
+      "techStack": [],
+      "description": "Build Predictive Model",
+      "estimatedTime": "3-4 weeks",
+      "createdAt": {
+        "_seconds": 1771057132,
+        "_nanoseconds": 807000000
+      }
+    },
+    {
+      "id": "CZaxWU3PL9MMgatYO6qW",
+      "name": "Tax Audit",
+      "fieldId": "commerce",
+      "specializationId": "accounting",
+      "difficulty": "intermediate",
+      "techStack": [],
+      "description": "Build Tax Audit",
+      "estimatedTime": "3-4 weeks",
+      "createdAt": {
+        "_seconds": 1771057127,
+        "_nanoseconds": 111000000
+      }
+    },
+    {
+      "id": "Ca0Oyt2WsVvwnDGfbBqY",
+      "name": "M&A Model",
+      "fieldId": "commerce",
+      "specializationId": "financial-analysis",
+      "difficulty": "advanced",
+      "techStack": [],
+      "description": "Build M&A Model",
+      "estimatedTime": "2-3 months",
+      "createdAt": {
+        "_seconds": 1771057126,
+        "_nanoseconds": 659000000
+      }
+    },
+    {
+      "id": "Cn4MAcaRM8pv4IjVLMbu",
+      "name": "Social Media Clone",
+      "fieldId": "engineering",
+      "specializationId": "cse-web-dev",
+      "difficulty": "intermediate",
+      "techStack": [],
+      "description": "Build Social Media Clone",
+      "estimatedTime": "3-4 weeks",
+      "createdAt": {
+        "_seconds": 1771057119,
+        "_nanoseconds": 440000000
+      }
+    },
+    {
+      "id": "D9zlFKuRZUUO21XyQ1Ad",
+      "name": "Truss Model",
+      "fieldId": "engineering",
+      "specializationId": "civil-structural",
+      "difficulty": "beginner",
+      "techStack": [],
+      "description": "Build Truss Model",
+      "estimatedTime": "1-2 weeks",
+      "createdAt": {
+        "_seconds": 1771057124,
+        "_nanoseconds": 197000000
+      }
+    },
+    {
+      "id": "DA72ELWGt7A6Fi3NwMR0",
+      "name": "Log Analytics",
+      "fieldId": "cybersecurity",
+      "specializationId": "cyber-defensive",
+      "difficulty": "beginner",
+      "techStack": [],
+      "description": "Build Log Analytics",
+      "estimatedTime": "1-2 weeks",
+      "createdAt": {
+        "_seconds": 1771057133,
+        "_nanoseconds": 606000000
+      }
+    },
+    {
+      "id": "DtegJxYkKAP6BSfCp5uf",
+      "name": "Spam Filter",
+      "fieldId": "ai-ml",
+      "specializationId": "ai-nlp",
+      "difficulty": "beginner",
+      "techStack": [],
+      "description": "Build Spam Filter",
+      "estimatedTime": "1-2 weeks",
+      "createdAt": {
+        "_seconds": 1771057133,
+        "_nanoseconds": 57000000
+      }
+    },
+    {
+      "id": "EFIkGYgDllm2gNGtf17e",
+      "name": "Basic Circuit",
+      "fieldId": "engineering",
+      "specializationId": "eee-power-systems",
+      "difficulty": "beginner",
+      "techStack": [],
+      "description": "Build Basic Circuit",
+      "estimatedTime": "1-2 weeks",
+      "createdAt": {
+        "_seconds": 1771057121,
+        "_nanoseconds": 874000000
+      }
+    },
+    {
+      "id": "EWznBzJQyvdauc83r78a",
+      "name": "QKD Sim",
+      "fieldId": "emerging-tech",
+      "specializationId": "tech-quantum",
+      "difficulty": "intermediate",
+      "techStack": [],
+      "description": "Build QKD Sim",
+      "estimatedTime": "3-4 weeks",
+      "createdAt": {
+        "_seconds": 1771057134,
+        "_nanoseconds": 474000000
+      }
+    },
+    {
+      "id": "ErFswhEZXdwXiMik5Ax8",
+      "name": "Distributed System",
+      "fieldId": "engineering",
+      "specializationId": "cse-software-dev",
+      "difficulty": "advanced",
+      "techStack": [],
+      "description": "Build Distributed System",
+      "estimatedTime": "2-3 months",
+      "createdAt": {
+        "_seconds": 1771057118,
+        "_nanoseconds": 718000000
+      }
+    },
+    {
+      "id": "F3yBqI5srBhwWTD8qSkW",
+      "name": "Lesson Plan",
+      "fieldId": "education",
+      "specializationId": "edtech",
+      "difficulty": "beginner",
+      "techStack": [],
+      "description": "Build Lesson Plan",
+      "estimatedTime": "1-2 weeks",
+      "createdAt": {
+        "_seconds": 1771057134,
+        "_nanoseconds": 912000000
+      }
+    },
+    {
+      "id": "FUAOyPZGELRV7gWwYqJ2",
+      "name": "Generative AI",
+      "fieldId": "ai-ml",
+      "specializationId": "ai-deep-learning",
+      "difficulty": "advanced",
+      "techStack": [],
+      "description": "Build Generative AI",
+      "estimatedTime": "2-3 months",
+      "createdAt": {
+        "_seconds": 1771057132,
+        "_nanoseconds": 595000000
+      }
+    },
+    {
+      "id": "FqbcyUdfn0FqRBZ4njCn",
+      "name": "Drone Agri",
+      "fieldId": "agriculture",
+      "specializationId": "agritech",
+      "difficulty": "intermediate",
+      "techStack": [],
+      "description": "Build Drone Agri",
+      "estimatedTime": "3-4 weeks",
+      "createdAt": {
+        "_seconds": 1771057135,
+        "_nanoseconds": 129000000
+      }
+    },
+    {
+      "id": "FuRO9txhtNMq28SWHHqq",
+      "name": "Metaverse DApp",
+      "fieldId": "blockchain-web3",
+      "specializationId": "web3-dapps",
+      "difficulty": "advanced",
+      "techStack": [],
+      "description": "Build Metaverse DApp",
+      "estimatedTime": "2-3 months",
+      "createdAt": {
+        "_seconds": 1771057134,
+        "_nanoseconds": 256000000
+      }
+    },
+    {
+      "id": "G7LXifxFo0j2MlSo5UGa",
+      "name": "Soil Sensor",
+      "fieldId": "agriculture",
+      "specializationId": "agritech",
+      "difficulty": "beginner",
+      "techStack": [],
+      "description": "Build Soil Sensor",
+      "estimatedTime": "1-2 weeks",
+      "createdAt": {
+        "_seconds": 1771057135,
+        "_nanoseconds": 129000000
+      }
+    },
+    {
+      "id": "G954iatqEs3X3g6aVviG",
+      "name": "Multiplayer Logic",
+      "fieldId": "design",
+      "specializationId": "game-design",
+      "difficulty": "advanced",
+      "techStack": [],
+      "description": "Build Multiplayer Logic",
+      "estimatedTime": "2-3 months",
+      "createdAt": {
+        "_seconds": 1771057128,
+        "_nanoseconds": 960000000
+      }
+    },
+    {
+      "id": "H1u6KqMaabjkxFfY6F4J",
+      "name": "Startup Legal Kit",
+      "fieldId": "law",
+      "specializationId": "corporate-law",
+      "difficulty": "intermediate",
+      "techStack": [],
+      "description": "Build Startup Legal Kit",
+      "estimatedTime": "3-4 weeks",
+      "createdAt": {
+        "_seconds": 1771057127,
+        "_nanoseconds": 613000000
+      }
+    },
+    {
+      "id": "H5080iSqFjJ6wc4TFcS8",
+      "name": "Policy Proposal",
+      "fieldId": "civil-services",
+      "specializationId": "civil-admin",
+      "difficulty": "advanced",
+      "techStack": [],
+      "description": "Build Policy Proposal",
+      "estimatedTime": "2-3 months",
+      "createdAt": {
+        "_seconds": 1771057130,
+        "_nanoseconds": 339000000
+      }
+    },
+    {
+      "id": "HMwvpLqneC6TnLVqakNQ",
+      "name": "ERC20 Token",
+      "fieldId": "blockchain-web3",
+      "specializationId": "web3-smart-contracts",
+      "difficulty": "beginner",
+      "techStack": [],
+      "description": "Build ERC20 Token",
+      "estimatedTime": "1-2 weeks",
+      "createdAt": {
+        "_seconds": 1771057133,
+        "_nanoseconds": 987000000
+      }
+    },
+    {
+      "id": "IE9zri0r2e383hn3iJGr",
+      "name": "Drone",
+      "fieldId": "emerging-tech",
+      "specializationId": "tech-robotics",
+      "difficulty": "beginner",
+      "techStack": [],
+      "description": "Build Drone",
+      "estimatedTime": "1-2 weeks",
+      "createdAt": {
+        "_seconds": 1771057134,
+        "_nanoseconds": 686000000
+      }
+    },
+    {
+      "id": "IKu8GpJ8rTclduiS432B",
+      "name": "Patrol Optimization",
+      "fieldId": "civil-services",
+      "specializationId": "civil-police",
+      "difficulty": "intermediate",
+      "techStack": [],
+      "description": "Build Patrol Optimization",
+      "estimatedTime": "3-4 weeks",
+      "createdAt": {
+        "_seconds": 1771057130,
+        "_nanoseconds": 918000000
+      }
+    },
+    {
+      "id": "Iqmi3UOX7XPlPalMYvws",
+      "name": "AI Diagnosis",
+      "fieldId": "medical",
+      "specializationId": "health-informatics",
+      "difficulty": "advanced",
+      "techStack": [],
+      "description": "Build AI Diagnosis",
+      "estimatedTime": "2-3 months",
+      "createdAt": {
+        "_seconds": 1771057125,
+        "_nanoseconds": 603000000
+      }
+    },
+    {
+      "id": "J9N3QasW6igrRwq407u0",
+      "name": "Navigation Mock",
+      "fieldId": "aviation",
+      "specializationId": "merchant-navy-deck-engine",
+      "difficulty": "intermediate",
+      "techStack": [],
+      "description": "Build Navigation Mock",
+      "estimatedTime": "3-4 weeks",
+      "createdAt": {
+        "_seconds": 1771057131,
+        "_nanoseconds": 911000000
+      }
+    },
+    {
+      "id": "KYX2XqyCf7kA7YfvCqzJ",
+      "name": "Complex SaaS UI",
+      "fieldId": "design",
+      "specializationId": "ui-ux",
+      "difficulty": "advanced",
+      "techStack": [],
+      "description": "Build Complex SaaS UI",
+      "estimatedTime": "2-3 months",
+      "createdAt": {
+        "_seconds": 1771057128,
+        "_nanoseconds": 693000000
+      }
+    },
+    {
+      "id": "KmqCnhnWtu8vVoMmHO6o",
+      "name": "Excel Dash",
+      "fieldId": "commerce",
+      "specializationId": "business-analytics",
+      "difficulty": "beginner",
+      "techStack": [],
+      "description": "Build Excel Dash",
+      "estimatedTime": "1-2 weeks",
+      "createdAt": {
+        "_seconds": 1771057127,
+        "_nanoseconds": 383000000
+      }
+    },
+    {
+      "id": "LG8buCNl5mrtw2kP8fPX",
+      "name": "Skyscraper Analysis",
+      "fieldId": "engineering",
+      "specializationId": "civil-structural",
+      "difficulty": "advanced",
+      "techStack": [],
+      "description": "Build Skyscraper Analysis",
+      "estimatedTime": "2-3 months",
+      "createdAt": {
+        "_seconds": 1771057124,
+        "_nanoseconds": 197000000
+      }
+    },
+    {
+      "id": "LaiheBYRDSKZGMjUAd2s",
+      "name": "Digit Recognizer",
+      "fieldId": "engineering",
+      "specializationId": "cse-ai-ml",
+      "difficulty": "beginner",
+      "techStack": [],
+      "description": "Build Digit Recognizer",
+      "estimatedTime": "1-2 weeks",
+      "createdAt": {
+        "_seconds": 1771057120,
+        "_nanoseconds": 837000000
+      }
+    },
+    {
+      "id": "MFmuV1GembaQS7Nn5s5x",
+      "name": "Serverless API",
+      "fieldId": "cloud-computing",
+      "specializationId": "cloud-architecture",
+      "difficulty": "intermediate",
+      "techStack": [],
+      "description": "Build Serverless API",
+      "estimatedTime": "3-4 weeks",
+      "createdAt": {
+        "_seconds": 1771057132,
+        "_nanoseconds": 132000000
+      }
+    },
+    {
+      "id": "MOcagnIjaEiWvwSHuCEL",
+      "name": "Contract Draft",
+      "fieldId": "law",
+      "specializationId": "corporate-law",
+      "difficulty": "beginner",
+      "techStack": [],
+      "description": "Build Contract Draft",
+      "estimatedTime": "1-2 weeks",
+      "createdAt": {
+        "_seconds": 1771057127,
+        "_nanoseconds": 613000000
+      }
+    },
+    {
+      "id": "Mu4eAjXXvklTenLvY8Cs",
+      "name": "Factory Automation",
+      "fieldId": "engineering",
+      "specializationId": "mech-design",
+      "difficulty": "advanced",
+      "techStack": [],
+      "description": "Build Factory Automation",
+      "estimatedTime": "2-3 months",
+      "createdAt": {
+        "_seconds": 1771057122,
+        "_nanoseconds": 813000000
+      }
+    },
+    {
+      "id": "Mu6UjeWCK8C2ZQb2OvKi",
+      "name": "Smart Home Hub",
+      "fieldId": "engineering",
+      "specializationId": "ece-embedded",
+      "difficulty": "intermediate",
+      "techStack": [],
+      "description": "Build Smart Home Hub",
+      "estimatedTime": "3-4 weeks",
+      "createdAt": {
+        "_seconds": 1771057121,
+        "_nanoseconds": 550000000
+      }
+    },
+    {
+      "id": "NY3k2M46NJROTCGMxnNc",
+      "name": "E-commerce API",
+      "fieldId": "engineering",
+      "specializationId": "cse-software-dev",
+      "difficulty": "intermediate",
+      "techStack": [],
+      "description": "Build E-commerce API",
+      "estimatedTime": "3-4 weeks",
+      "createdAt": {
+        "_seconds": 1771057118,
+        "_nanoseconds": 718000000
+      }
+    },
+    {
+      "id": "NpwcJmgwqi9UBhu4I3cq",
+      "name": "Battery Check",
+      "fieldId": "vocational",
+      "specializationId": "ev-tech",
+      "difficulty": "beginner",
+      "techStack": [],
+      "description": "Build Battery Check",
+      "estimatedTime": "1-2 weeks",
+      "createdAt": {
+        "_seconds": 1771057135,
+        "_nanoseconds": 797000000
+      }
+    },
+    {
+      "id": "NwOSfy7zdf85ygFPkEMg",
+      "name": "GDPR Audit",
+      "fieldId": "law",
+      "specializationId": "cyber-law",
+      "difficulty": "intermediate",
+      "techStack": [],
+      "description": "Build GDPR Audit",
+      "estimatedTime": "3-4 weeks",
+      "createdAt": {
+        "_seconds": 1771057127,
+        "_nanoseconds": 928000000
+      }
+    },
+    {
+      "id": "Ny3FOiWxphFZXTeNpH8h",
+      "name": "Portfolio",
+      "fieldId": "engineering",
+      "specializationId": "cse-web-dev",
+      "difficulty": "beginner",
+      "techStack": [],
+      "description": "Build Portfolio",
+      "estimatedTime": "1-2 weeks",
+      "createdAt": {
+        "_seconds": 1771057119,
+        "_nanoseconds": 440000000
+      }
+    },
+    {
+      "id": "O9Nb9ld4h8GqKkmi5SvV",
+      "name": "Vuln Scanner",
+      "fieldId": "cybersecurity",
+      "specializationId": "cyber-offensive",
+      "difficulty": "intermediate",
+      "techStack": [],
+      "description": "Build Vuln Scanner",
+      "estimatedTime": "3-4 weeks",
+      "createdAt": {
+        "_seconds": 1771057133,
+        "_nanoseconds": 300000000
+      }
+    },
+    {
+      "id": "OaQb8Tkw2gffOLxrz5BI",
+      "name": "Layout Design",
+      "fieldId": "logistics",
+      "specializationId": "warehouse-transport-management",
+      "difficulty": "beginner",
+      "techStack": [],
+      "description": "Build Layout Design",
+      "estimatedTime": "1-2 weeks",
+      "createdAt": {
+        "_seconds": 1771057131,
+        "_nanoseconds": 383000000
+      }
+    },
+    {
+      "id": "OjDHjymqtgTYXkS6PqHL",
+      "name": "Quantum Gate",
+      "fieldId": "emerging-tech",
+      "specializationId": "tech-quantum",
+      "difficulty": "beginner",
+      "techStack": [],
+      "description": "Build Quantum Gate",
+      "estimatedTime": "1-2 weeks",
+      "createdAt": {
+        "_seconds": 1771057134,
+        "_nanoseconds": 474000000
+      }
+    },
+    {
+      "id": "OlqRRjK2XQvPt5YbyCt6",
+      "name": "Proteomics App",
+      "fieldId": "science",
+      "specializationId": "bioinformatics",
+      "difficulty": "intermediate",
+      "techStack": [],
+      "description": "Build Proteomics App",
+      "estimatedTime": "3-4 weeks",
+      "createdAt": {
+        "_seconds": 1771057126,
+        "_nanoseconds": 416000000
+      }
+    },
+    {
+      "id": "P61z7ChUMAv6mPp1nwDl",
+      "name": "Nvidia-grade GPU block",
+      "fieldId": "engineering",
+      "specializationId": "ece-vlsi",
+      "difficulty": "advanced",
+      "techStack": [],
+      "description": "Build Nvidia-grade GPU block",
+      "estimatedTime": "2-3 months",
+      "createdAt": {
+        "_seconds": 1771057121,
+        "_nanoseconds": 158000000
+      }
+    },
+    {
+      "id": "PKmaitjM7YaQNkZxfxmQ",
+      "name": "Zero Downtime CI/CD",
+      "fieldId": "cloud-computing",
+      "specializationId": "cloud-devops",
+      "difficulty": "advanced",
+      "techStack": [],
+      "description": "Build Zero Downtime CI/CD",
+      "estimatedTime": "2-3 months",
+      "createdAt": {
+        "_seconds": 1771057132,
+        "_nanoseconds": 356000000
+      }
+    },
+    {
+      "id": "PsiMT3EOdCMK3nHMz7Ok",
+      "name": "Injury Map",
+      "fieldId": "sports",
+      "specializationId": "sports-science",
+      "difficulty": "intermediate",
+      "techStack": [],
+      "description": "Build Injury Map",
+      "estimatedTime": "3-4 weeks",
+      "createdAt": {
+        "_seconds": 1771057135,
+        "_nanoseconds": 568000000
+      }
+    },
+    {
+      "id": "Q0ScwIoQguSq14HbkgTs",
+      "name": "Shor's Demo",
+      "fieldId": "emerging-tech",
+      "specializationId": "tech-quantum",
+      "difficulty": "advanced",
+      "techStack": [],
+      "description": "Build Shor's Demo",
+      "estimatedTime": "2-3 months",
+      "createdAt": {
+        "_seconds": 1771057134,
+        "_nanoseconds": 474000000
+      }
+    },
+    {
+      "id": "R3RDl7mAxzKwsf7H9AsY",
+      "name": "Video Doc",
+      "fieldId": "media",
+      "specializationId": "media-journalism",
+      "difficulty": "intermediate",
+      "techStack": [],
+      "description": "Build Video Doc",
+      "estimatedTime": "3-4 weeks",
+      "createdAt": {
+        "_seconds": 1771057129,
+        "_nanoseconds": 650000000
+      }
+    },
+    {
+      "id": "SL0Na3MWDG4Yv1yhdwaK",
+      "name": "Humanoid Model",
+      "fieldId": "engineering",
+      "specializationId": "mech-robotics",
+      "difficulty": "advanced",
+      "techStack": [],
+      "description": "Build Humanoid Model",
+      "estimatedTime": "2-3 months",
+      "createdAt": {
+        "_seconds": 1771057123,
+        "_nanoseconds": 725000000
+      }
+    },
+    {
+      "id": "SVcUQG6hotvARlEfMSiJ",
+      "name": "DNA Seq",
+      "fieldId": "science",
+      "specializationId": "bioinformatics",
+      "difficulty": "beginner",
+      "techStack": [],
+      "description": "Build DNA Seq",
+      "estimatedTime": "1-2 weeks",
+      "createdAt": {
+        "_seconds": 1771057126,
+        "_nanoseconds": 416000000
+      }
+    },
+    {
+      "id": "SWSeh3ZLXpFxNXSJCGpE",
+      "name": "Engine Overhaul",
+      "fieldId": "aviation",
+      "specializationId": "merchant-navy-deck-engine",
+      "difficulty": "advanced",
+      "techStack": [],
+      "description": "Build Engine Overhaul",
+      "estimatedTime": "2-3 months",
+      "createdAt": {
+        "_seconds": 1771057131,
+        "_nanoseconds": 911000000
+      }
+    },
+    {
+      "id": "SlqbdVp6Tbe1ylaCKCNn",
+      "name": "SaaS Platform",
+      "fieldId": "engineering",
+      "specializationId": "cse-web-dev",
+      "difficulty": "advanced",
+      "techStack": [],
+      "description": "Build SaaS Platform",
+      "estimatedTime": "2-3 months",
+      "createdAt": {
+        "_seconds": 1771057119,
+        "_nanoseconds": 440000000
+      }
+    },
+    {
+      "id": "StWMbTd9Gu2a3dfMmh2B",
+      "name": "Metro Project",
+      "fieldId": "engineering",
+      "specializationId": "civil-construction",
+      "difficulty": "advanced",
+      "techStack": [],
+      "description": "Build Metro Project",
+      "estimatedTime": "2-3 months",
+      "createdAt": {
+        "_seconds": 1771057124,
+        "_nanoseconds": 505000000
+      }
+    },
+    {
+      "id": "Th2ThDG5DBQiLnaOGSYJ",
+      "name": "Full APT Mock",
+      "fieldId": "cybersecurity",
+      "specializationId": "cyber-offensive",
+      "difficulty": "advanced",
+      "techStack": [],
+      "description": "Build Full APT Mock",
+      "estimatedTime": "2-3 months",
+      "createdAt": {
+        "_seconds": 1771057133,
+        "_nanoseconds": 300000000
+      }
+    },
+    {
+      "id": "TqzLTltVGp5CnDqJ9c1U",
+      "name": "Lit Review",
+      "fieldId": "science",
+      "specializationId": "rnd",
+      "difficulty": "beginner",
+      "techStack": [],
+      "description": "Build Lit Review",
+      "estimatedTime": "1-2 weeks",
+      "createdAt": {
+        "_seconds": 1771057125,
+        "_nanoseconds": 855000000
+      }
+    },
+    {
+      "id": "Tukr6lSxNARNMjRRkRT8",
+      "name": "News Channel Setup",
+      "fieldId": "media",
+      "specializationId": "media-journalism",
+      "difficulty": "advanced",
+      "techStack": [],
+      "description": "Build News Channel Setup",
+      "estimatedTime": "2-3 months",
+      "createdAt": {
+        "_seconds": 1771057129,
+        "_nanoseconds": 650000000
+      }
+    },
+    {
+      "id": "UvI1ar5zdewpYrZoCUV3",
+      "name": "Chatbot",
+      "fieldId": "ai-ml",
+      "specializationId": "ai-nlp",
+      "difficulty": "intermediate",
+      "techStack": [],
+      "description": "Build Chatbot",
+      "estimatedTime": "3-4 weeks",
+      "createdAt": {
+        "_seconds": 1771057133,
+        "_nanoseconds": 57000000
+      }
+    },
+    {
+      "id": "Uvo1TP8UiD5DpKL2u2Y0",
+      "name": "To-Do App",
+      "fieldId": "engineering",
+      "specializationId": "cse-mobile-dev",
+      "difficulty": "beginner",
+      "techStack": [],
+      "description": "Build To-Do App",
+      "estimatedTime": "1-2 weeks",
+      "createdAt": {
+        "_seconds": 1771057120,
+        "_nanoseconds": 433000000
+      }
+    },
+    {
+      "id": "UyvmCW2Rv8CkayNk2tHe",
+      "name": "RTOS Kernel",
+      "fieldId": "engineering",
+      "specializationId": "ece-embedded",
+      "difficulty": "advanced",
+      "techStack": [],
+      "description": "Build RTOS Kernel",
+      "estimatedTime": "2-3 months",
+      "createdAt": {
+        "_seconds": 1771057121,
+        "_nanoseconds": 550000000
+      }
+    },
+    {
+      "id": "VBn41R5j2NOhiAUW1Rhg",
+      "name": "DEX Engine",
+      "fieldId": "blockchain-web3",
+      "specializationId": "web3-smart-contracts",
+      "difficulty": "advanced",
+      "techStack": [],
+      "description": "Build DEX Engine",
+      "estimatedTime": "2-3 months",
+      "createdAt": {
+        "_seconds": 1771057133,
+        "_nanoseconds": 987000000
+      }
+    },
+    {
+      "id": "VD3605op1Hti1fuF36UX",
+      "name": "Guest Plan",
+      "fieldId": "hospitality",
+      "specializationId": "hotel-mgmt",
+      "difficulty": "beginner",
+      "techStack": [],
+      "description": "Build Guest Plan",
+      "estimatedTime": "1-2 weeks",
+      "createdAt": {
+        "_seconds": 1771057135,
+        "_nanoseconds": 354000000
+      }
+    },
+    {
+      "id": "VJUWPiHivnVtmm9LcOHE",
+      "name": "Snake Game",
+      "fieldId": "engineering",
+      "specializationId": "cse-software-dev",
+      "difficulty": "beginner",
+      "techStack": [],
+      "description": "Build Snake Game",
+      "estimatedTime": "1-2 weeks",
+      "createdAt": {
+        "_seconds": 1771057118,
+        "_nanoseconds": 718000000
+      }
+    },
+    {
+      "id": "VRGTFfLPMhlNtA5oWD35",
+      "name": "Apartment Design",
+      "fieldId": "engineering",
+      "specializationId": "civil-structural",
+      "difficulty": "intermediate",
+      "techStack": [],
+      "description": "Build Apartment Design",
+      "estimatedTime": "3-4 weeks",
+      "createdAt": {
+        "_seconds": 1771057124,
+        "_nanoseconds": 197000000
+      }
+    },
+    {
+      "id": "VVSucKCS6ov4vJnNcZ7O",
+      "name": "Food Delivery App",
+      "fieldId": "engineering",
+      "specializationId": "cse-mobile-dev",
+      "difficulty": "intermediate",
+      "techStack": [],
+      "description": "Build Food Delivery App",
+      "estimatedTime": "3-4 weeks",
+      "createdAt": {
+        "_seconds": 1771057120,
+        "_nanoseconds": 433000000
+      }
+    },
+    {
+      "id": "Vw57I2cUlWVqSiP6U038",
+      "name": "Global Ops Hub",
+      "fieldId": "logistics",
+      "specializationId": "supply-chain-analytics",
+      "difficulty": "advanced",
+      "techStack": [],
+      "description": "Build Global Ops Hub",
+      "estimatedTime": "2-3 months",
+      "createdAt": {
+        "_seconds": 1771057131,
+        "_nanoseconds": 149000000
+      }
+    },
+    {
+      "id": "W8DKUwz59fuSCjenKiDe",
+      "name": "Drone Kit",
+      "fieldId": "engineering",
+      "specializationId": "mech-robotics",
+      "difficulty": "intermediate",
+      "techStack": [],
+      "description": "Build Drone Kit",
+      "estimatedTime": "3-4 weeks",
+      "createdAt": {
+        "_seconds": 1771057123,
+        "_nanoseconds": 725000000
+      }
+    },
+    {
+      "id": "XZF46VzT3TV9r2z8LC9J",
+      "name": "Experiment Set",
+      "fieldId": "science",
+      "specializationId": "rnd",
+      "difficulty": "intermediate",
+      "techStack": [],
+      "description": "Build Experiment Set",
+      "estimatedTime": "3-4 weeks",
+      "createdAt": {
+        "_seconds": 1771057125,
+        "_nanoseconds": 855000000
+      }
+    },
+    {
+      "id": "ZkokNCBqKtO8oz2QdWQg",
+      "name": "Face Recognition",
+      "fieldId": "ai-ml",
+      "specializationId": "ai-deep-learning",
+      "difficulty": "intermediate",
+      "techStack": [],
+      "description": "Build Face Recognition",
+      "estimatedTime": "3-4 weeks",
+      "createdAt": {
+        "_seconds": 1771057132,
+        "_nanoseconds": 595000000
+      }
+    },
+    {
+      "id": "ZsIdE71kdY62LFMEfEaB",
+      "name": "Dockerize App",
+      "fieldId": "cloud-computing",
+      "specializationId": "cloud-devops",
+      "difficulty": "beginner",
+      "techStack": [],
+      "description": "Build Dockerize App",
+      "estimatedTime": "1-2 weeks",
+      "createdAt": {
+        "_seconds": 1771057132,
+        "_nanoseconds": 356000000
+      }
+    },
+    {
+      "id": "aWTwHN3DKSeAb9i1BFuA",
+      "name": "Algorithm Design",
+      "fieldId": "science",
+      "specializationId": "applied-math",
+      "difficulty": "advanced",
+      "techStack": [],
+      "description": "Build Algorithm Design",
+      "estimatedTime": "2-3 months",
+      "createdAt": {
+        "_seconds": 1771057126,
+        "_nanoseconds": 145000000
+      }
+    },
+    {
+      "id": "aa12zyYrLA5RG8tQb1Tg",
+      "name": "8-bit CPU",
+      "fieldId": "engineering",
+      "specializationId": "ece-vlsi",
+      "difficulty": "intermediate",
+      "techStack": [],
+      "description": "Build 8-bit CPU",
+      "estimatedTime": "3-4 weeks",
+      "createdAt": {
+        "_seconds": 1771057121,
+        "_nanoseconds": 158000000
+      }
+    },
+    {
+      "id": "b0JEKrfUwU8T5Go0uSWD",
+      "name": "NFT Gallery",
+      "fieldId": "blockchain-web3",
+      "specializationId": "web3-dapps",
+      "difficulty": "intermediate",
+      "techStack": [],
+      "description": "Build NFT Gallery",
+      "estimatedTime": "3-4 weeks",
+      "createdAt": {
+        "_seconds": 1771057134,
+        "_nanoseconds": 256000000
+      }
+    },
+    {
+      "id": "bFtblgvcplOBVa1Q5xQQ",
+      "name": "Global Cloud Infra",
+      "fieldId": "cloud-computing",
+      "specializationId": "cloud-architecture",
+      "difficulty": "advanced",
+      "techStack": [],
+      "description": "Build Global Cloud Infra",
+      "estimatedTime": "2-3 months",
+      "createdAt": {
+        "_seconds": 1771057132,
+        "_nanoseconds": 132000000
+      }
+    },
+    {
+      "id": "bWFHSCCrSqXwHRFwqdU8",
+      "name": "Costing Sheet",
+      "fieldId": "engineering",
+      "specializationId": "civil-construction",
+      "difficulty": "beginner",
+      "techStack": [],
+      "description": "Build Costing Sheet",
+      "estimatedTime": "1-2 weeks",
+      "createdAt": {
+        "_seconds": 1771057124,
+        "_nanoseconds": 505000000
+      }
+    },
+    {
+      "id": "bgw9C6DUAOBwUii7FSdo",
+      "name": "Smart Grid AI",
+      "fieldId": "engineering",
+      "specializationId": "eee-power-systems",
+      "difficulty": "advanced",
+      "techStack": [],
+      "description": "Build Smart Grid AI",
+      "estimatedTime": "2-3 months",
+      "createdAt": {
+        "_seconds": 1771057121,
+        "_nanoseconds": 874000000
+      }
+    },
+    {
+      "id": "c9kytzC0RKec4CjbMpus",
+      "name": "Platformer",
+      "fieldId": "design",
+      "specializationId": "game-design",
+      "difficulty": "beginner",
+      "techStack": [],
+      "description": "Build Platformer",
+      "estimatedTime": "1-2 weeks",
+      "createdAt": {
+        "_seconds": 1771057128,
+        "_nanoseconds": 960000000
+      }
+    },
+    {
+      "id": "cAkGTNZ8MLzbyyP2Qgft",
+      "name": "Budget Plan",
+      "fieldId": "commerce",
+      "specializationId": "financial-analysis",
+      "difficulty": "beginner",
+      "techStack": [],
+      "description": "Build Budget Plan",
+      "estimatedTime": "1-2 weeks",
+      "createdAt": {
+        "_seconds": 1771057126,
+        "_nanoseconds": 659000000
+      }
+    },
+    {
+      "id": "cMi15YlPdjnEQP481Ecv",
+      "name": "T&C Policy",
+      "fieldId": "law",
+      "specializationId": "cyber-law",
+      "difficulty": "beginner",
+      "techStack": [],
+      "description": "Build T&C Policy",
+      "estimatedTime": "1-2 weeks",
+      "createdAt": {
+        "_seconds": 1771057127,
+        "_nanoseconds": 928000000
+      }
+    },
+    {
+      "id": "cT85bq634ESGaPYQ9yz2",
+      "name": "Disease Tracker",
+      "fieldId": "medical",
+      "specializationId": "health-informatics",
+      "difficulty": "intermediate",
+      "techStack": [],
+      "description": "Build Disease Tracker",
+      "estimatedTime": "3-4 weeks",
+      "createdAt": {
+        "_seconds": 1771057125,
+        "_nanoseconds": 603000000
+      }
+    },
+    {
+      "id": "dAk9AsXQJNc4fW4taHf1",
+      "name": "EV Prototype",
+      "fieldId": "engineering",
+      "specializationId": "eee-ev",
+      "difficulty": "advanced",
+      "techStack": [],
+      "description": "Build EV Prototype",
+      "estimatedTime": "2-3 months",
+      "createdAt": {
+        "_seconds": 1771057122,
+        "_nanoseconds": 254000000
+      }
+    },
+    {
+      "id": "dYgzpkCE7zkzeUaQUgEg",
+      "name": "OPD Flow Chart",
+      "fieldId": "medical",
+      "specializationId": "hospital-admin",
+      "difficulty": "beginner",
+      "techStack": [],
+      "description": "Build OPD Flow Chart",
+      "estimatedTime": "1-2 weeks",
+      "createdAt": {
+        "_seconds": 1771057124,
+        "_nanoseconds": 861000000
+      }
+    },
+    {
+      "id": "dw4pmup002sEgmMZ1pCQ",
+      "name": "YouTube Channel",
+      "fieldId": "media",
+      "specializationId": "media-digital",
+      "difficulty": "intermediate",
+      "techStack": [],
+      "description": "Build YouTube Channel",
+      "estimatedTime": "3-4 weeks",
+      "createdAt": {
+        "_seconds": 1771057129,
+        "_nanoseconds": 953000000
+      }
+    },
+    {
+      "id": "eM3nzeAY1FBw52YB5yeh",
+      "name": "Survey",
+      "fieldId": "arts",
+      "specializationId": "psychology",
+      "difficulty": "beginner",
+      "techStack": [],
+      "description": "Build Survey",
+      "estimatedTime": "1-2 weeks",
+      "createdAt": {
+        "_seconds": 1771057128,
+        "_nanoseconds": 242000000
+      }
+    },
+    {
+      "id": "f5RcfXHNnoEIcCB4yWLM",
+      "name": "Route Optimizer",
+      "fieldId": "logistics",
+      "specializationId": "supply-chain-analytics",
+      "difficulty": "intermediate",
+      "techStack": [],
+      "description": "Build Route Optimizer",
+      "estimatedTime": "3-4 weeks",
+      "createdAt": {
+        "_seconds": 1771057131,
+        "_nanoseconds": 149000000
+      }
+    },
+    {
+      "id": "f7Bb820xU7knUC2Ggbqn",
+      "name": "Clinic Website",
+      "fieldId": "medical",
+      "specializationId": "hospital-admin",
+      "difficulty": "intermediate",
+      "techStack": [],
+      "description": "Build Clinic Website",
+      "estimatedTime": "3-4 weeks",
+      "createdAt": {
+        "_seconds": 1771057124,
+        "_nanoseconds": 861000000
+      }
+    },
+    {
+      "id": "fZsrIO9mntpdXPv1AOE0",
+      "name": "IFR Training",
+      "fieldId": "aviation",
+      "specializationId": "commercial-pilot-operations",
+      "difficulty": "intermediate",
+      "techStack": [],
+      "description": "Build IFR Training",
+      "estimatedTime": "3-4 weeks",
+      "createdAt": {
+        "_seconds": 1771057131,
+        "_nanoseconds": 664000000
+      }
+    },
+    {
+      "id": "ffpUExEMZqmtV3fwURQa",
+      "name": "Tally Setup",
+      "fieldId": "commerce",
+      "specializationId": "accounting",
+      "difficulty": "beginner",
+      "techStack": [],
+      "description": "Build Tally Setup",
+      "estimatedTime": "1-2 weeks",
+      "createdAt": {
+        "_seconds": 1771057127,
+        "_nanoseconds": 111000000
+      }
+    },
+    {
+      "id": "g91GagcLBvo5mPhZHBPJ",
+      "name": "Leadership Mock",
+      "fieldId": "defense",
+      "specializationId": "armed-forces",
+      "difficulty": "advanced",
+      "techStack": [],
+      "description": "Build Leadership Mock",
+      "estimatedTime": "2-3 months",
+      "createdAt": {
+        "_seconds": 1771057129,
+        "_nanoseconds": 314000000
+      }
+    },
+    {
+      "id": "gLQftnlH1VvXCs4hEPqs",
+      "name": "Stat Calculator",
+      "fieldId": "science",
+      "specializationId": "applied-math",
+      "difficulty": "beginner",
+      "techStack": [],
+      "description": "Build Stat Calculator",
+      "estimatedTime": "1-2 weeks",
+      "createdAt": {
+        "_seconds": 1771057126,
+        "_nanoseconds": 145000000
+      }
+    },
+    {
+      "id": "gXR7K98CFJ0rtf7bLwUW",
+      "name": "Fitness Tracker",
+      "fieldId": "engineering",
+      "specializationId": "cse-mobile-dev",
+      "difficulty": "advanced",
+      "techStack": [],
+      "description": "Build Fitness Tracker",
+      "estimatedTime": "2-3 months",
+      "createdAt": {
+        "_seconds": 1771057120,
+        "_nanoseconds": 433000000
+      }
+    },
+    {
+      "id": "i3XnYqeCFmovSRdpImkJ",
+      "name": "Pro Team Stats",
+      "fieldId": "sports",
+      "specializationId": "sports-science",
+      "difficulty": "advanced",
+      "techStack": [],
+      "description": "Build Pro Team Stats",
+      "estimatedTime": "2-3 months",
+      "createdAt": {
+        "_seconds": 1771057135,
+        "_nanoseconds": 568000000
+      }
+    },
+    {
+      "id": "iEtDblQCNg3swyh2T21u",
+      "name": "Research Paper",
+      "fieldId": "arts",
+      "specializationId": "psychology",
+      "difficulty": "advanced",
+      "techStack": [],
+      "description": "Build Research Paper",
+      "estimatedTime": "2-3 months",
+      "createdAt": {
+        "_seconds": 1771057128,
+        "_nanoseconds": 242000000
+      }
+    },
+    {
+      "id": "jyNcZBSfoo5Owcdn3hYA",
+      "name": "K8s Cluster",
+      "fieldId": "cloud-computing",
+      "specializationId": "cloud-devops",
+      "difficulty": "intermediate",
+      "techStack": [],
+      "description": "Build K8s Cluster",
+      "estimatedTime": "3-4 weeks",
+      "createdAt": {
+        "_seconds": 1771057132,
+        "_nanoseconds": 356000000
+      }
+    },
+    {
+      "id": "kMsHy6aP4RGNhT3kBzTi",
+      "name": "Ad Campaign",
+      "fieldId": "media",
+      "specializationId": "media-digital",
+      "difficulty": "beginner",
+      "techStack": [],
+      "description": "Build Ad Campaign",
+      "estimatedTime": "1-2 weeks",
+      "createdAt": {
+        "_seconds": 1771057129,
+        "_nanoseconds": 953000000
+      }
+    },
+    {
+      "id": "kO5QteuwIw3VRReCN6dj",
+      "name": "Wallet Connect",
+      "fieldId": "blockchain-web3",
+      "specializationId": "web3-dapps",
+      "difficulty": "beginner",
+      "techStack": [],
+      "description": "Build Wallet Connect",
+      "estimatedTime": "1-2 weeks",
+      "createdAt": {
+        "_seconds": 1771057134,
+        "_nanoseconds": 256000000
+      }
+    },
+    {
+      "id": "kpFeyh6x0MaaqvadrFxz",
+      "name": "AI Tutor",
+      "fieldId": "education",
+      "specializationId": "edtech",
+      "difficulty": "advanced",
+      "techStack": [],
+      "description": "Build AI Tutor",
+      "estimatedTime": "2-3 months",
+      "createdAt": {
+        "_seconds": 1771057134,
+        "_nanoseconds": 912000000
+      }
+    },
+    {
+      "id": "lt84Rfu4S0pUeyvAIlMr",
+      "name": "Strategy Doc",
+      "fieldId": "defense",
+      "specializationId": "armed-forces",
+      "difficulty": "intermediate",
+      "techStack": [],
+      "description": "Build Strategy Doc",
+      "estimatedTime": "3-4 weeks",
+      "createdAt": {
+        "_seconds": 1771057129,
+        "_nanoseconds": 314000000
+      }
+    },
+    {
+      "id": "lyWt0NXwd2944C6VMWEv",
+      "name": "Robot Arm",
+      "fieldId": "engineering",
+      "specializationId": "mech-robotics",
+      "difficulty": "beginner",
+      "techStack": [],
+      "description": "Build Robot Arm",
+      "estimatedTime": "1-2 weeks",
+      "createdAt": {
+        "_seconds": 1771057123,
+        "_nanoseconds": 725000000
+      }
+    },
+    {
+      "id": "m8u31RtFtr1VzClcujHC",
+      "name": "Counseling Mock",
+      "fieldId": "arts",
+      "specializationId": "psychology",
+      "difficulty": "intermediate",
+      "techStack": [],
+      "description": "Build Counseling Mock",
+      "estimatedTime": "3-4 weeks",
+      "createdAt": {
+        "_seconds": 1771057128,
+        "_nanoseconds": 242000000
+      }
+    },
+    {
+      "id": "mX7QyOrXdhXkH5BtuYot",
+      "name": "Drug Discovery",
+      "fieldId": "science",
+      "specializationId": "bioinformatics",
+      "difficulty": "advanced",
+      "techStack": [],
+      "description": "Build Drug Discovery",
+      "estimatedTime": "2-3 months",
+      "createdAt": {
+        "_seconds": 1771057126,
+        "_nanoseconds": 416000000
+      }
+    },
+    {
+      "id": "mfasc9dAkRFLsSjYIqwx",
+      "name": "Precision Supply",
+      "fieldId": "agriculture",
+      "specializationId": "agritech",
+      "difficulty": "advanced",
+      "techStack": [],
+      "description": "Build Precision Supply",
+      "estimatedTime": "2-3 months",
+      "createdAt": {
+        "_seconds": 1771057135,
+        "_nanoseconds": 129000000
+      }
+    },
+    {
+      "id": "msMx0PKTMkIhREAa3NPR",
+      "name": "DeFi Loan",
+      "fieldId": "blockchain-web3",
+      "specializationId": "web3-smart-contracts",
+      "difficulty": "intermediate",
+      "techStack": [],
+      "description": "Build DeFi Loan",
+      "estimatedTime": "3-4 weeks",
+      "createdAt": {
+        "_seconds": 1771057133,
+        "_nanoseconds": 987000000
+      }
+    },
+    {
+      "id": "nRA7WvxLLl0TOyAQHTX8",
+      "name": "Sales EDA",
+      "fieldId": "ai-ml",
+      "specializationId": "ai-ds",
+      "difficulty": "beginner",
+      "techStack": [],
+      "description": "Build Sales EDA",
+      "estimatedTime": "1-2 weeks",
+      "createdAt": {
+        "_seconds": 1771057132,
+        "_nanoseconds": 807000000
+      }
+    },
+    {
+      "id": "nSYfyBG0Pb149VFZXCQP",
+      "name": "Phase 1 Trial",
+      "fieldId": "medical",
+      "specializationId": "clinical-research",
+      "difficulty": "advanced",
+      "techStack": [],
+      "description": "Build Phase 1 Trial",
+      "estimatedTime": "2-3 months",
+      "createdAt": {
+        "_seconds": 1771057125,
+        "_nanoseconds": 266000000
+      }
+    },
+    {
+      "id": "nTbQoq8uyfVH0QYYAwiY",
+      "name": "Motor Control",
+      "fieldId": "engineering",
+      "specializationId": "eee-ev",
+      "difficulty": "beginner",
+      "techStack": [],
+      "description": "Build Motor Control",
+      "estimatedTime": "1-2 weeks",
+      "createdAt": {
+        "_seconds": 1771057122,
+        "_nanoseconds": 254000000
+      }
+    },
+    {
+      "id": "nfx9aOFg1mkCavjdltgi",
+      "name": "HMS Software",
+      "fieldId": "medical",
+      "specializationId": "hospital-admin",
+      "difficulty": "advanced",
+      "techStack": [],
+      "description": "Build HMS Software",
+      "estimatedTime": "2-3 months",
+      "createdAt": {
+        "_seconds": 1771057124,
+        "_nanoseconds": 861000000
+      }
+    },
+    {
+      "id": "o4kVU2EQENsiNDnD8NMl",
+      "name": "Tracker",
+      "fieldId": "logistics",
+      "specializationId": "supply-chain-analytics",
+      "difficulty": "beginner",
+      "techStack": [],
+      "description": "Build Tracker",
+      "estimatedTime": "1-2 weeks",
+      "createdAt": {
+        "_seconds": 1771057131,
+        "_nanoseconds": 149000000
+      }
+    },
+    {
+      "id": "o8uOaxHrUfdSQUBiDh3j",
+      "name": "News Blog",
+      "fieldId": "media",
+      "specializationId": "media-journalism",
+      "difficulty": "beginner",
+      "techStack": [],
+      "description": "Build News Blog",
+      "estimatedTime": "1-2 weeks",
+      "createdAt": {
+        "_seconds": 1771057129,
+        "_nanoseconds": 650000000
+      }
+    },
+    {
+      "id": "oFb1nnvPASX4R9FjTk8y",
+      "name": "Mars Rover Unit",
+      "fieldId": "emerging-tech",
+      "specializationId": "tech-robotics",
+      "difficulty": "advanced",
+      "techStack": [],
+      "description": "Build Mars Rover Unit",
+      "estimatedTime": "2-3 months",
+      "createdAt": {
+        "_seconds": 1771057134,
+        "_nanoseconds": 686000000
+      }
+    },
+    {
+      "id": "pNiw9YjU2wCeVsNWo8vL",
+      "name": "RPG World",
+      "fieldId": "design",
+      "specializationId": "game-design",
+      "difficulty": "intermediate",
+      "techStack": [],
+      "description": "Build RPG World",
+      "estimatedTime": "3-4 weeks",
+      "createdAt": {
+        "_seconds": 1771057128,
+        "_nanoseconds": 960000000
+      }
+    },
+    {
+      "id": "pQoLWrb7eAxPqJJrWqlt",
+      "name": "Novel Discovery",
+      "fieldId": "science",
+      "specializationId": "rnd",
+      "difficulty": "advanced",
+      "techStack": [],
+      "description": "Build Novel Discovery",
+      "estimatedTime": "2-3 months",
+      "createdAt": {
+        "_seconds": 1771057125,
+        "_nanoseconds": 855000000
+      }
+    },
+    {
+      "id": "puLsTF6YfuJKJYN6fzUC",
+      "name": "Customer Churn",
+      "fieldId": "commerce",
+      "specializationId": "business-analytics",
+      "difficulty": "advanced",
+      "techStack": [],
+      "description": "Build Customer Churn",
+      "estimatedTime": "2-3 months",
+      "createdAt": {
+        "_seconds": 1771057127,
+        "_nanoseconds": 383000000
+      }
+    },
+    {
+      "id": "q4pqbaRxy9gZCdt1mjxY",
+      "name": "EV Retrofit",
+      "fieldId": "vocational",
+      "specializationId": "ev-tech",
+      "difficulty": "advanced",
+      "techStack": [],
+      "description": "Build EV Retrofit",
+      "estimatedTime": "2-3 months",
+      "createdAt": {
+        "_seconds": 1771057135,
+        "_nanoseconds": 797000000
+      }
+    },
+    {
+      "id": "rF1Z0U5C0Ri0uEFZT80j",
+      "name": "CFO Level Strategy",
+      "fieldId": "commerce",
+      "specializationId": "accounting",
+      "difficulty": "advanced",
+      "techStack": [],
+      "description": "Build CFO Level Strategy",
+      "estimatedTime": "2-3 months",
+      "createdAt": {
+        "_seconds": 1771057127,
+        "_nanoseconds": 111000000
+      }
+    },
+    {
+      "id": "u8RBSYQRVx3H8Vxjo9mF",
+      "name": "Trial Data Study",
+      "fieldId": "medical",
+      "specializationId": "clinical-research",
+      "difficulty": "beginner",
+      "techStack": [],
+      "description": "Build Trial Data Study",
+      "estimatedTime": "1-2 weeks",
+      "createdAt": {
+        "_seconds": 1771057125,
+        "_nanoseconds": 266000000
+      }
+    },
+    {
+      "id": "uGyutwSx88dHNhQYcAst",
+      "name": "Digit Classifier",
+      "fieldId": "ai-ml",
+      "specializationId": "ai-deep-learning",
+      "difficulty": "beginner",
+      "techStack": [],
+      "description": "Build Digit Classifier",
+      "estimatedTime": "1-2 weeks",
+      "createdAt": {
+        "_seconds": 1771057132,
+        "_nanoseconds": 595000000
+      }
+    },
+    {
+      "id": "uotOfl9eoYQzMZYhY4ZN",
+      "name": "Fitness Metrics",
+      "fieldId": "sports",
+      "specializationId": "sports-science",
+      "difficulty": "beginner",
+      "techStack": [],
+      "description": "Build Fitness Metrics",
+      "estimatedTime": "1-2 weeks",
+      "createdAt": {
+        "_seconds": 1771057135,
+        "_nanoseconds": 568000000
+      }
+    },
+    {
+      "id": "uz591JU30Eu51kWxRmml",
+      "name": "Event Budget",
+      "fieldId": "hospitality",
+      "specializationId": "hotel-mgmt",
+      "difficulty": "intermediate",
+      "techStack": [],
+      "description": "Build Event Budget",
+      "estimatedTime": "3-4 weeks",
+      "createdAt": {
+        "_seconds": 1771057135,
+        "_nanoseconds": 354000000
+      }
+    },
+    {
+      "id": "vcW2NB94j3KmJDpAtBBy",
+      "name": "BMS Simulation",
+      "fieldId": "engineering",
+      "specializationId": "eee-ev",
+      "difficulty": "intermediate",
+      "techStack": [],
+      "description": "Build BMS Simulation",
+      "estimatedTime": "3-4 weeks",
+      "createdAt": {
+        "_seconds": 1771057122,
+        "_nanoseconds": 254000000
+      }
+    },
+    {
+      "id": "wFimLKAZdnlwTQWXOevq",
+      "name": "Calculator",
+      "fieldId": "engineering",
+      "specializationId": "cse-software-dev",
+      "difficulty": "beginner",
+      "techStack": [],
+      "description": "Build Calculator",
+      "estimatedTime": "1-2 weeks",
+      "createdAt": {
+        "_seconds": 1771057118,
+        "_nanoseconds": 718000000
+      }
+    },
+    {
+      "id": "wGWyzriwMKVhudGtpYDG",
+      "name": "Automated Warehouse",
+      "fieldId": "logistics",
+      "specializationId": "warehouse-transport-management",
+      "difficulty": "advanced",
+      "techStack": [],
+      "description": "Build Automated Warehouse",
+      "estimatedTime": "2-3 months",
+      "createdAt": {
+        "_seconds": 1771057131,
+        "_nanoseconds": 383000000
+      }
+    },
+    {
+      "id": "wHHMizgwc59GLXWfgHuv",
+      "name": "Power BI Sales",
+      "fieldId": "commerce",
+      "specializationId": "business-analytics",
+      "difficulty": "intermediate",
+      "techStack": [],
+      "description": "Build Power BI Sales",
+      "estimatedTime": "3-4 weeks",
+      "createdAt": {
+        "_seconds": 1771057127,
+        "_nanoseconds": 383000000
+      }
+    },
+    {
+      "id": "woRiPhYa8p2e8ABooHEd",
+      "name": "SIEM Setup",
+      "fieldId": "cybersecurity",
+      "specializationId": "cyber-defensive",
+      "difficulty": "intermediate",
+      "techStack": [],
+      "description": "Build SIEM Setup",
+      "estimatedTime": "3-4 weeks",
+      "createdAt": {
+        "_seconds": 1771057133,
+        "_nanoseconds": 606000000
+      }
+    },
+    {
+      "id": "x0Vi9JBkNfl0LOIbkaNH",
+      "name": "SmallSat Mock",
+      "fieldId": "emerging-tech",
+      "specializationId": "tech-robotics",
+      "difficulty": "intermediate",
+      "techStack": [],
+      "description": "Build SmallSat Mock",
+      "estimatedTime": "3-4 weeks",
+      "createdAt": {
+        "_seconds": 1771057134,
+        "_nanoseconds": 686000000
+      }
+    },
+    {
+      "id": "x5VsVzuJEJKyIcP5ed0m",
+      "name": "Arduino Light",
+      "fieldId": "engineering",
+      "specializationId": "ece-embedded",
+      "difficulty": "beginner",
+      "techStack": [],
+      "description": "Build Arduino Light",
+      "estimatedTime": "1-2 weeks",
+      "createdAt": {
+        "_seconds": 1771057121,
+        "_nanoseconds": 550000000
+      }
+    },
+    {
+      "id": "xVHBYc7OeFWd8pbnydb1",
+      "name": "Litigation Strategy",
+      "fieldId": "law",
+      "specializationId": "corporate-law",
+      "difficulty": "advanced",
+      "techStack": [],
+      "description": "Build Litigation Strategy",
+      "estimatedTime": "2-3 months",
+      "createdAt": {
+        "_seconds": 1771057127,
+        "_nanoseconds": 613000000
+      }
+    },
+    {
+      "id": "xxOsQL86Mi7BqKBlf0Is",
+      "name": "Sim Log",
+      "fieldId": "aviation",
+      "specializationId": "commercial-pilot-operations",
+      "difficulty": "beginner",
+      "techStack": [],
+      "description": "Build Sim Log",
+      "estimatedTime": "1-2 weeks",
+      "createdAt": {
+        "_seconds": 1771057131,
+        "_nanoseconds": 664000000
+      }
+    },
+    {
+      "id": "xyOvBE8Z3KQ02Bbj2zQt",
+      "name": "Engine Crankshaft",
+      "fieldId": "engineering",
+      "specializationId": "mech-design",
+      "difficulty": "intermediate",
+      "techStack": [],
+      "description": "Build Engine Crankshaft",
+      "estimatedTime": "3-4 weeks",
+      "createdAt": {
+        "_seconds": 1771057122,
+        "_nanoseconds": 813000000
+      }
+    },
+    {
+      "id": "y6WKkDURKPGyZHw8YnIo",
+      "name": "WMS Setup",
+      "fieldId": "logistics",
+      "specializationId": "warehouse-transport-management",
+      "difficulty": "intermediate",
+      "techStack": [],
+      "description": "Build WMS Setup",
+      "estimatedTime": "3-4 weeks",
+      "createdAt": {
+        "_seconds": 1771057131,
+        "_nanoseconds": 383000000
+      }
+    },
+    {
+      "id": "yTxXmR2loDHi9lrI8gmE",
+      "name": "Logic Gate Sim",
+      "fieldId": "engineering",
+      "specializationId": "ece-vlsi",
+      "difficulty": "beginner",
+      "techStack": [],
+      "description": "Build Logic Gate Sim",
+      "estimatedTime": "1-2 weeks",
+      "createdAt": {
+        "_seconds": 1771057121,
+        "_nanoseconds": 158000000
+      }
+    },
+    {
+      "id": "yoLGkGJTakwPyG9ElnU8",
+      "name": "Motor Repair",
+      "fieldId": "vocational",
+      "specializationId": "ev-tech",
+      "difficulty": "intermediate",
+      "techStack": [],
+      "description": "Build Motor Repair",
+      "estimatedTime": "3-4 weeks",
+      "createdAt": {
+        "_seconds": 1771057135,
+        "_nanoseconds": 797000000
+      }
+    },
+    {
+      "id": "zRncJxiVljBIHkjKoCmM",
+      "name": "Security Audit",
+      "fieldId": "civil-services",
+      "specializationId": "civil-police",
+      "difficulty": "beginner",
+      "techStack": [],
+      "description": "Build Security Audit",
+      "estimatedTime": "1-2 weeks",
+      "createdAt": {
+        "_seconds": 1771057130,
+        "_nanoseconds": 918000000
+      }
+    }
+  ],
+  "certifications": [
+    {
+      "id": "021PBtdRhR8WPAHjoGwQ",
+      "name": "Verilog Basics",
+      "provider": "Various",
+      "cost": "Free",
+      "fieldId": "engineering",
+      "specializationId": "ece-vlsi",
+      "difficulty": "beginner",
+      "officialUrl": "#",
+      "timeToComplete": "40 hours",
+      "industryValue": "high",
+      "createdAt": {
+        "_seconds": 1771057121,
+        "_nanoseconds": 266000000
+      }
+    },
+    {
+      "id": "0qsF6Y3TphzAzXSkdvCa",
+      "name": "STAAD.Pro Basic",
+      "provider": "Various",
+      "cost": "Free",
+      "fieldId": "engineering",
+      "specializationId": "civil-structural",
+      "difficulty": "beginner",
+      "officialUrl": "#",
+      "timeToComplete": "40 hours",
+      "industryValue": "high",
+      "createdAt": {
+        "_seconds": 1771057124,
+        "_nanoseconds": 320000000
+      }
+    },
+    {
+      "id": "0rjGWxrJyWMEt6rZnmsV",
+      "name": "Advanced EV Tech",
+      "provider": "Various",
+      "cost": "$299",
+      "fieldId": "vocational",
+      "specializationId": "ev-tech",
+      "difficulty": "advanced",
+      "officialUrl": "#",
+      "timeToComplete": "6 months",
+      "industryValue": "high",
+      "createdAt": {
+        "_seconds": 1771057135,
+        "_nanoseconds": 871000000
+      }
+    },
+    {
+      "id": "1GoP0gjLat7QFWnjQk3Y",
+      "name": "SolidWorks Basic",
+      "provider": "Various",
+      "cost": "Free",
+      "fieldId": "engineering",
+      "specializationId": "mech-design",
+      "difficulty": "beginner",
+      "officialUrl": "#",
+      "timeToComplete": "40 hours",
+      "industryValue": "high",
+      "createdAt": {
+        "_seconds": 1771057122,
+        "_nanoseconds": 911000000
+      }
+    },
+    {
+      "id": "1REx8Z6m8jXVU0UabaJc",
+      "name": "CISSP",
+      "provider": "Various",
+      "cost": "$299",
+      "fieldId": "cybersecurity",
+      "specializationId": "cyber-defensive",
+      "difficulty": "advanced",
+      "officialUrl": "#",
+      "timeToComplete": "6 months",
+      "industryValue": "high",
+      "createdAt": {
+        "_seconds": 1771057133,
+        "_nanoseconds": 692000000
+      }
+    },
+    {
+      "id": "1VE2hHiFRaSC82fDLNvH",
+      "name": "NASA Free Ed",
+      "provider": "Various",
+      "cost": "Free",
+      "fieldId": "emerging-tech",
+      "specializationId": "tech-robotics",
+      "difficulty": "beginner",
+      "officialUrl": "#",
+      "timeToComplete": "40 hours",
+      "industryValue": "high",
+      "createdAt": {
+        "_seconds": 1771057134,
+        "_nanoseconds": 756000000
+      }
+    },
+    {
+      "id": "1s3gOBj43dNoUyTHuGd7",
+      "name": "SVP NPA Guide",
+      "provider": "Various",
+      "cost": "Free",
+      "fieldId": "civil-services",
+      "specializationId": "civil-police",
+      "difficulty": "beginner",
+      "officialUrl": "#",
+      "timeToComplete": "40 hours",
+      "industryValue": "high",
+      "createdAt": {
+        "_seconds": 1771057130,
+        "_nanoseconds": 988000000
+      }
+    },
+    {
+      "id": "2YxShJAtTpvGHIOq06pu",
+      "name": "Master Space Tech",
+      "provider": "Various",
+      "cost": "$299",
+      "fieldId": "emerging-tech",
+      "specializationId": "tech-robotics",
+      "difficulty": "advanced",
+      "officialUrl": "#",
+      "timeToComplete": "6 months",
+      "industryValue": "high",
+      "createdAt": {
+        "_seconds": 1771057134,
+        "_nanoseconds": 756000000
+      }
+    },
+    {
+      "id": "2nWgxD6Eq3AtnM527vBt",
+      "name": "WHO Clinical Mgmt",
+      "provider": "Various",
+      "cost": "Free",
+      "fieldId": "medical",
+      "specializationId": "hospital-admin",
+      "difficulty": "beginner",
+      "officialUrl": "#",
+      "timeToComplete": "40 hours",
+      "industryValue": "high",
+      "createdAt": {
+        "_seconds": 1771057124,
+        "_nanoseconds": 951000000
+      }
+    },
+    {
+      "id": "2qQiR60akjkQ6jqq5acv",
+      "name": "MeitY Modules",
+      "provider": "Various",
+      "cost": "Free",
+      "fieldId": "law",
+      "specializationId": "cyber-law",
+      "difficulty": "beginner",
+      "officialUrl": "#",
+      "timeToComplete": "40 hours",
+      "industryValue": "high",
+      "createdAt": {
+        "_seconds": 1771057128,
+        "_nanoseconds": 8000000
+      }
+    },
+    {
+      "id": "3P9esmQkTAsccRkU9dE6",
+      "name": "BJMC",
+      "provider": "Various",
+      "cost": "$99",
+      "fieldId": "media",
+      "specializationId": "media-journalism",
+      "difficulty": "intermediate",
+      "officialUrl": "#",
+      "timeToComplete": "3 months",
+      "industryValue": "high",
+      "createdAt": {
+        "_seconds": 1771057129,
+        "_nanoseconds": 737000000
+      }
+    },
+    {
+      "id": "4Gb62noBwz9sbdWBliDE",
+      "name": "IEEE Cert",
+      "provider": "Various",
+      "cost": "$99",
+      "fieldId": "engineering",
+      "specializationId": "eee-power-systems",
+      "difficulty": "intermediate",
+      "officialUrl": "#",
+      "timeToComplete": "3 months",
+      "industryValue": "high",
+      "createdAt": {
+        "_seconds": 1771057121,
+        "_nanoseconds": 990000000
+      }
+    },
+    {
+      "id": "53KxS0eAJVLGL7WeRdqb",
+      "name": "Six Sigma Green",
+      "provider": "Various",
+      "cost": "$99",
+      "fieldId": "logistics",
+      "specializationId": "supply-chain-analytics",
+      "difficulty": "intermediate",
+      "officialUrl": "#",
+      "timeToComplete": "3 months",
+      "industryValue": "high",
+      "createdAt": {
+        "_seconds": 1771057131,
+        "_nanoseconds": 222000000
+      }
+    },
+    {
+      "id": "5NjFdveGdrwxRIVl4fDB",
+      "name": "Skill India EV",
+      "provider": "Various",
+      "cost": "$99",
+      "fieldId": "vocational",
+      "specializationId": "ev-tech",
+      "difficulty": "intermediate",
+      "officialUrl": "#",
+      "timeToComplete": "3 months",
+      "industryValue": "high",
+      "createdAt": {
+        "_seconds": 1771057135,
+        "_nanoseconds": 871000000
+      }
+    },
+    {
+      "id": "65GVdQmGQLSkV2FJUUwH",
+      "name": "Science Writing",
+      "provider": "Various",
+      "cost": "Free",
+      "fieldId": "science",
+      "specializationId": "rnd",
+      "difficulty": "beginner",
+      "officialUrl": "#",
+      "timeToComplete": "40 hours",
+      "industryValue": "high",
+      "createdAt": {
+        "_seconds": 1771057125,
+        "_nanoseconds": 953000000
+      }
+    },
+    {
+      "id": "6Ug8sSx0graZth0QcYqF",
+      "name": "Apple Developer",
+      "provider": "Various",
+      "cost": "$299",
+      "fieldId": "engineering",
+      "specializationId": "cse-mobile-dev",
+      "difficulty": "advanced",
+      "officialUrl": "#",
+      "timeToComplete": "6 months",
+      "industryValue": "high",
+      "createdAt": {
+        "_seconds": 1771057120,
+        "_nanoseconds": 571000000
+      }
+    },
+    {
+      "id": "6aR30FWQNYtuDFlBkcOr",
+      "name": "LLM Corporate",
+      "provider": "Various",
+      "cost": "$99",
+      "fieldId": "law",
+      "specializationId": "corporate-law",
+      "difficulty": "intermediate",
+      "officialUrl": "#",
+      "timeToComplete": "3 months",
+      "industryValue": "high",
+      "createdAt": {
+        "_seconds": 1771057127,
+        "_nanoseconds": 688000000
+      }
+    },
+    {
+      "id": "6dTgyd6GrVBSqkbGNF5l",
+      "name": "Alchemy University",
+      "provider": "Various",
+      "cost": "Free",
+      "fieldId": "blockchain-web3",
+      "specializationId": "web3-dapps",
+      "difficulty": "beginner",
+      "officialUrl": "#",
+      "timeToComplete": "40 hours",
+      "industryValue": "high",
+      "createdAt": {
+        "_seconds": 1771057134,
+        "_nanoseconds": 326000000
+      }
+    },
+    {
+      "id": "6sdBGRIrkRAEIgOS2GxN",
+      "name": "IBM Data Health",
+      "provider": "Various",
+      "cost": "$99",
+      "fieldId": "medical",
+      "specializationId": "health-informatics",
+      "difficulty": "intermediate",
+      "officialUrl": "#",
+      "timeToComplete": "3 months",
+      "industryValue": "high",
+      "createdAt": {
+        "_seconds": 1771057125,
+        "_nanoseconds": 694000000
+      }
+    },
+    {
+      "id": "7Ipm105rIETiv00NZzOS",
+      "name": "ConsenSys Dev",
+      "provider": "Various",
+      "cost": "$99",
+      "fieldId": "blockchain-web3",
+      "specializationId": "web3-smart-contracts",
+      "difficulty": "intermediate",
+      "officialUrl": "#",
+      "timeToComplete": "3 months",
+      "industryValue": "high",
+      "createdAt": {
+        "_seconds": 1771057134,
+        "_nanoseconds": 65000000
+      }
+    },
+    {
+      "id": "7eTTH1cK6sQeL2PJnDVq",
+      "name": "Senior Security",
+      "provider": "Various",
+      "cost": "$299",
+      "fieldId": "civil-services",
+      "specializationId": "civil-police",
+      "difficulty": "advanced",
+      "officialUrl": "#",
+      "timeToComplete": "6 months",
+      "industryValue": "high",
+      "createdAt": {
+        "_seconds": 1771057130,
+        "_nanoseconds": 988000000
+      }
+    },
+    {
+      "id": "86Vi1b0fhhC1yFbH3BzQ",
+      "name": "NPTEL Power",
+      "provider": "Various",
+      "cost": "Free",
+      "fieldId": "engineering",
+      "specializationId": "eee-power-systems",
+      "difficulty": "beginner",
+      "officialUrl": "#",
+      "timeToComplete": "40 hours",
+      "industryValue": "high",
+      "createdAt": {
+        "_seconds": 1771057121,
+        "_nanoseconds": 990000000
+      }
+    },
+    {
+      "id": "8ABTN00u1yybA1yOLy73",
+      "name": "Unity Essentials",
+      "provider": "Various",
+      "cost": "Free",
+      "fieldId": "design",
+      "specializationId": "game-design",
+      "difficulty": "beginner",
+      "officialUrl": "#",
+      "timeToComplete": "40 hours",
+      "industryValue": "high",
+      "createdAt": {
+        "_seconds": 1771057129,
+        "_nanoseconds": 104000000
+      }
+    },
+    {
+      "id": "8KeAY9l2FbORD6oNHIFM",
+      "name": "ARM Developer",
+      "provider": "Various",
+      "cost": "$99",
+      "fieldId": "engineering",
+      "specializationId": "ece-embedded",
+      "difficulty": "intermediate",
+      "officialUrl": "#",
+      "timeToComplete": "3 months",
+      "industryValue": "high",
+      "createdAt": {
+        "_seconds": 1771057121,
+        "_nanoseconds": 653000000
+      }
+    },
+    {
+      "id": "8SJjnY7RlzIDF6ugbgFU",
+      "name": "Front Office",
+      "provider": "Various",
+      "cost": "Free",
+      "fieldId": "hospitality",
+      "specializationId": "hotel-mgmt",
+      "difficulty": "beginner",
+      "officialUrl": "#",
+      "timeToComplete": "40 hours",
+      "industryValue": "high",
+      "createdAt": {
+        "_seconds": 1771057135,
+        "_nanoseconds": 423000000
+      }
+    },
+    {
+      "id": "8oFxJ8eEuHC8e4MKoWEA",
+      "name": "IBM DS Professional",
+      "provider": "Various",
+      "cost": "$99",
+      "fieldId": "ai-ml",
+      "specializationId": "ai-ds",
+      "difficulty": "intermediate",
+      "officialUrl": "#",
+      "timeToComplete": "3 months",
+      "industryValue": "high",
+      "createdAt": {
+        "_seconds": 1771057132,
+        "_nanoseconds": 894000000
+      }
+    },
+    {
+      "id": "8tWYFuDvSZLgQjatLuuG",
+      "name": "Civils Prep Free",
+      "provider": "Various",
+      "cost": "Free",
+      "fieldId": "civil-services",
+      "specializationId": "civil-admin",
+      "difficulty": "beginner",
+      "officialUrl": "#",
+      "timeToComplete": "40 hours",
+      "industryValue": "high",
+      "createdAt": {
+        "_seconds": 1771057130,
+        "_nanoseconds": 460000000
+      }
+    },
+    {
+      "id": "AEEXUPLozrUA9poqmtdo",
+      "name": "Python Bio",
+      "provider": "Various",
+      "cost": "$99",
+      "fieldId": "science",
+      "specializationId": "bioinformatics",
+      "difficulty": "intermediate",
+      "officialUrl": "#",
+      "timeToComplete": "3 months",
+      "industryValue": "high",
+      "createdAt": {
+        "_seconds": 1771057126,
+        "_nanoseconds": 491000000
+      }
+    },
+    {
+      "id": "AQYx1ZEgDOgt5qsGz8IJ",
+      "name": "Agri-data Cert",
+      "provider": "Various",
+      "cost": "$99",
+      "fieldId": "agriculture",
+      "specializationId": "agritech",
+      "difficulty": "intermediate",
+      "officialUrl": "#",
+      "timeToComplete": "3 months",
+      "industryValue": "high",
+      "createdAt": {
+        "_seconds": 1771057135,
+        "_nanoseconds": 195000000
+      }
+    },
+    {
+      "id": "AqGMIyOidaFO2mWaaOYD",
+      "name": "MS Quantum",
+      "provider": "Various",
+      "cost": "$99",
+      "fieldId": "emerging-tech",
+      "specializationId": "tech-quantum",
+      "difficulty": "intermediate",
+      "officialUrl": "#",
+      "timeToComplete": "3 months",
+      "industryValue": "high",
+      "createdAt": {
+        "_seconds": 1771057134,
+        "_nanoseconds": 546000000
+      }
+    },
+    {
+      "id": "AtXIjBYS34gxwsmAc0R0",
+      "name": "Masters in ES",
+      "provider": "Various",
+      "cost": "$299",
+      "fieldId": "engineering",
+      "specializationId": "ece-embedded",
+      "difficulty": "advanced",
+      "officialUrl": "#",
+      "timeToComplete": "6 months",
+      "industryValue": "high",
+      "createdAt": {
+        "_seconds": 1771057121,
+        "_nanoseconds": 653000000
+      }
+    },
+    {
+      "id": "B4Tc6JNt7v11wGejbqCt",
+      "name": "AWS Dev Associate",
+      "provider": "Various",
+      "cost": "$299",
+      "fieldId": "engineering",
+      "specializationId": "cse-web-dev",
+      "difficulty": "advanced",
+      "officialUrl": "#",
+      "timeToComplete": "6 months",
+      "industryValue": "high",
+      "createdAt": {
+        "_seconds": 1771057119,
+        "_nanoseconds": 833000000
+      }
+    },
+    {
+      "id": "BexruQnu6SYUK7To08u2",
+      "name": "CPA / ACCA",
+      "provider": "Various",
+      "cost": "$299",
+      "fieldId": "commerce",
+      "specializationId": "accounting",
+      "difficulty": "advanced",
+      "officialUrl": "#",
+      "timeToComplete": "6 months",
+      "industryValue": "high",
+      "createdAt": {
+        "_seconds": 1771057127,
+        "_nanoseconds": 210000000
+      }
+    },
+    {
+      "id": "BvRZqYodPrY1TduiKjSC",
+      "name": "CFA Level 1",
+      "provider": "Various",
+      "cost": "$99",
+      "fieldId": "commerce",
+      "specializationId": "financial-analysis",
+      "difficulty": "intermediate",
+      "officialUrl": "#",
+      "timeToComplete": "3 months",
+      "industryValue": "high",
+      "createdAt": {
+        "_seconds": 1771057126,
+        "_nanoseconds": 768000000
+      }
+    },
+    {
+      "id": "CAgkgVISyW01NFLbwjtw",
+      "name": "Advanced Clinical",
+      "provider": "Various",
+      "cost": "$99",
+      "fieldId": "medical",
+      "specializationId": "clinical-research",
+      "difficulty": "intermediate",
+      "officialUrl": "#",
+      "timeToComplete": "3 months",
+      "industryValue": "high",
+      "createdAt": {
+        "_seconds": 1771057125,
+        "_nanoseconds": 413000000
+      }
+    },
+    {
+      "id": "CSPjHxfkWpQVeiN67OY7",
+      "name": "PhD Quantum",
+      "provider": "Various",
+      "cost": "$299",
+      "fieldId": "emerging-tech",
+      "specializationId": "tech-quantum",
+      "difficulty": "advanced",
+      "officialUrl": "#",
+      "timeToComplete": "6 months",
+      "industryValue": "high",
+      "createdAt": {
+        "_seconds": 1771057134,
+        "_nanoseconds": 546000000
+      }
+    },
+    {
+      "id": "DYW05iRDUbI0xAf0eYS5",
+      "name": "Web3JS Mastery",
+      "provider": "Various",
+      "cost": "$99",
+      "fieldId": "blockchain-web3",
+      "specializationId": "web3-dapps",
+      "difficulty": "intermediate",
+      "officialUrl": "#",
+      "timeToComplete": "3 months",
+      "industryValue": "high",
+      "createdAt": {
+        "_seconds": 1771057134,
+        "_nanoseconds": 326000000
+      }
+    },
+    {
+      "id": "DcjVv0aCY130JLtoWmye",
+      "name": "Corporate Finance",
+      "provider": "Various",
+      "cost": "Free",
+      "fieldId": "commerce",
+      "specializationId": "financial-analysis",
+      "difficulty": "beginner",
+      "officialUrl": "#",
+      "timeToComplete": "40 hours",
+      "industryValue": "high",
+      "createdAt": {
+        "_seconds": 1771057126,
+        "_nanoseconds": 768000000
+      }
+    },
+    {
+      "id": "EP3cBIw2Ox5Es2nJB11l",
+      "name": "AutoCAD Pro",
+      "provider": "Various",
+      "cost": "$99",
+      "fieldId": "engineering",
+      "specializationId": "mech-design",
+      "difficulty": "intermediate",
+      "officialUrl": "#",
+      "timeToComplete": "3 months",
+      "industryValue": "high",
+      "createdAt": {
+        "_seconds": 1771057122,
+        "_nanoseconds": 911000000
+      }
+    },
+    {
+      "id": "EtttFZmPBGa8VR6mz6ny",
+      "name": "NDA/CDS Prep",
+      "provider": "Various",
+      "cost": "$99",
+      "fieldId": "defense",
+      "specializationId": "armed-forces",
+      "difficulty": "intermediate",
+      "officialUrl": "#",
+      "timeToComplete": "3 months",
+      "industryValue": "high",
+      "createdAt": {
+        "_seconds": 1771057129,
+        "_nanoseconds": 420000000
+      }
+    },
+    {
+      "id": "F6EszQYVarrKx1E6dtJc",
+      "name": "M.Sc Informatics",
+      "provider": "Various",
+      "cost": "$299",
+      "fieldId": "medical",
+      "specializationId": "health-informatics",
+      "difficulty": "advanced",
+      "officialUrl": "#",
+      "timeToComplete": "6 months",
+      "industryValue": "high",
+      "createdAt": {
+        "_seconds": 1771057125,
+        "_nanoseconds": 694000000
+      }
+    },
+    {
+      "id": "FcCFnYxf8EXyGEc7hZLJ",
+      "name": "AWS Cloud Practitioner",
+      "provider": "Various",
+      "cost": "Free",
+      "fieldId": "cloud-computing",
+      "specializationId": "cloud-architecture",
+      "difficulty": "beginner",
+      "officialUrl": "#",
+      "timeToComplete": "40 hours",
+      "industryValue": "high",
+      "createdAt": {
+        "_seconds": 1771057132,
+        "_nanoseconds": 205000000
+      }
+    },
+    {
+      "id": "FmrDqpNV1NvZAER3Y58j",
+      "name": "COC Master",
+      "provider": "Various",
+      "cost": "$299",
+      "fieldId": "aviation",
+      "specializationId": "merchant-navy-deck-engine",
+      "difficulty": "advanced",
+      "officialUrl": "#",
+      "timeToComplete": "6 months",
+      "industryValue": "high",
+      "createdAt": {
+        "_seconds": 1771057131,
+        "_nanoseconds": 982000000
+      }
+    },
+    {
+      "id": "FvQMWaJEctlcBbYAjaiH",
+      "name": "HubSpot Marketing",
+      "provider": "Various",
+      "cost": "Free",
+      "fieldId": "media",
+      "specializationId": "media-digital",
+      "difficulty": "beginner",
+      "officialUrl": "#",
+      "timeToComplete": "40 hours",
+      "industryValue": "high",
+      "createdAt": {
+        "_seconds": 1771057130,
+        "_nanoseconds": 27000000
+      }
+    },
+    {
+      "id": "GPFlBCb01WzjRBt2Oesp",
+      "name": "IBM Qiskit",
+      "provider": "Various",
+      "cost": "Free",
+      "fieldId": "emerging-tech",
+      "specializationId": "tech-quantum",
+      "difficulty": "beginner",
+      "officialUrl": "#",
+      "timeToComplete": "40 hours",
+      "industryValue": "high",
+      "createdAt": {
+        "_seconds": 1771057134,
+        "_nanoseconds": 546000000
+      }
+    },
+    {
+      "id": "GrPq174nTxK9jc6DRPZK",
+      "name": "AWS Solutions Architect",
+      "provider": "Various",
+      "cost": "$99",
+      "fieldId": "cloud-computing",
+      "specializationId": "cloud-architecture",
+      "difficulty": "intermediate",
+      "officialUrl": "#",
+      "timeToComplete": "3 months",
+      "industryValue": "high",
+      "createdAt": {
+        "_seconds": 1771057132,
+        "_nanoseconds": 205000000
+      }
+    },
+    {
+      "id": "Hmpa2a3EB5poKOHn0R0g",
+      "name": "Cadence Tool Training",
+      "provider": "Various",
+      "cost": "$99",
+      "fieldId": "engineering",
+      "specializationId": "ece-vlsi",
+      "difficulty": "intermediate",
+      "officialUrl": "#",
+      "timeToComplete": "3 months",
+      "industryValue": "high",
+      "createdAt": {
+        "_seconds": 1771057121,
+        "_nanoseconds": 266000000
+      }
+    },
+    {
+      "id": "II7Uv3yqwkVtpyMFQycj",
+      "name": "PGDHA",
+      "provider": "Various",
+      "cost": "$99",
+      "fieldId": "medical",
+      "specializationId": "hospital-admin",
+      "difficulty": "intermediate",
+      "officialUrl": "#",
+      "timeToComplete": "3 months",
+      "industryValue": "high",
+      "createdAt": {
+        "_seconds": 1771057124,
+        "_nanoseconds": 951000000
+      }
+    },
+    {
+      "id": "IV56lVrUJapnVqn8L7j7",
+      "name": "Lean Expert",
+      "provider": "Various",
+      "cost": "$299",
+      "fieldId": "logistics",
+      "specializationId": "warehouse-transport-management",
+      "difficulty": "advanced",
+      "officialUrl": "#",
+      "timeToComplete": "6 months",
+      "industryValue": "high",
+      "createdAt": {
+        "_seconds": 1771057131,
+        "_nanoseconds": 482000000
+      }
+    },
+    {
+      "id": "JaBjmov6gf7fZsJ6eAua",
+      "name": "NCC",
+      "provider": "Various",
+      "cost": "Free",
+      "fieldId": "defense",
+      "specializationId": "armed-forces",
+      "difficulty": "beginner",
+      "officialUrl": "#",
+      "timeToComplete": "40 hours",
+      "industryValue": "high",
+      "createdAt": {
+        "_seconds": 1771057129,
+        "_nanoseconds": 420000000
+      }
+    },
+    {
+      "id": "KDrAtMN8oEfW1XIQYE8T",
+      "name": "CryptoZombies",
+      "provider": "Various",
+      "cost": "Free",
+      "fieldId": "blockchain-web3",
+      "specializationId": "web3-smart-contracts",
+      "difficulty": "beginner",
+      "officialUrl": "#",
+      "timeToComplete": "40 hours",
+      "industryValue": "high",
+      "createdAt": {
+        "_seconds": 1771057134,
+        "_nanoseconds": 65000000
+      }
+    },
+    {
+      "id": "L9lWLGzf7z033MXkZzI7",
+      "name": "MJMC",
+      "provider": "Various",
+      "cost": "$299",
+      "fieldId": "media",
+      "specializationId": "media-journalism",
+      "difficulty": "advanced",
+      "officialUrl": "#",
+      "timeToComplete": "6 months",
+      "industryValue": "high",
+      "createdAt": {
+        "_seconds": 1771057129,
+        "_nanoseconds": 737000000
+      }
+    },
+    {
+      "id": "LQbEG8ohlbQPDS310tcQ",
+      "name": "DGCA Ground",
+      "provider": "Various",
+      "cost": "Free",
+      "fieldId": "aviation",
+      "specializationId": "commercial-pilot-operations",
+      "difficulty": "beginner",
+      "officialUrl": "#",
+      "timeToComplete": "40 hours",
+      "industryValue": "high",
+      "createdAt": {
+        "_seconds": 1771057131,
+        "_nanoseconds": 745000000
+      }
+    },
+    {
+      "id": "M2y9wsLaO43cdYOU42NE",
+      "name": "Google ML Professional",
+      "provider": "Various",
+      "cost": "$299",
+      "fieldId": "engineering",
+      "specializationId": "cse-ai-ml",
+      "difficulty": "advanced",
+      "officialUrl": "#",
+      "timeToComplete": "6 months",
+      "industryValue": "high",
+      "createdAt": {
+        "_seconds": 1771057120,
+        "_nanoseconds": 963000000
+      }
+    },
+    {
+      "id": "M8sSMsf6EhufxvDNQsZb",
+      "name": "Swiss Hotel Mgmt",
+      "provider": "Various",
+      "cost": "$299",
+      "fieldId": "hospitality",
+      "specializationId": "hotel-mgmt",
+      "difficulty": "advanced",
+      "officialUrl": "#",
+      "timeToComplete": "6 months",
+      "industryValue": "high",
+      "createdAt": {
+        "_seconds": 1771057135,
+        "_nanoseconds": 423000000
+      }
+    },
+    {
+      "id": "NIcleOHuAkH5HVnZpKCU",
+      "name": "Google Android Cert",
+      "provider": "Various",
+      "cost": "$99",
+      "fieldId": "engineering",
+      "specializationId": "cse-mobile-dev",
+      "difficulty": "intermediate",
+      "officialUrl": "#",
+      "timeToComplete": "3 months",
+      "industryValue": "high",
+      "createdAt": {
+        "_seconds": 1771057120,
+        "_nanoseconds": 571000000
+      }
+    },
+    {
+      "id": "NO9Rn3P3SXSGzIVUwbYu",
+      "name": "Kaggle",
+      "provider": "Various",
+      "cost": "Free",
+      "fieldId": "engineering",
+      "specializationId": "cse-ai-ml",
+      "difficulty": "beginner",
+      "officialUrl": "#",
+      "timeToComplete": "40 hours",
+      "industryValue": "high",
+      "createdAt": {
+        "_seconds": 1771057120,
+        "_nanoseconds": 963000000
+      }
+    },
+    {
+      "id": "NPDJfeBXT2vy7FQ8eS56",
+      "name": "EdTech Leader",
+      "provider": "Various",
+      "cost": "$299",
+      "fieldId": "education",
+      "specializationId": "edtech",
+      "difficulty": "advanced",
+      "officialUrl": "#",
+      "timeToComplete": "6 months",
+      "industryValue": "high",
+      "createdAt": {
+        "_seconds": 1771057134,
+        "_nanoseconds": 985000000
+      }
+    },
+    {
+      "id": "Nr3tq0DqrbCljaqyHeMo",
+      "name": "Google UX Design",
+      "provider": "Various",
+      "cost": "$99",
+      "fieldId": "design",
+      "specializationId": "ui-ux",
+      "difficulty": "intermediate",
+      "officialUrl": "#",
+      "timeToComplete": "3 months",
+      "industryValue": "high",
+      "createdAt": {
+        "_seconds": 1771057128,
+        "_nanoseconds": 769000000
+      }
+    },
+    {
+      "id": "OnIMq9tP4x8vLclCUraC",
+      "name": "Google Educator",
+      "provider": "Various",
+      "cost": "Free",
+      "fieldId": "education",
+      "specializationId": "edtech",
+      "difficulty": "beginner",
+      "officialUrl": "#",
+      "timeToComplete": "40 hours",
+      "industryValue": "high",
+      "createdAt": {
+        "_seconds": 1771057134,
+        "_nanoseconds": 985000000
+      }
+    },
+    {
+      "id": "P8RcCpLaIj4NEffyzRTg",
+      "name": "Certified Web3 Pro",
+      "provider": "Various",
+      "cost": "$299",
+      "fieldId": "blockchain-web3",
+      "specializationId": "web3-dapps",
+      "difficulty": "advanced",
+      "officialUrl": "#",
+      "timeToComplete": "6 months",
+      "industryValue": "high",
+      "createdAt": {
+        "_seconds": 1771057134,
+        "_nanoseconds": 326000000
+      }
+    },
+    {
+      "id": "PS9jzf7zcMcX3BcZiNWz",
+      "name": "GME / DNS",
+      "provider": "Various",
+      "cost": "$99",
+      "fieldId": "aviation",
+      "specializationId": "merchant-navy-deck-engine",
+      "difficulty": "intermediate",
+      "officialUrl": "#",
+      "timeToComplete": "3 months",
+      "industryValue": "high",
+      "createdAt": {
+        "_seconds": 1771057131,
+        "_nanoseconds": 982000000
+      }
+    },
+    {
+      "id": "Q49XQE6YdVmp1UGL4Ah7",
+      "name": "Logistics 101",
+      "provider": "Various",
+      "cost": "Free",
+      "fieldId": "logistics",
+      "specializationId": "supply-chain-analytics",
+      "difficulty": "beginner",
+      "officialUrl": "#",
+      "timeToComplete": "40 hours",
+      "industryValue": "high",
+      "createdAt": {
+        "_seconds": 1771057131,
+        "_nanoseconds": 222000000
+      }
+    },
+    {
+      "id": "R2GsAfHmoisBcy7bLnuJ",
+      "name": "Service Training",
+      "provider": "Various",
+      "cost": "$299",
+      "fieldId": "civil-services",
+      "specializationId": "civil-admin",
+      "difficulty": "advanced",
+      "officialUrl": "#",
+      "timeToComplete": "6 months",
+      "industryValue": "high",
+      "createdAt": {
+        "_seconds": 1771057130,
+        "_nanoseconds": 460000000
+      }
+    },
+    {
+      "id": "RHLKDeLn6roWxL2QPL6B",
+      "name": "Actuarial Level",
+      "provider": "Various",
+      "cost": "$99",
+      "fieldId": "science",
+      "specializationId": "applied-math",
+      "difficulty": "intermediate",
+      "officialUrl": "#",
+      "timeToComplete": "3 months",
+      "industryValue": "high",
+      "createdAt": {
+        "_seconds": 1771057126,
+        "_nanoseconds": 277000000
+      }
+    },
+    {
+      "id": "RfHSmaeSqnkzuzwMF8z6",
+      "name": "Cisco IoT",
+      "provider": "Various",
+      "cost": "Free",
+      "fieldId": "engineering",
+      "specializationId": "ece-embedded",
+      "difficulty": "beginner",
+      "officialUrl": "#",
+      "timeToComplete": "40 hours",
+      "industryValue": "high",
+      "createdAt": {
+        "_seconds": 1771057121,
+        "_nanoseconds": 653000000
+      }
+    },
+    {
+      "id": "SNCWIFdTyUgGnvICJckH",
+      "name": "M.Tech VLSI",
+      "provider": "Various",
+      "cost": "$299",
+      "fieldId": "engineering",
+      "specializationId": "ece-vlsi",
+      "difficulty": "advanced",
+      "officialUrl": "#",
+      "timeToComplete": "6 months",
+      "industryValue": "high",
+      "createdAt": {
+        "_seconds": 1771057121,
+        "_nanoseconds": 266000000
+      }
+    },
+    {
+      "id": "Sg6yzfHewonkQlNwaV2O",
+      "name": "Masters Robotics",
+      "provider": "Various",
+      "cost": "$299",
+      "fieldId": "engineering",
+      "specializationId": "mech-robotics",
+      "difficulty": "advanced",
+      "officialUrl": "#",
+      "timeToComplete": "6 months",
+      "industryValue": "high",
+      "createdAt": {
+        "_seconds": 1771057123,
+        "_nanoseconds": 886000000
+      }
+    },
+    {
+      "id": "TJl13RToqFUT7HSMuZbf",
+      "name": "Tesla-style Training",
+      "provider": "Various",
+      "cost": "$99",
+      "fieldId": "engineering",
+      "specializationId": "eee-ev",
+      "difficulty": "intermediate",
+      "officialUrl": "#",
+      "timeToComplete": "3 months",
+      "industryValue": "high",
+      "createdAt": {
+        "_seconds": 1771057122,
+        "_nanoseconds": 446000000
+      }
+    },
+    {
+      "id": "TP0Udr9gFBxnMwtxkmUV",
+      "name": "Google Cloud Architect",
+      "provider": "Various",
+      "cost": "$299",
+      "fieldId": "cloud-computing",
+      "specializationId": "cloud-architecture",
+      "difficulty": "advanced",
+      "officialUrl": "#",
+      "timeToComplete": "6 months",
+      "industryValue": "high",
+      "createdAt": {
+        "_seconds": 1771057132,
+        "_nanoseconds": 205000000
+      }
+    },
+    {
+      "id": "TxsHPSO5ZjU5fRaoJj4x",
+      "name": "Security+",
+      "provider": "Various",
+      "cost": "$99",
+      "fieldId": "cybersecurity",
+      "specializationId": "cyber-defensive",
+      "difficulty": "intermediate",
+      "officialUrl": "#",
+      "timeToComplete": "3 months",
+      "industryValue": "high",
+      "createdAt": {
+        "_seconds": 1771057133,
+        "_nanoseconds": 692000000
+      }
+    },
+    {
+      "id": "UJPqxqnY6O7QPIH45shN",
+      "name": "Kaggle DS",
+      "provider": "Various",
+      "cost": "Free",
+      "fieldId": "ai-ml",
+      "specializationId": "ai-ds",
+      "difficulty": "beginner",
+      "officialUrl": "#",
+      "timeToComplete": "40 hours",
+      "industryValue": "high",
+      "createdAt": {
+        "_seconds": 1771057132,
+        "_nanoseconds": 894000000
+      }
+    },
+    {
+      "id": "UKzMltOE0ddf4ESWozRZ",
+      "name": "STCW",
+      "provider": "Various",
+      "cost": "Free",
+      "fieldId": "aviation",
+      "specializationId": "merchant-navy-deck-engine",
+      "difficulty": "beginner",
+      "officialUrl": "#",
+      "timeToComplete": "40 hours",
+      "industryValue": "high",
+      "createdAt": {
+        "_seconds": 1771057131,
+        "_nanoseconds": 982000000
+      }
+    },
+    {
+      "id": "UOxjAl8oieEiKrxHxBMo",
+      "name": "Agri-MBA",
+      "provider": "Various",
+      "cost": "$299",
+      "fieldId": "agriculture",
+      "specializationId": "agritech",
+      "difficulty": "advanced",
+      "officialUrl": "#",
+      "timeToComplete": "6 months",
+      "industryValue": "high",
+      "createdAt": {
+        "_seconds": 1771057135,
+        "_nanoseconds": 195000000
+      }
+    },
+    {
+      "id": "UR5Q3ctfGKvU97pBSuVx",
+      "name": "Certified Privacy Pro",
+      "provider": "Various",
+      "cost": "$99",
+      "fieldId": "law",
+      "specializationId": "cyber-law",
+      "difficulty": "intermediate",
+      "officialUrl": "#",
+      "timeToComplete": "3 months",
+      "industryValue": "high",
+      "createdAt": {
+        "_seconds": 1771057128,
+        "_nanoseconds": 8000000
+      }
+    },
+    {
+      "id": "URPW0bL1WWdQbEFvoqfG",
+      "name": "Fanuc Robotics",
+      "provider": "Various",
+      "cost": "$99",
+      "fieldId": "engineering",
+      "specializationId": "mech-robotics",
+      "difficulty": "intermediate",
+      "officialUrl": "#",
+      "timeToComplete": "3 months",
+      "industryValue": "high",
+      "createdAt": {
+        "_seconds": 1771057123,
+        "_nanoseconds": 886000000
+      }
+    },
+    {
+      "id": "VJQF6QRhdO26hfOCANXb",
+      "name": "IBM Data Expert",
+      "provider": "Various",
+      "cost": "$299",
+      "fieldId": "commerce",
+      "specializationId": "business-analytics",
+      "difficulty": "advanced",
+      "officialUrl": "#",
+      "timeToComplete": "6 months",
+      "industryValue": "high",
+      "createdAt": {
+        "_seconds": 1771057127,
+        "_nanoseconds": 465000000
+      }
+    },
+    {
+      "id": "WCJaInR0WP55t4P3b1Ws",
+      "name": "CSCP",
+      "provider": "Various",
+      "cost": "$299",
+      "fieldId": "logistics",
+      "specializationId": "supply-chain-analytics",
+      "difficulty": "advanced",
+      "officialUrl": "#",
+      "timeToComplete": "6 months",
+      "industryValue": "high",
+      "createdAt": {
+        "_seconds": 1771057131,
+        "_nanoseconds": 222000000
+      }
+    },
+    {
+      "id": "WRfdEq0EYktteEhQglJO",
+      "name": "Unreal Engine Cert",
+      "provider": "Various",
+      "cost": "$99",
+      "fieldId": "design",
+      "specializationId": "game-design",
+      "difficulty": "intermediate",
+      "officialUrl": "#",
+      "timeToComplete": "3 months",
+      "industryValue": "high",
+      "createdAt": {
+        "_seconds": 1771057129,
+        "_nanoseconds": 104000000
+      }
+    },
+    {
+      "id": "Wi5LU00s2PHeb1Fo1VpH",
+      "name": "RCI License",
+      "provider": "Various",
+      "cost": "$299",
+      "fieldId": "arts",
+      "specializationId": "psychology",
+      "difficulty": "advanced",
+      "officialUrl": "#",
+      "timeToComplete": "6 months",
+      "industryValue": "high",
+      "createdAt": {
+        "_seconds": 1771057128,
+        "_nanoseconds": 354000000
+      }
+    },
+    {
+      "id": "WwiP1lza4FogJVbaHCTk",
+      "name": "EV Safety",
+      "provider": "Various",
+      "cost": "Free",
+      "fieldId": "vocational",
+      "specializationId": "ev-tech",
+      "difficulty": "beginner",
+      "officialUrl": "#",
+      "timeToComplete": "40 hours",
+      "industryValue": "high",
+      "createdAt": {
+        "_seconds": 1771057135,
+        "_nanoseconds": 871000000
+      }
+    },
+    {
+      "id": "XHYNSHkqim04sYfNUWVz",
+      "name": "HackerRank",
+      "provider": "Various",
+      "cost": "Free",
+      "fieldId": "engineering",
+      "specializationId": "cse-software-dev",
+      "difficulty": "beginner",
+      "officialUrl": "#",
+      "timeToComplete": "40 hours",
+      "industryValue": "high",
+      "createdAt": {
+        "_seconds": 1771057118,
+        "_nanoseconds": 929000000
+      }
+    },
+    {
+      "id": "XgDiHXJmvWuAi6Fc4rJH",
+      "name": "Linux Basics",
+      "provider": "Various",
+      "cost": "Free",
+      "fieldId": "cloud-computing",
+      "specializationId": "cloud-devops",
+      "difficulty": "beginner",
+      "officialUrl": "#",
+      "timeToComplete": "40 hours",
+      "industryValue": "high",
+      "createdAt": {
+        "_seconds": 1771057132,
+        "_nanoseconds": 427000000
+      }
+    },
+    {
+      "id": "XsRQBoJy50mDp4CqHDV6",
+      "name": "CSCS Cert",
+      "provider": "Various",
+      "cost": "$99",
+      "fieldId": "sports",
+      "specializationId": "sports-science",
+      "difficulty": "intermediate",
+      "officialUrl": "#",
+      "timeToComplete": "3 months",
+      "industryValue": "high",
+      "createdAt": {
+        "_seconds": 1771057135,
+        "_nanoseconds": 659000000
+      }
+    },
+    {
+      "id": "Y2bnUzp0nRmKJhdH5jxB",
+      "name": "Masters Math",
+      "provider": "Various",
+      "cost": "$299",
+      "fieldId": "science",
+      "specializationId": "applied-math",
+      "difficulty": "advanced",
+      "officialUrl": "#",
+      "timeToComplete": "6 months",
+      "industryValue": "high",
+      "createdAt": {
+        "_seconds": 1771057126,
+        "_nanoseconds": 277000000
+      }
+    },
+    {
+      "id": "Y71B7Fyo4vzzs1lptSmv",
+      "name": "TryHackMe",
+      "provider": "Various",
+      "cost": "Free",
+      "fieldId": "cybersecurity",
+      "specializationId": "cyber-offensive",
+      "difficulty": "beginner",
+      "officialUrl": "#",
+      "timeToComplete": "40 hours",
+      "industryValue": "high",
+      "createdAt": {
+        "_seconds": 1771057133,
+        "_nanoseconds": 401000000
+      }
+    },
+    {
+      "id": "YBBFlEQAdKbFuHjt22PR",
+      "name": "Nvidia Deep Learning",
+      "provider": "Various",
+      "cost": "$299",
+      "fieldId": "ai-ml",
+      "specializationId": "ai-deep-learning",
+      "difficulty": "advanced",
+      "officialUrl": "#",
+      "timeToComplete": "6 months",
+      "industryValue": "high",
+      "createdAt": {
+        "_seconds": 1771057132,
+        "_nanoseconds": 664000000
+      }
+    },
+    {
+      "id": "YDTSXgWjgr8209WpQnkJ",
+      "name": "ETABS Pro",
+      "provider": "Various",
+      "cost": "$99",
+      "fieldId": "engineering",
+      "specializationId": "civil-structural",
+      "difficulty": "intermediate",
+      "officialUrl": "#",
+      "timeToComplete": "3 months",
+      "industryValue": "high",
+      "createdAt": {
+        "_seconds": 1771057124,
+        "_nanoseconds": 320000000
+      }
+    },
+    {
+      "id": "YXmiPjchop4IE3aGCPmF",
+      "name": "Blockchain Architect",
+      "provider": "Various",
+      "cost": "$299",
+      "fieldId": "blockchain-web3",
+      "specializationId": "web3-smart-contracts",
+      "difficulty": "advanced",
+      "officialUrl": "#",
+      "timeToComplete": "6 months",
+      "industryValue": "high",
+      "createdAt": {
+        "_seconds": 1771057134,
+        "_nanoseconds": 65000000
+      }
+    },
+    {
+      "id": "ZOKmJim6YLZRwpkLYhlg",
+      "name": "Coursera IT Health",
+      "provider": "Various",
+      "cost": "Free",
+      "fieldId": "medical",
+      "specializationId": "health-informatics",
+      "difficulty": "beginner",
+      "officialUrl": "#",
+      "timeToComplete": "40 hours",
+      "industryValue": "high",
+      "createdAt": {
+        "_seconds": 1771057125,
+        "_nanoseconds": 694000000
+      }
+    },
+    {
+      "id": "aelHAcQu1izGtrNWGyLH",
+      "name": "Hugging Face",
+      "provider": "Various",
+      "cost": "Free",
+      "fieldId": "ai-ml",
+      "specializationId": "ai-nlp",
+      "difficulty": "beginner",
+      "officialUrl": "#",
+      "timeToComplete": "40 hours",
+      "industryValue": "high",
+      "createdAt": {
+        "_seconds": 1771057133,
+        "_nanoseconds": 132000000
+      }
+    },
+    {
+      "id": "ahHdY7g69yds65x0yKkr",
+      "name": "Instructional Design",
+      "provider": "Various",
+      "cost": "$99",
+      "fieldId": "education",
+      "specializationId": "edtech",
+      "difficulty": "intermediate",
+      "officialUrl": "#",
+      "timeToComplete": "3 months",
+      "industryValue": "high",
+      "createdAt": {
+        "_seconds": 1771057134,
+        "_nanoseconds": 985000000
+      }
+    },
+    {
+      "id": "awZ1UosZiq7sgqxNx9wH",
+      "name": "Microsoft PL-300",
+      "provider": "Various",
+      "cost": "$99",
+      "fieldId": "commerce",
+      "specializationId": "business-analytics",
+      "difficulty": "intermediate",
+      "officialUrl": "#",
+      "timeToComplete": "3 months",
+      "industryValue": "high",
+      "createdAt": {
+        "_seconds": 1771057127,
+        "_nanoseconds": 465000000
+      }
+    },
+    {
+      "id": "c5k8X26OKYQPcVf0DYPz",
+      "name": "Foundation Course",
+      "provider": "Various",
+      "cost": "$99",
+      "fieldId": "civil-services",
+      "specializationId": "civil-admin",
+      "difficulty": "intermediate",
+      "officialUrl": "#",
+      "timeToComplete": "3 months",
+      "industryValue": "high",
+      "createdAt": {
+        "_seconds": 1771057130,
+        "_nanoseconds": 460000000
+      }
+    },
+    {
+      "id": "cgBfiBokUpWCgXIloDv1",
+      "name": "Psych 101",
+      "provider": "Various",
+      "cost": "Free",
+      "fieldId": "arts",
+      "specializationId": "psychology",
+      "difficulty": "beginner",
+      "officialUrl": "#",
+      "timeToComplete": "40 hours",
+      "industryValue": "high",
+      "createdAt": {
+        "_seconds": 1771057128,
+        "_nanoseconds": 354000000
+      }
+    },
+    {
+      "id": "d9WyF8goV1q49CjghhUf",
+      "name": "Safety Cert",
+      "provider": "Various",
+      "cost": "$99",
+      "fieldId": "logistics",
+      "specializationId": "warehouse-transport-management",
+      "difficulty": "intermediate",
+      "officialUrl": "#",
+      "timeToComplete": "3 months",
+      "industryValue": "high",
+      "createdAt": {
+        "_seconds": 1771057131,
+        "_nanoseconds": 482000000
+      }
+    },
+    {
+      "id": "dUUsSIEW8xsx420CC3XU",
+      "name": "Chartered Engineer",
+      "provider": "Various",
+      "cost": "$299",
+      "fieldId": "engineering",
+      "specializationId": "civil-structural",
+      "difficulty": "advanced",
+      "officialUrl": "#",
+      "timeToComplete": "6 months",
+      "industryValue": "high",
+      "createdAt": {
+        "_seconds": 1771057124,
+        "_nanoseconds": 320000000
+      }
+    },
+    {
+      "id": "dVeROZkFA2Waw6fUekcA",
+      "name": "NCBI Guide",
+      "provider": "Various",
+      "cost": "Free",
+      "fieldId": "science",
+      "specializationId": "bioinformatics",
+      "difficulty": "beginner",
+      "officialUrl": "#",
+      "timeToComplete": "40 hours",
+      "industryValue": "high",
+      "createdAt": {
+        "_seconds": 1771057126,
+        "_nanoseconds": 491000000
+      }
+    },
+    {
+      "id": "e0MTuYjmEEmXIk0ZwjAo",
+      "name": "Google News Init",
+      "provider": "Various",
+      "cost": "Free",
+      "fieldId": "media",
+      "specializationId": "media-journalism",
+      "difficulty": "beginner",
+      "officialUrl": "#",
+      "timeToComplete": "40 hours",
+      "industryValue": "high",
+      "createdAt": {
+        "_seconds": 1771057129,
+        "_nanoseconds": 737000000
+      }
+    },
+    {
+      "id": "ePsYBrfi8eNPLi0URuMY",
+      "name": "Bar Council Pro",
+      "provider": "Various",
+      "cost": "$299",
+      "fieldId": "law",
+      "specializationId": "corporate-law",
+      "difficulty": "advanced",
+      "officialUrl": "#",
+      "timeToComplete": "6 months",
+      "industryValue": "high",
+      "createdAt": {
+        "_seconds": 1771057127,
+        "_nanoseconds": 688000000
+      }
+    },
+    {
+      "id": "eoUUI4gDXj3LWyvkeTOp",
+      "name": "Khan Academy",
+      "provider": "Various",
+      "cost": "Free",
+      "fieldId": "science",
+      "specializationId": "applied-math",
+      "difficulty": "beginner",
+      "officialUrl": "#",
+      "timeToComplete": "40 hours",
+      "industryValue": "high",
+      "createdAt": {
+        "_seconds": 1771057126,
+        "_nanoseconds": 277000000
+      }
+    },
+    {
+      "id": "fTcJlgscAgHRHsV4nLJs",
+      "name": "Type Rating",
+      "provider": "Various",
+      "cost": "$299",
+      "fieldId": "aviation",
+      "specializationId": "commercial-pilot-operations",
+      "difficulty": "advanced",
+      "officialUrl": "#",
+      "timeToComplete": "6 months",
+      "industryValue": "high",
+      "createdAt": {
+        "_seconds": 1771057131,
+        "_nanoseconds": 745000000
+      }
+    },
+    {
+      "id": "fm093H7opgElunU3U3oc",
+      "name": "LLM Cyber",
+      "provider": "Various",
+      "cost": "$299",
+      "fieldId": "law",
+      "specializationId": "cyber-law",
+      "difficulty": "advanced",
+      "officialUrl": "#",
+      "timeToComplete": "6 months",
+      "industryValue": "high",
+      "createdAt": {
+        "_seconds": 1771057128,
+        "_nanoseconds": 8000000
+      }
+    },
+    {
+      "id": "g2ii1r2RQsv1LrdHttPC",
+      "name": "5S Training",
+      "provider": "Various",
+      "cost": "Free",
+      "fieldId": "logistics",
+      "specializationId": "warehouse-transport-management",
+      "difficulty": "beginner",
+      "officialUrl": "#",
+      "timeToComplete": "40 hours",
+      "industryValue": "high",
+      "createdAt": {
+        "_seconds": 1771057131,
+        "_nanoseconds": 482000000
+      }
+    },
+    {
+      "id": "gTlMpcej7Dqaksg3o17R",
+      "name": "ROS Basics",
+      "provider": "Various",
+      "cost": "Free",
+      "fieldId": "engineering",
+      "specializationId": "mech-robotics",
+      "difficulty": "beginner",
+      "officialUrl": "#",
+      "timeToComplete": "40 hours",
+      "industryValue": "high",
+      "createdAt": {
+        "_seconds": 1771057123,
+        "_nanoseconds": 886000000
+      }
+    },
+    {
+      "id": "grtfNObM0V4vqAkw4zDE",
+      "name": "Meta SE Cert",
+      "provider": "Various",
+      "cost": "$299",
+      "fieldId": "engineering",
+      "specializationId": "cse-software-dev",
+      "difficulty": "advanced",
+      "officialUrl": "#",
+      "timeToComplete": "6 months",
+      "industryValue": "high",
+      "createdAt": {
+        "_seconds": 1771057118,
+        "_nanoseconds": 929000000
+      }
+    },
+    {
+      "id": "hb64AowJbdUxFjbcZc9B",
+      "name": "CKA Certification",
+      "provider": "Various",
+      "cost": "$99",
+      "fieldId": "cloud-computing",
+      "specializationId": "cloud-devops",
+      "difficulty": "intermediate",
+      "officialUrl": "#",
+      "timeToComplete": "3 months",
+      "industryValue": "high",
+      "createdAt": {
+        "_seconds": 1771057132,
+        "_nanoseconds": 427000000
+      }
+    },
+    {
+      "id": "i7Q4uLuElqnkLRa5JjfR",
+      "name": "EV Intro",
+      "provider": "Various",
+      "cost": "Free",
+      "fieldId": "engineering",
+      "specializationId": "eee-ev",
+      "difficulty": "beginner",
+      "officialUrl": "#",
+      "timeToComplete": "40 hours",
+      "industryValue": "high",
+      "createdAt": {
+        "_seconds": 1771057122,
+        "_nanoseconds": 446000000
+      }
+    },
+    {
+      "id": "i9a0pe0zdb1osjwAz9CJ",
+      "name": "Police Academy",
+      "provider": "Various",
+      "cost": "$99",
+      "fieldId": "civil-services",
+      "specializationId": "civil-police",
+      "difficulty": "intermediate",
+      "officialUrl": "#",
+      "timeToComplete": "3 months",
+      "industryValue": "high",
+      "createdAt": {
+        "_seconds": 1771057130,
+        "_nanoseconds": 988000000
+      }
+    },
+    {
+      "id": "iAakUmGDD0m3y5cTQJ1U",
+      "name": "Smart Grid Expert",
+      "provider": "Various",
+      "cost": "$299",
+      "fieldId": "engineering",
+      "specializationId": "eee-power-systems",
+      "difficulty": "advanced",
+      "officialUrl": "#",
+      "timeToComplete": "6 months",
+      "industryValue": "high",
+      "createdAt": {
+        "_seconds": 1771057121,
+        "_nanoseconds": 990000000
+      }
+    },
+    {
+      "id": "iP8fWyTpoiSIw8Qtsh1q",
+      "name": "M.Sc Bioinfo",
+      "provider": "Various",
+      "cost": "$299",
+      "fieldId": "science",
+      "specializationId": "bioinformatics",
+      "difficulty": "advanced",
+      "officialUrl": "#",
+      "timeToComplete": "6 months",
+      "industryValue": "high",
+      "createdAt": {
+        "_seconds": 1771057126,
+        "_nanoseconds": 491000000
+      }
+    },
+    {
+      "id": "iRBubsLPgGHMuPfKi16w",
+      "name": "Masters in EV",
+      "provider": "Various",
+      "cost": "$299",
+      "fieldId": "engineering",
+      "specializationId": "eee-ev",
+      "difficulty": "advanced",
+      "officialUrl": "#",
+      "timeToComplete": "6 months",
+      "industryValue": "high",
+      "createdAt": {
+        "_seconds": 1771057122,
+        "_nanoseconds": 446000000
+      }
+    },
+    {
+      "id": "isl01keohkdrUC4zrNBe",
+      "name": "DeepLearning.AI",
+      "provider": "Various",
+      "cost": "$99",
+      "fieldId": "engineering",
+      "specializationId": "cse-ai-ml",
+      "difficulty": "intermediate",
+      "officialUrl": "#",
+      "timeToComplete": "3 months",
+      "industryValue": "high",
+      "createdAt": {
+        "_seconds": 1771057120,
+        "_nanoseconds": 963000000
+      }
+    },
+    {
+      "id": "itrSbwvmVtc2YxShMJrt",
+      "name": "Indie Dev Pro",
+      "provider": "Various",
+      "cost": "$299",
+      "fieldId": "design",
+      "specializationId": "game-design",
+      "difficulty": "advanced",
+      "officialUrl": "#",
+      "timeToComplete": "6 months",
+      "industryValue": "high",
+      "createdAt": {
+        "_seconds": 1771057129,
+        "_nanoseconds": 104000000
+      }
+    },
+    {
+      "id": "ixpX0q8W3NCAxljAh7KV",
+      "name": "M.Tech Design",
+      "provider": "Various",
+      "cost": "$299",
+      "fieldId": "engineering",
+      "specializationId": "mech-design",
+      "difficulty": "advanced",
+      "officialUrl": "#",
+      "timeToComplete": "6 months",
+      "industryValue": "high",
+      "createdAt": {
+        "_seconds": 1771057122,
+        "_nanoseconds": 911000000
+      }
+    },
+    {
+      "id": "jFUZOrFaJBEtrB5cSdOf",
+      "name": "NLP Specialization",
+      "provider": "Various",
+      "cost": "$299",
+      "fieldId": "ai-ml",
+      "specializationId": "ai-nlp",
+      "difficulty": "advanced",
+      "officialUrl": "#",
+      "timeToComplete": "6 months",
+      "industryValue": "high",
+      "createdAt": {
+        "_seconds": 1771057133,
+        "_nanoseconds": 132000000
+      }
+    },
+    {
+      "id": "jGyd1EfixST5FZJxmYBx",
+      "name": "Meta Social Admin",
+      "provider": "Various",
+      "cost": "$99",
+      "fieldId": "media",
+      "specializationId": "media-digital",
+      "difficulty": "intermediate",
+      "officialUrl": "#",
+      "timeToComplete": "3 months",
+      "industryValue": "high",
+      "createdAt": {
+        "_seconds": 1771057130,
+        "_nanoseconds": 27000000
+      }
+    },
+    {
+      "id": "jJKTzRytWKHyCus3J1xa",
+      "name": "GST Basics",
+      "provider": "Various",
+      "cost": "Free",
+      "fieldId": "commerce",
+      "specializationId": "accounting",
+      "difficulty": "beginner",
+      "officialUrl": "#",
+      "timeToComplete": "40 hours",
+      "industryValue": "high",
+      "createdAt": {
+        "_seconds": 1771057127,
+        "_nanoseconds": 210000000
+      }
+    },
+    {
+      "id": "jLwwGhr1ah7B6eufonl8",
+      "name": "LangChain Cert",
+      "provider": "Various",
+      "cost": "$99",
+      "fieldId": "ai-ml",
+      "specializationId": "ai-nlp",
+      "difficulty": "intermediate",
+      "officialUrl": "#",
+      "timeToComplete": "3 months",
+      "industryValue": "high",
+      "createdAt": {
+        "_seconds": 1771057133,
+        "_nanoseconds": 132000000
+      }
+    },
+    {
+      "id": "jMB2zObaoDZHiY1A1PAL",
+      "name": "Meta Frontend",
+      "provider": "Various",
+      "cost": "$99",
+      "fieldId": "engineering",
+      "specializationId": "cse-web-dev",
+      "difficulty": "intermediate",
+      "officialUrl": "#",
+      "timeToComplete": "3 months",
+      "industryValue": "high",
+      "createdAt": {
+        "_seconds": 1771057119,
+        "_nanoseconds": 833000000
+      }
+    },
+    {
+      "id": "jmilWVcqnUmBb2inqXpz",
+      "name": "CA Final",
+      "provider": "Various",
+      "cost": "$99",
+      "fieldId": "commerce",
+      "specializationId": "accounting",
+      "difficulty": "intermediate",
+      "officialUrl": "#",
+      "timeToComplete": "3 months",
+      "industryValue": "high",
+      "createdAt": {
+        "_seconds": 1771057127,
+        "_nanoseconds": 210000000
+      }
+    },
+    {
+      "id": "khyUxiHntY4UFmuKPwG8",
+      "name": "Pytorch Spec",
+      "provider": "Various",
+      "cost": "$99",
+      "fieldId": "ai-ml",
+      "specializationId": "ai-deep-learning",
+      "difficulty": "intermediate",
+      "officialUrl": "#",
+      "timeToComplete": "3 months",
+      "industryValue": "high",
+      "createdAt": {
+        "_seconds": 1771057132,
+        "_nanoseconds": 664000000
+      }
+    },
+    {
+      "id": "lU3zAAyiXhpnRTd7oEjK",
+      "name": "Masters Media",
+      "provider": "Various",
+      "cost": "$299",
+      "fieldId": "media",
+      "specializationId": "media-digital",
+      "difficulty": "advanced",
+      "officialUrl": "#",
+      "timeToComplete": "6 months",
+      "industryValue": "high",
+      "createdAt": {
+        "_seconds": 1771057130,
+        "_nanoseconds": 27000000
+      }
+    },
+    {
+      "id": "ls2NGfbmH1K1Fn7ckETb",
+      "name": "PhD",
+      "provider": "Various",
+      "cost": "$299",
+      "fieldId": "science",
+      "specializationId": "rnd",
+      "difficulty": "advanced",
+      "officialUrl": "#",
+      "timeToComplete": "6 months",
+      "industryValue": "high",
+      "createdAt": {
+        "_seconds": 1771057125,
+        "_nanoseconds": 953000000
+      }
+    },
+    {
+      "id": "mJc0Azw94FH4RThE5Dd1",
+      "name": "Project Mgmt Basic",
+      "provider": "Various",
+      "cost": "Free",
+      "fieldId": "engineering",
+      "specializationId": "civil-construction",
+      "difficulty": "beginner",
+      "officialUrl": "#",
+      "timeToComplete": "40 hours",
+      "industryValue": "high",
+      "createdAt": {
+        "_seconds": 1771057124,
+        "_nanoseconds": 612000000
+      }
+    },
+    {
+      "id": "mRXGKItXxWheXdab2RjN",
+      "name": "PMP (Construction)",
+      "provider": "Various",
+      "cost": "$99",
+      "fieldId": "engineering",
+      "specializationId": "civil-construction",
+      "difficulty": "intermediate",
+      "officialUrl": "#",
+      "timeToComplete": "3 months",
+      "industryValue": "high",
+      "createdAt": {
+        "_seconds": 1771057124,
+        "_nanoseconds": 612000000
+      }
+    },
+    {
+      "id": "n1hncDQWgwbxXNFZiQMf",
+      "name": "Anatomy Basic",
+      "provider": "Various",
+      "cost": "Free",
+      "fieldId": "sports",
+      "specializationId": "sports-science",
+      "difficulty": "beginner",
+      "officialUrl": "#",
+      "timeToComplete": "40 hours",
+      "industryValue": "high",
+      "createdAt": {
+        "_seconds": 1771057135,
+        "_nanoseconds": 659000000
+      }
+    },
+    {
+      "id": "npsab9xVGtnPGDfcmBvf",
+      "name": "Oracle Java",
+      "provider": "Various",
+      "cost": "$99",
+      "fieldId": "engineering",
+      "specializationId": "cse-software-dev",
+      "difficulty": "intermediate",
+      "officialUrl": "#",
+      "timeToComplete": "3 months",
+      "industryValue": "high",
+      "createdAt": {
+        "_seconds": 1771057118,
+        "_nanoseconds": 929000000
+      }
+    },
+    {
+      "id": "nzZXVDr4AK3yDuoqZ8K7",
+      "name": "freeCodeCamp",
+      "provider": "Various",
+      "cost": "Free",
+      "fieldId": "engineering",
+      "specializationId": "cse-web-dev",
+      "difficulty": "beginner",
+      "officialUrl": "#",
+      "timeToComplete": "40 hours",
+      "industryValue": "high",
+      "createdAt": {
+        "_seconds": 1771057119,
+        "_nanoseconds": 833000000
+      }
+    },
+    {
+      "id": "pTPdmpvbPjjqr9pieqbw",
+      "name": "Lab Safety",
+      "provider": "Various",
+      "cost": "$99",
+      "fieldId": "science",
+      "specializationId": "rnd",
+      "difficulty": "intermediate",
+      "officialUrl": "#",
+      "timeToComplete": "3 months",
+      "industryValue": "high",
+      "createdAt": {
+        "_seconds": 1771057125,
+        "_nanoseconds": 953000000
+      }
+    },
+    {
+      "id": "qCyrTt3p65uKv8JwcHLr",
+      "name": "IPR Basics",
+      "provider": "Various",
+      "cost": "Free",
+      "fieldId": "law",
+      "specializationId": "corporate-law",
+      "difficulty": "beginner",
+      "officialUrl": "#",
+      "timeToComplete": "40 hours",
+      "industryValue": "high",
+      "createdAt": {
+        "_seconds": 1771057127,
+        "_nanoseconds": 688000000
+      }
+    },
+    {
+      "id": "qhxI5Vn0uLOEJKrjv2Au",
+      "name": "CFA Charter",
+      "provider": "Various",
+      "cost": "$299",
+      "fieldId": "commerce",
+      "specializationId": "financial-analysis",
+      "difficulty": "advanced",
+      "officialUrl": "#",
+      "timeToComplete": "6 months",
+      "industryValue": "high",
+      "createdAt": {
+        "_seconds": 1771057126,
+        "_nanoseconds": 768000000
+      }
+    },
+    {
+      "id": "r6dGPzO8hyP2gXAvXm4b",
+      "name": "AWS DevOps Pro",
+      "provider": "Various",
+      "cost": "$299",
+      "fieldId": "cloud-computing",
+      "specializationId": "cloud-devops",
+      "difficulty": "advanced",
+      "officialUrl": "#",
+      "timeToComplete": "6 months",
+      "industryValue": "high",
+      "createdAt": {
+        "_seconds": 1771057132,
+        "_nanoseconds": 427000000
+      }
+    },
+    {
+      "id": "rGZz4VMlYHzYGJeTXjsO",
+      "name": "Google Data Analytics",
+      "provider": "Various",
+      "cost": "Free",
+      "fieldId": "commerce",
+      "specializationId": "business-analytics",
+      "difficulty": "beginner",
+      "officialUrl": "#",
+      "timeToComplete": "40 hours",
+      "industryValue": "high",
+      "createdAt": {
+        "_seconds": 1771057127,
+        "_nanoseconds": 465000000
+      }
+    },
+    {
+      "id": "rQeDHpy7KzQEvoIsSxrt",
+      "name": "CEH / PenTest+",
+      "provider": "Various",
+      "cost": "$99",
+      "fieldId": "cybersecurity",
+      "specializationId": "cyber-offensive",
+      "difficulty": "intermediate",
+      "officialUrl": "#",
+      "timeToComplete": "3 months",
+      "industryValue": "high",
+      "createdAt": {
+        "_seconds": 1771057133,
+        "_nanoseconds": 401000000
+      }
+    },
+    {
+      "id": "riPqC7q68W3V41zdxSko",
+      "name": "Fast.ai",
+      "provider": "Various",
+      "cost": "Free",
+      "fieldId": "ai-ml",
+      "specializationId": "ai-deep-learning",
+      "difficulty": "beginner",
+      "officialUrl": "#",
+      "timeToComplete": "40 hours",
+      "industryValue": "high",
+      "createdAt": {
+        "_seconds": 1771057132,
+        "_nanoseconds": 664000000
+      }
+    },
+    {
+      "id": "s7lOmm3WVcPHPpIaVUm9",
+      "name": "OSCP",
+      "provider": "Various",
+      "cost": "$299",
+      "fieldId": "cybersecurity",
+      "specializationId": "cyber-offensive",
+      "difficulty": "advanced",
+      "officialUrl": "#",
+      "timeToComplete": "6 months",
+      "industryValue": "high",
+      "createdAt": {
+        "_seconds": 1771057133,
+        "_nanoseconds": 401000000
+      }
+    },
+    {
+      "id": "tD6WfcbYpZ1dMRitcjZC",
+      "name": "PHD Sports",
+      "provider": "Various",
+      "cost": "$299",
+      "fieldId": "sports",
+      "specializationId": "sports-science",
+      "difficulty": "advanced",
+      "officialUrl": "#",
+      "timeToComplete": "6 months",
+      "industryValue": "high",
+      "createdAt": {
+        "_seconds": 1771057135,
+        "_nanoseconds": 659000000
+      }
+    },
+    {
+      "id": "tZNVfejNTIoYcW91s0jB",
+      "name": "Flutter Basics",
+      "provider": "Various",
+      "cost": "Free",
+      "fieldId": "engineering",
+      "specializationId": "cse-mobile-dev",
+      "difficulty": "beginner",
+      "officialUrl": "#",
+      "timeToComplete": "40 hours",
+      "industryValue": "high",
+      "createdAt": {
+        "_seconds": 1771057120,
+        "_nanoseconds": 571000000
+      }
+    },
+    {
+      "id": "tiYgSGJJUmWxmrcCHwyQ",
+      "name": "PhD Res",
+      "provider": "Various",
+      "cost": "$299",
+      "fieldId": "medical",
+      "specializationId": "clinical-research",
+      "difficulty": "advanced",
+      "officialUrl": "#",
+      "timeToComplete": "6 months",
+      "industryValue": "high",
+      "createdAt": {
+        "_seconds": 1771057125,
+        "_nanoseconds": 413000000
+      }
+    },
+    {
+      "id": "uOB90mNrGfHHgx3ydSky",
+      "name": "MBA Healthcare",
+      "provider": "Various",
+      "cost": "$299",
+      "fieldId": "medical",
+      "specializationId": "hospital-admin",
+      "difficulty": "advanced",
+      "officialUrl": "#",
+      "timeToComplete": "6 months",
+      "industryValue": "high",
+      "createdAt": {
+        "_seconds": 1771057124,
+        "_nanoseconds": 951000000
+      }
+    },
+    {
+      "id": "uzodQgD9tOZrbTvxyNkC",
+      "name": "AWS Data Analytics",
+      "provider": "Various",
+      "cost": "$299",
+      "fieldId": "ai-ml",
+      "specializationId": "ai-ds",
+      "difficulty": "advanced",
+      "officialUrl": "#",
+      "timeToComplete": "6 months",
+      "industryValue": "high",
+      "createdAt": {
+        "_seconds": 1771057132,
+        "_nanoseconds": 894000000
+      }
+    },
+    {
+      "id": "v4qqclb6owvPcPRUY0rI",
+      "name": "GCP Cert",
+      "provider": "Various",
+      "cost": "Free",
+      "fieldId": "medical",
+      "specializationId": "clinical-research",
+      "difficulty": "beginner",
+      "officialUrl": "#",
+      "timeToComplete": "40 hours",
+      "industryValue": "high",
+      "createdAt": {
+        "_seconds": 1771057125,
+        "_nanoseconds": 413000000
+      }
+    },
+    {
+      "id": "vJHXBUOz7Kdvz8LmGkyc",
+      "name": "RICS",
+      "provider": "Various",
+      "cost": "$299",
+      "fieldId": "engineering",
+      "specializationId": "civil-construction",
+      "difficulty": "advanced",
+      "officialUrl": "#",
+      "timeToComplete": "6 months",
+      "industryValue": "high",
+      "createdAt": {
+        "_seconds": 1771057124,
+        "_nanoseconds": 612000000
+      }
+    },
+    {
+      "id": "vp7xhIr0TzuMotanRrRM",
+      "name": "Agri 101",
+      "provider": "Various",
+      "cost": "Free",
+      "fieldId": "agriculture",
+      "specializationId": "agritech",
+      "difficulty": "beginner",
+      "officialUrl": "#",
+      "timeToComplete": "40 hours",
+      "industryValue": "high",
+      "createdAt": {
+        "_seconds": 1771057135,
+        "_nanoseconds": 195000000
+      }
+    },
+    {
+      "id": "wms4RN3FJJcgBTWYdWg5",
+      "name": "Google Cyber",
+      "provider": "Various",
+      "cost": "Free",
+      "fieldId": "cybersecurity",
+      "specializationId": "cyber-defensive",
+      "difficulty": "beginner",
+      "officialUrl": "#",
+      "timeToComplete": "40 hours",
+      "industryValue": "high",
+      "createdAt": {
+        "_seconds": 1771057133,
+        "_nanoseconds": 692000000
+      }
+    },
+    {
+      "id": "x85hRMmvN8RePhQpKJZk",
+      "name": "CPL License",
+      "provider": "Various",
+      "cost": "$99",
+      "fieldId": "aviation",
+      "specializationId": "commercial-pilot-operations",
+      "difficulty": "intermediate",
+      "officialUrl": "#",
+      "timeToComplete": "3 months",
+      "industryValue": "high",
+      "createdAt": {
+        "_seconds": 1771057131,
+        "_nanoseconds": 745000000
+      }
+    },
+    {
+      "id": "xZF0J6p90QmzPkpsCbOc",
+      "name": "STK Software",
+      "provider": "Various",
+      "cost": "$99",
+      "fieldId": "emerging-tech",
+      "specializationId": "tech-robotics",
+      "difficulty": "intermediate",
+      "officialUrl": "#",
+      "timeToComplete": "3 months",
+      "industryValue": "high",
+      "createdAt": {
+        "_seconds": 1771057134,
+        "_nanoseconds": 756000000
+      }
+    },
+    {
+      "id": "xfW96AS6vg9e3cxqZZwv",
+      "name": "IHM Degree",
+      "provider": "Various",
+      "cost": "$99",
+      "fieldId": "hospitality",
+      "specializationId": "hotel-mgmt",
+      "difficulty": "intermediate",
+      "officialUrl": "#",
+      "timeToComplete": "3 months",
+      "industryValue": "high",
+      "createdAt": {
+        "_seconds": 1771057135,
+        "_nanoseconds": 423000000
+      }
+    },
+    {
+      "id": "y8kkx2weDmjNPOZSgJIv",
+      "name": "Figma Guide",
+      "provider": "Various",
+      "cost": "Free",
+      "fieldId": "design",
+      "specializationId": "ui-ux",
+      "difficulty": "beginner",
+      "officialUrl": "#",
+      "timeToComplete": "40 hours",
+      "industryValue": "high",
+      "createdAt": {
+        "_seconds": 1771057128,
+        "_nanoseconds": 769000000
+      }
+    },
+    {
+      "id": "yANUCMjIsbaO8DX8XBIF",
+      "name": "M.A. Psych",
+      "provider": "Various",
+      "cost": "$99",
+      "fieldId": "arts",
+      "specializationId": "psychology",
+      "difficulty": "intermediate",
+      "officialUrl": "#",
+      "timeToComplete": "3 months",
+      "industryValue": "high",
+      "createdAt": {
+        "_seconds": 1771057128,
+        "_nanoseconds": 354000000
+      }
+    },
+    {
+      "id": "zFBLX1AgidAq6X4Z14CZ",
+      "name": "HCI Master",
+      "provider": "Various",
+      "cost": "$299",
+      "fieldId": "design",
+      "specializationId": "ui-ux",
+      "difficulty": "advanced",
+      "officialUrl": "#",
+      "timeToComplete": "6 months",
+      "industryValue": "high",
+      "createdAt": {
+        "_seconds": 1771057128,
+        "_nanoseconds": 769000000
+      }
+    },
+    {
+      "id": "zUaAiBlugixvk5OgAQpM",
+      "name": "Academy Commission",
+      "provider": "Various",
+      "cost": "$299",
+      "fieldId": "defense",
+      "specializationId": "armed-forces",
+      "difficulty": "advanced",
+      "officialUrl": "#",
+      "timeToComplete": "6 months",
+      "industryValue": "high",
+      "createdAt": {
+        "_seconds": 1771057129,
+        "_nanoseconds": 420000000
+      }
+    }
+  ],
+  "roadmaps": []
+}

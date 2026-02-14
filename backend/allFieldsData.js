@@ -11,72 +11,84 @@ const COMPLETE_REAL_WORLD_DATA = {
         specializations: {
             'cse-software-dev': {
                 displayName: 'Software Development & Programming',
+                branch: 'cse',
                 careerPaths: ['Software Engineer', 'Backend Developer', 'Systems Architect'],
                 projects: { beginner: ['Snake Game', 'Calculator'], intermediate: ['E-commerce API'], advanced: ['Distributed System'] },
                 certifications: { free: ['HackerRank'], pro: ['Oracle Java'], premium: ['Meta SE Cert'] }
             },
             'cse-web-dev': {
                 displayName: 'Full Stack Web Development',
+                branch: 'cse',
                 careerPaths: ['Frontend Developer', 'Full Stack Developer', 'Cloud Web Architect'],
                 projects: { beginner: ['Portfolio'], intermediate: ['Social Media Clone'], advanced: ['SaaS Platform'] },
                 certifications: { free: ['freeCodeCamp'], pro: ['Meta Frontend'], premium: ['AWS Dev Associate'] }
             },
             'cse-mobile-dev': {
                 displayName: 'Mobile App Development',
+                branch: 'cse',
                 careerPaths: ['iOS Developer', 'Android Developer', 'Cross-platform Mobile Lead'],
                 projects: { beginner: ['To-Do App'], intermediate: ['Food Delivery App'], advanced: ['Fitness Tracker'] },
                 certifications: { free: ['Flutter Basics'], pro: ['Google Android Cert'], premium: ['Apple Developer'] }
             },
             'cse-ai-ml': {
                 displayName: 'AI & Machine Learning',
+                branch: 'cse',
                 careerPaths: ['ML Engineer', 'Data Scientist', 'AI Research Scientist'],
                 projects: { beginner: ['Digit Recognizer'], intermediate: ['Sentiment Bot'], advanced: ['Autonomous Bot'] },
                 certifications: { free: ['Kaggle'], pro: ['DeepLearning.AI'], premium: ['Google ML Professional'] }
             },
             'ece-vlsi': {
                 displayName: 'VLSI Design & Chip Engineering',
+                branch: 'ece',
                 careerPaths: ['VLSI Design Engineer', 'ASIC Designer', 'SoC Architect'],
                 projects: { beginner: ['Logic Gate Sim'], intermediate: ['8-bit CPU'], advanced: ['Nvidia-grade GPU block'] },
                 certifications: { free: ['Verilog Basics'], pro: ['Cadence Tool Training'], premium: ['M.Tech VLSI'] }
             },
             'ece-embedded': {
                 displayName: 'Embedded Systems & IoT',
+                branch: 'ece',
                 careerPaths: ['Embedded Systems Engineer', 'IoT Solutions Architect', 'Hardware Designer'],
                 projects: { beginner: ['Arduino Light'], intermediate: ['Smart Home Hub'], advanced: ['RTOS Kernel'] },
                 certifications: { free: ['Cisco IoT'], pro: ['ARM Developer'], premium: ['Masters in ES'] }
             },
             'eee-power-systems': {
                 displayName: 'Power Systems & Grid',
+                branch: 'eee',
                 careerPaths: ['Power Systems Engineer', 'Grid Manager', 'Electrical Consultant'],
                 projects: { beginner: ['Basic Circuit'], intermediate: ['Micro-grid model'], advanced: ['Smart Grid AI'] },
                 certifications: { free: ['NPTEL Power'], pro: ['IEEE Cert'], premium: ['Smart Grid Expert'] }
             },
             'eee-ev': {
                 displayName: 'Electric Vehicles & Battery',
+                branch: 'eee',
                 careerPaths: ['EV Powertrain Engineer', 'BMS Designer', 'Battery Scientist'],
                 projects: { beginner: ['Motor Control'], intermediate: ['BMS Simulation'], advanced: ['EV Prototype'] },
                 certifications: { free: ['EV Intro'], pro: ['Tesla-style Training'], premium: ['Masters in EV'] }
             },
             'mech-design': {
                 displayName: 'Design & Manufacturing',
+                branch: 'mechanical',
                 careerPaths: ['Design Engineer', 'CAD Specialist', 'Production Manager'],
                 projects: { beginner: ['3D Bridge'], intermediate: ['Engine Crankshaft'], advanced: ['Factory Automation'] },
                 certifications: { free: ['SolidWorks Basic'], pro: ['AutoCAD Pro'], premium: ['M.Tech Design'] }
             },
             'mech-robotics': {
                 displayName: 'Robotics & Automation',
+                branch: 'mechanical',
                 careerPaths: ['Robotics Engineer', 'Automation Lead', 'Mechatronics Expert'],
                 projects: { beginner: ['Robot Arm'], intermediate: ['Drone Kit'], advanced: ['Humanoid Model'] },
                 certifications: { free: ['ROS Basics'], pro: ['Fanuc Robotics'], premium: ['Masters Robotics'] }
             },
             'civil-structural': {
                 displayName: 'Structural Engineering',
+                branch: 'civil',
                 careerPaths: ['Structural Engineer', 'Project Manager', 'Bridge Designer'],
                 projects: { beginner: ['Truss Model'], intermediate: ['Apartment Design'], advanced: ['Skyscraper Analysis'] },
                 certifications: { free: ['STAAD.Pro Basic'], pro: ['ETABS Pro'], premium: ['Chartered Engineer'] }
             },
             'civil-construction': {
                 displayName: 'Construction Management',
+                branch: 'civil',
                 careerPaths: ['Site Engineer', 'Quantity Surveyor', 'Construction Manager'],
                 projects: { beginner: ['Costing Sheet'], intermediate: ['BIM model'], advanced: ['Metro Project'] },
                 certifications: { free: ['Project Mgmt Basic'], pro: ['PMP (Construction)'], premium: ['RICS'] }
