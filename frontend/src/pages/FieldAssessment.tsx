@@ -24,16 +24,20 @@ export default function FieldAssessment() {
     const { user, profile, loading: authLoading } = useAuthContext();
     const navigate = useNavigate();
     const [searchParams] = useSearchParams();
-    const fieldId = searchParams.get('field') || profile?.field || '';
+    const queryField = searchParams.get('field');
+    const fieldId = queryField || profile?.branch || profile?.field || '';
+
+    // If generic engineering is passed but branch is available, use branch
+    const effectiveFieldId = (fieldId === 'engineering' && profile?.branch) ? profile.branch : fieldId;
 
     const [stage, setStage] = useState<AssessmentStage>('intro');
     const [questions, setQuestions] = useState<AssessmentQuestion[]>([]);
     const [result, setResult] = useState<AssessmentResult | null>(null);
     const [loadingQuestions, setLoadingQuestions] = useState(false);
 
-    const { status, loading: statusLoading, submitAssessment } = useFieldAssessment(fieldId);
+    const { status, loading: statusLoading, submitAssessment } = useFieldAssessment(effectiveFieldId);
 
-    const field = getFieldById(fieldId);
+    const field = getFieldById(fieldId); // Keep original for UI content
     const fieldContent = fieldIntroductions[fieldId];
 
     // Redirect if not authenticated or no field selected
@@ -51,14 +55,14 @@ export default function FieldAssessment() {
 
     // Optimized: Fetch questions using React Query
     const { data: fetchedQuestions = [] } = useQuery({
-        queryKey: ['assessment_questions', fieldId],
+        queryKey: ['assessment_questions', effectiveFieldId],
         queryFn: async () => {
-            if (!fieldId) return [];
+            if (!effectiveFieldId) return [];
             const apiBase = import.meta.env.VITE_API_URL || 'http://localhost:5000';
             try {
                 // Try backend first
                 const token = await user?.getIdToken();
-                const res = await fetch(`${apiBase}/api/assessment/questions/${fieldId}`, {
+                const res = await fetch(`${apiBase}/api/assessment/questions/${effectiveFieldId}`, {
                     headers: token ? { 'Authorization': `Bearer ${token}` } : {}
                 });
 
@@ -73,7 +77,7 @@ export default function FieldAssessment() {
             // Fallback to Firestore getDocs (not listener)
             const q = query(
                 collection(db, 'assessment_questions'),
-                where('fieldId', '==', fieldId.toLowerCase().trim())
+                where('fieldId', '==', effectiveFieldId.toLowerCase().trim())
             );
             const snapshot = await getDocs(q);
             return snapshot.docs.map(doc => {

@@ -9,143 +9,86 @@ export const assessmentQuestions: Record<string, AssessmentQuestion[]> = {
             id: 'eng-1',
             fieldId: 'engineering',
             question: 'What is the primary purpose of an algorithm in computer science?',
-            options: [
-                'To make code look organized',
-                'A step-by-step procedure to solve a problem',
-                'To increase file size',
-                'To slow down program execution'
-            ],
+            options: ['To make code look organized', 'A step-by-step procedure to solve a problem', 'To increase file size', 'To slow down program execution'],
             correctAnswer: 1,
             explanation: 'An algorithm is a well-defined step-by-step procedure or formula for solving a problem or accomplishing a task.',
             difficulty: 'easy',
             topic: 'Fundamentals'
         },
+        // ... (keeping some generic ones but adding branches later)
+    ],
+    cse: [
         {
-            id: 'eng-2',
-            fieldId: 'engineering',
-            question: 'Which of the following is NOT a programming paradigm?',
-            options: [
-                'Object-Oriented Programming',
-                'Functional Programming',
-                'Procedural Programming',
-                'Circular Programming'
-            ],
-            correctAnswer: 3,
-            difficulty: 'easy',
-            topic: 'Programming'
+            id: 'cse-1',
+            fieldId: 'cse',
+            question: 'What is the time complexity of searching an element in a balanced binary search tree?',
+            options: ['O(1)', 'O(n)', 'O(log n)', 'O(n^2)'],
+            correctAnswer: 2,
+            difficulty: 'medium',
+            topic: 'Data Structures'
         },
         {
-            id: 'eng-3',
-            fieldId: 'engineering',
-            question: 'What does CPU stand for?',
-            options: [
-                'Central Processing Unit',
-                'Computer Personal Unit',
-                'Central Program Utility',
-                'Common Processing Unit'
-            ],
-            correctAnswer: 0,
-            difficulty: 'easy',
-            topic: 'Hardware'
-        },
-        {
-            id: 'eng-4',
-            fieldId: 'engineering',
-            question: 'In software development, what does "debugging" mean?',
-            options: [
-                'Adding new features',
-                'Finding and fixing errors in code',
-                'Deleting old code',
-                'Optimizing performance'
-            ],
-            correctAnswer: 1,
-            difficulty: 'easy',
-            topic: 'Software Development'
-        },
-        {
-            id: 'eng-5',
-            fieldId: 'engineering',
-            question: 'What is the purpose of a database?',
-            options: [
-                'To display graphics',
-                'To store and organize data',
-                'To connect to the internet',
-                'To run programs'
-            ],
-            correctAnswer: 1,
+            id: 'cse-2',
+            fieldId: 'cse',
+            question: 'Which of the following is a NoSQL database?',
+            options: ['MySQL', 'PostgreSQL', 'MongoDB', 'Oracle'],
+            correctAnswer: 2,
             difficulty: 'easy',
             topic: 'Databases'
-        },
+        }
+    ],
+    ece: [
         {
-            id: 'eng-6',
-            fieldId: 'engineering',
-            question: 'Which of these is a version control system?',
-            options: [
-                'Microsoft Word',
-                'Git',
-                'Photoshop',
-                'Excel'
-            ],
+            id: 'ece-1',
+            fieldId: 'ece',
+            question: 'What is the purpose of a filter in an electronic circuit?',
+            options: ['To increase voltage', 'To remove unwanted frequency components', 'To store charge', 'To measure current'],
             correctAnswer: 1,
             difficulty: 'easy',
-            topic: 'Tools'
+            topic: 'Signals'
         },
         {
-            id: 'eng-7',
-            fieldId: 'engineering',
-            question: 'What does HTML stand for?',
-            options: [
-                'Hyper Text Markup Language',
-                'High Tech Modern Language',
-                'Home Tool Markup Language',
-                'Hyperlinks and Text Markup Language'
-            ],
-            correctAnswer: 0,
-            difficulty: 'easy',
-            topic: 'Web Development'
-        },
-        {
-            id: 'eng-8',
-            fieldId: 'engineering',
-            question: 'What is the main function of an operating system?',
-            options: [
-                'To browse the internet',
-                'To manage computer hardware and software resources',
-                'To create documents',
-                'To play games'
-            ],
+            id: 'ece-2',
+            fieldId: 'ece',
+            question: 'What does "VLSI" stand for?',
+            options: ['Very Large System Integration', 'Very Large Scale Integration', 'Variable Level Signal Integration', 'Virtual Local Storage Interface'],
             correctAnswer: 1,
             difficulty: 'easy',
-            topic: 'Operating Systems'
-        },
+            topic: 'Electronics'
+        }
+    ],
+    mech: [
         {
-            id: 'eng-9',
-            fieldId: 'engineering',
-            question: 'In networking, what does IP stand for?',
-            options: [
-                'Internet Protocol',
-                'Internal Program',
-                'Integrated Process',
-                'Information Package'
-            ],
-            correctAnswer: 0,
-            difficulty: 'easy',
-            topic: 'Networking'
-        },
-        {
-            id: 'eng-10',
-            fieldId: 'engineering',
-            question: 'What is the purpose of a compiler?',
-            options: [
-                'To delete files',
-                'To translate high-level code into machine code',
-                'To browse websites',
-                'To create backups'
-            ],
+            id: 'mech-1',
+            fieldId: 'mech',
+            question: 'Which law of thermodynamics states that energy cannot be created or destroyed?',
+            options: ['Zeroth Law', 'First Law', 'Second Law', 'Third Law'],
             correctAnswer: 1,
             difficulty: 'easy',
-            topic: 'Programming'
-        },
+            topic: 'Thermodynamics'
+        }
+    ],
+    civil: [
+        {
+            id: 'civil-1',
+            fieldId: 'civil',
+            question: 'What is the primary function of a foundation in a building?',
+            options: ['To look good', 'To transfer the load of the building to the ground', 'To keep the building cool', 'To provide storage space'],
+            correctAnswer: 1,
+            difficulty: 'easy',
+            topic: 'Structural'
+        }
+    ],
+    eee: [
+        {
+            id: 'eee-1',
+            fieldId: 'eee',
+            question: 'What is the unit of electrical resistance?',
+            options: ['Volt', 'Ampere', 'Ohm', 'Watt'],
+            correctAnswer: 2,
+            difficulty: 'easy',
+            topic: 'Basic Electrical'
+        }
     ],
     medical: [
         {
