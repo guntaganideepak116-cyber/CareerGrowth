@@ -29,6 +29,10 @@ router.get('/', async (req: Request, res: Response) => {
             query = query.where('fieldId', '==', field);
         }
 
+        if (req.query.branch) {
+            query = query.where('branch', '==', req.query.branch);
+        }
+
         if (specialization) {
             query = query.where('specializationId', '==', specialization);
         }

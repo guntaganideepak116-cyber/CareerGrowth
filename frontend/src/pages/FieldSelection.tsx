@@ -36,8 +36,13 @@ export default function FieldSelection() {
       await updateProfile({ field: field.id });
       toast.success(`${field.name} selected!`);
 
-      // Redirect to field assessment page
-      navigate(`/field-assessment?field=${field.id}`);
+      // If field has branches (like Engineering), go to branch selection first
+      if (field.hasBranches) {
+        navigate('/branches');
+      } else {
+        // Redirect to field assessment page
+        navigate(`/field-assessment?field=${field.id}`);
+      }
     } catch (error) {
       toast.error('Failed to save selection. Please try again.');
     }

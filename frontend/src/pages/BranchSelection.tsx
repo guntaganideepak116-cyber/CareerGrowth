@@ -39,7 +39,8 @@ export default function BranchSelection() {
         try {
             await updateProfile({ branch: branch.id });
             toast.success(`${branch.name} selected!`);
-            navigate('/specializations');
+            // Go to assessment for the chosen field/branch
+            navigate(`/field-assessment?field=${profile?.field || 'engineering'}`);
         } catch (error) {
             toast.error('Failed to save selection. Please try again.');
         }
@@ -103,8 +104,8 @@ export default function BranchSelection() {
                             <div
                                 key={branch.id}
                                 className={`group relative bg-card rounded-xl border p-6 hover:shadow-xl transition-all duration-300 cursor-pointer animate-slide-up ${isSelected
-                                        ? 'border-primary ring-2 ring-primary/20 shadow-lg'
-                                        : 'border-border hover:border-primary/50'
+                                    ? 'border-primary ring-2 ring-primary/20 shadow-lg'
+                                    : 'border-border hover:border-primary/50'
                                     }`}
                                 style={{ animationDelay: `${index * 0.05}s` }}
                                 onClick={() => handleSelectBranch(branch)}

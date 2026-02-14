@@ -16,7 +16,8 @@ export function useCertifications() {
             try {
                 const certs = await getCertifications({
                     field: fieldId,
-                    specialization: specializationId
+                    specialization: profile?.specialization,
+                    branch: profile?.branch
                 });
 
                 if (certs && certs.length > 0) {

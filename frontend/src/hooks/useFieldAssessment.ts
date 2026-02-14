@@ -230,7 +230,16 @@ export function useFieldAssessment(fieldId: string) {
             };
 
             // Save to Firestore
-            await setDoc(doc(db, 'users', user.uid, 'assessments', fieldId), resultData);
+            try {
+                await setDoc(doc(db, 'users', user.uid, 'assessments', fieldId), resultData);
+            } catch (firestoreError: any) {
+                console.warn('Failed to save assessment to Firestore (Quota/Offline):', firestoreError);
+                if (firestoreError?.code === 'resource-exhausted') {
+                    // Don't throw, let the user proceed with local result
+                } else {
+                    // For other errors, maybe still allow local-only flow
+                }
+            }
 
             const result: AssessmentResult = {
                 userId: resultData.userId,
@@ -250,16 +259,17 @@ export function useFieldAssessment(fieldId: string) {
             updateLocalStatus(result);
             showCompletionToast(result);
 
-            // Log activity for real-time analytics
-            await logUserActivity(user.uid, 'ASSESSMENT_COMPLETED', {
+            // Log activity for real-time analytics (silent fail)
+            logUserActivity(user.uid, 'ASSESSMENT_COMPLETED', {
                 fieldId,
                 metadata: { score: resultData.score, fieldName }
-            });
+            }).catch(() => { });
 
             return result;
-        } catch (error) {
+        } catch (error: any) {
             console.error('Error submitting assessment:', error);
-            toast.error('Failed to submit assessment. Please try again.');
+            // Even on general error, we might want to try and return a basic result if possible, 
+            // but for now, we'll just allow the local evaluation result above to be the main path.
             throw error;
         } finally {
             setSubmitting(false);

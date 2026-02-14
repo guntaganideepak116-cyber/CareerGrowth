@@ -41,16 +41,28 @@ export async function generateContent<T>(request: ContentRequest): Promise<T> {
     return result.data as T;
 }
 
-export async function getProjects(params: { field?: string; specialization?: string; careerPath?: string }): Promise<any[]> {
-    const query = new URLSearchParams(params as any).toString();
-    const response = await fetch(`${API_URL}/api/projects?${query}`);
-    const result = await response.json();
-    return result.success ? result.data : [];
+export async function getProjects(params: { field?: string; specialization?: string; careerPath?: string; branch?: string }): Promise<any[]> {
+    try {
+        const query = new URLSearchParams(params as any).toString();
+        const response = await fetch(`${API_URL}/api/projects?${query}`);
+        if (!response.ok) throw new Error('API Error');
+        const result = await response.json();
+        return result.success ? result.data : [];
+    } catch (error) {
+        console.error('Projects API failure:', error);
+        return [];
+    }
 }
 
-export async function getCertifications(params: { field?: string; specialization?: string; careerPath?: string }): Promise<any[]> {
-    const query = new URLSearchParams(params as any).toString();
-    const response = await fetch(`${API_URL}/api/certifications?${query}`);
-    const result = await response.json();
-    return result.success ? result.data : [];
+export async function getCertifications(params: { field?: string; specialization?: string; careerPath?: string; branch?: string }): Promise<any[]> {
+    try {
+        const query = new URLSearchParams(params as any).toString();
+        const response = await fetch(`${API_URL}/api/certifications?${query}`);
+        if (!response.ok) throw new Error('API Error');
+        const result = await response.json();
+        return result.success ? result.data : [];
+    } catch (error) {
+        console.error('Certifications API failure:', error);
+        return [];
+    }
 }

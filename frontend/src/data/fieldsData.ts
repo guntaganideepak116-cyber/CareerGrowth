@@ -294,7 +294,7 @@ export const branchesMap: Record<string, Branch[]> = {
       color: 'from-yellow-500 to-yellow-600',
     },
     {
-      id: 'mechanical',
+      id: 'mech',
       name: 'Mechanical Engineering',
       description: 'Design, manufacturing, thermal systems, and robotics',
       demand: 'High',
@@ -366,17 +366,17 @@ export const specializationsMap: Record<string, Specialization[]> = {
     // ============================================
     // MECHANICAL ENGINEERING - UG
     // ============================================
-    { id: 'mech-design', name: 'Design & Manufacturing Engineering', type: 'core', growthPotential: 'high', riskLevel: 'low', marketDemand: 85, description: 'Design mechanical components and manufacturing processes', skills: ['CAD/CAM', 'SolidWorks', 'Manufacturing', 'Materials'], degreeLevel: 'UG', branch: 'mechanical' },
-    { id: 'mech-thermal', name: 'Thermal Engineering & HVAC', type: 'core', growthPotential: 'medium', riskLevel: 'low', marketDemand: 78, description: 'Design thermal systems, HVAC, and refrigeration systems', skills: ['Thermodynamics', 'HVAC', 'Heat Transfer', 'CFD'], degreeLevel: 'UG', branch: 'mechanical' },
-    { id: 'mech-robotics', name: 'Robotics & Automation', type: 'emerging', growthPotential: 'high', riskLevel: 'medium', marketDemand: 90, description: 'Design robotic systems and automated manufacturing', skills: ['Robotics', 'ROS', 'Automation', 'Control Systems'], degreeLevel: 'UG', branch: 'mechanical' },
-    { id: 'mech-automotive', name: 'Automotive Engineering & Vehicle Design', type: 'core', growthPotential: 'high', riskLevel: 'low', marketDemand: 88, description: 'Design automotive systems and vehicle engineering', skills: ['Automotive Systems', 'Vehicle Dynamics', 'Engine Design', 'Testing'], degreeLevel: 'UG', branch: 'mechanical' },
-    { id: 'mech-cfd', name: 'Computational Fluid Dynamics (CFD)', type: 'hybrid', growthPotential: 'medium', riskLevel: 'medium', marketDemand: 75, description: 'Simulate fluid flow and heat transfer using computational methods', skills: ['CFD', 'ANSYS', 'Fluid Mechanics', 'Simulation'], degreeLevel: 'UG', branch: 'mechanical' },
-    { id: 'mech-production', name: 'Production & Industrial Engineering', type: 'core', growthPotential: 'medium', riskLevel: 'low', marketDemand: 80, description: 'Optimize manufacturing processes and production systems', skills: ['Production Planning', 'Quality Control', 'Lean Manufacturing', 'Six Sigma'], degreeLevel: 'UG', branch: 'mechanical' },
+    { id: 'mech-design', name: 'Design & Manufacturing Engineering', type: 'core', growthPotential: 'high', riskLevel: 'low', marketDemand: 85, description: 'Design mechanical components and manufacturing processes', skills: ['CAD/CAM', 'SolidWorks', 'Manufacturing', 'Materials'], degreeLevel: 'UG', branch: 'mech' },
+    { id: 'mech-thermal', name: 'Thermal Engineering & HVAC', type: 'core', growthPotential: 'medium', riskLevel: 'low', marketDemand: 78, description: 'Design thermal systems, HVAC, and refrigeration systems', skills: ['Thermodynamics', 'HVAC', 'Heat Transfer', 'CFD'], degreeLevel: 'UG', branch: 'mech' },
+    { id: 'mech-robotics', name: 'Robotics & Automation', type: 'emerging', growthPotential: 'high', riskLevel: 'medium', marketDemand: 90, description: 'Design robotic systems and automated manufacturing', skills: ['Robotics', 'ROS', 'Automation', 'Control Systems'], degreeLevel: 'UG', branch: 'mech' },
+    { id: 'mech-automotive', name: 'Automotive Engineering & Vehicle Design', type: 'core', growthPotential: 'high', riskLevel: 'low', marketDemand: 88, description: 'Design automotive systems and vehicle engineering', skills: ['Automotive Systems', 'Vehicle Dynamics', 'Engine Design', 'Testing'], degreeLevel: 'UG', branch: 'mech' },
+    { id: 'mech-cfd', name: 'Computational Fluid Dynamics (CFD)', type: 'hybrid', growthPotential: 'medium', riskLevel: 'medium', marketDemand: 75, description: 'Simulate fluid flow and heat transfer using computational methods', skills: ['CFD', 'ANSYS', 'Fluid Mechanics', 'Simulation'], degreeLevel: 'UG', branch: 'mech' },
+    { id: 'mech-production', name: 'Production & Industrial Engineering', type: 'core', growthPotential: 'medium', riskLevel: 'low', marketDemand: 80, description: 'Optimize manufacturing processes and production systems', skills: ['Production Planning', 'Quality Control', 'Lean Manufacturing', 'Six Sigma'], degreeLevel: 'UG', branch: 'mech' },
 
     // MECHANICAL - POSTGRADUATE
-    { id: 'mech-mtech-design', name: 'M.Tech in Mechanical Design', type: 'core', growthPotential: 'high', riskLevel: 'low', marketDemand: 84, description: 'Advanced mechanical design and engineering analysis', skills: ['Advanced CAD', 'FEA', 'Design Optimization', 'Materials Science'], degreeLevel: 'M.Tech', branch: 'mechanical' },
-    { id: 'mech-mtech-thermal', name: 'M.Tech in Thermal Engineering', type: 'core', growthPotential: 'medium', riskLevel: 'low', marketDemand: 80, description: 'Advanced thermal systems and energy engineering', skills: ['Advanced Thermodynamics', 'Heat Transfer', 'Energy Systems', 'CFD'], degreeLevel: 'M.Tech', branch: 'mechanical' },
-    { id: 'mech-mtech-robotics', name: 'M.Tech in Robotics & Automation', type: 'emerging', growthPotential: 'high', riskLevel: 'medium', marketDemand: 88, description: 'Advanced robotics, AI integration, and automation', skills: ['Advanced Robotics', 'AI', 'Machine Vision', 'Automation'], degreeLevel: 'M.Tech', branch: 'mechanical' },
+    { id: 'mech-mtech-design', name: 'M.Tech in Mechanical Design', type: 'core', growthPotential: 'high', riskLevel: 'low', marketDemand: 84, description: 'Advanced mechanical design and engineering analysis', skills: ['Advanced CAD', 'FEA', 'Design Optimization', 'Materials Science'], degreeLevel: 'M.Tech', branch: 'mech' },
+    { id: 'mech-mtech-thermal', name: 'M.Tech in Thermal Engineering', type: 'core', growthPotential: 'medium', riskLevel: 'low', marketDemand: 80, description: 'Advanced thermal systems and energy engineering', skills: ['Advanced Thermodynamics', 'Heat Transfer', 'Energy Systems', 'CFD'], degreeLevel: 'M.Tech', branch: 'mech' },
+    { id: 'mech-mtech-robotics', name: 'M.Tech in Robotics & Automation', type: 'emerging', growthPotential: 'high', riskLevel: 'medium', marketDemand: 88, description: 'Advanced robotics, AI integration, and automation', skills: ['Advanced Robotics', 'AI', 'Machine Vision', 'Automation'], degreeLevel: 'M.Tech', branch: 'mech' },
 
     // ============================================
     // CIVIL ENGINEERING - UG
