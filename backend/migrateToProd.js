@@ -89,7 +89,8 @@ async function migrateCareerPaths(fieldId, specializationId, branch, careerPaths
 
         batch.set(docRef, {
             title: title,
-            fieldId: fieldId,
+            field: fieldId, // Use 'field' for consistency with existing API
+            fieldId: fieldId, // Keep 'fieldId' for future-proofing
             specializationId: specializationId,
             branch: branch || null,
             level: level,
@@ -109,17 +110,21 @@ async function migrateProjects(fieldId, specializationId, branch, projects) {
     // Beginner projects
     projects.beginner?.forEach(proj => {
         const docRef = db.collection('projects').doc();
-        batch.set(docRef, {
-            name: proj.name || proj,
+        const name = proj.name || proj;
+        const difficulty = 'beginner';
+        const projectData = {
+            name: name,
+            field: fieldId,
             fieldId: fieldId,
             specializationId: specializationId,
             branch: branch || null,
-            difficulty: 'beginner',
+            difficulty: difficulty,
             techStack: proj.techStack || [],
-            description: `Build ${proj.name || proj}`,
+            description: `Build ${name}`,
             estimatedTime: proj.estimatedTime || '1-2 weeks',
             createdAt: admin.firestore.FieldValue.serverTimestamp()
-        });
+        };
+        batch.set(docRef, projectData);
     });
 
     // Intermediate projects
@@ -127,8 +132,10 @@ async function migrateProjects(fieldId, specializationId, branch, projects) {
         const docRef = db.collection('projects').doc();
         batch.set(docRef, {
             name: proj.name || proj,
+            field: fieldId,
             fieldId: fieldId,
             specializationId: specializationId,
+            branch: branch || null,
             difficulty: 'intermediate',
             techStack: proj.techStack || [],
             description: `Build ${proj.name || proj}`,
@@ -142,8 +149,10 @@ async function migrateProjects(fieldId, specializationId, branch, projects) {
         const docRef = db.collection('projects').doc();
         batch.set(docRef, {
             name: proj.name || proj,
+            field: fieldId,
             fieldId: fieldId,
             specializationId: specializationId,
+            branch: branch || null,
             difficulty: 'advanced',
             techStack: proj.techStack || [],
             description: `Build ${proj.name || proj}`,
@@ -166,6 +175,7 @@ async function migrateCertifications(fieldId, specializationId, branch, certific
             name: cert.name || cert,
             provider: cert.provider || 'Various',
             cost: 'Free',
+            field: fieldId,
             fieldId: fieldId,
             specializationId: specializationId,
             branch: branch || null,
@@ -184,8 +194,10 @@ async function migrateCertifications(fieldId, specializationId, branch, certific
             name: cert.name || cert,
             provider: cert.provider || 'Various',
             cost: cert.cost || '$99',
+            field: fieldId,
             fieldId: fieldId,
             specializationId: specializationId,
+            branch: branch || null,
             difficulty: 'intermediate',
             officialUrl: cert.url || '#',
             timeToComplete: cert.timeToComplete || '3 months',
@@ -201,8 +213,10 @@ async function migrateCertifications(fieldId, specializationId, branch, certific
             name: cert.name || cert,
             provider: cert.provider || 'Various',
             cost: cert.cost || '$299',
+            field: fieldId,
             fieldId: fieldId,
             specializationId: specializationId,
+            branch: branch || null,
             difficulty: 'advanced',
             officialUrl: cert.url || '#',
             timeToComplete: cert.timeToComplete || '6 months',

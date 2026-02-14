@@ -1,6041 +1,4482 @@
 const COMPLETE_REAL_WORLD_DATA = {
     "engineering": {
-        "displayName": "Engineering",
+        "displayName": "Engineering & Technology",
         "specializations": {
             "cse-software-dev": {
-                "displayName": "Cse Software Dev",
+                "displayName": "Software Development & Programming",
                 "branch": "cse",
                 "careerPaths": [
-                    "Frontend Developer",
-                    "Backend Developer",
-                    "Full Stack Developer"
+                    "Software Engineer",
+                    "Senior Software Engineer"
                 ],
                 "projects": {
-                    "beginner": [
-                        "Personal Portfolio Website",
-                        "To-Do CRUD App",
-                        "Blog with Admin Panel"
-                    ],
+                    "beginner": [],
                     "intermediate": [
-                        "Full Stack E-commerce Platform",
-                        "JWT Authentication System",
-                        "Real-time Chat App"
+                        "Full Stack E-Commerce"
                     ],
                     "advanced": [
-                        "SaaS Platform",
-                        "Multi-role Enterprise Web App",
-                        "AI-powered Web Application"
+                        "AI Code Assistant",
+                        "Distributed Key-Value Store"
                     ]
                 },
                 "certifications": {
                     "free": [
-                        "freeCodeCamp Full Stack",
-                        "NPTEL Web Programming",
-                        "Infosys Springboard Web Dev"
+                        "AWS Certified Solutions Architect",
+                        "Certified Kubernetes Administrator (CKA)"
                     ],
                     "pro": [
-                        "Meta Frontend Developer (Coursera)",
-                        "IBM Full Stack Developer"
+                        "Google Professional ML Engineer"
                     ],
-                    "premium": [
-                        "AWS Developer Associate",
-                        "Microsoft Azure Developer"
-                    ]
+                    "premium": []
                 }
             },
             "cse-web-dev": {
-                "displayName": "Cse Web Dev",
+                "displayName": "Full Stack Web Development",
                 "branch": "cse",
                 "careerPaths": [
-                    "Senior Cse Web Dev Specialist",
-                    "Cse Web Dev Consultant",
-                    "Lead Cse Web Dev Engineer"
+                    "Frontend Developer",
+                    "Full Stack Developer"
                 ],
                 "projects": {
-                    "beginner": [
-                        "Basic cse-web-dev Project",
-                        "cse-web-dev Simulation",
-                        "Introduction to cse-web-dev"
-                    ],
+                    "beginner": [],
                     "intermediate": [
-                        "Advanced cse-web-dev System",
-                        "Cross-platform cse-web-dev",
-                        "cse-web-dev Analytics"
+                        "Full Stack E-Commerce"
                     ],
                     "advanced": [
-                        "Enterprise cse-web-dev Suite",
-                        "High-Performance cse-web-dev",
-                        "Global cse-web-dev Infrastructure"
+                        "AI Code Assistant",
+                        "Distributed Key-Value Store"
                     ]
                 },
                 "certifications": {
                     "free": [
-                        "cse-web-dev Foundations",
-                        "Google cse-web-dev Intro"
+                        "AWS Certified Solutions Architect",
+                        "Certified Kubernetes Administrator (CKA)"
                     ],
                     "pro": [
-                        "Professional cse-web-dev Cert",
-                        "Microsoft cse-web-dev Master"
+                        "Google Professional ML Engineer"
                     ],
-                    "premium": [
-                        "Industry Certified cse-web-dev",
-                        "cse-web-dev Expert Professional"
-                    ]
+                    "premium": []
                 }
             },
             "cse-mobile-dev": {
-                "displayName": "Cse Mobile Dev",
+                "displayName": "Mobile App Development",
                 "branch": "cse",
                 "careerPaths": [
-                    "Senior Cse Mobile Dev Specialist",
-                    "Cse Mobile Dev Consultant",
-                    "Lead Cse Mobile Dev Engineer"
+                    "iOS Developer",
+                    "Android Developer"
                 ],
                 "projects": {
-                    "beginner": [
-                        "Basic cse-mobile-dev Project",
-                        "cse-mobile-dev Simulation",
-                        "Introduction to cse-mobile-dev"
-                    ],
+                    "beginner": [],
                     "intermediate": [
-                        "Advanced cse-mobile-dev System",
-                        "Cross-platform cse-mobile-dev",
-                        "cse-mobile-dev Analytics"
+                        "Full Stack E-Commerce"
                     ],
                     "advanced": [
-                        "Enterprise cse-mobile-dev Suite",
-                        "High-Performance cse-mobile-dev",
-                        "Global cse-mobile-dev Infrastructure"
+                        "AI Code Assistant",
+                        "Distributed Key-Value Store"
                     ]
                 },
                 "certifications": {
                     "free": [
-                        "cse-mobile-dev Foundations",
-                        "Google cse-mobile-dev Intro"
+                        "AWS Certified Solutions Architect",
+                        "Certified Kubernetes Administrator (CKA)"
                     ],
                     "pro": [
-                        "Professional cse-mobile-dev Cert",
-                        "Microsoft cse-mobile-dev Master"
+                        "Google Professional ML Engineer"
                     ],
-                    "premium": [
-                        "Industry Certified cse-mobile-dev",
-                        "cse-mobile-dev Expert Professional"
-                    ]
+                    "premium": []
                 }
             },
             "cse-ai-ml": {
-                "displayName": "Cse Ai Ml",
+                "displayName": "Artificial Intelligence & Machine Learning",
                 "branch": "cse",
                 "careerPaths": [
-                    "AI Engineer",
                     "ML Engineer",
-                    "NLP Engineer"
+                    "AI Researcher"
                 ],
                 "projects": {
-                    "beginner": [
-                        "Spam Detection",
-                        "Movie Recommendation",
-                        "House Price Prediction"
-                    ],
+                    "beginner": [],
                     "intermediate": [
-                        "Resume Screening AI",
-                        "Face Recognition System",
-                        "Sentiment Analysis"
+                        "Full Stack E-Commerce"
                     ],
                     "advanced": [
-                        "LLM-based AI Assistant",
-                        "AI SaaS Platform",
-                        "Deep Learning Deployment Pipeline"
+                        "AI Code Assistant",
+                        "Distributed Key-Value Store"
                     ]
                 },
                 "certifications": {
                     "free": [
-                        "Google ML Crash Course",
-                        "Kaggle Micro Courses"
+                        "AWS Certified Solutions Architect",
+                        "Certified Kubernetes Administrator (CKA)"
                     ],
                     "pro": [
-                        "IBM AI Engineering",
-                        "DeepLearning.AI ML Specialization"
+                        "Google Professional ML Engineer"
                     ],
-                    "premium": [
-                        "Google Professional ML Engineer",
-                        "Azure AI Engineer"
-                    ]
+                    "premium": []
                 }
             },
             "cse-data-science": {
-                "displayName": "Cse Data Science",
+                "displayName": "Data Science & Big Data",
                 "branch": "cse",
                 "careerPaths": [
-                    "Data Analyst",
                     "Data Scientist",
-                    "BI Developer"
+                    "Data Engineer"
                 ],
                 "projects": {
-                    "beginner": [
-                        "Excel Sales Dashboard",
-                        "Basic Data Visualization"
-                    ],
+                    "beginner": [],
                     "intermediate": [
-                        "Power BI Dashboard",
-                        "Customer Segmentation"
+                        "Full Stack E-Commerce"
                     ],
                     "advanced": [
-                        "Big Data Pipeline",
-                        "Real-time Analytics System"
+                        "AI Code Assistant",
+                        "Distributed Key-Value Store"
                     ]
                 },
                 "certifications": {
                     "free": [
-                        "Google Data Analytics (Audit Mode)",
-                        "Kaggle SQL"
+                        "AWS Certified Solutions Architect",
+                        "Certified Kubernetes Administrator (CKA)"
                     ],
                     "pro": [
-                        "Microsoft Power BI",
-                        "IBM Data Science"
+                        "Google Professional ML Engineer"
                     ],
-                    "premium": [
-                        "AWS Data Analytics Specialty",
-                        "Tableau Professional"
-                    ]
+                    "premium": []
                 }
             },
             "cse-cloud": {
-                "displayName": "Cse Cloud",
+                "displayName": "Cloud Computing & DevOps",
                 "branch": "cse",
                 "careerPaths": [
-                    "Senior Cse Cloud Specialist",
-                    "Cse Cloud Consultant",
-                    "Lead Cse Cloud Engineer"
+                    "Cloud Engineer",
+                    "Cloud Architect"
                 ],
                 "projects": {
-                    "beginner": [
-                        "Basic cse-cloud Project",
-                        "cse-cloud Simulation",
-                        "Introduction to cse-cloud"
-                    ],
+                    "beginner": [],
                     "intermediate": [
-                        "Advanced cse-cloud System",
-                        "Cross-platform cse-cloud",
-                        "cse-cloud Analytics"
+                        "Full Stack E-Commerce"
                     ],
                     "advanced": [
-                        "Enterprise cse-cloud Suite",
-                        "High-Performance cse-cloud",
-                        "Global cse-cloud Infrastructure"
+                        "AI Code Assistant",
+                        "Distributed Key-Value Store"
                     ]
                 },
                 "certifications": {
                     "free": [
-                        "cse-cloud Foundations",
-                        "Google cse-cloud Intro"
+                        "AWS Certified Solutions Architect",
+                        "Certified Kubernetes Administrator (CKA)"
                     ],
                     "pro": [
-                        "Professional cse-cloud Cert",
-                        "Microsoft cse-cloud Master"
+                        "Google Professional ML Engineer"
                     ],
-                    "premium": [
-                        "Industry Certified cse-cloud",
-                        "cse-cloud Expert Professional"
-                    ]
+                    "premium": []
                 }
             },
             "cse-cybersecurity": {
-                "displayName": "Cse Cybersecurity",
+                "displayName": "Cybersecurity & Ethical Hacking",
                 "branch": "cse",
                 "careerPaths": [
-                    "Senior Cse Cybersecurity Specialist",
-                    "Cse Cybersecurity Consultant",
-                    "Lead Cse Cybersecurity Engineer"
+                    "Security Analyst",
+                    "Penetration Tester"
                 ],
                 "projects": {
-                    "beginner": [
-                        "Basic cse-cybersecurity Project",
-                        "cse-cybersecurity Simulation",
-                        "Introduction to cse-cybersecurity"
-                    ],
+                    "beginner": [],
                     "intermediate": [
-                        "Advanced cse-cybersecurity System",
-                        "Cross-platform cse-cybersecurity",
-                        "cse-cybersecurity Analytics"
+                        "Full Stack E-Commerce"
                     ],
                     "advanced": [
-                        "Enterprise cse-cybersecurity Suite",
-                        "High-Performance cse-cybersecurity",
-                        "Global cse-cybersecurity Infrastructure"
+                        "AI Code Assistant",
+                        "Distributed Key-Value Store"
                     ]
                 },
                 "certifications": {
                     "free": [
-                        "cse-cybersecurity Foundations",
-                        "Google cse-cybersecurity Intro"
+                        "AWS Certified Solutions Architect",
+                        "Certified Kubernetes Administrator (CKA)"
                     ],
                     "pro": [
-                        "Professional cse-cybersecurity Cert",
-                        "Microsoft cse-cybersecurity Master"
+                        "Google Professional ML Engineer"
                     ],
-                    "premium": [
-                        "Industry Certified cse-cybersecurity",
-                        "cse-cybersecurity Expert Professional"
-                    ]
+                    "premium": []
                 }
             },
             "cse-database": {
-                "displayName": "Cse Database",
+                "displayName": "Database Management & Engineering",
                 "branch": "cse",
                 "careerPaths": [
-                    "Senior Cse Database Specialist",
-                    "Cse Database Consultant",
-                    "Lead Cse Database Engineer"
+                    "Database Administrator",
+                    "Data Architect"
                 ],
                 "projects": {
-                    "beginner": [
-                        "Basic cse-database Project",
-                        "cse-database Simulation",
-                        "Introduction to cse-database"
-                    ],
+                    "beginner": [],
                     "intermediate": [
-                        "Advanced cse-database System",
-                        "Cross-platform cse-database",
-                        "cse-database Analytics"
+                        "Full Stack E-Commerce"
                     ],
                     "advanced": [
-                        "Enterprise cse-database Suite",
-                        "High-Performance cse-database",
-                        "Global cse-database Infrastructure"
+                        "AI Code Assistant",
+                        "Distributed Key-Value Store"
                     ]
                 },
                 "certifications": {
                     "free": [
-                        "cse-database Foundations",
-                        "Google cse-database Intro"
+                        "AWS Certified Solutions Architect",
+                        "Certified Kubernetes Administrator (CKA)"
                     ],
                     "pro": [
-                        "Professional cse-database Cert",
-                        "Microsoft cse-database Master"
+                        "Google Professional ML Engineer"
                     ],
-                    "premium": [
-                        "Industry Certified cse-database",
-                        "cse-database Expert Professional"
-                    ]
+                    "premium": []
                 }
             },
             "cse-mtech": {
-                "displayName": "Cse Mtech",
+                "displayName": "M.Tech in Computer Science & Engineering",
                 "branch": "cse",
                 "careerPaths": [
-                    "Senior Cse Mtech Specialist",
-                    "Cse Mtech Consultant",
-                    "Lead Cse Mtech Engineer"
+                    "Senior R&D Engineer"
                 ],
                 "projects": {
-                    "beginner": [
-                        "Basic cse-mtech Project",
-                        "cse-mtech Simulation",
-                        "Introduction to cse-mtech"
-                    ],
+                    "beginner": [],
                     "intermediate": [
-                        "Advanced cse-mtech System",
-                        "Cross-platform cse-mtech",
-                        "cse-mtech Analytics"
+                        "Full Stack E-Commerce"
                     ],
                     "advanced": [
-                        "Enterprise cse-mtech Suite",
-                        "High-Performance cse-mtech",
-                        "Global cse-mtech Infrastructure"
+                        "AI Code Assistant",
+                        "Distributed Key-Value Store"
                     ]
                 },
                 "certifications": {
                     "free": [
-                        "cse-mtech Foundations",
-                        "Google cse-mtech Intro"
+                        "AWS Certified Solutions Architect",
+                        "Certified Kubernetes Administrator (CKA)"
                     ],
                     "pro": [
-                        "Professional cse-mtech Cert",
-                        "Microsoft cse-mtech Master"
+                        "Google Professional ML Engineer"
                     ],
-                    "premium": [
-                        "Industry Certified cse-mtech",
-                        "cse-mtech Expert Professional"
-                    ]
+                    "premium": []
                 }
             },
             "cse-mtech-ai": {
-                "displayName": "Cse Mtech Ai",
+                "displayName": "M.Tech in AI & Machine Learning",
                 "branch": "cse",
                 "careerPaths": [
-                    "Senior Cse Mtech Ai Specialist",
-                    "Cse Mtech Ai Consultant",
-                    "Lead Cse Mtech Ai Engineer"
+                    "Lead AI Scientist"
                 ],
                 "projects": {
-                    "beginner": [
-                        "Basic cse-mtech-ai Project",
-                        "cse-mtech-ai Simulation",
-                        "Introduction to cse-mtech-ai"
-                    ],
+                    "beginner": [],
                     "intermediate": [
-                        "Advanced cse-mtech-ai System",
-                        "Cross-platform cse-mtech-ai",
-                        "cse-mtech-ai Analytics"
+                        "Full Stack E-Commerce"
                     ],
                     "advanced": [
-                        "Enterprise cse-mtech-ai Suite",
-                        "High-Performance cse-mtech-ai",
-                        "Global cse-mtech-ai Infrastructure"
+                        "AI Code Assistant",
+                        "Distributed Key-Value Store"
                     ]
                 },
                 "certifications": {
                     "free": [
-                        "cse-mtech-ai Foundations",
-                        "Google cse-mtech-ai Intro"
+                        "AWS Certified Solutions Architect",
+                        "Certified Kubernetes Administrator (CKA)"
                     ],
                     "pro": [
-                        "Professional cse-mtech-ai Cert",
-                        "Microsoft cse-mtech-ai Master"
+                        "Google Professional ML Engineer"
                     ],
-                    "premium": [
-                        "Industry Certified cse-mtech-ai",
-                        "cse-mtech-ai Expert Professional"
-                    ]
+                    "premium": []
                 }
             },
             "cse-mtech-data": {
-                "displayName": "Cse Mtech Data",
+                "displayName": "M.Tech in Data Science & Analytics",
                 "branch": "cse",
                 "careerPaths": [
-                    "Senior Cse Mtech Data Specialist",
-                    "Cse Mtech Data Consultant",
-                    "Lead Cse Mtech Data Engineer"
+                    "Principal Data Scientist"
                 ],
                 "projects": {
-                    "beginner": [
-                        "Basic cse-mtech-data Project",
-                        "cse-mtech-data Simulation",
-                        "Introduction to cse-mtech-data"
-                    ],
+                    "beginner": [],
                     "intermediate": [
-                        "Advanced cse-mtech-data System",
-                        "Cross-platform cse-mtech-data",
-                        "cse-mtech-data Analytics"
+                        "Full Stack E-Commerce"
                     ],
                     "advanced": [
-                        "Enterprise cse-mtech-data Suite",
-                        "High-Performance cse-mtech-data",
-                        "Global cse-mtech-data Infrastructure"
+                        "AI Code Assistant",
+                        "Distributed Key-Value Store"
                     ]
                 },
                 "certifications": {
                     "free": [
-                        "cse-mtech-data Foundations",
-                        "Google cse-mtech-data Intro"
+                        "AWS Certified Solutions Architect",
+                        "Certified Kubernetes Administrator (CKA)"
                     ],
                     "pro": [
-                        "Professional cse-mtech-data Cert",
-                        "Microsoft cse-mtech-data Master"
+                        "Google Professional ML Engineer"
                     ],
-                    "premium": [
-                        "Industry Certified cse-mtech-data",
-                        "cse-mtech-data Expert Professional"
-                    ]
+                    "premium": []
                 }
             },
             "cse-mtech-cyber": {
-                "displayName": "Cse Mtech Cyber",
+                "displayName": "M.Tech in Cyber Security",
                 "branch": "cse",
                 "careerPaths": [
-                    "Senior Cse Mtech Cyber Specialist",
-                    "Cse Mtech Cyber Consultant",
-                    "Lead Cse Mtech Cyber Engineer"
+                    "Security Architect"
                 ],
                 "projects": {
-                    "beginner": [
-                        "Basic cse-mtech-cyber Project",
-                        "cse-mtech-cyber Simulation",
-                        "Introduction to cse-mtech-cyber"
-                    ],
+                    "beginner": [],
                     "intermediate": [
-                        "Advanced cse-mtech-cyber System",
-                        "Cross-platform cse-mtech-cyber",
-                        "cse-mtech-cyber Analytics"
+                        "Full Stack E-Commerce"
                     ],
                     "advanced": [
-                        "Enterprise cse-mtech-cyber Suite",
-                        "High-Performance cse-mtech-cyber",
-                        "Global cse-mtech-cyber Infrastructure"
+                        "AI Code Assistant",
+                        "Distributed Key-Value Store"
                     ]
                 },
                 "certifications": {
                     "free": [
-                        "cse-mtech-cyber Foundations",
-                        "Google cse-mtech-cyber Intro"
+                        "AWS Certified Solutions Architect",
+                        "Certified Kubernetes Administrator (CKA)"
                     ],
                     "pro": [
-                        "Professional cse-mtech-cyber Cert",
-                        "Microsoft cse-mtech-cyber Master"
+                        "Google Professional ML Engineer"
                     ],
-                    "premium": [
-                        "Industry Certified cse-mtech-cyber",
-                        "cse-mtech-cyber Expert Professional"
-                    ]
+                    "premium": []
                 }
             },
             "cse-mtech-cloud": {
-                "displayName": "Cse Mtech Cloud",
+                "displayName": "M.Tech in Cloud Computing & Virtualization",
                 "branch": "cse",
                 "careerPaths": [
-                    "Senior Cse Mtech Cloud Specialist",
-                    "Cse Mtech Cloud Consultant",
-                    "Lead Cse Mtech Cloud Engineer"
+                    "Principal Cloud Architect"
                 ],
                 "projects": {
-                    "beginner": [
-                        "Basic cse-mtech-cloud Project",
-                        "cse-mtech-cloud Simulation",
-                        "Introduction to cse-mtech-cloud"
-                    ],
+                    "beginner": [],
                     "intermediate": [
-                        "Advanced cse-mtech-cloud System",
-                        "Cross-platform cse-mtech-cloud",
-                        "cse-mtech-cloud Analytics"
+                        "Full Stack E-Commerce"
                     ],
                     "advanced": [
-                        "Enterprise cse-mtech-cloud Suite",
-                        "High-Performance cse-mtech-cloud",
-                        "Global cse-mtech-cloud Infrastructure"
+                        "AI Code Assistant",
+                        "Distributed Key-Value Store"
                     ]
                 },
                 "certifications": {
                     "free": [
-                        "cse-mtech-cloud Foundations",
-                        "Google cse-mtech-cloud Intro"
+                        "AWS Certified Solutions Architect",
+                        "Certified Kubernetes Administrator (CKA)"
                     ],
                     "pro": [
-                        "Professional cse-mtech-cloud Cert",
-                        "Microsoft cse-mtech-cloud Master"
+                        "Google Professional ML Engineer"
                     ],
-                    "premium": [
-                        "Industry Certified cse-mtech-cloud",
-                        "cse-mtech-cloud Expert Professional"
-                    ]
+                    "premium": []
                 }
             },
             "ece-vlsi": {
-                "displayName": "Ece Vlsi",
+                "displayName": "VLSI Design & Chip Engineering",
                 "branch": "ece",
                 "careerPaths": [
-                    "Senior Ece Vlsi Specialist",
-                    "Ece Vlsi Consultant",
-                    "Lead Ece Vlsi Engineer"
+                    "VLSI Engineer",
+                    "Physical Design Engineer"
                 ],
                 "projects": {
-                    "beginner": [
-                        "Basic ece-vlsi Project",
-                        "ece-vlsi Simulation",
-                        "Introduction to ece-vlsi"
-                    ],
+                    "beginner": [],
                     "intermediate": [
-                        "Advanced ece-vlsi System",
-                        "Cross-platform ece-vlsi",
-                        "ece-vlsi Analytics"
+                        "Smart IoT Home System"
                     ],
                     "advanced": [
-                        "Enterprise ece-vlsi Suite",
-                        "High-Performance ece-vlsi",
-                        "Global ece-vlsi Infrastructure"
+                        "RISC-V Core in Verilog",
+                        "Real-time DSP Audio Filter"
                     ]
                 },
                 "certifications": {
                     "free": [
-                        "ece-vlsi Foundations",
-                        "Google ece-vlsi Intro"
+                        "Cisco Certified Network Associate (CCNA)"
                     ],
                     "pro": [
-                        "Professional ece-vlsi Cert",
-                        "Microsoft ece-vlsi Master"
+                        "Arm Accredited Engineer (AAE)"
                     ],
-                    "premium": [
-                        "Industry Certified ece-vlsi",
-                        "ece-vlsi Expert Professional"
-                    ]
+                    "premium": []
                 }
             },
             "ece-embedded": {
-                "displayName": "Ece Embedded",
+                "displayName": "Embedded Systems & IoT",
                 "branch": "ece",
                 "careerPaths": [
-                    "Senior Ece Embedded Specialist",
-                    "Ece Embedded Consultant",
-                    "Lead Ece Embedded Engineer"
+                    "Embedded Systems Engineer",
+                    "IoT Solutions Architect"
                 ],
                 "projects": {
-                    "beginner": [
-                        "Basic ece-embedded Project",
-                        "ece-embedded Simulation",
-                        "Introduction to ece-embedded"
-                    ],
+                    "beginner": [],
                     "intermediate": [
-                        "Advanced ece-embedded System",
-                        "Cross-platform ece-embedded",
-                        "ece-embedded Analytics"
+                        "Smart IoT Home System"
                     ],
                     "advanced": [
-                        "Enterprise ece-embedded Suite",
-                        "High-Performance ece-embedded",
-                        "Global ece-embedded Infrastructure"
+                        "RISC-V Core in Verilog",
+                        "Real-time DSP Audio Filter"
                     ]
                 },
                 "certifications": {
                     "free": [
-                        "ece-embedded Foundations",
-                        "Google ece-embedded Intro"
+                        "Cisco Certified Network Associate (CCNA)"
                     ],
                     "pro": [
-                        "Professional ece-embedded Cert",
-                        "Microsoft ece-embedded Master"
+                        "Arm Accredited Engineer (AAE)"
                     ],
-                    "premium": [
-                        "Industry Certified ece-embedded",
-                        "ece-embedded Expert Professional"
-                    ]
+                    "premium": []
                 }
             },
             "ece-communication": {
-                "displayName": "Ece Communication",
+                "displayName": "Communication Systems & Networks",
                 "branch": "ece",
                 "careerPaths": [
-                    "Senior Ece Communication Specialist",
-                    "Ece Communication Consultant",
-                    "Lead Ece Communication Engineer"
+                    "Network Engineer",
+                    "Telecom Engineer"
                 ],
                 "projects": {
-                    "beginner": [
-                        "Basic ece-communication Project",
-                        "ece-communication Simulation",
-                        "Introduction to ece-communication"
-                    ],
+                    "beginner": [],
                     "intermediate": [
-                        "Advanced ece-communication System",
-                        "Cross-platform ece-communication",
-                        "ece-communication Analytics"
+                        "Smart IoT Home System"
                     ],
                     "advanced": [
-                        "Enterprise ece-communication Suite",
-                        "High-Performance ece-communication",
-                        "Global ece-communication Infrastructure"
+                        "RISC-V Core in Verilog",
+                        "Real-time DSP Audio Filter"
                     ]
                 },
                 "certifications": {
                     "free": [
-                        "ece-communication Foundations",
-                        "Google ece-communication Intro"
+                        "Cisco Certified Network Associate (CCNA)"
                     ],
                     "pro": [
-                        "Professional ece-communication Cert",
-                        "Microsoft ece-communication Master"
+                        "Arm Accredited Engineer (AAE)"
                     ],
-                    "premium": [
-                        "Industry Certified ece-communication",
-                        "ece-communication Expert Professional"
-                    ]
+                    "premium": []
                 }
             },
             "ece-signal": {
-                "displayName": "Ece Signal",
+                "displayName": "Signal Processing & Image Processing",
                 "branch": "ece",
                 "careerPaths": [
-                    "Senior Ece Signal Specialist",
-                    "Ece Signal Consultant",
-                    "Lead Ece Signal Engineer"
+                    "DSP Engineer"
                 ],
                 "projects": {
-                    "beginner": [
-                        "Basic ece-signal Project",
-                        "ece-signal Simulation",
-                        "Introduction to ece-signal"
-                    ],
+                    "beginner": [],
                     "intermediate": [
-                        "Advanced ece-signal System",
-                        "Cross-platform ece-signal",
-                        "ece-signal Analytics"
+                        "Smart IoT Home System"
                     ],
                     "advanced": [
-                        "Enterprise ece-signal Suite",
-                        "High-Performance ece-signal",
-                        "Global ece-signal Infrastructure"
+                        "RISC-V Core in Verilog",
+                        "Real-time DSP Audio Filter"
                     ]
                 },
                 "certifications": {
                     "free": [
-                        "ece-signal Foundations",
-                        "Google ece-signal Intro"
+                        "Cisco Certified Network Associate (CCNA)"
                     ],
                     "pro": [
-                        "Professional ece-signal Cert",
-                        "Microsoft ece-signal Master"
+                        "Arm Accredited Engineer (AAE)"
                     ],
-                    "premium": [
-                        "Industry Certified ece-signal",
-                        "ece-signal Expert Professional"
-                    ]
+                    "premium": []
                 }
             },
             "ece-rf": {
-                "displayName": "Ece Rf",
+                "displayName": "RF & Microwave Engineering",
                 "branch": "ece",
                 "careerPaths": [
-                    "Senior Ece Rf Specialist",
-                    "Ece Rf Consultant",
-                    "Lead Ece Rf Engineer"
+                    "RF Engineer"
                 ],
                 "projects": {
-                    "beginner": [
-                        "Basic ece-rf Project",
-                        "ece-rf Simulation",
-                        "Introduction to ece-rf"
-                    ],
+                    "beginner": [],
                     "intermediate": [
-                        "Advanced ece-rf System",
-                        "Cross-platform ece-rf",
-                        "ece-rf Analytics"
+                        "Smart IoT Home System"
                     ],
                     "advanced": [
-                        "Enterprise ece-rf Suite",
-                        "High-Performance ece-rf",
-                        "Global ece-rf Infrastructure"
+                        "RISC-V Core in Verilog",
+                        "Real-time DSP Audio Filter"
                     ]
                 },
                 "certifications": {
                     "free": [
-                        "ece-rf Foundations",
-                        "Google ece-rf Intro"
+                        "Cisco Certified Network Associate (CCNA)"
                     ],
                     "pro": [
-                        "Professional ece-rf Cert",
-                        "Microsoft ece-rf Master"
+                        "Arm Accredited Engineer (AAE)"
                     ],
-                    "premium": [
-                        "Industry Certified ece-rf",
-                        "ece-rf Expert Professional"
-                    ]
+                    "premium": []
                 }
             },
             "ece-optical": {
-                "displayName": "Ece Optical",
+                "displayName": "Optical Communication & Fiber Optics",
                 "branch": "ece",
                 "careerPaths": [
-                    "Senior Ece Optical Specialist",
-                    "Ece Optical Consultant",
-                    "Lead Ece Optical Engineer"
+                    "Optical Engineer"
                 ],
                 "projects": {
-                    "beginner": [
-                        "Basic ece-optical Project",
-                        "ece-optical Simulation",
-                        "Introduction to ece-optical"
-                    ],
+                    "beginner": [],
                     "intermediate": [
-                        "Advanced ece-optical System",
-                        "Cross-platform ece-optical",
-                        "ece-optical Analytics"
+                        "Smart IoT Home System"
                     ],
                     "advanced": [
-                        "Enterprise ece-optical Suite",
-                        "High-Performance ece-optical",
-                        "Global ece-optical Infrastructure"
+                        "RISC-V Core in Verilog",
+                        "Real-time DSP Audio Filter"
                     ]
                 },
                 "certifications": {
                     "free": [
-                        "ece-optical Foundations",
-                        "Google ece-optical Intro"
+                        "Cisco Certified Network Associate (CCNA)"
                     ],
                     "pro": [
-                        "Professional ece-optical Cert",
-                        "Microsoft ece-optical Master"
+                        "Arm Accredited Engineer (AAE)"
                     ],
-                    "premium": [
-                        "Industry Certified ece-optical",
-                        "ece-optical Expert Professional"
-                    ]
+                    "premium": []
                 }
             },
             "ece-mtech-vlsi": {
-                "displayName": "Ece Mtech Vlsi",
+                "displayName": "M.Tech in VLSI Design",
                 "branch": "ece",
                 "careerPaths": [
-                    "Senior Ece Mtech Vlsi Specialist",
-                    "Ece Mtech Vlsi Consultant",
-                    "Lead Ece Mtech Vlsi Engineer"
+                    "Senior Staff VLSI Engineer"
                 ],
                 "projects": {
-                    "beginner": [
-                        "Basic ece-mtech-vlsi Project",
-                        "ece-mtech-vlsi Simulation",
-                        "Introduction to ece-mtech-vlsi"
-                    ],
+                    "beginner": [],
                     "intermediate": [
-                        "Advanced ece-mtech-vlsi System",
-                        "Cross-platform ece-mtech-vlsi",
-                        "ece-mtech-vlsi Analytics"
+                        "Smart IoT Home System"
                     ],
                     "advanced": [
-                        "Enterprise ece-mtech-vlsi Suite",
-                        "High-Performance ece-mtech-vlsi",
-                        "Global ece-mtech-vlsi Infrastructure"
+                        "RISC-V Core in Verilog",
+                        "Real-time DSP Audio Filter"
                     ]
                 },
                 "certifications": {
                     "free": [
-                        "ece-mtech-vlsi Foundations",
-                        "Google ece-mtech-vlsi Intro"
+                        "Cisco Certified Network Associate (CCNA)"
                     ],
                     "pro": [
-                        "Professional ece-mtech-vlsi Cert",
-                        "Microsoft ece-mtech-vlsi Master"
+                        "Arm Accredited Engineer (AAE)"
                     ],
-                    "premium": [
-                        "Industry Certified ece-mtech-vlsi",
-                        "ece-mtech-vlsi Expert Professional"
-                    ]
+                    "premium": []
                 }
             },
             "ece-mtech-embedded": {
-                "displayName": "Ece Mtech Embedded",
+                "displayName": "M.Tech in Embedded Systems",
                 "branch": "ece",
                 "careerPaths": [
-                    "Senior Ece Mtech Embedded Specialist",
-                    "Ece Mtech Embedded Consultant",
-                    "Lead Ece Mtech Embedded Engineer"
+                    "Embedded System Architect"
                 ],
                 "projects": {
-                    "beginner": [
-                        "Basic ece-mtech-embedded Project",
-                        "ece-mtech-embedded Simulation",
-                        "Introduction to ece-mtech-embedded"
-                    ],
+                    "beginner": [],
                     "intermediate": [
-                        "Advanced ece-mtech-embedded System",
-                        "Cross-platform ece-mtech-embedded",
-                        "ece-mtech-embedded Analytics"
+                        "Smart IoT Home System"
                     ],
                     "advanced": [
-                        "Enterprise ece-mtech-embedded Suite",
-                        "High-Performance ece-mtech-embedded",
-                        "Global ece-mtech-embedded Infrastructure"
+                        "RISC-V Core in Verilog",
+                        "Real-time DSP Audio Filter"
                     ]
                 },
                 "certifications": {
                     "free": [
-                        "ece-mtech-embedded Foundations",
-                        "Google ece-mtech-embedded Intro"
+                        "Cisco Certified Network Associate (CCNA)"
                     ],
                     "pro": [
-                        "Professional ece-mtech-embedded Cert",
-                        "Microsoft ece-mtech-embedded Master"
+                        "Arm Accredited Engineer (AAE)"
                     ],
-                    "premium": [
-                        "Industry Certified ece-mtech-embedded",
-                        "ece-mtech-embedded Expert Professional"
-                    ]
+                    "premium": []
                 }
             },
             "ece-mtech-comm": {
-                "displayName": "Ece Mtech Comm",
+                "displayName": "M.Tech in Communication Systems",
                 "branch": "ece",
                 "careerPaths": [
-                    "Senior Ece Mtech Comm Specialist",
-                    "Ece Mtech Comm Consultant",
-                    "Lead Ece Mtech Comm Engineer"
+                    "Communication Systems Lead"
                 ],
                 "projects": {
-                    "beginner": [
-                        "Basic ece-mtech-comm Project",
-                        "ece-mtech-comm Simulation",
-                        "Introduction to ece-mtech-comm"
-                    ],
+                    "beginner": [],
                     "intermediate": [
-                        "Advanced ece-mtech-comm System",
-                        "Cross-platform ece-mtech-comm",
-                        "ece-mtech-comm Analytics"
+                        "Smart IoT Home System"
                     ],
                     "advanced": [
-                        "Enterprise ece-mtech-comm Suite",
-                        "High-Performance ece-mtech-comm",
-                        "Global ece-mtech-comm Infrastructure"
+                        "RISC-V Core in Verilog",
+                        "Real-time DSP Audio Filter"
                     ]
                 },
                 "certifications": {
                     "free": [
-                        "ece-mtech-comm Foundations",
-                        "Google ece-mtech-comm Intro"
+                        "Cisco Certified Network Associate (CCNA)"
                     ],
                     "pro": [
-                        "Professional ece-mtech-comm Cert",
-                        "Microsoft ece-mtech-comm Master"
+                        "Arm Accredited Engineer (AAE)"
                     ],
-                    "premium": [
-                        "Industry Certified ece-mtech-comm",
-                        "ece-mtech-comm Expert Professional"
-                    ]
+                    "premium": []
                 }
             },
             "eee-power-systems": {
-                "displayName": "Eee Power Systems",
+                "displayName": "Power Systems & Grid Management",
                 "branch": "eee",
                 "careerPaths": [
-                    "Senior Eee Power Systems Specialist",
-                    "Eee Power Systems Consultant",
-                    "Lead Eee Power Systems Engineer"
+                    "Power Engineer",
+                    "Grid Planning Engineer"
                 ],
                 "projects": {
-                    "beginner": [
-                        "Basic eee-power-systems Project",
-                        "eee-power-systems Simulation",
-                        "Introduction to eee-power-systems"
-                    ],
+                    "beginner": [],
                     "intermediate": [
-                        "Advanced eee-power-systems System",
-                        "Cross-platform eee-power-systems",
-                        "eee-power-systems Analytics"
+                        "Smart Grid Load Flow Analysis"
                     ],
                     "advanced": [
-                        "Enterprise eee-power-systems Suite",
-                        "High-Performance eee-power-systems",
-                        "Global eee-power-systems Infrastructure"
+                        "Solar Inverter Design",
+                        "EV Battery Management System"
                     ]
                 },
                 "certifications": {
                     "free": [
-                        "eee-power-systems Foundations",
-                        "Google eee-power-systems Intro"
+                        "Fundamentals of Engineering (FE Electrical)"
                     ],
                     "pro": [
-                        "Professional eee-power-systems Cert",
-                        "Microsoft eee-power-systems Master"
+                        "Certified Energy Manager (CEM)"
                     ],
-                    "premium": [
-                        "Industry Certified eee-power-systems",
-                        "eee-power-systems Expert Professional"
-                    ]
+                    "premium": []
                 }
             },
             "eee-renewable": {
-                "displayName": "Eee Renewable",
+                "displayName": "Renewable Energy & Solar Engineering",
                 "branch": "eee",
                 "careerPaths": [
-                    "Senior Eee Renewable Specialist",
-                    "Eee Renewable Consultant",
-                    "Lead Eee Renewable Engineer"
+                    "Solar Energy Engineer",
+                    "Wind Energy Engineer"
                 ],
                 "projects": {
-                    "beginner": [
-                        "Basic eee-renewable Project",
-                        "eee-renewable Simulation",
-                        "Introduction to eee-renewable"
-                    ],
+                    "beginner": [],
                     "intermediate": [
-                        "Advanced eee-renewable System",
-                        "Cross-platform eee-renewable",
-                        "eee-renewable Analytics"
+                        "Smart Grid Load Flow Analysis"
                     ],
                     "advanced": [
-                        "Enterprise eee-renewable Suite",
-                        "High-Performance eee-renewable",
-                        "Global eee-renewable Infrastructure"
+                        "Solar Inverter Design",
+                        "EV Battery Management System"
                     ]
                 },
                 "certifications": {
                     "free": [
-                        "eee-renewable Foundations",
-                        "Google eee-renewable Intro"
+                        "Fundamentals of Engineering (FE Electrical)"
                     ],
                     "pro": [
-                        "Professional eee-renewable Cert",
-                        "Microsoft eee-renewable Master"
+                        "Certified Energy Manager (CEM)"
                     ],
-                    "premium": [
-                        "Industry Certified eee-renewable",
-                        "eee-renewable Expert Professional"
-                    ]
+                    "premium": []
                 }
             },
             "eee-power-electronics": {
-                "displayName": "Eee Power Electronics",
+                "displayName": "Power Electronics & Drives",
                 "branch": "eee",
                 "careerPaths": [
-                    "Senior Eee Power Electronics Specialist",
-                    "Eee Power Electronics Consultant",
-                    "Lead Eee Power Electronics Engineer"
+                    "Power Electronics Engineer"
                 ],
                 "projects": {
-                    "beginner": [
-                        "Basic eee-power-electronics Project",
-                        "eee-power-electronics Simulation",
-                        "Introduction to eee-power-electronics"
-                    ],
+                    "beginner": [],
                     "intermediate": [
-                        "Advanced eee-power-electronics System",
-                        "Cross-platform eee-power-electronics",
-                        "eee-power-electronics Analytics"
+                        "Smart Grid Load Flow Analysis"
                     ],
                     "advanced": [
-                        "Enterprise eee-power-electronics Suite",
-                        "High-Performance eee-power-electronics",
-                        "Global eee-power-electronics Infrastructure"
+                        "Solar Inverter Design",
+                        "EV Battery Management System"
                     ]
                 },
                 "certifications": {
                     "free": [
-                        "eee-power-electronics Foundations",
-                        "Google eee-power-electronics Intro"
+                        "Fundamentals of Engineering (FE Electrical)"
                     ],
                     "pro": [
-                        "Professional eee-power-electronics Cert",
-                        "Microsoft eee-power-electronics Master"
+                        "Certified Energy Manager (CEM)"
                     ],
-                    "premium": [
-                        "Industry Certified eee-power-electronics",
-                        "eee-power-electronics Expert Professional"
-                    ]
+                    "premium": []
                 }
             },
             "eee-ev": {
-                "displayName": "Eee Ev",
+                "displayName": "Electric Vehicles & Battery Systems",
                 "branch": "eee",
                 "careerPaths": [
-                    "Senior Eee Ev Specialist",
-                    "Eee Ev Consultant",
-                    "Lead Eee Ev Engineer"
+                    "EV Powertrain Engineer",
+                    "Battery Systems Engineer"
                 ],
                 "projects": {
-                    "beginner": [
-                        "Basic eee-ev Project",
-                        "eee-ev Simulation",
-                        "Introduction to eee-ev"
-                    ],
+                    "beginner": [],
                     "intermediate": [
-                        "Advanced eee-ev System",
-                        "Cross-platform eee-ev",
-                        "eee-ev Analytics"
+                        "Smart Grid Load Flow Analysis"
                     ],
                     "advanced": [
-                        "Enterprise eee-ev Suite",
-                        "High-Performance eee-ev",
-                        "Global eee-ev Infrastructure"
+                        "Solar Inverter Design",
+                        "EV Battery Management System"
                     ]
                 },
                 "certifications": {
                     "free": [
-                        "eee-ev Foundations",
-                        "Google eee-ev Intro"
+                        "Fundamentals of Engineering (FE Electrical)"
                     ],
                     "pro": [
-                        "Professional eee-ev Cert",
-                        "Microsoft eee-ev Master"
+                        "Certified Energy Manager (CEM)"
                     ],
-                    "premium": [
-                        "Industry Certified eee-ev",
-                        "eee-ev Expert Professional"
-                    ]
+                    "premium": []
                 }
             },
             "eee-control": {
-                "displayName": "Eee Control",
+                "displayName": "Control Systems & Automation",
                 "branch": "eee",
                 "careerPaths": [
-                    "Senior Eee Control Specialist",
-                    "Eee Control Consultant",
-                    "Lead Eee Control Engineer"
+                    "Controls Engineer"
                 ],
                 "projects": {
-                    "beginner": [
-                        "Basic eee-control Project",
-                        "eee-control Simulation",
-                        "Introduction to eee-control"
-                    ],
+                    "beginner": [],
                     "intermediate": [
-                        "Advanced eee-control System",
-                        "Cross-platform eee-control",
-                        "eee-control Analytics"
+                        "Smart Grid Load Flow Analysis"
                     ],
                     "advanced": [
-                        "Enterprise eee-control Suite",
-                        "High-Performance eee-control",
-                        "Global eee-control Infrastructure"
+                        "Solar Inverter Design",
+                        "EV Battery Management System"
                     ]
                 },
                 "certifications": {
                     "free": [
-                        "eee-control Foundations",
-                        "Google eee-control Intro"
+                        "Fundamentals of Engineering (FE Electrical)"
                     ],
                     "pro": [
-                        "Professional eee-control Cert",
-                        "Microsoft eee-control Master"
+                        "Certified Energy Manager (CEM)"
                     ],
-                    "premium": [
-                        "Industry Certified eee-control",
-                        "eee-control Expert Professional"
-                    ]
+                    "premium": []
                 }
             },
             "eee-instrumentation": {
-                "displayName": "Eee Instrumentation",
+                "displayName": "Instrumentation & Measurements",
                 "branch": "eee",
                 "careerPaths": [
-                    "Senior Eee Instrumentation Specialist",
-                    "Eee Instrumentation Consultant",
-                    "Lead Eee Instrumentation Engineer"
+                    "Instrumentation Engineer"
                 ],
                 "projects": {
-                    "beginner": [
-                        "Basic eee-instrumentation Project",
-                        "eee-instrumentation Simulation",
-                        "Introduction to eee-instrumentation"
-                    ],
+                    "beginner": [],
                     "intermediate": [
-                        "Advanced eee-instrumentation System",
-                        "Cross-platform eee-instrumentation",
-                        "eee-instrumentation Analytics"
+                        "Smart Grid Load Flow Analysis"
                     ],
                     "advanced": [
-                        "Enterprise eee-instrumentation Suite",
-                        "High-Performance eee-instrumentation",
-                        "Global eee-instrumentation Infrastructure"
+                        "Solar Inverter Design",
+                        "EV Battery Management System"
                     ]
                 },
                 "certifications": {
                     "free": [
-                        "eee-instrumentation Foundations",
-                        "Google eee-instrumentation Intro"
+                        "Fundamentals of Engineering (FE Electrical)"
                     ],
                     "pro": [
-                        "Professional eee-instrumentation Cert",
-                        "Microsoft eee-instrumentation Master"
+                        "Certified Energy Manager (CEM)"
                     ],
-                    "premium": [
-                        "Industry Certified eee-instrumentation",
-                        "eee-instrumentation Expert Professional"
-                    ]
+                    "premium": []
                 }
             },
             "eee-mtech-power": {
-                "displayName": "Eee Mtech Power",
+                "displayName": "M.Tech in Power Systems",
                 "branch": "eee",
                 "careerPaths": [
-                    "Senior Eee Mtech Power Specialist",
-                    "Eee Mtech Power Consultant",
-                    "Lead Eee Mtech Power Engineer"
+                    "Senior Power System Analyst"
                 ],
                 "projects": {
-                    "beginner": [
-                        "Basic eee-mtech-power Project",
-                        "eee-mtech-power Simulation",
-                        "Introduction to eee-mtech-power"
-                    ],
+                    "beginner": [],
                     "intermediate": [
-                        "Advanced eee-mtech-power System",
-                        "Cross-platform eee-mtech-power",
-                        "eee-mtech-power Analytics"
+                        "Smart Grid Load Flow Analysis"
                     ],
                     "advanced": [
-                        "Enterprise eee-mtech-power Suite",
-                        "High-Performance eee-mtech-power",
-                        "Global eee-mtech-power Infrastructure"
+                        "Solar Inverter Design",
+                        "EV Battery Management System"
                     ]
                 },
                 "certifications": {
                     "free": [
-                        "eee-mtech-power Foundations",
-                        "Google eee-mtech-power Intro"
+                        "Fundamentals of Engineering (FE Electrical)"
                     ],
                     "pro": [
-                        "Professional eee-mtech-power Cert",
-                        "Microsoft eee-mtech-power Master"
+                        "Certified Energy Manager (CEM)"
                     ],
-                    "premium": [
-                        "Industry Certified eee-mtech-power",
-                        "eee-mtech-power Expert Professional"
-                    ]
+                    "premium": []
                 }
             },
             "eee-mtech-pe": {
-                "displayName": "Eee Mtech Pe",
+                "displayName": "M.Tech in Power Electronics",
                 "branch": "eee",
                 "careerPaths": [
-                    "Senior Eee Mtech Pe Specialist",
-                    "Eee Mtech Pe Consultant",
-                    "Lead Eee Mtech Pe Engineer"
+                    "Lead Power Electronics Design"
                 ],
                 "projects": {
-                    "beginner": [
-                        "Basic eee-mtech-pe Project",
-                        "eee-mtech-pe Simulation",
-                        "Introduction to eee-mtech-pe"
-                    ],
+                    "beginner": [],
                     "intermediate": [
-                        "Advanced eee-mtech-pe System",
-                        "Cross-platform eee-mtech-pe",
-                        "eee-mtech-pe Analytics"
+                        "Smart Grid Load Flow Analysis"
                     ],
                     "advanced": [
-                        "Enterprise eee-mtech-pe Suite",
-                        "High-Performance eee-mtech-pe",
-                        "Global eee-mtech-pe Infrastructure"
+                        "Solar Inverter Design",
+                        "EV Battery Management System"
                     ]
                 },
                 "certifications": {
                     "free": [
-                        "eee-mtech-pe Foundations",
-                        "Google eee-mtech-pe Intro"
+                        "Fundamentals of Engineering (FE Electrical)"
                     ],
                     "pro": [
-                        "Professional eee-mtech-pe Cert",
-                        "Microsoft eee-mtech-pe Master"
+                        "Certified Energy Manager (CEM)"
                     ],
-                    "premium": [
-                        "Industry Certified eee-mtech-pe",
-                        "eee-mtech-pe Expert Professional"
-                    ]
+                    "premium": []
                 }
             },
             "eee-mtech-renewable": {
-                "displayName": "Eee Mtech Renewable",
+                "displayName": "M.Tech in Renewable Energy",
                 "branch": "eee",
                 "careerPaths": [
-                    "Senior Eee Mtech Renewable Specialist",
-                    "Eee Mtech Renewable Consultant",
-                    "Lead Eee Mtech Renewable Engineer"
+                    "Renewable Integration Specialist"
                 ],
                 "projects": {
-                    "beginner": [
-                        "Basic eee-mtech-renewable Project",
-                        "eee-mtech-renewable Simulation",
-                        "Introduction to eee-mtech-renewable"
-                    ],
+                    "beginner": [],
                     "intermediate": [
-                        "Advanced eee-mtech-renewable System",
-                        "Cross-platform eee-mtech-renewable",
-                        "eee-mtech-renewable Analytics"
+                        "Smart Grid Load Flow Analysis"
                     ],
                     "advanced": [
-                        "Enterprise eee-mtech-renewable Suite",
-                        "High-Performance eee-mtech-renewable",
-                        "Global eee-mtech-renewable Infrastructure"
+                        "Solar Inverter Design",
+                        "EV Battery Management System"
                     ]
                 },
                 "certifications": {
                     "free": [
-                        "eee-mtech-renewable Foundations",
-                        "Google eee-mtech-renewable Intro"
+                        "Fundamentals of Engineering (FE Electrical)"
                     ],
                     "pro": [
-                        "Professional eee-mtech-renewable Cert",
-                        "Microsoft eee-mtech-renewable Master"
+                        "Certified Energy Manager (CEM)"
                     ],
-                    "premium": [
-                        "Industry Certified eee-mtech-renewable",
-                        "eee-mtech-renewable Expert Professional"
-                    ]
+                    "premium": []
                 }
             },
             "mech-design": {
-                "displayName": "Mech Design",
+                "displayName": "Design & Manufacturing Engineering",
                 "branch": "mechanical",
                 "careerPaths": [
-                    "Senior Mech Design Specialist",
-                    "Mech Design Consultant",
-                    "Lead Mech Design Engineer"
+                    "Mechanical Design Engineer",
+                    "CAE Engineer"
                 ],
                 "projects": {
-                    "beginner": [
-                        "Basic mech-design Project",
-                        "mech-design Simulation",
-                        "Introduction to mech-design"
-                    ],
+                    "beginner": [],
                     "intermediate": [
-                        "Advanced mech-design System",
-                        "Cross-platform mech-design",
-                        "mech-design Analytics"
+                        "Electric Vehicle Chassis Design",
+                        "HVAC System Optimization"
                     ],
                     "advanced": [
-                        "Enterprise mech-design Suite",
-                        "High-Performance mech-design",
-                        "Global mech-design Infrastructure"
+                        "Autonomous Robot Arm"
                     ]
                 },
                 "certifications": {
                     "free": [
-                        "mech-design Foundations",
-                        "Google mech-design Intro"
+                        "Certified SolidWorks Professional (CSWP)",
+                        "FE Mechanical"
                     ],
-                    "pro": [
-                        "Professional mech-design Cert",
-                        "Microsoft mech-design Master"
-                    ],
-                    "premium": [
-                        "Industry Certified mech-design",
-                        "mech-design Expert Professional"
-                    ]
+                    "pro": [],
+                    "premium": []
                 }
             },
             "mech-thermal": {
-                "displayName": "Mech Thermal",
+                "displayName": "Thermal Engineering & HVAC",
                 "branch": "mechanical",
                 "careerPaths": [
-                    "Senior Mech Thermal Specialist",
-                    "Mech Thermal Consultant",
-                    "Lead Mech Thermal Engineer"
+                    "Thermal Engineer",
+                    "HVAC Engineer"
                 ],
                 "projects": {
-                    "beginner": [
-                        "Basic mech-thermal Project",
-                        "mech-thermal Simulation",
-                        "Introduction to mech-thermal"
-                    ],
+                    "beginner": [],
                     "intermediate": [
-                        "Advanced mech-thermal System",
-                        "Cross-platform mech-thermal",
-                        "mech-thermal Analytics"
+                        "Electric Vehicle Chassis Design",
+                        "HVAC System Optimization"
                     ],
                     "advanced": [
-                        "Enterprise mech-thermal Suite",
-                        "High-Performance mech-thermal",
-                        "Global mech-thermal Infrastructure"
+                        "Autonomous Robot Arm"
                     ]
                 },
                 "certifications": {
                     "free": [
-                        "mech-thermal Foundations",
-                        "Google mech-thermal Intro"
+                        "Certified SolidWorks Professional (CSWP)",
+                        "FE Mechanical"
                     ],
-                    "pro": [
-                        "Professional mech-thermal Cert",
-                        "Microsoft mech-thermal Master"
-                    ],
-                    "premium": [
-                        "Industry Certified mech-thermal",
-                        "mech-thermal Expert Professional"
-                    ]
+                    "pro": [],
+                    "premium": []
                 }
             },
             "mech-robotics": {
-                "displayName": "Mech Robotics",
+                "displayName": "Robotics & Automation",
                 "branch": "mechanical",
                 "careerPaths": [
-                    "Senior Mech Robotics Specialist",
-                    "Mech Robotics Consultant",
-                    "Lead Mech Robotics Engineer"
+                    "Robotics Engineer"
                 ],
                 "projects": {
-                    "beginner": [
-                        "Basic mech-robotics Project",
-                        "mech-robotics Simulation",
-                        "Introduction to mech-robotics"
-                    ],
+                    "beginner": [],
                     "intermediate": [
-                        "Advanced mech-robotics System",
-                        "Cross-platform mech-robotics",
-                        "mech-robotics Analytics"
+                        "Electric Vehicle Chassis Design",
+                        "HVAC System Optimization"
                     ],
                     "advanced": [
-                        "Enterprise mech-robotics Suite",
-                        "High-Performance mech-robotics",
-                        "Global mech-robotics Infrastructure"
+                        "Autonomous Robot Arm"
                     ]
                 },
                 "certifications": {
                     "free": [
-                        "mech-robotics Foundations",
-                        "Google mech-robotics Intro"
+                        "Certified SolidWorks Professional (CSWP)",
+                        "FE Mechanical"
                     ],
-                    "pro": [
-                        "Professional mech-robotics Cert",
-                        "Microsoft mech-robotics Master"
-                    ],
-                    "premium": [
-                        "Industry Certified mech-robotics",
-                        "mech-robotics Expert Professional"
-                    ]
+                    "pro": [],
+                    "premium": []
                 }
             },
             "mech-automotive": {
-                "displayName": "Mech Automotive",
+                "displayName": "Automotive Engineering & Vehicle Design",
                 "branch": "mechanical",
                 "careerPaths": [
-                    "Senior Mech Automotive Specialist",
-                    "Mech Automotive Consultant",
-                    "Lead Mech Automotive Engineer"
+                    "Automotive Engineer"
                 ],
                 "projects": {
-                    "beginner": [
-                        "Basic mech-automotive Project",
-                        "mech-automotive Simulation",
-                        "Introduction to mech-automotive"
-                    ],
+                    "beginner": [],
                     "intermediate": [
-                        "Advanced mech-automotive System",
-                        "Cross-platform mech-automotive",
-                        "mech-automotive Analytics"
+                        "Electric Vehicle Chassis Design",
+                        "HVAC System Optimization"
                     ],
                     "advanced": [
-                        "Enterprise mech-automotive Suite",
-                        "High-Performance mech-automotive",
-                        "Global mech-automotive Infrastructure"
+                        "Autonomous Robot Arm"
                     ]
                 },
                 "certifications": {
                     "free": [
-                        "mech-automotive Foundations",
-                        "Google mech-automotive Intro"
+                        "Certified SolidWorks Professional (CSWP)",
+                        "FE Mechanical"
                     ],
-                    "pro": [
-                        "Professional mech-automotive Cert",
-                        "Microsoft mech-automotive Master"
-                    ],
-                    "premium": [
-                        "Industry Certified mech-automotive",
-                        "mech-automotive Expert Professional"
-                    ]
+                    "pro": [],
+                    "premium": []
                 }
             },
             "mech-cfd": {
-                "displayName": "Mech Cfd",
+                "displayName": "Computational Fluid Dynamics (CFD)",
                 "branch": "mechanical",
                 "careerPaths": [
-                    "Senior Mech Cfd Specialist",
-                    "Mech Cfd Consultant",
-                    "Lead Mech Cfd Engineer"
+                    "CFD Analyst"
                 ],
                 "projects": {
-                    "beginner": [
-                        "Basic mech-cfd Project",
-                        "mech-cfd Simulation",
-                        "Introduction to mech-cfd"
-                    ],
+                    "beginner": [],
                     "intermediate": [
-                        "Advanced mech-cfd System",
-                        "Cross-platform mech-cfd",
-                        "mech-cfd Analytics"
+                        "Electric Vehicle Chassis Design",
+                        "HVAC System Optimization"
                     ],
                     "advanced": [
-                        "Enterprise mech-cfd Suite",
-                        "High-Performance mech-cfd",
-                        "Global mech-cfd Infrastructure"
+                        "Autonomous Robot Arm"
                     ]
                 },
                 "certifications": {
                     "free": [
-                        "mech-cfd Foundations",
-                        "Google mech-cfd Intro"
+                        "Certified SolidWorks Professional (CSWP)",
+                        "FE Mechanical"
                     ],
-                    "pro": [
-                        "Professional mech-cfd Cert",
-                        "Microsoft mech-cfd Master"
-                    ],
-                    "premium": [
-                        "Industry Certified mech-cfd",
-                        "mech-cfd Expert Professional"
-                    ]
+                    "pro": [],
+                    "premium": []
                 }
             },
             "mech-production": {
-                "displayName": "Mech Production",
+                "displayName": "Production & Industrial Engineering",
                 "branch": "mechanical",
                 "careerPaths": [
-                    "Senior Mech Production Specialist",
-                    "Mech Production Consultant",
-                    "Lead Mech Production Engineer"
+                    "Manufacturing Engineer"
                 ],
                 "projects": {
-                    "beginner": [
-                        "Basic mech-production Project",
-                        "mech-production Simulation",
-                        "Introduction to mech-production"
-                    ],
+                    "beginner": [],
                     "intermediate": [
-                        "Advanced mech-production System",
-                        "Cross-platform mech-production",
-                        "mech-production Analytics"
+                        "Electric Vehicle Chassis Design",
+                        "HVAC System Optimization"
                     ],
                     "advanced": [
-                        "Enterprise mech-production Suite",
-                        "High-Performance mech-production",
-                        "Global mech-production Infrastructure"
+                        "Autonomous Robot Arm"
                     ]
                 },
                 "certifications": {
                     "free": [
-                        "mech-production Foundations",
-                        "Google mech-production Intro"
+                        "Certified SolidWorks Professional (CSWP)",
+                        "FE Mechanical"
                     ],
-                    "pro": [
-                        "Professional mech-production Cert",
-                        "Microsoft mech-production Master"
-                    ],
-                    "premium": [
-                        "Industry Certified mech-production",
-                        "mech-production Expert Professional"
-                    ]
+                    "pro": [],
+                    "premium": []
                 }
             },
             "mech-mtech-design": {
-                "displayName": "Mech Mtech Design",
+                "displayName": "M.Tech in Mechanical Design",
                 "branch": "mechanical",
                 "careerPaths": [
-                    "Senior Mech Mtech Design Specialist",
-                    "Mech Mtech Design Consultant",
-                    "Lead Mech Mtech Design Engineer"
+                    "Senior Mechanical Architect"
                 ],
                 "projects": {
-                    "beginner": [
-                        "Basic mech-mtech-design Project",
-                        "mech-mtech-design Simulation",
-                        "Introduction to mech-mtech-design"
-                    ],
+                    "beginner": [],
                     "intermediate": [
-                        "Advanced mech-mtech-design System",
-                        "Cross-platform mech-mtech-design",
-                        "mech-mtech-design Analytics"
+                        "Electric Vehicle Chassis Design",
+                        "HVAC System Optimization"
                     ],
                     "advanced": [
-                        "Enterprise mech-mtech-design Suite",
-                        "High-Performance mech-mtech-design",
-                        "Global mech-mtech-design Infrastructure"
+                        "Autonomous Robot Arm"
                     ]
                 },
                 "certifications": {
                     "free": [
-                        "mech-mtech-design Foundations",
-                        "Google mech-mtech-design Intro"
+                        "Certified SolidWorks Professional (CSWP)",
+                        "FE Mechanical"
                     ],
-                    "pro": [
-                        "Professional mech-mtech-design Cert",
-                        "Microsoft mech-mtech-design Master"
-                    ],
-                    "premium": [
-                        "Industry Certified mech-mtech-design",
-                        "mech-mtech-design Expert Professional"
-                    ]
+                    "pro": [],
+                    "premium": []
                 }
             },
             "mech-mtech-thermal": {
-                "displayName": "Mech Mtech Thermal",
+                "displayName": "M.Tech in Thermal Engineering",
                 "branch": "mechanical",
                 "careerPaths": [
-                    "Senior Mech Mtech Thermal Specialist",
-                    "Mech Mtech Thermal Consultant",
-                    "Lead Mech Mtech Thermal Engineer"
+                    "Principal Thermal Engineer"
                 ],
                 "projects": {
-                    "beginner": [
-                        "Basic mech-mtech-thermal Project",
-                        "mech-mtech-thermal Simulation",
-                        "Introduction to mech-mtech-thermal"
-                    ],
+                    "beginner": [],
                     "intermediate": [
-                        "Advanced mech-mtech-thermal System",
-                        "Cross-platform mech-mtech-thermal",
-                        "mech-mtech-thermal Analytics"
+                        "Electric Vehicle Chassis Design",
+                        "HVAC System Optimization"
                     ],
                     "advanced": [
-                        "Enterprise mech-mtech-thermal Suite",
-                        "High-Performance mech-mtech-thermal",
-                        "Global mech-mtech-thermal Infrastructure"
+                        "Autonomous Robot Arm"
                     ]
                 },
                 "certifications": {
                     "free": [
-                        "mech-mtech-thermal Foundations",
-                        "Google mech-mtech-thermal Intro"
+                        "Certified SolidWorks Professional (CSWP)",
+                        "FE Mechanical"
                     ],
-                    "pro": [
-                        "Professional mech-mtech-thermal Cert",
-                        "Microsoft mech-mtech-thermal Master"
-                    ],
-                    "premium": [
-                        "Industry Certified mech-mtech-thermal",
-                        "mech-mtech-thermal Expert Professional"
-                    ]
+                    "pro": [],
+                    "premium": []
                 }
             },
             "mech-mtech-robotics": {
-                "displayName": "Mech Mtech Robotics",
+                "displayName": "M.Tech in Robotics & Automation",
                 "branch": "mechanical",
                 "careerPaths": [
-                    "Senior Mech Mtech Robotics Specialist",
-                    "Mech Mtech Robotics Consultant",
-                    "Lead Mech Mtech Robotics Engineer"
+                    "Lead Robotics Systems Engineer"
                 ],
                 "projects": {
-                    "beginner": [
-                        "Basic mech-mtech-robotics Project",
-                        "mech-mtech-robotics Simulation",
-                        "Introduction to mech-mtech-robotics"
-                    ],
+                    "beginner": [],
                     "intermediate": [
-                        "Advanced mech-mtech-robotics System",
-                        "Cross-platform mech-mtech-robotics",
-                        "mech-mtech-robotics Analytics"
+                        "Electric Vehicle Chassis Design",
+                        "HVAC System Optimization"
                     ],
                     "advanced": [
-                        "Enterprise mech-mtech-robotics Suite",
-                        "High-Performance mech-mtech-robotics",
-                        "Global mech-mtech-robotics Infrastructure"
+                        "Autonomous Robot Arm"
                     ]
                 },
                 "certifications": {
                     "free": [
-                        "mech-mtech-robotics Foundations",
-                        "Google mech-mtech-robotics Intro"
+                        "Certified SolidWorks Professional (CSWP)",
+                        "FE Mechanical"
                     ],
-                    "pro": [
-                        "Professional mech-mtech-robotics Cert",
-                        "Microsoft mech-mtech-robotics Master"
-                    ],
-                    "premium": [
-                        "Industry Certified mech-mtech-robotics",
-                        "mech-mtech-robotics Expert Professional"
-                    ]
+                    "pro": [],
+                    "premium": []
                 }
             },
             "civil-structural": {
-                "displayName": "Civil Structural",
+                "displayName": "Structural Engineering & Design",
                 "branch": "civil",
                 "careerPaths": [
-                    "Senior Civil Structural Specialist",
-                    "Civil Structural Consultant",
-                    "Lead Civil Structural Engineer"
+                    "Structural Engineer",
+                    "Bridge Engineer"
                 ],
                 "projects": {
-                    "beginner": [
-                        "Basic civil-structural Project",
-                        "civil-structural Simulation",
-                        "Introduction to civil-structural"
-                    ],
+                    "beginner": [],
                     "intermediate": [
-                        "Advanced civil-structural System",
-                        "Cross-platform civil-structural",
-                        "civil-structural Analytics"
+                        "Smart Traffic Management",
+                        "Bridge Construction Scheduler"
                     ],
                     "advanced": [
-                        "Enterprise civil-structural Suite",
-                        "High-Performance civil-structural",
-                        "Global civil-structural Infrastructure"
+                        "Sustainable Skyscraper Design"
                     ]
                 },
                 "certifications": {
                     "free": [
-                        "civil-structural Foundations",
-                        "Google civil-structural Intro"
+                        "AutoCAD Certified Professional",
+                        "LEED Green Associate"
                     ],
-                    "pro": [
-                        "Professional civil-structural Cert",
-                        "Microsoft civil-structural Master"
-                    ],
-                    "premium": [
-                        "Industry Certified civil-structural",
-                        "civil-structural Expert Professional"
-                    ]
+                    "pro": [],
+                    "premium": []
                 }
             },
             "civil-construction": {
-                "displayName": "Civil Construction",
+                "displayName": "Construction Management & Planning",
                 "branch": "civil",
                 "careerPaths": [
-                    "Senior Civil Construction Specialist",
-                    "Civil Construction Consultant",
-                    "Lead Civil Construction Engineer"
+                    "Construction Manager",
+                    "Project Engineer"
                 ],
                 "projects": {
-                    "beginner": [
-                        "Basic civil-construction Project",
-                        "civil-construction Simulation",
-                        "Introduction to civil-construction"
-                    ],
+                    "beginner": [],
                     "intermediate": [
-                        "Advanced civil-construction System",
-                        "Cross-platform civil-construction",
-                        "civil-construction Analytics"
+                        "Smart Traffic Management",
+                        "Bridge Construction Scheduler"
                     ],
                     "advanced": [
-                        "Enterprise civil-construction Suite",
-                        "High-Performance civil-construction",
-                        "Global civil-construction Infrastructure"
+                        "Sustainable Skyscraper Design"
                     ]
                 },
                 "certifications": {
                     "free": [
-                        "civil-construction Foundations",
-                        "Google civil-construction Intro"
+                        "AutoCAD Certified Professional",
+                        "LEED Green Associate"
                     ],
-                    "pro": [
-                        "Professional civil-construction Cert",
-                        "Microsoft civil-construction Master"
-                    ],
-                    "premium": [
-                        "Industry Certified civil-construction",
-                        "civil-construction Expert Professional"
-                    ]
+                    "pro": [],
+                    "premium": []
                 }
             },
             "civil-transport": {
-                "displayName": "Civil Transport",
+                "displayName": "Transportation Engineering & Traffic",
                 "branch": "civil",
                 "careerPaths": [
-                    "Senior Civil Transport Specialist",
-                    "Civil Transport Consultant",
-                    "Lead Civil Transport Engineer"
+                    "Transportation Engineer"
                 ],
                 "projects": {
-                    "beginner": [
-                        "Basic civil-transport Project",
-                        "civil-transport Simulation",
-                        "Introduction to civil-transport"
-                    ],
+                    "beginner": [],
                     "intermediate": [
-                        "Advanced civil-transport System",
-                        "Cross-platform civil-transport",
-                        "civil-transport Analytics"
+                        "Smart Traffic Management",
+                        "Bridge Construction Scheduler"
                     ],
                     "advanced": [
-                        "Enterprise civil-transport Suite",
-                        "High-Performance civil-transport",
-                        "Global civil-transport Infrastructure"
+                        "Sustainable Skyscraper Design"
                     ]
                 },
                 "certifications": {
                     "free": [
-                        "civil-transport Foundations",
-                        "Google civil-transport Intro"
+                        "AutoCAD Certified Professional",
+                        "LEED Green Associate"
                     ],
-                    "pro": [
-                        "Professional civil-transport Cert",
-                        "Microsoft civil-transport Master"
-                    ],
-                    "premium": [
-                        "Industry Certified civil-transport",
-                        "civil-transport Expert Professional"
-                    ]
+                    "pro": [],
+                    "premium": []
                 }
             },
             "civil-environmental": {
-                "displayName": "Civil Environmental",
+                "displayName": "Environmental Engineering & Sustainability",
                 "branch": "civil",
                 "careerPaths": [
-                    "Senior Civil Environmental Specialist",
-                    "Civil Environmental Consultant",
-                    "Lead Civil Environmental Engineer"
+                    "Environmental Engineer"
                 ],
                 "projects": {
-                    "beginner": [
-                        "Basic civil-environmental Project",
-                        "civil-environmental Simulation",
-                        "Introduction to civil-environmental"
-                    ],
+                    "beginner": [],
                     "intermediate": [
-                        "Advanced civil-environmental System",
-                        "Cross-platform civil-environmental",
-                        "civil-environmental Analytics"
+                        "Smart Traffic Management",
+                        "Bridge Construction Scheduler"
                     ],
                     "advanced": [
-                        "Enterprise civil-environmental Suite",
-                        "High-Performance civil-environmental",
-                        "Global civil-environmental Infrastructure"
+                        "Sustainable Skyscraper Design"
                     ]
                 },
                 "certifications": {
                     "free": [
-                        "civil-environmental Foundations",
-                        "Google civil-environmental Intro"
+                        "AutoCAD Certified Professional",
+                        "LEED Green Associate"
                     ],
-                    "pro": [
-                        "Professional civil-environmental Cert",
-                        "Microsoft civil-environmental Master"
-                    ],
-                    "premium": [
-                        "Industry Certified civil-environmental",
-                        "civil-environmental Expert Professional"
-                    ]
+                    "pro": [],
+                    "premium": []
                 }
             },
             "civil-geotech": {
-                "displayName": "Civil Geotech",
+                "displayName": "Geotechnical Engineering & Soil Mechanics",
                 "branch": "civil",
                 "careerPaths": [
-                    "Senior Civil Geotech Specialist",
-                    "Civil Geotech Consultant",
-                    "Lead Civil Geotech Engineer"
+                    "Geotechnical Engineer"
                 ],
                 "projects": {
-                    "beginner": [
-                        "Basic civil-geotech Project",
-                        "civil-geotech Simulation",
-                        "Introduction to civil-geotech"
-                    ],
+                    "beginner": [],
                     "intermediate": [
-                        "Advanced civil-geotech System",
-                        "Cross-platform civil-geotech",
-                        "civil-geotech Analytics"
+                        "Smart Traffic Management",
+                        "Bridge Construction Scheduler"
                     ],
                     "advanced": [
-                        "Enterprise civil-geotech Suite",
-                        "High-Performance civil-geotech",
-                        "Global civil-geotech Infrastructure"
+                        "Sustainable Skyscraper Design"
                     ]
                 },
                 "certifications": {
                     "free": [
-                        "civil-geotech Foundations",
-                        "Google civil-geotech Intro"
+                        "AutoCAD Certified Professional",
+                        "LEED Green Associate"
                     ],
-                    "pro": [
-                        "Professional civil-geotech Cert",
-                        "Microsoft civil-geotech Master"
-                    ],
-                    "premium": [
-                        "Industry Certified civil-geotech",
-                        "civil-geotech Expert Professional"
-                    ]
+                    "pro": [],
+                    "premium": []
                 }
             },
             "civil-water": {
-                "displayName": "Civil Water",
+                "displayName": "Water Resources & Hydraulics",
                 "branch": "civil",
                 "careerPaths": [
-                    "Senior Civil Water Specialist",
-                    "Civil Water Consultant",
-                    "Lead Civil Water Engineer"
+                    "Water Resources Engineer"
                 ],
                 "projects": {
-                    "beginner": [
-                        "Basic civil-water Project",
-                        "civil-water Simulation",
-                        "Introduction to civil-water"
-                    ],
+                    "beginner": [],
                     "intermediate": [
-                        "Advanced civil-water System",
-                        "Cross-platform civil-water",
-                        "civil-water Analytics"
+                        "Smart Traffic Management",
+                        "Bridge Construction Scheduler"
                     ],
                     "advanced": [
-                        "Enterprise civil-water Suite",
-                        "High-Performance civil-water",
-                        "Global civil-water Infrastructure"
+                        "Sustainable Skyscraper Design"
                     ]
                 },
                 "certifications": {
                     "free": [
-                        "civil-water Foundations",
-                        "Google civil-water Intro"
+                        "AutoCAD Certified Professional",
+                        "LEED Green Associate"
                     ],
-                    "pro": [
-                        "Professional civil-water Cert",
-                        "Microsoft civil-water Master"
-                    ],
-                    "premium": [
-                        "Industry Certified civil-water",
-                        "civil-water Expert Professional"
-                    ]
+                    "pro": [],
+                    "premium": []
                 }
             },
             "civil-mtech-structural": {
-                "displayName": "Civil Mtech Structural",
+                "displayName": "M.Tech in Structural Engineering",
                 "branch": "civil",
                 "careerPaths": [
-                    "Senior Civil Mtech Structural Specialist",
-                    "Civil Mtech Structural Consultant",
-                    "Lead Civil Mtech Structural Engineer"
+                    "Principal Structural Engineer"
                 ],
                 "projects": {
-                    "beginner": [
-                        "Basic civil-mtech-structural Project",
-                        "civil-mtech-structural Simulation",
-                        "Introduction to civil-mtech-structural"
-                    ],
+                    "beginner": [],
                     "intermediate": [
-                        "Advanced civil-mtech-structural System",
-                        "Cross-platform civil-mtech-structural",
-                        "civil-mtech-structural Analytics"
+                        "Smart Traffic Management",
+                        "Bridge Construction Scheduler"
                     ],
                     "advanced": [
-                        "Enterprise civil-mtech-structural Suite",
-                        "High-Performance civil-mtech-structural",
-                        "Global civil-mtech-structural Infrastructure"
+                        "Sustainable Skyscraper Design"
                     ]
                 },
                 "certifications": {
                     "free": [
-                        "civil-mtech-structural Foundations",
-                        "Google civil-mtech-structural Intro"
+                        "AutoCAD Certified Professional",
+                        "LEED Green Associate"
                     ],
-                    "pro": [
-                        "Professional civil-mtech-structural Cert",
-                        "Microsoft civil-mtech-structural Master"
-                    ],
-                    "premium": [
-                        "Industry Certified civil-mtech-structural",
-                        "civil-mtech-structural Expert Professional"
-                    ]
+                    "pro": [],
+                    "premium": []
                 }
             },
             "civil-mtech-construction": {
-                "displayName": "Civil Mtech Construction",
+                "displayName": "M.Tech in Construction Management",
                 "branch": "civil",
                 "careerPaths": [
-                    "Senior Civil Mtech Construction Specialist",
-                    "Civil Mtech Construction Consultant",
-                    "Lead Civil Mtech Construction Engineer"
+                    "Senior Construction Manager"
                 ],
                 "projects": {
-                    "beginner": [
-                        "Basic civil-mtech-construction Project",
-                        "civil-mtech-construction Simulation",
-                        "Introduction to civil-mtech-construction"
-                    ],
+                    "beginner": [],
                     "intermediate": [
-                        "Advanced civil-mtech-construction System",
-                        "Cross-platform civil-mtech-construction",
-                        "civil-mtech-construction Analytics"
+                        "Smart Traffic Management",
+                        "Bridge Construction Scheduler"
                     ],
                     "advanced": [
-                        "Enterprise civil-mtech-construction Suite",
-                        "High-Performance civil-mtech-construction",
-                        "Global civil-mtech-construction Infrastructure"
+                        "Sustainable Skyscraper Design"
                     ]
                 },
                 "certifications": {
                     "free": [
-                        "civil-mtech-construction Foundations",
-                        "Google civil-mtech-construction Intro"
+                        "AutoCAD Certified Professional",
+                        "LEED Green Associate"
                     ],
-                    "pro": [
-                        "Professional civil-mtech-construction Cert",
-                        "Microsoft civil-mtech-construction Master"
-                    ],
-                    "premium": [
-                        "Industry Certified civil-mtech-construction",
-                        "civil-mtech-construction Expert Professional"
-                    ]
+                    "pro": [],
+                    "premium": []
                 }
             },
             "civil-mtech-transport": {
-                "displayName": "Civil Mtech Transport",
+                "displayName": "M.Tech in Transportation Engineering",
                 "branch": "civil",
                 "careerPaths": [
-                    "Senior Civil Mtech Transport Specialist",
-                    "Civil Mtech Transport Consultant",
-                    "Lead Civil Mtech Transport Engineer"
+                    "Senior Transportation Planner"
                 ],
                 "projects": {
-                    "beginner": [
-                        "Basic civil-mtech-transport Project",
-                        "civil-mtech-transport Simulation",
-                        "Introduction to civil-mtech-transport"
-                    ],
+                    "beginner": [],
                     "intermediate": [
-                        "Advanced civil-mtech-transport System",
-                        "Cross-platform civil-mtech-transport",
-                        "civil-mtech-transport Analytics"
+                        "Smart Traffic Management",
+                        "Bridge Construction Scheduler"
                     ],
                     "advanced": [
-                        "Enterprise civil-mtech-transport Suite",
-                        "High-Performance civil-mtech-transport",
-                        "Global civil-mtech-transport Infrastructure"
+                        "Sustainable Skyscraper Design"
                     ]
                 },
                 "certifications": {
                     "free": [
-                        "civil-mtech-transport Foundations",
-                        "Google civil-mtech-transport Intro"
+                        "AutoCAD Certified Professional",
+                        "LEED Green Associate"
                     ],
-                    "pro": [
-                        "Professional civil-mtech-transport Cert",
-                        "Microsoft civil-mtech-transport Master"
-                    ],
-                    "premium": [
-                        "Industry Certified civil-mtech-transport",
-                        "civil-mtech-transport Expert Professional"
-                    ]
+                    "pro": [],
+                    "premium": []
                 }
             },
             "civil-mtech-env": {
-                "displayName": "Civil Mtech Env",
+                "displayName": "M.Tech in Environmental Engineering",
                 "branch": "civil",
                 "careerPaths": [
-                    "Senior Civil Mtech Env Specialist",
-                    "Civil Mtech Env Consultant",
-                    "Lead Civil Mtech Env Engineer"
+                    "Environmental Consultant"
                 ],
                 "projects": {
-                    "beginner": [
-                        "Basic civil-mtech-env Project",
-                        "civil-mtech-env Simulation",
-                        "Introduction to civil-mtech-env"
-                    ],
+                    "beginner": [],
                     "intermediate": [
-                        "Advanced civil-mtech-env System",
-                        "Cross-platform civil-mtech-env",
-                        "civil-mtech-env Analytics"
+                        "Smart Traffic Management",
+                        "Bridge Construction Scheduler"
                     ],
                     "advanced": [
-                        "Enterprise civil-mtech-env Suite",
-                        "High-Performance civil-mtech-env",
-                        "Global civil-mtech-env Infrastructure"
+                        "Sustainable Skyscraper Design"
                     ]
                 },
                 "certifications": {
                     "free": [
-                        "civil-mtech-env Foundations",
-                        "Google civil-mtech-env Intro"
+                        "AutoCAD Certified Professional",
+                        "LEED Green Associate"
                     ],
-                    "pro": [
-                        "Professional civil-mtech-env Cert",
-                        "Microsoft civil-mtech-env Master"
-                    ],
-                    "premium": [
-                        "Industry Certified civil-mtech-env",
-                        "civil-mtech-env Expert Professional"
-                    ]
+                    "pro": [],
+                    "premium": []
                 }
             }
         }
     },
     "medical": {
-        "displayName": "Medical",
+        "displayName": "Medical & Health Sciences",
         "specializations": {
             "hospital-admin": {
-                "displayName": "Hospital Admin",
+                "displayName": "Hospital Administration & Healthcare Management",
                 "branch": null,
                 "careerPaths": [
                     "Hospital Administrator",
-                    "Healthcare Operations Manager",
-                    "Medical Superintendent"
+                    "Healthcare Consultant"
                 ],
                 "projects": {
                     "beginner": [
-                        "Hospital Workflow Analysis",
-                        "Patient Registration System"
+                        "Mental Health Mood Tracker",
+                        "Nutrition Planning Application"
                     ],
                     "intermediate": [
-                        "Hospital Management System",
-                        "Patient Data Analytics Dashboard"
+                        "Clinical Trial Data Analyzer",
+                        "Medication Interaction Checker"
                     ],
                     "advanced": [
-                        "AI-based Hospital Resource Optimization",
-                        "Enterprise Healthcare ERP System"
+                        "Patient Health Dashboard",
+                        "Hospital Bed Management System"
                     ]
                 },
                 "certifications": {
                     "free": [
-                        "WHO Online Health Courses",
-                        "Coursera Healthcare Management (Audit)"
+                        "USMLE Step 1",
+                        "ACLS (Advanced Cardiovascular Life Support)"
                     ],
-                    "pro": [
-                        "PG Diploma in Hospital Administration",
-                        "Healthcare Management Certification"
-                    ],
-                    "premium": [
-                        "MBA in Healthcare Management",
-                        "CPHQ"
-                    ]
+                    "pro": [],
+                    "premium": []
                 }
             },
             "clinical-research": {
-                "displayName": "Clinical Research",
+                "displayName": "Clinical Research & Trials",
                 "branch": null,
                 "careerPaths": [
                     "Clinical Research Associate",
-                    "Medical Research Analyst",
-                    "Clinical Trial Coordinator"
+                    "Clinical Project Manager"
                 ],
                 "projects": {
                     "beginner": [
-                        "Literature Review on Medical Study"
+                        "Mental Health Mood Tracker",
+                        "Nutrition Planning Application"
                     ],
                     "intermediate": [
-                        "Clinical Trial Data Analysis"
+                        "Clinical Trial Data Analyzer",
+                        "Medication Interaction Checker"
                     ],
                     "advanced": [
-                        "Full Clinical Trial Management Simulation"
+                        "Patient Health Dashboard",
+                        "Hospital Bed Management System"
                     ]
                 },
                 "certifications": {
                     "free": [
-                        "NIH Clinical Research Training"
+                        "USMLE Step 1",
+                        "ACLS (Advanced Cardiovascular Life Support)"
                     ],
-                    "pro": [
-                        "Clinical Research Certification (CRS)"
-                    ],
-                    "premium": [
-                        "Certified Clinical Research Professional (CCRP)"
-                    ]
+                    "pro": [],
+                    "premium": []
                 }
             },
             "health-informatics": {
                 "displayName": "Health Informatics",
                 "branch": null,
                 "careerPaths": [
-                    "Senior Health Informatics Specialist",
-                    "Health Informatics Consultant",
-                    "Lead Health Informatics Engineer"
+                    "Health Informaticist",
+                    "Chief Health Informatics Officer"
                 ],
                 "projects": {
                     "beginner": [
-                        "Basic health-informatics Project",
-                        "health-informatics Simulation",
-                        "Introduction to health-informatics"
+                        "Mental Health Mood Tracker",
+                        "Nutrition Planning Application"
                     ],
                     "intermediate": [
-                        "Advanced health-informatics System",
-                        "Cross-platform health-informatics",
-                        "health-informatics Analytics"
+                        "Clinical Trial Data Analyzer",
+                        "Medication Interaction Checker"
                     ],
                     "advanced": [
-                        "Enterprise health-informatics Suite",
-                        "High-Performance health-informatics",
-                        "Global health-informatics Infrastructure"
+                        "Patient Health Dashboard",
+                        "Hospital Bed Management System"
                     ]
                 },
                 "certifications": {
                     "free": [
-                        "health-informatics Foundations",
-                        "Google health-informatics Intro"
+                        "USMLE Step 1",
+                        "ACLS (Advanced Cardiovascular Life Support)"
                     ],
-                    "pro": [
-                        "Professional health-informatics Cert",
-                        "Microsoft health-informatics Master"
-                    ],
-                    "premium": [
-                        "Industry Certified health-informatics",
-                        "health-informatics Expert Professional"
-                    ]
+                    "pro": [],
+                    "premium": []
                 }
             },
             "medical-coding": {
-                "displayName": "Medical Coding",
+                "displayName": "Medical Coding & Health Data Analytics",
                 "branch": null,
                 "careerPaths": [
-                    "Senior Medical Coding Specialist",
-                    "Medical Coding Consultant",
-                    "Lead Medical Coding Engineer"
+                    "Medical Coder",
+                    "Coding Supervisor"
                 ],
                 "projects": {
                     "beginner": [
-                        "Basic medical-coding Project",
-                        "medical-coding Simulation",
-                        "Introduction to medical-coding"
+                        "Mental Health Mood Tracker",
+                        "Nutrition Planning Application"
                     ],
                     "intermediate": [
-                        "Advanced medical-coding System",
-                        "Cross-platform medical-coding",
-                        "medical-coding Analytics"
+                        "Clinical Trial Data Analyzer",
+                        "Medication Interaction Checker"
                     ],
                     "advanced": [
-                        "Enterprise medical-coding Suite",
-                        "High-Performance medical-coding",
-                        "Global medical-coding Infrastructure"
+                        "Patient Health Dashboard",
+                        "Hospital Bed Management System"
                     ]
                 },
                 "certifications": {
                     "free": [
-                        "medical-coding Foundations",
-                        "Google medical-coding Intro"
+                        "USMLE Step 1",
+                        "ACLS (Advanced Cardiovascular Life Support)"
                     ],
-                    "pro": [
-                        "Professional medical-coding Cert",
-                        "Microsoft medical-coding Master"
-                    ],
-                    "premium": [
-                        "Industry Certified medical-coding",
-                        "medical-coding Expert Professional"
-                    ]
+                    "pro": [],
+                    "premium": []
                 }
             },
             "public-health": {
-                "displayName": "Public Health",
+                "displayName": "Public Health & Epidemiology",
                 "branch": null,
                 "careerPaths": [
-                    "Public Health Officer",
                     "Epidemiologist",
-                    "Health Policy Analyst"
+                    "Public Health Director"
                 ],
                 "projects": {
                     "beginner": [
-                        "Community Health Survey"
+                        "Mental Health Mood Tracker",
+                        "Nutrition Planning Application"
                     ],
                     "intermediate": [
-                        "Public Health Data Dashboard"
+                        "Clinical Trial Data Analyzer",
+                        "Medication Interaction Checker"
                     ],
                     "advanced": [
-                        "National Health Strategy Plan"
+                        "Patient Health Dashboard",
+                        "Hospital Bed Management System"
                     ]
                 },
                 "certifications": {
                     "free": [
-                        "WHO Public Health Courses"
+                        "USMLE Step 1",
+                        "ACLS (Advanced Cardiovascular Life Support)"
                     ],
-                    "pro": [
-                        "PG Diploma in Public Health"
-                    ],
-                    "premium": [
-                        "Master of Public Health (MPH)"
-                    ]
+                    "pro": [],
+                    "premium": []
                 }
             },
             "mental-health": {
-                "displayName": "Mental Health",
+                "displayName": "Mental Health & Psychology (Applied)",
                 "branch": null,
                 "careerPaths": [
-                    "Senior Mental Health Specialist",
-                    "Mental Health Consultant",
-                    "Lead Mental Health Engineer"
+                    "Clinical Psychologist",
+                    "Mental Health Counselor"
                 ],
                 "projects": {
                     "beginner": [
-                        "Basic mental-health Project",
-                        "mental-health Simulation",
-                        "Introduction to mental-health"
+                        "Mental Health Mood Tracker",
+                        "Nutrition Planning Application"
                     ],
                     "intermediate": [
-                        "Advanced mental-health System",
-                        "Cross-platform mental-health",
-                        "mental-health Analytics"
+                        "Clinical Trial Data Analyzer",
+                        "Medication Interaction Checker"
                     ],
                     "advanced": [
-                        "Enterprise mental-health Suite",
-                        "High-Performance mental-health",
-                        "Global mental-health Infrastructure"
+                        "Patient Health Dashboard",
+                        "Hospital Bed Management System"
                     ]
                 },
                 "certifications": {
                     "free": [
-                        "mental-health Foundations",
-                        "Google mental-health Intro"
+                        "USMLE Step 1",
+                        "ACLS (Advanced Cardiovascular Life Support)"
                     ],
-                    "pro": [
-                        "Professional mental-health Cert",
-                        "Microsoft mental-health Master"
-                    ],
-                    "premium": [
-                        "Industry Certified mental-health",
-                        "mental-health Expert Professional"
-                    ]
+                    "pro": [],
+                    "premium": []
                 }
             },
             "nutrition": {
-                "displayName": "Nutrition",
+                "displayName": "Nutrition Science & Diet Planning",
                 "branch": null,
                 "careerPaths": [
-                    "Senior Nutrition Specialist",
-                    "Nutrition Consultant",
-                    "Lead Nutrition Engineer"
+                    "Clinical Dietitian",
+                    "Nutrition Consultant"
                 ],
                 "projects": {
                     "beginner": [
-                        "Basic nutrition Project",
-                        "nutrition Simulation",
-                        "Introduction to nutrition"
+                        "Mental Health Mood Tracker",
+                        "Nutrition Planning Application"
                     ],
                     "intermediate": [
-                        "Advanced nutrition System",
-                        "Cross-platform nutrition",
-                        "nutrition Analytics"
+                        "Clinical Trial Data Analyzer",
+                        "Medication Interaction Checker"
                     ],
                     "advanced": [
-                        "Enterprise nutrition Suite",
-                        "High-Performance nutrition",
-                        "Global nutrition Infrastructure"
+                        "Patient Health Dashboard",
+                        "Hospital Bed Management System"
                     ]
                 },
                 "certifications": {
                     "free": [
-                        "nutrition Foundations",
-                        "Google nutrition Intro"
+                        "USMLE Step 1",
+                        "ACLS (Advanced Cardiovascular Life Support)"
                     ],
-                    "pro": [
-                        "Professional nutrition Cert",
-                        "Microsoft nutrition Master"
-                    ],
-                    "premium": [
-                        "Industry Certified nutrition",
-                        "nutrition Expert Professional"
-                    ]
+                    "pro": [],
+                    "premium": []
                 }
             },
             "msc-public-health": {
-                "displayName": "Msc Public Health",
+                "displayName": "M.Sc. in Public Health",
                 "branch": null,
                 "careerPaths": [
-                    "Senior Msc Public Health Specialist",
-                    "Msc Public Health Consultant",
-                    "Lead Msc Public Health Engineer"
+                    "Senior M.Sc. in Public Health Specialist",
+                    "M.Sc. in Public Health Consultant",
+                    "Lead M.Sc. in Public Health Engineer"
                 ],
                 "projects": {
                     "beginner": [
-                        "Basic msc-public-health Project",
-                        "msc-public-health Simulation",
-                        "Introduction to msc-public-health"
+                        "Mental Health Mood Tracker",
+                        "Nutrition Planning Application"
                     ],
                     "intermediate": [
-                        "Advanced msc-public-health System",
-                        "Cross-platform msc-public-health",
-                        "msc-public-health Analytics"
+                        "Clinical Trial Data Analyzer",
+                        "Medication Interaction Checker"
                     ],
                     "advanced": [
-                        "Enterprise msc-public-health Suite",
-                        "High-Performance msc-public-health",
-                        "Global msc-public-health Infrastructure"
+                        "Patient Health Dashboard",
+                        "Hospital Bed Management System"
                     ]
                 },
                 "certifications": {
                     "free": [
-                        "msc-public-health Foundations",
-                        "Google msc-public-health Intro"
+                        "USMLE Step 1",
+                        "ACLS (Advanced Cardiovascular Life Support)"
                     ],
-                    "pro": [
-                        "Professional msc-public-health Cert",
-                        "Microsoft msc-public-health Master"
-                    ],
-                    "premium": [
-                        "Industry Certified msc-public-health",
-                        "msc-public-health Expert Professional"
-                    ]
+                    "pro": [],
+                    "premium": []
                 }
             },
             "mph": {
-                "displayName": "Mph",
+                "displayName": "Master of Public Health (MPH)",
                 "branch": null,
                 "careerPaths": [
-                    "Senior Mph Specialist",
-                    "Mph Consultant",
-                    "Lead Mph Engineer"
+                    "Senior Master of Public Health (MPH) Specialist",
+                    "Master of Public Health (MPH) Consultant",
+                    "Lead Master of Public Health (MPH) Engineer"
                 ],
                 "projects": {
                     "beginner": [
-                        "Basic mph Project",
-                        "mph Simulation",
-                        "Introduction to mph"
+                        "Mental Health Mood Tracker",
+                        "Nutrition Planning Application"
                     ],
                     "intermediate": [
-                        "Advanced mph System",
-                        "Cross-platform mph",
-                        "mph Analytics"
+                        "Clinical Trial Data Analyzer",
+                        "Medication Interaction Checker"
                     ],
                     "advanced": [
-                        "Enterprise mph Suite",
-                        "High-Performance mph",
-                        "Global mph Infrastructure"
+                        "Patient Health Dashboard",
+                        "Hospital Bed Management System"
                     ]
                 },
                 "certifications": {
                     "free": [
-                        "mph Foundations",
-                        "Google mph Intro"
+                        "USMLE Step 1",
+                        "ACLS (Advanced Cardiovascular Life Support)"
                     ],
-                    "pro": [
-                        "Professional mph Cert",
-                        "Microsoft mph Master"
-                    ],
-                    "premium": [
-                        "Industry Certified mph",
-                        "mph Expert Professional"
-                    ]
+                    "pro": [],
+                    "premium": []
                 }
             },
             "msc-clinical-research": {
-                "displayName": "Msc Clinical Research",
+                "displayName": "M.Sc. in Clinical Research",
                 "branch": null,
                 "careerPaths": [
-                    "Senior Msc Clinical Research Specialist",
-                    "Msc Clinical Research Consultant",
-                    "Lead Msc Clinical Research Engineer"
+                    "Senior M.Sc. in Clinical Research Specialist",
+                    "M.Sc. in Clinical Research Consultant",
+                    "Lead M.Sc. in Clinical Research Engineer"
                 ],
                 "projects": {
                     "beginner": [
-                        "Basic msc-clinical-research Project",
-                        "msc-clinical-research Simulation",
-                        "Introduction to msc-clinical-research"
+                        "Mental Health Mood Tracker",
+                        "Nutrition Planning Application"
                     ],
                     "intermediate": [
-                        "Advanced msc-clinical-research System",
-                        "Cross-platform msc-clinical-research",
-                        "msc-clinical-research Analytics"
+                        "Clinical Trial Data Analyzer",
+                        "Medication Interaction Checker"
                     ],
                     "advanced": [
-                        "Enterprise msc-clinical-research Suite",
-                        "High-Performance msc-clinical-research",
-                        "Global msc-clinical-research Infrastructure"
+                        "Patient Health Dashboard",
+                        "Hospital Bed Management System"
                     ]
                 },
                 "certifications": {
                     "free": [
-                        "msc-clinical-research Foundations",
-                        "Google msc-clinical-research Intro"
+                        "USMLE Step 1",
+                        "ACLS (Advanced Cardiovascular Life Support)"
                     ],
-                    "pro": [
-                        "Professional msc-clinical-research Cert",
-                        "Microsoft msc-clinical-research Master"
-                    ],
-                    "premium": [
-                        "Industry Certified msc-clinical-research",
-                        "msc-clinical-research Expert Professional"
-                    ]
+                    "pro": [],
+                    "premium": []
                 }
             },
             "mha": {
-                "displayName": "Mha",
+                "displayName": "Master of Hospital Administration (MHA)",
                 "branch": null,
                 "careerPaths": [
-                    "Senior Mha Specialist",
-                    "Mha Consultant",
-                    "Lead Mha Engineer"
+                    "Senior Master of Hospital Administration (MHA) Specialist",
+                    "Master of Hospital Administration (MHA) Consultant",
+                    "Lead Master of Hospital Administration (MHA) Engineer"
                 ],
                 "projects": {
                     "beginner": [
-                        "Basic mha Project",
-                        "mha Simulation",
-                        "Introduction to mha"
+                        "Mental Health Mood Tracker",
+                        "Nutrition Planning Application"
                     ],
                     "intermediate": [
-                        "Advanced mha System",
-                        "Cross-platform mha",
-                        "mha Analytics"
+                        "Clinical Trial Data Analyzer",
+                        "Medication Interaction Checker"
                     ],
                     "advanced": [
-                        "Enterprise mha Suite",
-                        "High-Performance mha",
-                        "Global mha Infrastructure"
+                        "Patient Health Dashboard",
+                        "Hospital Bed Management System"
                     ]
                 },
                 "certifications": {
                     "free": [
-                        "mha Foundations",
-                        "Google mha Intro"
+                        "USMLE Step 1",
+                        "ACLS (Advanced Cardiovascular Life Support)"
                     ],
-                    "pro": [
-                        "Professional mha Cert",
-                        "Microsoft mha Master"
-                    ],
-                    "premium": [
-                        "Industry Certified mha",
-                        "mha Expert Professional"
-                    ]
+                    "pro": [],
+                    "premium": []
                 }
             },
             "msc-health-informatics": {
-                "displayName": "Msc Health Informatics",
+                "displayName": "M.Sc. in Health Informatics",
                 "branch": null,
                 "careerPaths": [
-                    "Senior Msc Health Informatics Specialist",
-                    "Msc Health Informatics Consultant",
-                    "Lead Msc Health Informatics Engineer"
+                    "Senior M.Sc. in Health Informatics Specialist",
+                    "M.Sc. in Health Informatics Consultant",
+                    "Lead M.Sc. in Health Informatics Engineer"
                 ],
                 "projects": {
                     "beginner": [
-                        "Basic msc-health-informatics Project",
-                        "msc-health-informatics Simulation",
-                        "Introduction to msc-health-informatics"
+                        "Mental Health Mood Tracker",
+                        "Nutrition Planning Application"
                     ],
                     "intermediate": [
-                        "Advanced msc-health-informatics System",
-                        "Cross-platform msc-health-informatics",
-                        "msc-health-informatics Analytics"
+                        "Clinical Trial Data Analyzer",
+                        "Medication Interaction Checker"
                     ],
                     "advanced": [
-                        "Enterprise msc-health-informatics Suite",
-                        "High-Performance msc-health-informatics",
-                        "Global msc-health-informatics Infrastructure"
+                        "Patient Health Dashboard",
+                        "Hospital Bed Management System"
                     ]
                 },
                 "certifications": {
                     "free": [
-                        "msc-health-informatics Foundations",
-                        "Google msc-health-informatics Intro"
+                        "USMLE Step 1",
+                        "ACLS (Advanced Cardiovascular Life Support)"
                     ],
-                    "pro": [
-                        "Professional msc-health-informatics Cert",
-                        "Microsoft msc-health-informatics Master"
-                    ],
-                    "premium": [
-                        "Industry Certified msc-health-informatics",
-                        "msc-health-informatics Expert Professional"
-                    ]
+                    "pro": [],
+                    "premium": []
                 }
             },
             "msc-biotechnology": {
-                "displayName": "Msc Biotechnology",
+                "displayName": "M.Sc. in Medical Biotechnology",
                 "branch": null,
                 "careerPaths": [
-                    "Senior Msc Biotechnology Specialist",
-                    "Msc Biotechnology Consultant",
-                    "Lead Msc Biotechnology Engineer"
+                    "Senior M.Sc. in Medical Biotechnology Specialist",
+                    "M.Sc. in Medical Biotechnology Consultant",
+                    "Lead M.Sc. in Medical Biotechnology Engineer"
                 ],
                 "projects": {
                     "beginner": [
-                        "Basic msc-biotechnology Project",
-                        "msc-biotechnology Simulation",
-                        "Introduction to msc-biotechnology"
+                        "Mental Health Mood Tracker",
+                        "Nutrition Planning Application"
                     ],
                     "intermediate": [
-                        "Advanced msc-biotechnology System",
-                        "Cross-platform msc-biotechnology",
-                        "msc-biotechnology Analytics"
+                        "Clinical Trial Data Analyzer",
+                        "Medication Interaction Checker"
                     ],
                     "advanced": [
-                        "Enterprise msc-biotechnology Suite",
-                        "High-Performance msc-biotechnology",
-                        "Global msc-biotechnology Infrastructure"
+                        "Patient Health Dashboard",
+                        "Hospital Bed Management System"
                     ]
                 },
                 "certifications": {
                     "free": [
-                        "msc-biotechnology Foundations",
-                        "Google msc-biotechnology Intro"
+                        "USMLE Step 1",
+                        "ACLS (Advanced Cardiovascular Life Support)"
                     ],
-                    "pro": [
-                        "Professional msc-biotechnology Cert",
-                        "Microsoft msc-biotechnology Master"
-                    ],
-                    "premium": [
-                        "Industry Certified msc-biotechnology",
-                        "msc-biotechnology Expert Professional"
-                    ]
+                    "pro": [],
+                    "premium": []
                 }
             },
             "msc-microbiology": {
-                "displayName": "Msc Microbiology",
+                "displayName": "M.Sc. in Medical Microbiology",
                 "branch": null,
                 "careerPaths": [
-                    "Senior Msc Microbiology Specialist",
-                    "Msc Microbiology Consultant",
-                    "Lead Msc Microbiology Engineer"
+                    "Senior M.Sc. in Medical Microbiology Specialist",
+                    "M.Sc. in Medical Microbiology Consultant",
+                    "Lead M.Sc. in Medical Microbiology Engineer"
                 ],
                 "projects": {
                     "beginner": [
-                        "Basic msc-microbiology Project",
-                        "msc-microbiology Simulation",
-                        "Introduction to msc-microbiology"
+                        "Mental Health Mood Tracker",
+                        "Nutrition Planning Application"
                     ],
                     "intermediate": [
-                        "Advanced msc-microbiology System",
-                        "Cross-platform msc-microbiology",
-                        "msc-microbiology Analytics"
+                        "Clinical Trial Data Analyzer",
+                        "Medication Interaction Checker"
                     ],
                     "advanced": [
-                        "Enterprise msc-microbiology Suite",
-                        "High-Performance msc-microbiology",
-                        "Global msc-microbiology Infrastructure"
+                        "Patient Health Dashboard",
+                        "Hospital Bed Management System"
                     ]
                 },
                 "certifications": {
                     "free": [
-                        "msc-microbiology Foundations",
-                        "Google msc-microbiology Intro"
+                        "USMLE Step 1",
+                        "ACLS (Advanced Cardiovascular Life Support)"
                     ],
-                    "pro": [
-                        "Professional msc-microbiology Cert",
-                        "Microsoft msc-microbiology Master"
-                    ],
-                    "premium": [
-                        "Industry Certified msc-microbiology",
-                        "msc-microbiology Expert Professional"
-                    ]
+                    "pro": [],
+                    "premium": []
                 }
             },
             "msc-pharmacology": {
-                "displayName": "Msc Pharmacology",
+                "displayName": "M.Sc. in Pharmacology",
                 "branch": null,
                 "careerPaths": [
-                    "Senior Msc Pharmacology Specialist",
-                    "Msc Pharmacology Consultant",
-                    "Lead Msc Pharmacology Engineer"
+                    "Senior M.Sc. in Pharmacology Specialist",
+                    "M.Sc. in Pharmacology Consultant",
+                    "Lead M.Sc. in Pharmacology Engineer"
                 ],
                 "projects": {
                     "beginner": [
-                        "Basic msc-pharmacology Project",
-                        "msc-pharmacology Simulation",
-                        "Introduction to msc-pharmacology"
+                        "Mental Health Mood Tracker",
+                        "Nutrition Planning Application"
                     ],
                     "intermediate": [
-                        "Advanced msc-pharmacology System",
-                        "Cross-platform msc-pharmacology",
-                        "msc-pharmacology Analytics"
+                        "Clinical Trial Data Analyzer",
+                        "Medication Interaction Checker"
                     ],
                     "advanced": [
-                        "Enterprise msc-pharmacology Suite",
-                        "High-Performance msc-pharmacology",
-                        "Global msc-pharmacology Infrastructure"
+                        "Patient Health Dashboard",
+                        "Hospital Bed Management System"
                     ]
                 },
                 "certifications": {
                     "free": [
-                        "msc-pharmacology Foundations",
-                        "Google msc-pharmacology Intro"
+                        "USMLE Step 1",
+                        "ACLS (Advanced Cardiovascular Life Support)"
                     ],
-                    "pro": [
-                        "Professional msc-pharmacology Cert",
-                        "Microsoft msc-pharmacology Master"
-                    ],
-                    "premium": [
-                        "Industry Certified msc-pharmacology",
-                        "msc-pharmacology Expert Professional"
-                    ]
+                    "pro": [],
+                    "premium": []
                 }
             },
             "msc-psychology": {
-                "displayName": "Msc Psychology",
+                "displayName": "M.Sc. in Clinical Psychology",
                 "branch": null,
                 "careerPaths": [
-                    "Senior Msc Psychology Specialist",
-                    "Msc Psychology Consultant",
-                    "Lead Msc Psychology Engineer"
+                    "Senior M.Sc. in Clinical Psychology Specialist",
+                    "M.Sc. in Clinical Psychology Consultant",
+                    "Lead M.Sc. in Clinical Psychology Engineer"
                 ],
                 "projects": {
                     "beginner": [
-                        "Basic msc-psychology Project",
-                        "msc-psychology Simulation",
-                        "Introduction to msc-psychology"
+                        "Mental Health Mood Tracker",
+                        "Nutrition Planning Application"
                     ],
                     "intermediate": [
-                        "Advanced msc-psychology System",
-                        "Cross-platform msc-psychology",
-                        "msc-psychology Analytics"
+                        "Clinical Trial Data Analyzer",
+                        "Medication Interaction Checker"
                     ],
                     "advanced": [
-                        "Enterprise msc-psychology Suite",
-                        "High-Performance msc-psychology",
-                        "Global msc-psychology Infrastructure"
+                        "Patient Health Dashboard",
+                        "Hospital Bed Management System"
                     ]
                 },
                 "certifications": {
                     "free": [
-                        "msc-psychology Foundations",
-                        "Google msc-psychology Intro"
+                        "USMLE Step 1",
+                        "ACLS (Advanced Cardiovascular Life Support)"
                     ],
-                    "pro": [
-                        "Professional msc-psychology Cert",
-                        "Microsoft msc-psychology Master"
-                    ],
-                    "premium": [
-                        "Industry Certified msc-psychology",
-                        "msc-psychology Expert Professional"
-                    ]
+                    "pro": [],
+                    "premium": []
                 }
             },
             "msc-nutrition": {
-                "displayName": "Msc Nutrition",
+                "displayName": "M.Sc. in Nutrition & Dietetics",
                 "branch": null,
                 "careerPaths": [
-                    "Senior Msc Nutrition Specialist",
-                    "Msc Nutrition Consultant",
-                    "Lead Msc Nutrition Engineer"
+                    "Senior M.Sc. in Nutrition & Dietetics Specialist",
+                    "M.Sc. in Nutrition & Dietetics Consultant",
+                    "Lead M.Sc. in Nutrition & Dietetics Engineer"
                 ],
                 "projects": {
                     "beginner": [
-                        "Basic msc-nutrition Project",
-                        "msc-nutrition Simulation",
-                        "Introduction to msc-nutrition"
+                        "Mental Health Mood Tracker",
+                        "Nutrition Planning Application"
                     ],
                     "intermediate": [
-                        "Advanced msc-nutrition System",
-                        "Cross-platform msc-nutrition",
-                        "msc-nutrition Analytics"
+                        "Clinical Trial Data Analyzer",
+                        "Medication Interaction Checker"
                     ],
                     "advanced": [
-                        "Enterprise msc-nutrition Suite",
-                        "High-Performance msc-nutrition",
-                        "Global msc-nutrition Infrastructure"
+                        "Patient Health Dashboard",
+                        "Hospital Bed Management System"
                     ]
                 },
                 "certifications": {
                     "free": [
-                        "msc-nutrition Foundations",
-                        "Google msc-nutrition Intro"
+                        "USMLE Step 1",
+                        "ACLS (Advanced Cardiovascular Life Support)"
                     ],
-                    "pro": [
-                        "Professional msc-nutrition Cert",
-                        "Microsoft msc-nutrition Master"
-                    ],
-                    "premium": [
-                        "Industry Certified msc-nutrition",
-                        "msc-nutrition Expert Professional"
-                    ]
-                }
-            },
-            "msc-physics": {
-                "displayName": "Msc Physics",
-                "branch": null,
-                "careerPaths": [
-                    "Senior Msc Physics Specialist",
-                    "Msc Physics Consultant",
-                    "Lead Msc Physics Engineer"
-                ],
-                "projects": {
-                    "beginner": [
-                        "Basic msc-physics Project",
-                        "msc-physics Simulation",
-                        "Introduction to msc-physics"
-                    ],
-                    "intermediate": [
-                        "Advanced msc-physics System",
-                        "Cross-platform msc-physics",
-                        "msc-physics Analytics"
-                    ],
-                    "advanced": [
-                        "Enterprise msc-physics Suite",
-                        "High-Performance msc-physics",
-                        "Global msc-physics Infrastructure"
-                    ]
-                },
-                "certifications": {
-                    "free": [
-                        "msc-physics Foundations",
-                        "Google msc-physics Intro"
-                    ],
-                    "pro": [
-                        "Professional msc-physics Cert",
-                        "Microsoft msc-physics Master"
-                    ],
-                    "premium": [
-                        "Industry Certified msc-physics",
-                        "msc-physics Expert Professional"
-                    ]
-                }
-            },
-            "msc-chemistry": {
-                "displayName": "Msc Chemistry",
-                "branch": null,
-                "careerPaths": [
-                    "Senior Msc Chemistry Specialist",
-                    "Msc Chemistry Consultant",
-                    "Lead Msc Chemistry Engineer"
-                ],
-                "projects": {
-                    "beginner": [
-                        "Basic msc-chemistry Project",
-                        "msc-chemistry Simulation",
-                        "Introduction to msc-chemistry"
-                    ],
-                    "intermediate": [
-                        "Advanced msc-chemistry System",
-                        "Cross-platform msc-chemistry",
-                        "msc-chemistry Analytics"
-                    ],
-                    "advanced": [
-                        "Enterprise msc-chemistry Suite",
-                        "High-Performance msc-chemistry",
-                        "Global msc-chemistry Infrastructure"
-                    ]
-                },
-                "certifications": {
-                    "free": [
-                        "msc-chemistry Foundations",
-                        "Google msc-chemistry Intro"
-                    ],
-                    "pro": [
-                        "Professional msc-chemistry Cert",
-                        "Microsoft msc-chemistry Master"
-                    ],
-                    "premium": [
-                        "Industry Certified msc-chemistry",
-                        "msc-chemistry Expert Professional"
-                    ]
-                }
-            },
-            "msc-mathematics": {
-                "displayName": "Msc Mathematics",
-                "branch": null,
-                "careerPaths": [
-                    "Senior Msc Mathematics Specialist",
-                    "Msc Mathematics Consultant",
-                    "Lead Msc Mathematics Engineer"
-                ],
-                "projects": {
-                    "beginner": [
-                        "Basic msc-mathematics Project",
-                        "msc-mathematics Simulation",
-                        "Introduction to msc-mathematics"
-                    ],
-                    "intermediate": [
-                        "Advanced msc-mathematics System",
-                        "Cross-platform msc-mathematics",
-                        "msc-mathematics Analytics"
-                    ],
-                    "advanced": [
-                        "Enterprise msc-mathematics Suite",
-                        "High-Performance msc-mathematics",
-                        "Global msc-mathematics Infrastructure"
-                    ]
-                },
-                "certifications": {
-                    "free": [
-                        "msc-mathematics Foundations",
-                        "Google msc-mathematics Intro"
-                    ],
-                    "pro": [
-                        "Professional msc-mathematics Cert",
-                        "Microsoft msc-mathematics Master"
-                    ],
-                    "premium": [
-                        "Industry Certified msc-mathematics",
-                        "msc-mathematics Expert Professional"
-                    ]
-                }
-            },
-            "msc-biology": {
-                "displayName": "Msc Biology",
-                "branch": null,
-                "careerPaths": [
-                    "Senior Msc Biology Specialist",
-                    "Msc Biology Consultant",
-                    "Lead Msc Biology Engineer"
-                ],
-                "projects": {
-                    "beginner": [
-                        "Basic msc-biology Project",
-                        "msc-biology Simulation",
-                        "Introduction to msc-biology"
-                    ],
-                    "intermediate": [
-                        "Advanced msc-biology System",
-                        "Cross-platform msc-biology",
-                        "msc-biology Analytics"
-                    ],
-                    "advanced": [
-                        "Enterprise msc-biology Suite",
-                        "High-Performance msc-biology",
-                        "Global msc-biology Infrastructure"
-                    ]
-                },
-                "certifications": {
-                    "free": [
-                        "msc-biology Foundations",
-                        "Google msc-biology Intro"
-                    ],
-                    "pro": [
-                        "Professional msc-biology Cert",
-                        "Microsoft msc-biology Master"
-                    ],
-                    "premium": [
-                        "Industry Certified msc-biology",
-                        "msc-biology Expert Professional"
-                    ]
-                }
-            },
-            "msc-env-science": {
-                "displayName": "Msc Env Science",
-                "branch": null,
-                "careerPaths": [
-                    "Senior Msc Env Science Specialist",
-                    "Msc Env Science Consultant",
-                    "Lead Msc Env Science Engineer"
-                ],
-                "projects": {
-                    "beginner": [
-                        "Basic msc-env-science Project",
-                        "msc-env-science Simulation",
-                        "Introduction to msc-env-science"
-                    ],
-                    "intermediate": [
-                        "Advanced msc-env-science System",
-                        "Cross-platform msc-env-science",
-                        "msc-env-science Analytics"
-                    ],
-                    "advanced": [
-                        "Enterprise msc-env-science Suite",
-                        "High-Performance msc-env-science",
-                        "Global msc-env-science Infrastructure"
-                    ]
-                },
-                "certifications": {
-                    "free": [
-                        "msc-env-science Foundations",
-                        "Google msc-env-science Intro"
-                    ],
-                    "pro": [
-                        "Professional msc-env-science Cert",
-                        "Microsoft msc-env-science Master"
-                    ],
-                    "premium": [
-                        "Industry Certified msc-env-science",
-                        "msc-env-science Expert Professional"
-                    ]
-                }
-            },
-            "msc-bioinformatics": {
-                "displayName": "Msc Bioinformatics",
-                "branch": null,
-                "careerPaths": [
-                    "Senior Msc Bioinformatics Specialist",
-                    "Msc Bioinformatics Consultant",
-                    "Lead Msc Bioinformatics Engineer"
-                ],
-                "projects": {
-                    "beginner": [
-                        "Basic msc-bioinformatics Project",
-                        "msc-bioinformatics Simulation",
-                        "Introduction to msc-bioinformatics"
-                    ],
-                    "intermediate": [
-                        "Advanced msc-bioinformatics System",
-                        "Cross-platform msc-bioinformatics",
-                        "msc-bioinformatics Analytics"
-                    ],
-                    "advanced": [
-                        "Enterprise msc-bioinformatics Suite",
-                        "High-Performance msc-bioinformatics",
-                        "Global msc-bioinformatics Infrastructure"
-                    ]
-                },
-                "certifications": {
-                    "free": [
-                        "msc-bioinformatics Foundations",
-                        "Google msc-bioinformatics Intro"
-                    ],
-                    "pro": [
-                        "Professional msc-bioinformatics Cert",
-                        "Microsoft msc-bioinformatics Master"
-                    ],
-                    "premium": [
-                        "Industry Certified msc-bioinformatics",
-                        "msc-bioinformatics Expert Professional"
-                    ]
-                }
-            },
-            "msc-geology": {
-                "displayName": "Msc Geology",
-                "branch": null,
-                "careerPaths": [
-                    "Senior Msc Geology Specialist",
-                    "Msc Geology Consultant",
-                    "Lead Msc Geology Engineer"
-                ],
-                "projects": {
-                    "beginner": [
-                        "Basic msc-geology Project",
-                        "msc-geology Simulation",
-                        "Introduction to msc-geology"
-                    ],
-                    "intermediate": [
-                        "Advanced msc-geology System",
-                        "Cross-platform msc-geology",
-                        "msc-geology Analytics"
-                    ],
-                    "advanced": [
-                        "Enterprise msc-geology Suite",
-                        "High-Performance msc-geology",
-                        "Global msc-geology Infrastructure"
-                    ]
-                },
-                "certifications": {
-                    "free": [
-                        "msc-geology Foundations",
-                        "Google msc-geology Intro"
-                    ],
-                    "pro": [
-                        "Professional msc-geology Cert",
-                        "Microsoft msc-geology Master"
-                    ],
-                    "premium": [
-                        "Industry Certified msc-geology",
-                        "msc-geology Expert Professional"
-                    ]
-                }
-            },
-            "msc-statistics": {
-                "displayName": "Msc Statistics",
-                "branch": null,
-                "careerPaths": [
-                    "Senior Msc Statistics Specialist",
-                    "Msc Statistics Consultant",
-                    "Lead Msc Statistics Engineer"
-                ],
-                "projects": {
-                    "beginner": [
-                        "Basic msc-statistics Project",
-                        "msc-statistics Simulation",
-                        "Introduction to msc-statistics"
-                    ],
-                    "intermediate": [
-                        "Advanced msc-statistics System",
-                        "Cross-platform msc-statistics",
-                        "msc-statistics Analytics"
-                    ],
-                    "advanced": [
-                        "Enterprise msc-statistics Suite",
-                        "High-Performance msc-statistics",
-                        "Global msc-statistics Infrastructure"
-                    ]
-                },
-                "certifications": {
-                    "free": [
-                        "msc-statistics Foundations",
-                        "Google msc-statistics Intro"
-                    ],
-                    "pro": [
-                        "Professional msc-statistics Cert",
-                        "Microsoft msc-statistics Master"
-                    ],
-                    "premium": [
-                        "Industry Certified msc-statistics",
-                        "msc-statistics Expert Professional"
-                    ]
-                }
-            },
-            "public-policy": {
-                "displayName": "Public Policy",
-                "branch": null,
-                "careerPaths": [
-                    "Senior Public Policy Specialist",
-                    "Public Policy Consultant",
-                    "Lead Public Policy Engineer"
-                ],
-                "projects": {
-                    "beginner": [
-                        "Basic public-policy Project",
-                        "public-policy Simulation",
-                        "Introduction to public-policy"
-                    ],
-                    "intermediate": [
-                        "Advanced public-policy System",
-                        "Cross-platform public-policy",
-                        "public-policy Analytics"
-                    ],
-                    "advanced": [
-                        "Enterprise public-policy Suite",
-                        "High-Performance public-policy",
-                        "Global public-policy Infrastructure"
-                    ]
-                },
-                "certifications": {
-                    "free": [
-                        "public-policy Foundations",
-                        "Google public-policy Intro"
-                    ],
-                    "pro": [
-                        "Professional public-policy Cert",
-                        "Microsoft public-policy Master"
-                    ],
-                    "premium": [
-                        "Industry Certified public-policy",
-                        "public-policy Expert Professional"
-                    ]
-                }
-            },
-            "msc-finance": {
-                "displayName": "Msc Finance",
-                "branch": null,
-                "careerPaths": [
-                    "Senior Msc Finance Specialist",
-                    "Msc Finance Consultant",
-                    "Lead Msc Finance Engineer"
-                ],
-                "projects": {
-                    "beginner": [
-                        "Basic msc-finance Project",
-                        "msc-finance Simulation",
-                        "Introduction to msc-finance"
-                    ],
-                    "intermediate": [
-                        "Advanced msc-finance System",
-                        "Cross-platform msc-finance",
-                        "msc-finance Analytics"
-                    ],
-                    "advanced": [
-                        "Enterprise msc-finance Suite",
-                        "High-Performance msc-finance",
-                        "Global msc-finance Infrastructure"
-                    ]
-                },
-                "certifications": {
-                    "free": [
-                        "msc-finance Foundations",
-                        "Google msc-finance Intro"
-                    ],
-                    "pro": [
-                        "Professional msc-finance Cert",
-                        "Microsoft msc-finance Master"
-                    ],
-                    "premium": [
-                        "Industry Certified msc-finance",
-                        "msc-finance Expert Professional"
-                    ]
-                }
-            },
-            "public-policy-law": {
-                "displayName": "Public Policy Law",
-                "branch": null,
-                "careerPaths": [
-                    "Senior Public Policy Law Specialist",
-                    "Public Policy Law Consultant",
-                    "Lead Public Policy Law Engineer"
-                ],
-                "projects": {
-                    "beginner": [
-                        "Basic public-policy-law Project",
-                        "public-policy-law Simulation",
-                        "Introduction to public-policy-law"
-                    ],
-                    "intermediate": [
-                        "Advanced public-policy-law System",
-                        "Cross-platform public-policy-law",
-                        "public-policy-law Analytics"
-                    ],
-                    "advanced": [
-                        "Enterprise public-policy-law Suite",
-                        "High-Performance public-policy-law",
-                        "Global public-policy-law Infrastructure"
-                    ]
-                },
-                "certifications": {
-                    "free": [
-                        "public-policy-law Foundations",
-                        "Google public-policy-law Intro"
-                    ],
-                    "pro": [
-                        "Professional public-policy-law Cert",
-                        "Microsoft public-policy-law Master"
-                    ],
-                    "premium": [
-                        "Industry Certified public-policy-law",
-                        "public-policy-law Expert Professional"
-                    ]
+                    "pro": [],
+                    "premium": []
                 }
             }
         }
     },
     "science": {
-        "displayName": "Science",
+        "displayName": "Science & Research",
         "specializations": {
             "rnd": {
-                "displayName": "Rnd",
+                "displayName": "Research & Development (R&D)",
                 "branch": null,
                 "careerPaths": [
-                    "Senior Rnd Specialist",
-                    "Rnd Consultant",
-                    "Lead Rnd Engineer"
+                    "Research Scientist",
+                    "R&D Director"
                 ],
                 "projects": {
-                    "beginner": [
-                        "Basic rnd Project",
-                        "rnd Simulation",
-                        "Introduction to rnd"
-                    ],
+                    "beginner": [],
                     "intermediate": [
-                        "Advanced rnd System",
-                        "Cross-platform rnd",
-                        "rnd Analytics"
+                        "Climate Data Visualization Platform",
+                        "Laboratory Information Management System",
+                        "Statistical Analysis Dashboard"
                     ],
                     "advanced": [
-                        "Enterprise rnd Suite",
-                        "High-Performance rnd",
-                        "Global rnd Infrastructure"
+                        "Scientific Paper Recommendation Engine",
+                        "Genomic Sequence Analyzer",
+                        "Astronomy Image Processing Tool"
                     ]
                 },
                 "certifications": {
-                    "free": [
-                        "rnd Foundations",
-                        "Google rnd Intro"
-                    ],
+                    "free": [],
                     "pro": [
-                        "Professional rnd Cert",
-                        "Microsoft rnd Master"
+                        "Certified Analytics Professional (CAP)"
                     ],
-                    "premium": [
-                        "Industry Certified rnd",
-                        "rnd Expert Professional"
-                    ]
+                    "premium": []
                 }
             },
             "computational": {
-                "displayName": "Computational",
+                "displayName": "Computational Science",
                 "branch": null,
                 "careerPaths": [
-                    "Senior Computational Specialist",
-                    "Computational Consultant",
-                    "Lead Computational Engineer"
+                    "Computational Scientist",
+                    "Simulation Engineer"
                 ],
                 "projects": {
-                    "beginner": [
-                        "Basic computational Project",
-                        "computational Simulation",
-                        "Introduction to computational"
-                    ],
+                    "beginner": [],
                     "intermediate": [
-                        "Advanced computational System",
-                        "Cross-platform computational",
-                        "computational Analytics"
+                        "Climate Data Visualization Platform",
+                        "Laboratory Information Management System",
+                        "Statistical Analysis Dashboard"
                     ],
                     "advanced": [
-                        "Enterprise computational Suite",
-                        "High-Performance computational",
-                        "Global computational Infrastructure"
+                        "Scientific Paper Recommendation Engine",
+                        "Genomic Sequence Analyzer",
+                        "Astronomy Image Processing Tool"
                     ]
                 },
                 "certifications": {
-                    "free": [
-                        "computational Foundations",
-                        "Google computational Intro"
-                    ],
+                    "free": [],
                     "pro": [
-                        "Professional computational Cert",
-                        "Microsoft computational Master"
+                        "Certified Analytics Professional (CAP)"
                     ],
-                    "premium": [
-                        "Industry Certified computational",
-                        "computational Expert Professional"
-                    ]
+                    "premium": []
                 }
             },
             "applied-math": {
-                "displayName": "Applied Math",
+                "displayName": "Applied Mathematics & Statistics",
                 "branch": null,
                 "careerPaths": [
-                    "Senior Applied Math Specialist",
-                    "Applied Math Consultant",
-                    "Lead Applied Math Engineer"
+                    "Statistician",
+                    "Quantitative Analyst"
                 ],
                 "projects": {
-                    "beginner": [
-                        "Basic applied-math Project",
-                        "applied-math Simulation",
-                        "Introduction to applied-math"
-                    ],
+                    "beginner": [],
                     "intermediate": [
-                        "Advanced applied-math System",
-                        "Cross-platform applied-math",
-                        "applied-math Analytics"
+                        "Climate Data Visualization Platform",
+                        "Laboratory Information Management System",
+                        "Statistical Analysis Dashboard"
                     ],
                     "advanced": [
-                        "Enterprise applied-math Suite",
-                        "High-Performance applied-math",
-                        "Global applied-math Infrastructure"
+                        "Scientific Paper Recommendation Engine",
+                        "Genomic Sequence Analyzer",
+                        "Astronomy Image Processing Tool"
                     ]
                 },
                 "certifications": {
-                    "free": [
-                        "applied-math Foundations",
-                        "Google applied-math Intro"
-                    ],
+                    "free": [],
                     "pro": [
-                        "Professional applied-math Cert",
-                        "Microsoft applied-math Master"
+                        "Certified Analytics Professional (CAP)"
                     ],
-                    "premium": [
-                        "Industry Certified applied-math",
-                        "applied-math Expert Professional"
-                    ]
+                    "premium": []
                 }
             },
             "bioinformatics": {
                 "displayName": "Bioinformatics",
                 "branch": null,
                 "careerPaths": [
-                    "Senior Bioinformatics Specialist",
-                    "Bioinformatics Consultant",
-                    "Lead Bioinformatics Engineer"
+                    "Bioinformatician",
+                    "Genomics Scientist"
                 ],
                 "projects": {
-                    "beginner": [
-                        "Basic bioinformatics Project",
-                        "bioinformatics Simulation",
-                        "Introduction to bioinformatics"
-                    ],
+                    "beginner": [],
                     "intermediate": [
-                        "Advanced bioinformatics System",
-                        "Cross-platform bioinformatics",
-                        "bioinformatics Analytics"
+                        "Climate Data Visualization Platform",
+                        "Laboratory Information Management System",
+                        "Statistical Analysis Dashboard"
                     ],
                     "advanced": [
-                        "Enterprise bioinformatics Suite",
-                        "High-Performance bioinformatics",
-                        "Global bioinformatics Infrastructure"
+                        "Scientific Paper Recommendation Engine",
+                        "Genomic Sequence Analyzer",
+                        "Astronomy Image Processing Tool"
                     ]
                 },
                 "certifications": {
-                    "free": [
-                        "bioinformatics Foundations",
-                        "Google bioinformatics Intro"
-                    ],
+                    "free": [],
                     "pro": [
-                        "Professional bioinformatics Cert",
-                        "Microsoft bioinformatics Master"
+                        "Certified Analytics Professional (CAP)"
                     ],
-                    "premium": [
-                        "Industry Certified bioinformatics",
-                        "bioinformatics Expert Professional"
-                    ]
+                    "premium": []
                 }
             },
             "environmental": {
-                "displayName": "Environmental",
+                "displayName": "Environmental & Climate Science",
                 "branch": null,
                 "careerPaths": [
-                    "Senior Environmental Specialist",
-                    "Environmental Consultant",
-                    "Lead Environmental Engineer"
+                    "Environmental Scientist",
+                    "Climate Analyst"
                 ],
                 "projects": {
-                    "beginner": [
-                        "Basic environmental Project",
-                        "environmental Simulation",
-                        "Introduction to environmental"
-                    ],
+                    "beginner": [],
                     "intermediate": [
-                        "Advanced environmental System",
-                        "Cross-platform environmental",
-                        "environmental Analytics"
+                        "Climate Data Visualization Platform",
+                        "Laboratory Information Management System",
+                        "Statistical Analysis Dashboard"
                     ],
                     "advanced": [
-                        "Enterprise environmental Suite",
-                        "High-Performance environmental",
-                        "Global environmental Infrastructure"
+                        "Scientific Paper Recommendation Engine",
+                        "Genomic Sequence Analyzer",
+                        "Astronomy Image Processing Tool"
                     ]
                 },
                 "certifications": {
-                    "free": [
-                        "environmental Foundations",
-                        "Google environmental Intro"
-                    ],
+                    "free": [],
                     "pro": [
-                        "Professional environmental Cert",
-                        "Microsoft environmental Master"
+                        "Certified Analytics Professional (CAP)"
                     ],
-                    "premium": [
-                        "Industry Certified environmental",
-                        "environmental Expert Professional"
-                    ]
+                    "premium": []
                 }
             },
             "space-science": {
-                "displayName": "Space Science",
+                "displayName": "Space Science & Astrophysics",
                 "branch": null,
                 "careerPaths": [
-                    "Senior Space Science Specialist",
-                    "Space Science Consultant",
-                    "Lead Space Science Engineer"
+                    "Astrophysicist",
+                    "Space Systems Engineer"
                 ],
                 "projects": {
-                    "beginner": [
-                        "Basic space-science Project",
-                        "space-science Simulation",
-                        "Introduction to space-science"
-                    ],
+                    "beginner": [],
                     "intermediate": [
-                        "Advanced space-science System",
-                        "Cross-platform space-science",
-                        "space-science Analytics"
+                        "Climate Data Visualization Platform",
+                        "Laboratory Information Management System",
+                        "Statistical Analysis Dashboard"
                     ],
                     "advanced": [
-                        "Enterprise space-science Suite",
-                        "High-Performance space-science",
-                        "Global space-science Infrastructure"
+                        "Scientific Paper Recommendation Engine",
+                        "Genomic Sequence Analyzer",
+                        "Astronomy Image Processing Tool"
                     ]
                 },
                 "certifications": {
-                    "free": [
-                        "space-science Foundations",
-                        "Google space-science Intro"
-                    ],
+                    "free": [],
                     "pro": [
-                        "Professional space-science Cert",
-                        "Microsoft space-science Master"
+                        "Certified Analytics Professional (CAP)"
                     ],
-                    "premium": [
-                        "Industry Certified space-science",
-                        "space-science Expert Professional"
-                    ]
+                    "premium": []
                 }
             },
             "scientific-data": {
-                "displayName": "Scientific Data",
+                "displayName": "Scientific Data Analysis",
                 "branch": null,
                 "careerPaths": [
-                    "Senior Scientific Data Specialist",
-                    "Scientific Data Consultant",
-                    "Lead Scientific Data Engineer"
+                    "Scientific Data Analyst",
+                    "Research Data Scientist"
                 ],
                 "projects": {
-                    "beginner": [
-                        "Basic scientific-data Project",
-                        "scientific-data Simulation",
-                        "Introduction to scientific-data"
-                    ],
+                    "beginner": [],
                     "intermediate": [
-                        "Advanced scientific-data System",
-                        "Cross-platform scientific-data",
-                        "scientific-data Analytics"
+                        "Climate Data Visualization Platform",
+                        "Laboratory Information Management System",
+                        "Statistical Analysis Dashboard"
                     ],
                     "advanced": [
-                        "Enterprise scientific-data Suite",
-                        "High-Performance scientific-data",
-                        "Global scientific-data Infrastructure"
+                        "Scientific Paper Recommendation Engine",
+                        "Genomic Sequence Analyzer",
+                        "Astronomy Image Processing Tool"
                     ]
                 },
                 "certifications": {
-                    "free": [
-                        "scientific-data Foundations",
-                        "Google scientific-data Intro"
-                    ],
+                    "free": [],
                     "pro": [
-                        "Professional scientific-data Cert",
-                        "Microsoft scientific-data Master"
+                        "Certified Analytics Professional (CAP)"
                     ],
-                    "premium": [
-                        "Industry Certified scientific-data",
-                        "scientific-data Expert Professional"
+                    "premium": []
+                }
+            },
+            "msc-physics": {
+                "displayName": "M.Sc. in Physics",
+                "branch": null,
+                "careerPaths": [
+                    "Senior M.Sc. in Physics Specialist",
+                    "M.Sc. in Physics Consultant",
+                    "Lead M.Sc. in Physics Engineer"
+                ],
+                "projects": {
+                    "beginner": [],
+                    "intermediate": [
+                        "Climate Data Visualization Platform",
+                        "Laboratory Information Management System",
+                        "Statistical Analysis Dashboard"
+                    ],
+                    "advanced": [
+                        "Scientific Paper Recommendation Engine",
+                        "Genomic Sequence Analyzer",
+                        "Astronomy Image Processing Tool"
                     ]
+                },
+                "certifications": {
+                    "free": [],
+                    "pro": [
+                        "Certified Analytics Professional (CAP)"
+                    ],
+                    "premium": []
+                }
+            },
+            "msc-chemistry": {
+                "displayName": "M.Sc. in Chemistry",
+                "branch": null,
+                "careerPaths": [
+                    "Senior M.Sc. in Chemistry Specialist",
+                    "M.Sc. in Chemistry Consultant",
+                    "Lead M.Sc. in Chemistry Engineer"
+                ],
+                "projects": {
+                    "beginner": [],
+                    "intermediate": [
+                        "Climate Data Visualization Platform",
+                        "Laboratory Information Management System",
+                        "Statistical Analysis Dashboard"
+                    ],
+                    "advanced": [
+                        "Scientific Paper Recommendation Engine",
+                        "Genomic Sequence Analyzer",
+                        "Astronomy Image Processing Tool"
+                    ]
+                },
+                "certifications": {
+                    "free": [],
+                    "pro": [
+                        "Certified Analytics Professional (CAP)"
+                    ],
+                    "premium": []
+                }
+            },
+            "msc-mathematics": {
+                "displayName": "M.Sc. in Mathematics",
+                "branch": null,
+                "careerPaths": [
+                    "Senior M.Sc. in Mathematics Specialist",
+                    "M.Sc. in Mathematics Consultant",
+                    "Lead M.Sc. in Mathematics Engineer"
+                ],
+                "projects": {
+                    "beginner": [],
+                    "intermediate": [
+                        "Climate Data Visualization Platform",
+                        "Laboratory Information Management System",
+                        "Statistical Analysis Dashboard"
+                    ],
+                    "advanced": [
+                        "Scientific Paper Recommendation Engine",
+                        "Genomic Sequence Analyzer",
+                        "Astronomy Image Processing Tool"
+                    ]
+                },
+                "certifications": {
+                    "free": [],
+                    "pro": [
+                        "Certified Analytics Professional (CAP)"
+                    ],
+                    "premium": []
+                }
+            },
+            "msc-biology": {
+                "displayName": "M.Sc. in Biology / Life Sciences",
+                "branch": null,
+                "careerPaths": [
+                    "Senior M.Sc. in Biology / Life Sciences Specialist",
+                    "M.Sc. in Biology / Life Sciences Consultant",
+                    "Lead M.Sc. in Biology / Life Sciences Engineer"
+                ],
+                "projects": {
+                    "beginner": [],
+                    "intermediate": [
+                        "Climate Data Visualization Platform",
+                        "Laboratory Information Management System",
+                        "Statistical Analysis Dashboard"
+                    ],
+                    "advanced": [
+                        "Scientific Paper Recommendation Engine",
+                        "Genomic Sequence Analyzer",
+                        "Astronomy Image Processing Tool"
+                    ]
+                },
+                "certifications": {
+                    "free": [],
+                    "pro": [
+                        "Certified Analytics Professional (CAP)"
+                    ],
+                    "premium": []
+                }
+            },
+            "msc-env-science": {
+                "displayName": "M.Sc. in Environmental Science",
+                "branch": null,
+                "careerPaths": [
+                    "Senior M.Sc. in Environmental Science Specialist",
+                    "M.Sc. in Environmental Science Consultant",
+                    "Lead M.Sc. in Environmental Science Engineer"
+                ],
+                "projects": {
+                    "beginner": [],
+                    "intermediate": [
+                        "Climate Data Visualization Platform",
+                        "Laboratory Information Management System",
+                        "Statistical Analysis Dashboard"
+                    ],
+                    "advanced": [
+                        "Scientific Paper Recommendation Engine",
+                        "Genomic Sequence Analyzer",
+                        "Astronomy Image Processing Tool"
+                    ]
+                },
+                "certifications": {
+                    "free": [],
+                    "pro": [
+                        "Certified Analytics Professional (CAP)"
+                    ],
+                    "premium": []
+                }
+            },
+            "msc-bioinformatics": {
+                "displayName": "M.Sc. in Bioinformatics",
+                "branch": null,
+                "careerPaths": [
+                    "Senior M.Sc. in Bioinformatics Specialist",
+                    "M.Sc. in Bioinformatics Consultant",
+                    "Lead M.Sc. in Bioinformatics Engineer"
+                ],
+                "projects": {
+                    "beginner": [],
+                    "intermediate": [
+                        "Climate Data Visualization Platform",
+                        "Laboratory Information Management System",
+                        "Statistical Analysis Dashboard"
+                    ],
+                    "advanced": [
+                        "Scientific Paper Recommendation Engine",
+                        "Genomic Sequence Analyzer",
+                        "Astronomy Image Processing Tool"
+                    ]
+                },
+                "certifications": {
+                    "free": [],
+                    "pro": [
+                        "Certified Analytics Professional (CAP)"
+                    ],
+                    "premium": []
+                }
+            },
+            "msc-geology": {
+                "displayName": "M.Sc. in Geology",
+                "branch": null,
+                "careerPaths": [
+                    "Senior M.Sc. in Geology Specialist",
+                    "M.Sc. in Geology Consultant",
+                    "Lead M.Sc. in Geology Engineer"
+                ],
+                "projects": {
+                    "beginner": [],
+                    "intermediate": [
+                        "Climate Data Visualization Platform",
+                        "Laboratory Information Management System",
+                        "Statistical Analysis Dashboard"
+                    ],
+                    "advanced": [
+                        "Scientific Paper Recommendation Engine",
+                        "Genomic Sequence Analyzer",
+                        "Astronomy Image Processing Tool"
+                    ]
+                },
+                "certifications": {
+                    "free": [],
+                    "pro": [
+                        "Certified Analytics Professional (CAP)"
+                    ],
+                    "premium": []
+                }
+            },
+            "msc-statistics": {
+                "displayName": "M.Sc. in Statistics",
+                "branch": null,
+                "careerPaths": [
+                    "Senior M.Sc. in Statistics Specialist",
+                    "M.Sc. in Statistics Consultant",
+                    "Lead M.Sc. in Statistics Engineer"
+                ],
+                "projects": {
+                    "beginner": [],
+                    "intermediate": [
+                        "Climate Data Visualization Platform",
+                        "Laboratory Information Management System",
+                        "Statistical Analysis Dashboard"
+                    ],
+                    "advanced": [
+                        "Scientific Paper Recommendation Engine",
+                        "Genomic Sequence Analyzer",
+                        "Astronomy Image Processing Tool"
+                    ]
+                },
+                "certifications": {
+                    "free": [],
+                    "pro": [
+                        "Certified Analytics Professional (CAP)"
+                    ],
+                    "premium": []
                 }
             }
         }
     },
     "arts": {
-        "displayName": "Arts",
+        "displayName": "Arts, Humanities & Degree",
         "specializations": {
             "psychology": {
-                "displayName": "Psychology",
+                "displayName": "Psychology & Behavioral Science",
                 "branch": null,
                 "careerPaths": [
-                    "Senior Psychology Specialist",
-                    "Psychology Consultant",
-                    "Lead Psychology Engineer"
+                    "Research Psychologist",
+                    "Organizational Psychologist"
                 ],
                 "projects": {
                     "beginner": [
-                        "Basic psychology Project",
-                        "psychology Simulation",
-                        "Introduction to psychology"
+                        "Interactive Timeline Builder",
+                        "Ethics Case Study Database"
                     ],
                     "intermediate": [
-                        "Advanced psychology System",
-                        "Cross-platform psychology",
-                        "psychology Analytics"
+                        "Digital Humanities Text Analysis Platform",
+                        "Survey Research Analysis Tool",
+                        "Policy Brief Generator",
+                        "Podcast Production Platform"
                     ],
-                    "advanced": [
-                        "Enterprise psychology Suite",
-                        "High-Performance psychology",
-                        "Global psychology Infrastructure"
-                    ]
+                    "advanced": []
                 },
                 "certifications": {
                     "free": [
-                        "psychology Foundations",
-                        "Google psychology Intro"
+                        "Google UX Design Professional Certificate"
                     ],
-                    "pro": [
-                        "Professional psychology Cert",
-                        "Microsoft psychology Master"
-                    ],
-                    "premium": [
-                        "Industry Certified psychology",
-                        "psychology Expert Professional"
-                    ]
+                    "pro": [],
+                    "premium": []
                 }
             },
             "intl-relations": {
-                "displayName": "Intl Relations",
+                "displayName": "International Relations & Political Strategy",
                 "branch": null,
                 "careerPaths": [
-                    "Senior Intl Relations Specialist",
-                    "Intl Relations Consultant",
-                    "Lead Intl Relations Engineer"
+                    "Diplomat",
+                    "Policy Analyst"
                 ],
                 "projects": {
                     "beginner": [
-                        "Basic intl-relations Project",
-                        "intl-relations Simulation",
-                        "Introduction to intl-relations"
+                        "Interactive Timeline Builder",
+                        "Ethics Case Study Database"
                     ],
                     "intermediate": [
-                        "Advanced intl-relations System",
-                        "Cross-platform intl-relations",
-                        "intl-relations Analytics"
+                        "Digital Humanities Text Analysis Platform",
+                        "Survey Research Analysis Tool",
+                        "Policy Brief Generator",
+                        "Podcast Production Platform"
                     ],
-                    "advanced": [
-                        "Enterprise intl-relations Suite",
-                        "High-Performance intl-relations",
-                        "Global intl-relations Infrastructure"
-                    ]
+                    "advanced": []
                 },
                 "certifications": {
                     "free": [
-                        "intl-relations Foundations",
-                        "Google intl-relations Intro"
+                        "Google UX Design Professional Certificate"
                     ],
-                    "pro": [
-                        "Professional intl-relations Cert",
-                        "Microsoft intl-relations Master"
+                    "pro": [],
+                    "premium": []
+                }
+            },
+            "public-policy": {
+                "displayName": "Public Policy & Governance",
+                "branch": null,
+                "careerPaths": [
+                    "Policy Researcher",
+                    "Policy Director"
+                ],
+                "projects": {
+                    "beginner": [
+                        "Interactive Timeline Builder",
+                        "Ethics Case Study Database"
                     ],
-                    "premium": [
-                        "Industry Certified intl-relations",
-                        "intl-relations Expert Professional"
-                    ]
+                    "intermediate": [
+                        "Digital Humanities Text Analysis Platform",
+                        "Survey Research Analysis Tool",
+                        "Policy Brief Generator",
+                        "Podcast Production Platform"
+                    ],
+                    "advanced": []
+                },
+                "certifications": {
+                    "free": [
+                        "Google UX Design Professional Certificate"
+                    ],
+                    "pro": [],
+                    "premium": []
                 }
             },
             "digital-humanities": {
                 "displayName": "Digital Humanities",
                 "branch": null,
                 "careerPaths": [
-                    "Senior Digital Humanities Specialist",
-                    "Digital Humanities Consultant",
-                    "Lead Digital Humanities Engineer"
+                    "Digital Humanities Specialist",
+                    "DH Professor"
                 ],
                 "projects": {
                     "beginner": [
-                        "Basic digital-humanities Project",
-                        "digital-humanities Simulation",
-                        "Introduction to digital-humanities"
+                        "Interactive Timeline Builder",
+                        "Ethics Case Study Database"
                     ],
                     "intermediate": [
-                        "Advanced digital-humanities System",
-                        "Cross-platform digital-humanities",
-                        "digital-humanities Analytics"
+                        "Digital Humanities Text Analysis Platform",
+                        "Survey Research Analysis Tool",
+                        "Policy Brief Generator",
+                        "Podcast Production Platform"
                     ],
-                    "advanced": [
-                        "Enterprise digital-humanities Suite",
-                        "High-Performance digital-humanities",
-                        "Global digital-humanities Infrastructure"
-                    ]
+                    "advanced": []
                 },
                 "certifications": {
                     "free": [
-                        "digital-humanities Foundations",
-                        "Google digital-humanities Intro"
+                        "Google UX Design Professional Certificate"
                     ],
-                    "pro": [
-                        "Professional digital-humanities Cert",
-                        "Microsoft digital-humanities Master"
-                    ],
-                    "premium": [
-                        "Industry Certified digital-humanities",
-                        "digital-humanities Expert Professional"
-                    ]
+                    "pro": [],
+                    "premium": []
                 }
             },
             "communication": {
-                "displayName": "Communication",
+                "displayName": "Communication & Media Studies",
                 "branch": null,
                 "careerPaths": [
-                    "Senior Communication Specialist",
-                    "Communication Consultant",
-                    "Lead Communication Engineer"
+                    "Communications Manager",
+                    "PR Director"
                 ],
                 "projects": {
                     "beginner": [
-                        "Basic communication Project",
-                        "communication Simulation",
-                        "Introduction to communication"
+                        "Interactive Timeline Builder",
+                        "Ethics Case Study Database"
                     ],
                     "intermediate": [
-                        "Advanced communication System",
-                        "Cross-platform communication",
-                        "communication Analytics"
+                        "Digital Humanities Text Analysis Platform",
+                        "Survey Research Analysis Tool",
+                        "Policy Brief Generator",
+                        "Podcast Production Platform"
                     ],
-                    "advanced": [
-                        "Enterprise communication Suite",
-                        "High-Performance communication",
-                        "Global communication Infrastructure"
-                    ]
+                    "advanced": []
                 },
                 "certifications": {
                     "free": [
-                        "communication Foundations",
-                        "Google communication Intro"
+                        "Google UX Design Professional Certificate"
                     ],
-                    "pro": [
-                        "Professional communication Cert",
-                        "Microsoft communication Master"
-                    ],
-                    "premium": [
-                        "Industry Certified communication",
-                        "communication Expert Professional"
-                    ]
+                    "pro": [],
+                    "premium": []
                 }
             },
             "philosophy-ethics": {
-                "displayName": "Philosophy Ethics",
+                "displayName": "Philosophy & Ethics (Applied)",
                 "branch": null,
                 "careerPaths": [
-                    "Senior Philosophy Ethics Specialist",
-                    "Philosophy Ethics Consultant",
-                    "Lead Philosophy Ethics Engineer"
+                    "Ethics Consultant",
+                    "Academic Philosopher"
                 ],
                 "projects": {
                     "beginner": [
-                        "Basic philosophy-ethics Project",
-                        "philosophy-ethics Simulation",
-                        "Introduction to philosophy-ethics"
+                        "Interactive Timeline Builder",
+                        "Ethics Case Study Database"
                     ],
                     "intermediate": [
-                        "Advanced philosophy-ethics System",
-                        "Cross-platform philosophy-ethics",
-                        "philosophy-ethics Analytics"
+                        "Digital Humanities Text Analysis Platform",
+                        "Survey Research Analysis Tool",
+                        "Policy Brief Generator",
+                        "Podcast Production Platform"
                     ],
-                    "advanced": [
-                        "Enterprise philosophy-ethics Suite",
-                        "High-Performance philosophy-ethics",
-                        "Global philosophy-ethics Infrastructure"
-                    ]
+                    "advanced": []
                 },
                 "certifications": {
                     "free": [
-                        "philosophy-ethics Foundations",
-                        "Google philosophy-ethics Intro"
+                        "Google UX Design Professional Certificate"
                     ],
-                    "pro": [
-                        "Professional philosophy-ethics Cert",
-                        "Microsoft philosophy-ethics Master"
-                    ],
-                    "premium": [
-                        "Industry Certified philosophy-ethics",
-                        "philosophy-ethics Expert Professional"
-                    ]
+                    "pro": [],
+                    "premium": []
                 }
             }
         }
     },
     "commerce": {
-        "displayName": "Commerce",
+        "displayName": "Commerce, Business & Management",
         "specializations": {
             "financial-analysis": {
-                "displayName": "Financial Analysis",
+                "displayName": "Financial Analysis & Investment Banking",
                 "branch": null,
                 "careerPaths": [
-                    "Senior Financial Analysis Specialist",
-                    "Financial Analysis Consultant",
-                    "Lead Financial Analysis Engineer"
+                    "Financial Analyst",
+                    "Investment Banker",
+                    "Portfolio Manager"
                 ],
                 "projects": {
                     "beginner": [
-                        "Basic financial-analysis Project",
-                        "financial-analysis Simulation",
-                        "Introduction to financial-analysis"
+                        "Invoice and Expense Tracker"
                     ],
                     "intermediate": [
-                        "Advanced financial-analysis System",
-                        "Cross-platform financial-analysis",
-                        "financial-analysis Analytics"
+                        "Business Intelligence Dashboard",
+                        "Startup Pitch Deck Generator",
+                        "Marketing Campaign Analyzer"
                     ],
                     "advanced": [
-                        "Enterprise financial-analysis Suite",
-                        "High-Performance financial-analysis",
-                        "Global financial-analysis Infrastructure"
+                        "Financial Portfolio Analyzer",
+                        "Supply Chain Optimization Tool"
                     ]
                 },
                 "certifications": {
                     "free": [
-                        "financial-analysis Foundations",
-                        "Google financial-analysis Intro"
+                        "Chartered Financial Analyst (CFA) Level 1"
                     ],
-                    "pro": [
-                        "Professional financial-analysis Cert",
-                        "Microsoft financial-analysis Master"
-                    ],
-                    "premium": [
-                        "Industry Certified financial-analysis",
-                        "financial-analysis Expert Professional"
-                    ]
+                    "pro": [],
+                    "premium": []
                 }
             },
             "accounting": {
-                "displayName": "Accounting",
+                "displayName": "Accounting (CA, CPA, CMA Paths)",
                 "branch": null,
                 "careerPaths": [
-                    "Senior Accounting Specialist",
-                    "Accounting Consultant",
-                    "Lead Accounting Engineer"
+                    "Senior Accounting (CA, CPA, CMA Paths) Specialist",
+                    "Accounting (CA, CPA, CMA Paths) Consultant",
+                    "Lead Accounting (CA, CPA, CMA Paths) Engineer"
                 ],
                 "projects": {
                     "beginner": [
-                        "Basic accounting Project",
-                        "accounting Simulation",
-                        "Introduction to accounting"
+                        "Invoice and Expense Tracker"
                     ],
                     "intermediate": [
-                        "Advanced accounting System",
-                        "Cross-platform accounting",
-                        "accounting Analytics"
+                        "Business Intelligence Dashboard",
+                        "Startup Pitch Deck Generator",
+                        "Marketing Campaign Analyzer"
                     ],
                     "advanced": [
-                        "Enterprise accounting Suite",
-                        "High-Performance accounting",
-                        "Global accounting Infrastructure"
+                        "Financial Portfolio Analyzer",
+                        "Supply Chain Optimization Tool"
                     ]
                 },
                 "certifications": {
                     "free": [
-                        "accounting Foundations",
-                        "Google accounting Intro"
+                        "Chartered Financial Analyst (CFA) Level 1"
                     ],
-                    "pro": [
-                        "Professional accounting Cert",
-                        "Microsoft accounting Master"
-                    ],
-                    "premium": [
-                        "Industry Certified accounting",
-                        "accounting Expert Professional"
-                    ]
+                    "pro": [],
+                    "premium": []
                 }
             },
             "hrm": {
-                "displayName": "Hrm",
+                "displayName": "Human Resource Management (HRM)",
                 "branch": null,
                 "careerPaths": [
-                    "Senior Hrm Specialist",
-                    "Hrm Consultant",
-                    "Lead Hrm Engineer"
+                    "Senior Human Resource Management (HRM) Specialist",
+                    "Human Resource Management (HRM) Consultant",
+                    "Lead Human Resource Management (HRM) Engineer"
                 ],
                 "projects": {
                     "beginner": [
-                        "Basic hrm Project",
-                        "hrm Simulation",
-                        "Introduction to hrm"
+                        "Invoice and Expense Tracker"
                     ],
                     "intermediate": [
-                        "Advanced hrm System",
-                        "Cross-platform hrm",
-                        "hrm Analytics"
+                        "Business Intelligence Dashboard",
+                        "Startup Pitch Deck Generator",
+                        "Marketing Campaign Analyzer"
                     ],
                     "advanced": [
-                        "Enterprise hrm Suite",
-                        "High-Performance hrm",
-                        "Global hrm Infrastructure"
+                        "Financial Portfolio Analyzer",
+                        "Supply Chain Optimization Tool"
                     ]
                 },
                 "certifications": {
                     "free": [
-                        "hrm Foundations",
-                        "Google hrm Intro"
+                        "Chartered Financial Analyst (CFA) Level 1"
                     ],
-                    "pro": [
-                        "Professional hrm Cert",
-                        "Microsoft hrm Master"
-                    ],
-                    "premium": [
-                        "Industry Certified hrm",
-                        "hrm Expert Professional"
-                    ]
+                    "pro": [],
+                    "premium": []
                 }
             },
             "business-analytics": {
                 "displayName": "Business Analytics",
                 "branch": null,
                 "careerPaths": [
-                    "Senior Business Analytics Specialist",
-                    "Business Analytics Consultant",
-                    "Lead Business Analytics Engineer"
+                    "Business Analyst",
+                    "Analytics Director"
                 ],
                 "projects": {
                     "beginner": [
-                        "Basic business-analytics Project",
-                        "business-analytics Simulation",
-                        "Introduction to business-analytics"
+                        "Invoice and Expense Tracker"
                     ],
                     "intermediate": [
-                        "Advanced business-analytics System",
-                        "Cross-platform business-analytics",
-                        "business-analytics Analytics"
+                        "Business Intelligence Dashboard",
+                        "Startup Pitch Deck Generator",
+                        "Marketing Campaign Analyzer"
                     ],
                     "advanced": [
-                        "Enterprise business-analytics Suite",
-                        "High-Performance business-analytics",
-                        "Global business-analytics Infrastructure"
+                        "Financial Portfolio Analyzer",
+                        "Supply Chain Optimization Tool"
                     ]
                 },
                 "certifications": {
                     "free": [
-                        "business-analytics Foundations",
-                        "Google business-analytics Intro"
+                        "Chartered Financial Analyst (CFA) Level 1"
                     ],
-                    "pro": [
-                        "Professional business-analytics Cert",
-                        "Microsoft business-analytics Master"
-                    ],
-                    "premium": [
-                        "Industry Certified business-analytics",
-                        "business-analytics Expert Professional"
-                    ]
+                    "pro": [],
+                    "premium": []
                 }
             },
             "entrepreneurship": {
-                "displayName": "Entrepreneurship",
+                "displayName": "Entrepreneurship & Startup Management",
                 "branch": null,
                 "careerPaths": [
-                    "Senior Entrepreneurship Specialist",
-                    "Entrepreneurship Consultant",
-                    "Lead Entrepreneurship Engineer"
+                    "Startup Founder",
+                    "Venture Builder"
                 ],
                 "projects": {
                     "beginner": [
-                        "Basic entrepreneurship Project",
-                        "entrepreneurship Simulation",
-                        "Introduction to entrepreneurship"
+                        "Invoice and Expense Tracker"
                     ],
                     "intermediate": [
-                        "Advanced entrepreneurship System",
-                        "Cross-platform entrepreneurship",
-                        "entrepreneurship Analytics"
+                        "Business Intelligence Dashboard",
+                        "Startup Pitch Deck Generator",
+                        "Marketing Campaign Analyzer"
                     ],
                     "advanced": [
-                        "Enterprise entrepreneurship Suite",
-                        "High-Performance entrepreneurship",
-                        "Global entrepreneurship Infrastructure"
+                        "Financial Portfolio Analyzer",
+                        "Supply Chain Optimization Tool"
                     ]
                 },
                 "certifications": {
                     "free": [
-                        "entrepreneurship Foundations",
-                        "Google entrepreneurship Intro"
+                        "Chartered Financial Analyst (CFA) Level 1"
                     ],
-                    "pro": [
-                        "Professional entrepreneurship Cert",
-                        "Microsoft entrepreneurship Master"
-                    ],
-                    "premium": [
-                        "Industry Certified entrepreneurship",
-                        "entrepreneurship Expert Professional"
-                    ]
+                    "pro": [],
+                    "premium": []
                 }
             },
             "marketing-analytics": {
-                "displayName": "Marketing Analytics",
+                "displayName": "Marketing Analytics & Growth Strategy",
                 "branch": null,
                 "careerPaths": [
-                    "Senior Marketing Analytics Specialist",
-                    "Marketing Analytics Consultant",
-                    "Lead Marketing Analytics Engineer"
+                    "Growth Marketer",
+                    "Chief Marketing Officer"
                 ],
                 "projects": {
                     "beginner": [
-                        "Basic marketing-analytics Project",
-                        "marketing-analytics Simulation",
-                        "Introduction to marketing-analytics"
+                        "Invoice and Expense Tracker"
                     ],
                     "intermediate": [
-                        "Advanced marketing-analytics System",
-                        "Cross-platform marketing-analytics",
-                        "marketing-analytics Analytics"
+                        "Business Intelligence Dashboard",
+                        "Startup Pitch Deck Generator",
+                        "Marketing Campaign Analyzer"
                     ],
                     "advanced": [
-                        "Enterprise marketing-analytics Suite",
-                        "High-Performance marketing-analytics",
-                        "Global marketing-analytics Infrastructure"
+                        "Financial Portfolio Analyzer",
+                        "Supply Chain Optimization Tool"
                     ]
                 },
                 "certifications": {
                     "free": [
-                        "marketing-analytics Foundations",
-                        "Google marketing-analytics Intro"
+                        "Chartered Financial Analyst (CFA) Level 1"
                     ],
-                    "pro": [
-                        "Professional marketing-analytics Cert",
-                        "Microsoft marketing-analytics Master"
-                    ],
-                    "premium": [
-                        "Industry Certified marketing-analytics",
-                        "marketing-analytics Expert Professional"
-                    ]
+                    "pro": [],
+                    "premium": []
                 }
             },
             "supply-chain": {
-                "displayName": "Supply Chain",
+                "displayName": "Supply Chain & Operations Management",
                 "branch": null,
                 "careerPaths": [
-                    "Senior Supply Chain Specialist",
-                    "Supply Chain Consultant",
-                    "Lead Supply Chain Engineer"
+                    "Supply Chain Analyst",
+                    "Supply Chain Director"
                 ],
                 "projects": {
                     "beginner": [
-                        "Basic supply-chain Project",
-                        "supply-chain Simulation",
-                        "Introduction to supply-chain"
+                        "Invoice and Expense Tracker"
                     ],
                     "intermediate": [
-                        "Advanced supply-chain System",
-                        "Cross-platform supply-chain",
-                        "supply-chain Analytics"
+                        "Business Intelligence Dashboard",
+                        "Startup Pitch Deck Generator",
+                        "Marketing Campaign Analyzer"
                     ],
                     "advanced": [
-                        "Enterprise supply-chain Suite",
-                        "High-Performance supply-chain",
-                        "Global supply-chain Infrastructure"
+                        "Financial Portfolio Analyzer",
+                        "Supply Chain Optimization Tool"
                     ]
                 },
                 "certifications": {
                     "free": [
-                        "supply-chain Foundations",
-                        "Google supply-chain Intro"
+                        "Chartered Financial Analyst (CFA) Level 1"
                     ],
-                    "pro": [
-                        "Professional supply-chain Cert",
-                        "Microsoft supply-chain Master"
-                    ],
-                    "premium": [
-                        "Industry Certified supply-chain",
-                        "supply-chain Expert Professional"
-                    ]
+                    "pro": [],
+                    "premium": []
                 }
             },
             "mba-finance": {
-                "displayName": "Mba Finance",
+                "displayName": "MBA in Finance",
                 "branch": null,
                 "careerPaths": [
-                    "Senior Mba Finance Specialist",
-                    "Mba Finance Consultant",
-                    "Lead Mba Finance Engineer"
+                    "Senior MBA in Finance Specialist",
+                    "MBA in Finance Consultant",
+                    "Lead MBA in Finance Engineer"
                 ],
                 "projects": {
                     "beginner": [
-                        "Basic mba-finance Project",
-                        "mba-finance Simulation",
-                        "Introduction to mba-finance"
+                        "Invoice and Expense Tracker"
                     ],
                     "intermediate": [
-                        "Advanced mba-finance System",
-                        "Cross-platform mba-finance",
-                        "mba-finance Analytics"
+                        "Business Intelligence Dashboard",
+                        "Startup Pitch Deck Generator",
+                        "Marketing Campaign Analyzer"
                     ],
                     "advanced": [
-                        "Enterprise mba-finance Suite",
-                        "High-Performance mba-finance",
-                        "Global mba-finance Infrastructure"
+                        "Financial Portfolio Analyzer",
+                        "Supply Chain Optimization Tool"
                     ]
                 },
                 "certifications": {
                     "free": [
-                        "mba-finance Foundations",
-                        "Google mba-finance Intro"
+                        "Chartered Financial Analyst (CFA) Level 1"
                     ],
-                    "pro": [
-                        "Professional mba-finance Cert",
-                        "Microsoft mba-finance Master"
-                    ],
-                    "premium": [
-                        "Industry Certified mba-finance",
-                        "mba-finance Expert Professional"
-                    ]
+                    "pro": [],
+                    "premium": []
                 }
             },
             "mba-marketing": {
-                "displayName": "Mba Marketing",
+                "displayName": "MBA in Marketing",
                 "branch": null,
                 "careerPaths": [
-                    "Senior Mba Marketing Specialist",
-                    "Mba Marketing Consultant",
-                    "Lead Mba Marketing Engineer"
+                    "Senior MBA in Marketing Specialist",
+                    "MBA in Marketing Consultant",
+                    "Lead MBA in Marketing Engineer"
                 ],
                 "projects": {
                     "beginner": [
-                        "Basic mba-marketing Project",
-                        "mba-marketing Simulation",
-                        "Introduction to mba-marketing"
+                        "Invoice and Expense Tracker"
                     ],
                     "intermediate": [
-                        "Advanced mba-marketing System",
-                        "Cross-platform mba-marketing",
-                        "mba-marketing Analytics"
+                        "Business Intelligence Dashboard",
+                        "Startup Pitch Deck Generator",
+                        "Marketing Campaign Analyzer"
                     ],
                     "advanced": [
-                        "Enterprise mba-marketing Suite",
-                        "High-Performance mba-marketing",
-                        "Global mba-marketing Infrastructure"
+                        "Financial Portfolio Analyzer",
+                        "Supply Chain Optimization Tool"
                     ]
                 },
                 "certifications": {
                     "free": [
-                        "mba-marketing Foundations",
-                        "Google mba-marketing Intro"
+                        "Chartered Financial Analyst (CFA) Level 1"
                     ],
-                    "pro": [
-                        "Professional mba-marketing Cert",
-                        "Microsoft mba-marketing Master"
-                    ],
-                    "premium": [
-                        "Industry Certified mba-marketing",
-                        "mba-marketing Expert Professional"
-                    ]
+                    "pro": [],
+                    "premium": []
                 }
             },
             "mba-hr": {
-                "displayName": "Mba Hr",
+                "displayName": "MBA in Human Resource Management",
                 "branch": null,
                 "careerPaths": [
-                    "Senior Mba Hr Specialist",
-                    "Mba Hr Consultant",
-                    "Lead Mba Hr Engineer"
+                    "Senior MBA in Human Resource Management Specialist",
+                    "MBA in Human Resource Management Consultant",
+                    "Lead MBA in Human Resource Management Engineer"
                 ],
                 "projects": {
                     "beginner": [
-                        "Basic mba-hr Project",
-                        "mba-hr Simulation",
-                        "Introduction to mba-hr"
+                        "Invoice and Expense Tracker"
                     ],
                     "intermediate": [
-                        "Advanced mba-hr System",
-                        "Cross-platform mba-hr",
-                        "mba-hr Analytics"
+                        "Business Intelligence Dashboard",
+                        "Startup Pitch Deck Generator",
+                        "Marketing Campaign Analyzer"
                     ],
                     "advanced": [
-                        "Enterprise mba-hr Suite",
-                        "High-Performance mba-hr",
-                        "Global mba-hr Infrastructure"
+                        "Financial Portfolio Analyzer",
+                        "Supply Chain Optimization Tool"
                     ]
                 },
                 "certifications": {
                     "free": [
-                        "mba-hr Foundations",
-                        "Google mba-hr Intro"
+                        "Chartered Financial Analyst (CFA) Level 1"
                     ],
-                    "pro": [
-                        "Professional mba-hr Cert",
-                        "Microsoft mba-hr Master"
-                    ],
-                    "premium": [
-                        "Industry Certified mba-hr",
-                        "mba-hr Expert Professional"
-                    ]
+                    "pro": [],
+                    "premium": []
                 }
             },
             "mba-operations": {
-                "displayName": "Mba Operations",
+                "displayName": "MBA in Operations Management",
                 "branch": null,
                 "careerPaths": [
-                    "Senior Mba Operations Specialist",
-                    "Mba Operations Consultant",
-                    "Lead Mba Operations Engineer"
+                    "Senior MBA in Operations Management Specialist",
+                    "MBA in Operations Management Consultant",
+                    "Lead MBA in Operations Management Engineer"
                 ],
                 "projects": {
                     "beginner": [
-                        "Basic mba-operations Project",
-                        "mba-operations Simulation",
-                        "Introduction to mba-operations"
+                        "Invoice and Expense Tracker"
                     ],
                     "intermediate": [
-                        "Advanced mba-operations System",
-                        "Cross-platform mba-operations",
-                        "mba-operations Analytics"
+                        "Business Intelligence Dashboard",
+                        "Startup Pitch Deck Generator",
+                        "Marketing Campaign Analyzer"
                     ],
                     "advanced": [
-                        "Enterprise mba-operations Suite",
-                        "High-Performance mba-operations",
-                        "Global mba-operations Infrastructure"
+                        "Financial Portfolio Analyzer",
+                        "Supply Chain Optimization Tool"
                     ]
                 },
                 "certifications": {
                     "free": [
-                        "mba-operations Foundations",
-                        "Google mba-operations Intro"
+                        "Chartered Financial Analyst (CFA) Level 1"
                     ],
-                    "pro": [
-                        "Professional mba-operations Cert",
-                        "Microsoft mba-operations Master"
-                    ],
-                    "premium": [
-                        "Industry Certified mba-operations",
-                        "mba-operations Expert Professional"
-                    ]
+                    "pro": [],
+                    "premium": []
                 }
             },
             "mba-analytics": {
-                "displayName": "Mba Analytics",
+                "displayName": "MBA in Business Analytics",
                 "branch": null,
                 "careerPaths": [
-                    "Senior Mba Analytics Specialist",
-                    "Mba Analytics Consultant",
-                    "Lead Mba Analytics Engineer"
+                    "Senior MBA in Business Analytics Specialist",
+                    "MBA in Business Analytics Consultant",
+                    "Lead MBA in Business Analytics Engineer"
                 ],
                 "projects": {
                     "beginner": [
-                        "Basic mba-analytics Project",
-                        "mba-analytics Simulation",
-                        "Introduction to mba-analytics"
+                        "Invoice and Expense Tracker"
                     ],
                     "intermediate": [
-                        "Advanced mba-analytics System",
-                        "Cross-platform mba-analytics",
-                        "mba-analytics Analytics"
+                        "Business Intelligence Dashboard",
+                        "Startup Pitch Deck Generator",
+                        "Marketing Campaign Analyzer"
                     ],
                     "advanced": [
-                        "Enterprise mba-analytics Suite",
-                        "High-Performance mba-analytics",
-                        "Global mba-analytics Infrastructure"
+                        "Financial Portfolio Analyzer",
+                        "Supply Chain Optimization Tool"
                     ]
                 },
                 "certifications": {
                     "free": [
-                        "mba-analytics Foundations",
-                        "Google mba-analytics Intro"
+                        "Chartered Financial Analyst (CFA) Level 1"
                     ],
-                    "pro": [
-                        "Professional mba-analytics Cert",
-                        "Microsoft mba-analytics Master"
-                    ],
-                    "premium": [
-                        "Industry Certified mba-analytics",
-                        "mba-analytics Expert Professional"
-                    ]
+                    "pro": [],
+                    "premium": []
                 }
             },
             "mba-consulting": {
-                "displayName": "Mba Consulting",
+                "displayName": "MBA in Management Consulting",
                 "branch": null,
                 "careerPaths": [
-                    "Senior Mba Consulting Specialist",
-                    "Mba Consulting Consultant",
-                    "Lead Mba Consulting Engineer"
+                    "Senior MBA in Management Consulting Specialist",
+                    "MBA in Management Consulting Consultant",
+                    "Lead MBA in Management Consulting Engineer"
                 ],
                 "projects": {
                     "beginner": [
-                        "Basic mba-consulting Project",
-                        "mba-consulting Simulation",
-                        "Introduction to mba-consulting"
+                        "Invoice and Expense Tracker"
                     ],
                     "intermediate": [
-                        "Advanced mba-consulting System",
-                        "Cross-platform mba-consulting",
-                        "mba-consulting Analytics"
+                        "Business Intelligence Dashboard",
+                        "Startup Pitch Deck Generator",
+                        "Marketing Campaign Analyzer"
                     ],
                     "advanced": [
-                        "Enterprise mba-consulting Suite",
-                        "High-Performance mba-consulting",
-                        "Global mba-consulting Infrastructure"
+                        "Financial Portfolio Analyzer",
+                        "Supply Chain Optimization Tool"
                     ]
                 },
                 "certifications": {
                     "free": [
-                        "mba-consulting Foundations",
-                        "Google mba-consulting Intro"
+                        "Chartered Financial Analyst (CFA) Level 1"
                     ],
-                    "pro": [
-                        "Professional mba-consulting Cert",
-                        "Microsoft mba-consulting Master"
-                    ],
-                    "premium": [
-                        "Industry Certified mba-consulting",
-                        "mba-consulting Expert Professional"
-                    ]
+                    "pro": [],
+                    "premium": []
                 }
             },
             "mba-entrepreneurship": {
-                "displayName": "Mba Entrepreneurship",
+                "displayName": "MBA in Entrepreneurship",
                 "branch": null,
                 "careerPaths": [
-                    "Senior Mba Entrepreneurship Specialist",
-                    "Mba Entrepreneurship Consultant",
-                    "Lead Mba Entrepreneurship Engineer"
+                    "Senior MBA in Entrepreneurship Specialist",
+                    "MBA in Entrepreneurship Consultant",
+                    "Lead MBA in Entrepreneurship Engineer"
                 ],
                 "projects": {
                     "beginner": [
-                        "Basic mba-entrepreneurship Project",
-                        "mba-entrepreneurship Simulation",
-                        "Introduction to mba-entrepreneurship"
+                        "Invoice and Expense Tracker"
                     ],
                     "intermediate": [
-                        "Advanced mba-entrepreneurship System",
-                        "Cross-platform mba-entrepreneurship",
-                        "mba-entrepreneurship Analytics"
+                        "Business Intelligence Dashboard",
+                        "Startup Pitch Deck Generator",
+                        "Marketing Campaign Analyzer"
                     ],
                     "advanced": [
-                        "Enterprise mba-entrepreneurship Suite",
-                        "High-Performance mba-entrepreneurship",
-                        "Global mba-entrepreneurship Infrastructure"
+                        "Financial Portfolio Analyzer",
+                        "Supply Chain Optimization Tool"
                     ]
                 },
                 "certifications": {
                     "free": [
-                        "mba-entrepreneurship Foundations",
-                        "Google mba-entrepreneurship Intro"
+                        "Chartered Financial Analyst (CFA) Level 1"
                     ],
-                    "pro": [
-                        "Professional mba-entrepreneurship Cert",
-                        "Microsoft mba-entrepreneurship Master"
-                    ],
-                    "premium": [
-                        "Industry Certified mba-entrepreneurship",
-                        "mba-entrepreneurship Expert Professional"
-                    ]
+                    "pro": [],
+                    "premium": []
                 }
             },
             "mba-international": {
-                "displayName": "Mba International",
+                "displayName": "MBA in International Business",
                 "branch": null,
                 "careerPaths": [
-                    "Senior Mba International Specialist",
-                    "Mba International Consultant",
-                    "Lead Mba International Engineer"
+                    "Senior MBA in International Business Specialist",
+                    "MBA in International Business Consultant",
+                    "Lead MBA in International Business Engineer"
                 ],
                 "projects": {
                     "beginner": [
-                        "Basic mba-international Project",
-                        "mba-international Simulation",
-                        "Introduction to mba-international"
+                        "Invoice and Expense Tracker"
                     ],
                     "intermediate": [
-                        "Advanced mba-international System",
-                        "Cross-platform mba-international",
-                        "mba-international Analytics"
+                        "Business Intelligence Dashboard",
+                        "Startup Pitch Deck Generator",
+                        "Marketing Campaign Analyzer"
                     ],
                     "advanced": [
-                        "Enterprise mba-international Suite",
-                        "High-Performance mba-international",
-                        "Global mba-international Infrastructure"
+                        "Financial Portfolio Analyzer",
+                        "Supply Chain Optimization Tool"
                     ]
                 },
                 "certifications": {
                     "free": [
-                        "mba-international Foundations",
-                        "Google mba-international Intro"
+                        "Chartered Financial Analyst (CFA) Level 1"
                     ],
-                    "pro": [
-                        "Professional mba-international Cert",
-                        "Microsoft mba-international Master"
+                    "pro": [],
+                    "premium": []
+                }
+            },
+            "msc-finance": {
+                "displayName": "M.Sc. in Finance",
+                "branch": null,
+                "careerPaths": [
+                    "Senior M.Sc. in Finance Specialist",
+                    "M.Sc. in Finance Consultant",
+                    "Lead M.Sc. in Finance Engineer"
+                ],
+                "projects": {
+                    "beginner": [
+                        "Invoice and Expense Tracker"
                     ],
-                    "premium": [
-                        "Industry Certified mba-international",
-                        "mba-international Expert Professional"
+                    "intermediate": [
+                        "Business Intelligence Dashboard",
+                        "Startup Pitch Deck Generator",
+                        "Marketing Campaign Analyzer"
+                    ],
+                    "advanced": [
+                        "Financial Portfolio Analyzer",
+                        "Supply Chain Optimization Tool"
                     ]
+                },
+                "certifications": {
+                    "free": [
+                        "Chartered Financial Analyst (CFA) Level 1"
+                    ],
+                    "pro": [],
+                    "premium": []
                 }
             },
             "mcom": {
-                "displayName": "Mcom",
+                "displayName": "M.Com (Master of Commerce)",
                 "branch": null,
                 "careerPaths": [
-                    "Senior Mcom Specialist",
-                    "Mcom Consultant",
-                    "Lead Mcom Engineer"
+                    "Senior M.Com (Master of Commerce) Specialist",
+                    "M.Com (Master of Commerce) Consultant",
+                    "Lead M.Com (Master of Commerce) Engineer"
                 ],
                 "projects": {
                     "beginner": [
-                        "Basic mcom Project",
-                        "mcom Simulation",
-                        "Introduction to mcom"
+                        "Invoice and Expense Tracker"
                     ],
                     "intermediate": [
-                        "Advanced mcom System",
-                        "Cross-platform mcom",
-                        "mcom Analytics"
+                        "Business Intelligence Dashboard",
+                        "Startup Pitch Deck Generator",
+                        "Marketing Campaign Analyzer"
                     ],
                     "advanced": [
-                        "Enterprise mcom Suite",
-                        "High-Performance mcom",
-                        "Global mcom Infrastructure"
+                        "Financial Portfolio Analyzer",
+                        "Supply Chain Optimization Tool"
                     ]
                 },
                 "certifications": {
                     "free": [
-                        "mcom Foundations",
-                        "Google mcom Intro"
+                        "Chartered Financial Analyst (CFA) Level 1"
                     ],
-                    "pro": [
-                        "Professional mcom Cert",
-                        "Microsoft mcom Master"
-                    ],
-                    "premium": [
-                        "Industry Certified mcom",
-                        "mcom Expert Professional"
-                    ]
+                    "pro": [],
+                    "premium": []
                 }
             }
         }
     },
     "law": {
-        "displayName": "Law",
+        "displayName": "Law & Public Services",
         "specializations": {
             "corporate-law": {
-                "displayName": "Corporate Law",
+                "displayName": "Corporate & Business Law",
                 "branch": null,
                 "careerPaths": [
-                    "Senior Corporate Law Specialist",
-                    "Corporate Law Consultant",
-                    "Lead Corporate Law Engineer"
+                    "Corporate Lawyer",
+                    "General Counsel"
                 ],
                 "projects": {
                     "beginner": [
-                        "Basic corporate-law Project",
-                        "corporate-law Simulation",
-                        "Introduction to corporate-law"
+                        "Court Filing Deadline Calculator"
                     ],
                     "intermediate": [
-                        "Advanced corporate-law System",
-                        "Cross-platform corporate-law",
-                        "corporate-law Analytics"
+                        "GDPR Compliance Checker",
+                        "Legal Billing and Time Tracker",
+                        "Intellectual Property Portfolio Manager"
                     ],
                     "advanced": [
-                        "Enterprise corporate-law Suite",
-                        "High-Performance corporate-law",
-                        "Global corporate-law Infrastructure"
+                        "Legal Document Analyzer",
+                        "Case Law Research Assistant"
                     ]
                 },
                 "certifications": {
                     "free": [
-                        "corporate-law Foundations",
-                        "Google corporate-law Intro"
+                        "Certified Information Privacy Professional (CIPP/E)"
                     ],
-                    "pro": [
-                        "Professional corporate-law Cert",
-                        "Microsoft corporate-law Master"
-                    ],
-                    "premium": [
-                        "Industry Certified corporate-law",
-                        "corporate-law Expert Professional"
-                    ]
+                    "pro": [],
+                    "premium": []
                 }
             },
             "cyber-law": {
-                "displayName": "Cyber Law",
+                "displayName": "Cyber Law & Data Protection",
                 "branch": null,
                 "careerPaths": [
-                    "Senior Cyber Law Specialist",
-                    "Cyber Law Consultant",
-                    "Lead Cyber Law Engineer"
+                    "Data Privacy Lawyer",
+                    "Cybercrime Prosecutor"
                 ],
                 "projects": {
                     "beginner": [
-                        "Basic cyber-law Project",
-                        "cyber-law Simulation",
-                        "Introduction to cyber-law"
+                        "Court Filing Deadline Calculator"
                     ],
                     "intermediate": [
-                        "Advanced cyber-law System",
-                        "Cross-platform cyber-law",
-                        "cyber-law Analytics"
+                        "GDPR Compliance Checker",
+                        "Legal Billing and Time Tracker",
+                        "Intellectual Property Portfolio Manager"
                     ],
                     "advanced": [
-                        "Enterprise cyber-law Suite",
-                        "High-Performance cyber-law",
-                        "Global cyber-law Infrastructure"
+                        "Legal Document Analyzer",
+                        "Case Law Research Assistant"
                     ]
                 },
                 "certifications": {
                     "free": [
-                        "cyber-law Foundations",
-                        "Google cyber-law Intro"
+                        "Certified Information Privacy Professional (CIPP/E)"
                     ],
-                    "pro": [
-                        "Professional cyber-law Cert",
-                        "Microsoft cyber-law Master"
-                    ],
-                    "premium": [
-                        "Industry Certified cyber-law",
-                        "cyber-law Expert Professional"
-                    ]
+                    "pro": [],
+                    "premium": []
                 }
             },
             "constitutional": {
-                "displayName": "Constitutional",
+                "displayName": "Constitutional & Administrative Law",
                 "branch": null,
                 "careerPaths": [
-                    "Senior Constitutional Specialist",
-                    "Constitutional Consultant",
-                    "Lead Constitutional Engineer"
+                    "Constitutional Lawyer",
+                    "Judicial Clerk"
                 ],
                 "projects": {
                     "beginner": [
-                        "Basic constitutional Project",
-                        "constitutional Simulation",
-                        "Introduction to constitutional"
+                        "Court Filing Deadline Calculator"
                     ],
                     "intermediate": [
-                        "Advanced constitutional System",
-                        "Cross-platform constitutional",
-                        "constitutional Analytics"
+                        "GDPR Compliance Checker",
+                        "Legal Billing and Time Tracker",
+                        "Intellectual Property Portfolio Manager"
                     ],
                     "advanced": [
-                        "Enterprise constitutional Suite",
-                        "High-Performance constitutional",
-                        "Global constitutional Infrastructure"
+                        "Legal Document Analyzer",
+                        "Case Law Research Assistant"
                     ]
                 },
                 "certifications": {
                     "free": [
-                        "constitutional Foundations",
-                        "Google constitutional Intro"
+                        "Certified Information Privacy Professional (CIPP/E)"
                     ],
-                    "pro": [
-                        "Professional constitutional Cert",
-                        "Microsoft constitutional Master"
-                    ],
-                    "premium": [
-                        "Industry Certified constitutional",
-                        "constitutional Expert Professional"
-                    ]
+                    "pro": [],
+                    "premium": []
                 }
             },
             "judiciary": {
-                "displayName": "Judiciary",
+                "displayName": "Judiciary Preparation",
                 "branch": null,
                 "careerPaths": [
-                    "Senior Judiciary Specialist",
-                    "Judiciary Consultant",
-                    "Lead Judiciary Engineer"
+                    "Judicial Officer",
+                    "Judge"
                 ],
                 "projects": {
                     "beginner": [
-                        "Basic judiciary Project",
-                        "judiciary Simulation",
-                        "Introduction to judiciary"
+                        "Court Filing Deadline Calculator"
                     ],
                     "intermediate": [
-                        "Advanced judiciary System",
-                        "Cross-platform judiciary",
-                        "judiciary Analytics"
+                        "GDPR Compliance Checker",
+                        "Legal Billing and Time Tracker",
+                        "Intellectual Property Portfolio Manager"
                     ],
                     "advanced": [
-                        "Enterprise judiciary Suite",
-                        "High-Performance judiciary",
-                        "Global judiciary Infrastructure"
+                        "Legal Document Analyzer",
+                        "Case Law Research Assistant"
                     ]
                 },
                 "certifications": {
                     "free": [
-                        "judiciary Foundations",
-                        "Google judiciary Intro"
+                        "Certified Information Privacy Professional (CIPP/E)"
                     ],
-                    "pro": [
-                        "Professional judiciary Cert",
-                        "Microsoft judiciary Master"
+                    "pro": [],
+                    "premium": []
+                }
+            },
+            "public-policy-law": {
+                "displayName": "Public Policy & Governance",
+                "branch": null,
+                "careerPaths": [
+                    "Legislative Counsel",
+                    "Policy Lawyer"
+                ],
+                "projects": {
+                    "beginner": [
+                        "Court Filing Deadline Calculator"
                     ],
-                    "premium": [
-                        "Industry Certified judiciary",
-                        "judiciary Expert Professional"
+                    "intermediate": [
+                        "GDPR Compliance Checker",
+                        "Legal Billing and Time Tracker",
+                        "Intellectual Property Portfolio Manager"
+                    ],
+                    "advanced": [
+                        "Legal Document Analyzer",
+                        "Case Law Research Assistant"
                     ]
+                },
+                "certifications": {
+                    "free": [
+                        "Certified Information Privacy Professional (CIPP/E)"
+                    ],
+                    "pro": [],
+                    "premium": []
                 }
             },
             "international-law": {
                 "displayName": "International Law",
                 "branch": null,
                 "careerPaths": [
-                    "Senior International Law Specialist",
-                    "International Law Consultant",
-                    "Lead International Law Engineer"
+                    "International Lawyer",
+                    "Trade Lawyer"
                 ],
                 "projects": {
                     "beginner": [
-                        "Basic international-law Project",
-                        "international-law Simulation",
-                        "Introduction to international-law"
+                        "Court Filing Deadline Calculator"
                     ],
                     "intermediate": [
-                        "Advanced international-law System",
-                        "Cross-platform international-law",
-                        "international-law Analytics"
+                        "GDPR Compliance Checker",
+                        "Legal Billing and Time Tracker",
+                        "Intellectual Property Portfolio Manager"
                     ],
                     "advanced": [
-                        "Enterprise international-law Suite",
-                        "High-Performance international-law",
-                        "Global international-law Infrastructure"
+                        "Legal Document Analyzer",
+                        "Case Law Research Assistant"
                     ]
                 },
                 "certifications": {
                     "free": [
-                        "international-law Foundations",
-                        "Google international-law Intro"
+                        "Certified Information Privacy Professional (CIPP/E)"
                     ],
-                    "pro": [
-                        "Professional international-law Cert",
-                        "Microsoft international-law Master"
-                    ],
-                    "premium": [
-                        "Industry Certified international-law",
-                        "international-law Expert Professional"
-                    ]
+                    "pro": [],
+                    "premium": []
                 }
             }
         }
     },
     "education": {
-        "displayName": "Education",
+        "displayName": "Education & Teaching",
         "specializations": {
             "edtech": {
-                "displayName": "Edtech",
+                "displayName": "Educational Technology (EdTech)",
                 "branch": null,
                 "careerPaths": [
-                    "Senior Edtech Specialist",
-                    "Edtech Consultant",
-                    "Lead Edtech Engineer"
+                    "Instructional Designer",
+                    "EdTech Product Manager"
                 ],
                 "projects": {
                     "beginner": [
-                        "Basic edtech Project",
-                        "edtech Simulation",
-                        "Introduction to edtech"
+                        "Student Progress Tracker"
                     ],
                     "intermediate": [
-                        "Advanced edtech System",
-                        "Cross-platform edtech",
-                        "edtech Analytics"
+                        "Interactive Quiz and Assessment Builder",
+                        "Course Content Management System",
+                        "Peer Review and Feedback System"
                     ],
                     "advanced": [
-                        "Enterprise edtech Suite",
-                        "High-Performance edtech",
-                        "Global edtech Infrastructure"
+                        "Adaptive Learning Platform",
+                        "Virtual Classroom Platform"
                     ]
                 },
                 "certifications": {
                     "free": [
-                        "edtech Foundations",
-                        "Google edtech Intro"
+                        "Google Certified Educator Level 1"
                     ],
-                    "pro": [
-                        "Professional edtech Cert",
-                        "Microsoft edtech Master"
-                    ],
-                    "premium": [
-                        "Industry Certified edtech",
-                        "edtech Expert Professional"
-                    ]
+                    "pro": [],
+                    "premium": []
                 }
             },
             "curriculum": {
-                "displayName": "Curriculum",
+                "displayName": "Curriculum Design",
                 "branch": null,
                 "careerPaths": [
-                    "Senior Curriculum Specialist",
-                    "Curriculum Consultant",
-                    "Lead Curriculum Engineer"
+                    "Curriculum Developer",
+                    "Curriculum Director"
                 ],
                 "projects": {
                     "beginner": [
-                        "Basic curriculum Project",
-                        "curriculum Simulation",
-                        "Introduction to curriculum"
+                        "Student Progress Tracker"
                     ],
                     "intermediate": [
-                        "Advanced curriculum System",
-                        "Cross-platform curriculum",
-                        "curriculum Analytics"
+                        "Interactive Quiz and Assessment Builder",
+                        "Course Content Management System",
+                        "Peer Review and Feedback System"
                     ],
                     "advanced": [
-                        "Enterprise curriculum Suite",
-                        "High-Performance curriculum",
-                        "Global curriculum Infrastructure"
+                        "Adaptive Learning Platform",
+                        "Virtual Classroom Platform"
                     ]
                 },
                 "certifications": {
                     "free": [
-                        "curriculum Foundations",
-                        "Google curriculum Intro"
+                        "Google Certified Educator Level 1"
                     ],
-                    "pro": [
-                        "Professional curriculum Cert",
-                        "Microsoft curriculum Master"
-                    ],
-                    "premium": [
-                        "Industry Certified curriculum",
-                        "curriculum Expert Professional"
-                    ]
+                    "pro": [],
+                    "premium": []
                 }
             },
             "edu-psychology": {
-                "displayName": "Edu Psychology",
+                "displayName": "Educational Psychology",
                 "branch": null,
                 "careerPaths": [
-                    "Senior Edu Psychology Specialist",
-                    "Edu Psychology Consultant",
-                    "Lead Edu Psychology Engineer"
+                    "School Psychologist",
+                    "Learning Specialist"
                 ],
                 "projects": {
                     "beginner": [
-                        "Basic edu-psychology Project",
-                        "edu-psychology Simulation",
-                        "Introduction to edu-psychology"
+                        "Student Progress Tracker"
                     ],
                     "intermediate": [
-                        "Advanced edu-psychology System",
-                        "Cross-platform edu-psychology",
-                        "edu-psychology Analytics"
+                        "Interactive Quiz and Assessment Builder",
+                        "Course Content Management System",
+                        "Peer Review and Feedback System"
                     ],
                     "advanced": [
-                        "Enterprise edu-psychology Suite",
-                        "High-Performance edu-psychology",
-                        "Global edu-psychology Infrastructure"
+                        "Adaptive Learning Platform",
+                        "Virtual Classroom Platform"
                     ]
                 },
                 "certifications": {
                     "free": [
-                        "edu-psychology Foundations",
-                        "Google edu-psychology Intro"
+                        "Google Certified Educator Level 1"
                     ],
-                    "pro": [
-                        "Professional edu-psychology Cert",
-                        "Microsoft edu-psychology Master"
-                    ],
-                    "premium": [
-                        "Industry Certified edu-psychology",
-                        "edu-psychology Expert Professional"
-                    ]
+                    "pro": [],
+                    "premium": []
                 }
             },
             "online-teaching": {
-                "displayName": "Online Teaching",
+                "displayName": "Online Teaching & Digital Pedagogy",
                 "branch": null,
                 "careerPaths": [
-                    "Senior Online Teaching Specialist",
-                    "Online Teaching Consultant",
-                    "Lead Online Teaching Engineer"
+                    "Online Instructor",
+                    "Course Creator"
                 ],
                 "projects": {
                     "beginner": [
-                        "Basic online-teaching Project",
-                        "online-teaching Simulation",
-                        "Introduction to online-teaching"
+                        "Student Progress Tracker"
                     ],
                     "intermediate": [
-                        "Advanced online-teaching System",
-                        "Cross-platform online-teaching",
-                        "online-teaching Analytics"
+                        "Interactive Quiz and Assessment Builder",
+                        "Course Content Management System",
+                        "Peer Review and Feedback System"
                     ],
                     "advanced": [
-                        "Enterprise online-teaching Suite",
-                        "High-Performance online-teaching",
-                        "Global online-teaching Infrastructure"
+                        "Adaptive Learning Platform",
+                        "Virtual Classroom Platform"
                     ]
                 },
                 "certifications": {
                     "free": [
-                        "online-teaching Foundations",
-                        "Google online-teaching Intro"
+                        "Google Certified Educator Level 1"
                     ],
-                    "pro": [
-                        "Professional online-teaching Cert",
-                        "Microsoft online-teaching Master"
-                    ],
-                    "premium": [
-                        "Industry Certified online-teaching",
-                        "online-teaching Expert Professional"
-                    ]
+                    "pro": [],
+                    "premium": []
                 }
             },
             "academic-research": {
-                "displayName": "Academic Research",
+                "displayName": "Academic Research & Doctoral Track",
                 "branch": null,
                 "careerPaths": [
-                    "Senior Academic Research Specialist",
-                    "Academic Research Consultant",
-                    "Lead Academic Research Engineer"
+                    "Postdoctoral Researcher",
+                    "Professor"
                 ],
                 "projects": {
                     "beginner": [
-                        "Basic academic-research Project",
-                        "academic-research Simulation",
-                        "Introduction to academic-research"
+                        "Student Progress Tracker"
                     ],
                     "intermediate": [
-                        "Advanced academic-research System",
-                        "Cross-platform academic-research",
-                        "academic-research Analytics"
+                        "Interactive Quiz and Assessment Builder",
+                        "Course Content Management System",
+                        "Peer Review and Feedback System"
                     ],
                     "advanced": [
-                        "Enterprise academic-research Suite",
-                        "High-Performance academic-research",
-                        "Global academic-research Infrastructure"
+                        "Adaptive Learning Platform",
+                        "Virtual Classroom Platform"
                     ]
                 },
                 "certifications": {
                     "free": [
-                        "academic-research Foundations",
-                        "Google academic-research Intro"
+                        "Google Certified Educator Level 1"
                     ],
-                    "pro": [
-                        "Professional academic-research Cert",
-                        "Microsoft academic-research Master"
-                    ],
-                    "premium": [
-                        "Industry Certified academic-research",
-                        "academic-research Expert Professional"
-                    ]
+                    "pro": [],
+                    "premium": []
                 }
             }
         }
     },
     "design": {
-        "displayName": "Design",
+        "displayName": "Design, Media & Creative Arts",
         "specializations": {
             "motion": {
-                "displayName": "Motion",
+                "displayName": "Motion Graphics & Animation",
                 "branch": null,
                 "careerPaths": [
-                    "Senior Motion Specialist",
-                    "Motion Consultant",
-                    "Lead Motion Engineer"
+                    "Motion Designer",
+                    "Creative Director"
                 ],
                 "projects": {
                     "beginner": [
-                        "Basic motion Project",
-                        "motion Simulation",
-                        "Introduction to motion"
+                        "Color Palette Generator"
                     ],
                     "intermediate": [
-                        "Advanced motion System",
-                        "Cross-platform motion",
-                        "motion Analytics"
+                        "Design System Documentation Site",
+                        "Brand Asset Manager",
+                        "Motion Design Prototyping Tool"
                     ],
                     "advanced": [
-                        "Enterprise motion Suite",
-                        "High-Performance motion",
-                        "Global motion Infrastructure"
+                        "Collaborative Whiteboard Tool",
+                        "Video Editing Timeline Interface"
                     ]
                 },
                 "certifications": {
                     "free": [
-                        "motion Foundations",
-                        "Google motion Intro"
+                        "Adobe Certified Professional using Photoshop"
                     ],
-                    "pro": [
-                        "Professional motion Cert",
-                        "Microsoft motion Master"
-                    ],
-                    "premium": [
-                        "Industry Certified motion",
-                        "motion Expert Professional"
-                    ]
+                    "pro": [],
+                    "premium": []
                 }
             },
             "game-design": {
                 "displayName": "Game Design",
                 "branch": null,
                 "careerPaths": [
-                    "Senior Game Design Specialist",
-                    "Game Design Consultant",
-                    "Lead Game Design Engineer"
+                    "Game Designer",
+                    "Lead Game Designer"
                 ],
                 "projects": {
                     "beginner": [
-                        "Basic game-design Project",
-                        "game-design Simulation",
-                        "Introduction to game-design"
+                        "Color Palette Generator"
                     ],
                     "intermediate": [
-                        "Advanced game-design System",
-                        "Cross-platform game-design",
-                        "game-design Analytics"
+                        "Design System Documentation Site",
+                        "Brand Asset Manager",
+                        "Motion Design Prototyping Tool"
                     ],
                     "advanced": [
-                        "Enterprise game-design Suite",
-                        "High-Performance game-design",
-                        "Global game-design Infrastructure"
+                        "Collaborative Whiteboard Tool",
+                        "Video Editing Timeline Interface"
                     ]
                 },
                 "certifications": {
                     "free": [
-                        "game-design Foundations",
-                        "Google game-design Intro"
+                        "Adobe Certified Professional using Photoshop"
                     ],
-                    "pro": [
-                        "Professional game-design Cert",
-                        "Microsoft game-design Master"
-                    ],
-                    "premium": [
-                        "Industry Certified game-design",
-                        "game-design Expert Professional"
-                    ]
+                    "pro": [],
+                    "premium": []
                 }
             },
             "film": {
-                "displayName": "Film",
+                "displayName": "Film Production & Direction",
                 "branch": null,
                 "careerPaths": [
-                    "Senior Film Specialist",
-                    "Film Consultant",
-                    "Lead Film Engineer"
+                    "Film Director",
+                    "Video Producer"
                 ],
                 "projects": {
                     "beginner": [
-                        "Basic film Project",
-                        "film Simulation",
-                        "Introduction to film"
+                        "Color Palette Generator"
                     ],
                     "intermediate": [
-                        "Advanced film System",
-                        "Cross-platform film",
-                        "film Analytics"
+                        "Design System Documentation Site",
+                        "Brand Asset Manager",
+                        "Motion Design Prototyping Tool"
                     ],
                     "advanced": [
-                        "Enterprise film Suite",
-                        "High-Performance film",
-                        "Global film Infrastructure"
+                        "Collaborative Whiteboard Tool",
+                        "Video Editing Timeline Interface"
                     ]
                 },
                 "certifications": {
                     "free": [
-                        "film Foundations",
-                        "Google film Intro"
+                        "Adobe Certified Professional using Photoshop"
                     ],
-                    "pro": [
-                        "Professional film Cert",
-                        "Microsoft film Master"
-                    ],
-                    "premium": [
-                        "Industry Certified film",
-                        "film Expert Professional"
-                    ]
+                    "pro": [],
+                    "premium": []
                 }
             },
             "content-creation": {
-                "displayName": "Content Creation",
+                "displayName": "Digital Content Creation",
                 "branch": null,
                 "careerPaths": [
-                    "Senior Content Creation Specialist",
-                    "Content Creation Consultant",
-                    "Lead Content Creation Engineer"
+                    "Content Creator",
+                    "Content Strategist"
                 ],
                 "projects": {
                     "beginner": [
-                        "Basic content-creation Project",
-                        "content-creation Simulation",
-                        "Introduction to content-creation"
+                        "Color Palette Generator"
                     ],
                     "intermediate": [
-                        "Advanced content-creation System",
-                        "Cross-platform content-creation",
-                        "content-creation Analytics"
+                        "Design System Documentation Site",
+                        "Brand Asset Manager",
+                        "Motion Design Prototyping Tool"
                     ],
                     "advanced": [
-                        "Enterprise content-creation Suite",
-                        "High-Performance content-creation",
-                        "Global content-creation Infrastructure"
+                        "Collaborative Whiteboard Tool",
+                        "Video Editing Timeline Interface"
                     ]
                 },
                 "certifications": {
                     "free": [
-                        "content-creation Foundations",
-                        "Google content-creation Intro"
+                        "Adobe Certified Professional using Photoshop"
                     ],
-                    "pro": [
-                        "Professional content-creation Cert",
-                        "Microsoft content-creation Master"
-                    ],
-                    "premium": [
-                        "Industry Certified content-creation",
-                        "content-creation Expert Professional"
-                    ]
+                    "pro": [],
+                    "premium": []
                 }
             },
             "branding": {
-                "displayName": "Branding",
+                "displayName": "Branding & Visual Communication",
                 "branch": null,
                 "careerPaths": [
-                    "Senior Branding Specialist",
-                    "Branding Consultant",
-                    "Lead Branding Engineer"
+                    "Brand Designer",
+                    "Brand Director"
                 ],
                 "projects": {
                     "beginner": [
-                        "Basic branding Project",
-                        "branding Simulation",
-                        "Introduction to branding"
+                        "Color Palette Generator"
                     ],
                     "intermediate": [
-                        "Advanced branding System",
-                        "Cross-platform branding",
-                        "branding Analytics"
+                        "Design System Documentation Site",
+                        "Brand Asset Manager",
+                        "Motion Design Prototyping Tool"
                     ],
                     "advanced": [
-                        "Enterprise branding Suite",
-                        "High-Performance branding",
-                        "Global branding Infrastructure"
+                        "Collaborative Whiteboard Tool",
+                        "Video Editing Timeline Interface"
                     ]
                 },
                 "certifications": {
                     "free": [
-                        "branding Foundations",
-                        "Google branding Intro"
+                        "Adobe Certified Professional using Photoshop"
                     ],
-                    "pro": [
-                        "Professional branding Cert",
-                        "Microsoft branding Master"
-                    ],
-                    "premium": [
-                        "Industry Certified branding",
-                        "branding Expert Professional"
-                    ]
+                    "pro": [],
+                    "premium": []
                 }
             },
             "media-journalism": {
-                "displayName": "Media Journalism",
+                "displayName": "Journalism & Mass Communication",
                 "branch": null,
                 "careerPaths": [
-                    "Senior Media Journalism Specialist",
-                    "Media Journalism Consultant",
-                    "Lead Media Journalism Engineer"
+                    "Senior Journalism & Mass Communication Specialist",
+                    "Journalism & Mass Communication Consultant",
+                    "Lead Journalism & Mass Communication Engineer"
                 ],
                 "projects": {
                     "beginner": [
-                        "Basic media-journalism Project",
-                        "media-journalism Simulation",
-                        "Introduction to media-journalism"
+                        "Color Palette Generator"
                     ],
                     "intermediate": [
-                        "Advanced media-journalism System",
-                        "Cross-platform media-journalism",
-                        "media-journalism Analytics"
+                        "Design System Documentation Site",
+                        "Brand Asset Manager",
+                        "Motion Design Prototyping Tool"
                     ],
                     "advanced": [
-                        "Enterprise media-journalism Suite",
-                        "High-Performance media-journalism",
-                        "Global media-journalism Infrastructure"
+                        "Collaborative Whiteboard Tool",
+                        "Video Editing Timeline Interface"
                     ]
                 },
                 "certifications": {
                     "free": [
-                        "media-journalism Foundations",
-                        "Google media-journalism Intro"
+                        "Adobe Certified Professional using Photoshop"
                     ],
-                    "pro": [
-                        "Professional media-journalism Cert",
-                        "Microsoft media-journalism Master"
-                    ],
-                    "premium": [
-                        "Industry Certified media-journalism",
-                        "media-journalism Expert Professional"
-                    ]
+                    "pro": [],
+                    "premium": []
                 }
             },
             "media-digital": {
-                "displayName": "Media Digital",
+                "displayName": "Digital Content & Influencer Strategy",
                 "branch": null,
                 "careerPaths": [
-                    "Senior Media Digital Specialist",
-                    "Media Digital Consultant",
-                    "Lead Media Digital Engineer"
+                    "Senior Digital Content & Influencer Strategy Specialist",
+                    "Digital Content & Influencer Strategy Consultant",
+                    "Lead Digital Content & Influencer Strategy Engineer"
                 ],
                 "projects": {
                     "beginner": [
-                        "Basic media-digital Project",
-                        "media-digital Simulation",
-                        "Introduction to media-digital"
+                        "Color Palette Generator"
                     ],
                     "intermediate": [
-                        "Advanced media-digital System",
-                        "Cross-platform media-digital",
-                        "media-digital Analytics"
+                        "Design System Documentation Site",
+                        "Brand Asset Manager",
+                        "Motion Design Prototyping Tool"
                     ],
                     "advanced": [
-                        "Enterprise media-digital Suite",
-                        "High-Performance media-digital",
-                        "Global media-digital Infrastructure"
+                        "Collaborative Whiteboard Tool",
+                        "Video Editing Timeline Interface"
                     ]
                 },
                 "certifications": {
                     "free": [
-                        "media-digital Foundations",
-                        "Google media-digital Intro"
+                        "Adobe Certified Professional using Photoshop"
                     ],
-                    "pro": [
-                        "Professional media-digital Cert",
-                        "Microsoft media-digital Master"
-                    ],
-                    "premium": [
-                        "Industry Certified media-digital",
-                        "media-digital Expert Professional"
-                    ]
+                    "pro": [],
+                    "premium": []
                 }
             }
         }
     },
     "defense": {
-        "displayName": "Defense",
+        "displayName": "Defense, Security & Physical Services",
         "specializations": {
             "armed-forces": {
-                "displayName": "Armed Forces",
+                "displayName": "Indian Armed Forces (NDA, CDS, AFCAT, OTA)",
                 "branch": null,
                 "careerPaths": [
-                    "Senior Armed Forces Specialist",
-                    "Armed Forces Consultant",
-                    "Lead Armed Forces Engineer"
+                    "Military Officer",
+                    "Defense Consultant"
                 ],
                 "projects": {
                     "beginner": [
-                        "Basic armed-forces Project",
-                        "armed-forces Simulation",
-                        "Introduction to armed-forces"
+                        "Training and Certification Tracker"
                     ],
                     "intermediate": [
-                        "Advanced armed-forces System",
-                        "Cross-platform armed-forces",
-                        "armed-forces Analytics"
+                        "Security Incident Tracker",
+                        "Physical Access Control Dashboard",
+                        "Threat Assessment Tool"
                     ],
                     "advanced": [
-                        "Enterprise armed-forces Suite",
-                        "High-Performance armed-forces",
-                        "Global armed-forces Infrastructure"
+                        "Emergency Response Coordination System",
+                        "Patrol Route Optimizer"
                     ]
                 },
                 "certifications": {
                     "free": [
-                        "armed-forces Foundations",
-                        "Google armed-forces Intro"
+                        "Indian Armed Forces (NDA, CDS, AFCAT, OTA) Foundations (Free)",
+                        "Google Indian Armed Forces (NDA, CDS, AFCAT, OTA) Intro"
                     ],
                     "pro": [
-                        "Professional armed-forces Cert",
-                        "Microsoft armed-forces Master"
+                        "Professional Indian Armed Forces (NDA, CDS, AFCAT, OTA) Certificate",
+                        "Microsoft Certified: Indian Armed Forces (NDA, CDS, AFCAT, OTA)"
                     ],
                     "premium": [
-                        "Industry Certified armed-forces",
-                        "armed-forces Expert Professional"
+                        "Advanced Indian Armed Forces (NDA, CDS, AFCAT, OTA) Expert",
+                        "Enterprise Indian Armed Forces (NDA, CDS, AFCAT, OTA) Professional"
                     ]
                 }
             },
             "paramilitary": {
-                "displayName": "Paramilitary",
+                "displayName": "Paramilitary Forces",
                 "branch": null,
                 "careerPaths": [
-                    "Senior Paramilitary Specialist",
-                    "Paramilitary Consultant",
-                    "Lead Paramilitary Engineer"
+                    "Paramilitary Officer"
                 ],
                 "projects": {
                     "beginner": [
-                        "Basic paramilitary Project",
-                        "paramilitary Simulation",
-                        "Introduction to paramilitary"
+                        "Training and Certification Tracker"
                     ],
                     "intermediate": [
-                        "Advanced paramilitary System",
-                        "Cross-platform paramilitary",
-                        "paramilitary Analytics"
+                        "Security Incident Tracker",
+                        "Physical Access Control Dashboard",
+                        "Threat Assessment Tool"
                     ],
                     "advanced": [
-                        "Enterprise paramilitary Suite",
-                        "High-Performance paramilitary",
-                        "Global paramilitary Infrastructure"
+                        "Emergency Response Coordination System",
+                        "Patrol Route Optimizer"
                     ]
                 },
                 "certifications": {
                     "free": [
-                        "paramilitary Foundations",
-                        "Google paramilitary Intro"
+                        "Paramilitary Forces Foundations (Free)",
+                        "Google Paramilitary Forces Intro"
                     ],
                     "pro": [
-                        "Professional paramilitary Cert",
-                        "Microsoft paramilitary Master"
+                        "Professional Paramilitary Forces Certificate",
+                        "Microsoft Certified: Paramilitary Forces"
                     ],
                     "premium": [
-                        "Industry Certified paramilitary",
-                        "paramilitary Expert Professional"
+                        "Advanced Paramilitary Forces Expert",
+                        "Enterprise Paramilitary Forces Professional"
                     ]
                 }
             },
             "intelligence": {
-                "displayName": "Intelligence",
+                "displayName": "Intelligence & Strategic Operations",
                 "branch": null,
                 "careerPaths": [
-                    "Senior Intelligence Specialist",
-                    "Intelligence Consultant",
-                    "Lead Intelligence Engineer"
+                    "Intelligence Analyst",
+                    "Intelligence Officer"
                 ],
                 "projects": {
                     "beginner": [
-                        "Basic intelligence Project",
-                        "intelligence Simulation",
-                        "Introduction to intelligence"
+                        "Training and Certification Tracker"
                     ],
                     "intermediate": [
-                        "Advanced intelligence System",
-                        "Cross-platform intelligence",
-                        "intelligence Analytics"
+                        "Security Incident Tracker",
+                        "Physical Access Control Dashboard",
+                        "Threat Assessment Tool"
                     ],
                     "advanced": [
-                        "Enterprise intelligence Suite",
-                        "High-Performance intelligence",
-                        "Global intelligence Infrastructure"
+                        "Emergency Response Coordination System",
+                        "Patrol Route Optimizer"
                     ]
                 },
                 "certifications": {
                     "free": [
-                        "intelligence Foundations",
-                        "Google intelligence Intro"
+                        "Intelligence & Strategic Operations Foundations (Free)",
+                        "Google Intelligence & Strategic Operations Intro"
                     ],
                     "pro": [
-                        "Professional intelligence Cert",
-                        "Microsoft intelligence Master"
+                        "Professional Intelligence & Strategic Operations Certificate",
+                        "Microsoft Certified: Intelligence & Strategic Operations"
                     ],
                     "premium": [
-                        "Industry Certified intelligence",
-                        "intelligence Expert Professional"
+                        "Advanced Intelligence & Strategic Operations Expert",
+                        "Enterprise Intelligence & Strategic Operations Professional"
                     ]
                 }
             },
             "digital-forensics": {
-                "displayName": "Digital Forensics",
+                "displayName": "Cybersecurity & Digital Forensics",
                 "branch": null,
                 "careerPaths": [
-                    "Senior Digital Forensics Specialist",
-                    "Digital Forensics Consultant",
-                    "Lead Digital Forensics Engineer"
+                    "Digital Forensic Analyst",
+                    "Cybercrime Investigator"
                 ],
                 "projects": {
                     "beginner": [
-                        "Basic digital-forensics Project",
-                        "digital-forensics Simulation",
-                        "Introduction to digital-forensics"
+                        "Training and Certification Tracker"
                     ],
                     "intermediate": [
-                        "Advanced digital-forensics System",
-                        "Cross-platform digital-forensics",
-                        "digital-forensics Analytics"
+                        "Security Incident Tracker",
+                        "Physical Access Control Dashboard",
+                        "Threat Assessment Tool"
                     ],
                     "advanced": [
-                        "Enterprise digital-forensics Suite",
-                        "High-Performance digital-forensics",
-                        "Global digital-forensics Infrastructure"
+                        "Emergency Response Coordination System",
+                        "Patrol Route Optimizer"
                     ]
                 },
                 "certifications": {
                     "free": [
-                        "digital-forensics Foundations",
-                        "Google digital-forensics Intro"
+                        "Cybersecurity & Digital Forensics Foundations (Free)",
+                        "Google Cybersecurity & Digital Forensics Intro"
                     ],
                     "pro": [
-                        "Professional digital-forensics Cert",
-                        "Microsoft digital-forensics Master"
+                        "Professional Cybersecurity & Digital Forensics Certificate",
+                        "Microsoft Certified: Cybersecurity & Digital Forensics"
                     ],
                     "premium": [
-                        "Industry Certified digital-forensics",
-                        "digital-forensics Expert Professional"
+                        "Advanced Cybersecurity & Digital Forensics Expert",
+                        "Enterprise Cybersecurity & Digital Forensics Professional"
                     ]
                 }
             },
             "disaster-mgmt": {
-                "displayName": "Disaster Mgmt",
+                "displayName": "Disaster & Emergency Management",
                 "branch": null,
                 "careerPaths": [
-                    "Senior Disaster Mgmt Specialist",
-                    "Disaster Mgmt Consultant",
-                    "Lead Disaster Mgmt Engineer"
+                    "Emergency Manager",
+                    "Disaster Response Lead"
                 ],
                 "projects": {
                     "beginner": [
-                        "Basic disaster-mgmt Project",
-                        "disaster-mgmt Simulation",
-                        "Introduction to disaster-mgmt"
+                        "Training and Certification Tracker"
                     ],
                     "intermediate": [
-                        "Advanced disaster-mgmt System",
-                        "Cross-platform disaster-mgmt",
-                        "disaster-mgmt Analytics"
+                        "Security Incident Tracker",
+                        "Physical Access Control Dashboard",
+                        "Threat Assessment Tool"
                     ],
                     "advanced": [
-                        "Enterprise disaster-mgmt Suite",
-                        "High-Performance disaster-mgmt",
-                        "Global disaster-mgmt Infrastructure"
+                        "Emergency Response Coordination System",
+                        "Patrol Route Optimizer"
                     ]
                 },
                 "certifications": {
                     "free": [
-                        "disaster-mgmt Foundations",
-                        "Google disaster-mgmt Intro"
+                        "Disaster & Emergency Management Foundations (Free)",
+                        "Google Disaster & Emergency Management Intro"
                     ],
                     "pro": [
-                        "Professional disaster-mgmt Cert",
-                        "Microsoft disaster-mgmt Master"
+                        "Professional Disaster & Emergency Management Certificate",
+                        "Microsoft Certified: Disaster & Emergency Management"
                     ],
                     "premium": [
-                        "Industry Certified disaster-mgmt",
-                        "disaster-mgmt Expert Professional"
+                        "Advanced Disaster & Emergency Management Expert",
+                        "Enterprise Disaster & Emergency Management Professional"
                     ]
                 }
             },
             "fire-safety": {
-                "displayName": "Fire Safety",
+                "displayName": "Fire & Industrial Safety",
                 "branch": null,
                 "careerPaths": [
-                    "Senior Fire Safety Specialist",
-                    "Fire Safety Consultant",
-                    "Lead Fire Safety Engineer"
+                    "Fire Safety Officer",
+                    "Safety Director"
                 ],
                 "projects": {
                     "beginner": [
-                        "Basic fire-safety Project",
-                        "fire-safety Simulation",
-                        "Introduction to fire-safety"
+                        "Training and Certification Tracker"
                     ],
                     "intermediate": [
-                        "Advanced fire-safety System",
-                        "Cross-platform fire-safety",
-                        "fire-safety Analytics"
+                        "Security Incident Tracker",
+                        "Physical Access Control Dashboard",
+                        "Threat Assessment Tool"
                     ],
                     "advanced": [
-                        "Enterprise fire-safety Suite",
-                        "High-Performance fire-safety",
-                        "Global fire-safety Infrastructure"
+                        "Emergency Response Coordination System",
+                        "Patrol Route Optimizer"
                     ]
                 },
                 "certifications": {
                     "free": [
-                        "fire-safety Foundations",
-                        "Google fire-safety Intro"
+                        "Fire & Industrial Safety Foundations (Free)",
+                        "Google Fire & Industrial Safety Intro"
                     ],
                     "pro": [
-                        "Professional fire-safety Cert",
-                        "Microsoft fire-safety Master"
+                        "Professional Fire & Industrial Safety Certificate",
+                        "Microsoft Certified: Fire & Industrial Safety"
                     ],
                     "premium": [
-                        "Industry Certified fire-safety",
-                        "fire-safety Expert Professional"
+                        "Advanced Fire & Industrial Safety Expert",
+                        "Enterprise Fire & Industrial Safety Professional"
                     ]
                 }
             }
         }
     },
     "agriculture": {
-        "displayName": "Agriculture",
+        "displayName": "Agriculture & Environmental Studies",
         "specializations": {
             "agritech": {
-                "displayName": "Agritech",
+                "displayName": "Agri-Technology",
                 "branch": null,
                 "careerPaths": [
-                    "Senior Agritech Specialist",
-                    "Agritech Consultant",
-                    "Lead Agritech Engineer"
+                    "AgriTech Specialist",
+                    "Precision Ag Manager"
                 ],
                 "projects": {
-                    "beginner": [
-                        "Basic agritech Project",
-                        "agritech Simulation",
-                        "Introduction to agritech"
-                    ],
+                    "beginner": [],
                     "intermediate": [
-                        "Advanced agritech System",
-                        "Cross-platform agritech",
-                        "agritech Analytics"
+                        "Farm Management System",
+                        "Carbon Footprint Calculator",
+                        "Weather-Based Planting Scheduler",
+                        "Farm-to-Table Marketplace"
                     ],
                     "advanced": [
-                        "Enterprise agritech Suite",
-                        "High-Performance agritech",
-                        "Global agritech Infrastructure"
+                        "Precision Agriculture Dashboard",
+                        "Crop Disease Identifier"
                     ]
                 },
                 "certifications": {
                     "free": [
-                        "agritech Foundations",
-                        "Google agritech Intro"
+                        "Agri-Technology Foundations (Free)",
+                        "Google Agri-Technology Intro"
                     ],
                     "pro": [
-                        "Professional agritech Cert",
-                        "Microsoft agritech Master"
+                        "Professional Agri-Technology Certificate",
+                        "Microsoft Certified: Agri-Technology"
                     ],
                     "premium": [
-                        "Industry Certified agritech",
-                        "agritech Expert Professional"
+                        "Advanced Agri-Technology Expert",
+                        "Enterprise Agri-Technology Professional"
                     ]
                 }
             },
             "organic-farming": {
-                "displayName": "Organic Farming",
+                "displayName": "Sustainable & Organic Farming",
                 "branch": null,
                 "careerPaths": [
-                    "Senior Organic Farming Specialist",
-                    "Organic Farming Consultant",
-                    "Lead Organic Farming Engineer"
+                    "Organic Farmer",
+                    "Organic Consultant"
                 ],
                 "projects": {
-                    "beginner": [
-                        "Basic organic-farming Project",
-                        "organic-farming Simulation",
-                        "Introduction to organic-farming"
-                    ],
+                    "beginner": [],
                     "intermediate": [
-                        "Advanced organic-farming System",
-                        "Cross-platform organic-farming",
-                        "organic-farming Analytics"
+                        "Farm Management System",
+                        "Carbon Footprint Calculator",
+                        "Weather-Based Planting Scheduler",
+                        "Farm-to-Table Marketplace"
                     ],
                     "advanced": [
-                        "Enterprise organic-farming Suite",
-                        "High-Performance organic-farming",
-                        "Global organic-farming Infrastructure"
+                        "Precision Agriculture Dashboard",
+                        "Crop Disease Identifier"
                     ]
                 },
                 "certifications": {
                     "free": [
-                        "organic-farming Foundations",
-                        "Google organic-farming Intro"
+                        "Sustainable & Organic Farming Foundations (Free)",
+                        "Google Sustainable & Organic Farming Intro"
                     ],
                     "pro": [
-                        "Professional organic-farming Cert",
-                        "Microsoft organic-farming Master"
+                        "Professional Sustainable & Organic Farming Certificate",
+                        "Microsoft Certified: Sustainable & Organic Farming"
                     ],
                     "premium": [
-                        "Industry Certified organic-farming",
-                        "organic-farming Expert Professional"
+                        "Advanced Sustainable & Organic Farming Expert",
+                        "Enterprise Sustainable & Organic Farming Professional"
                     ]
                 }
             },
             "food-tech": {
-                "displayName": "Food Tech",
+                "displayName": "Food Technology",
                 "branch": null,
                 "careerPaths": [
-                    "Senior Food Tech Specialist",
-                    "Food Tech Consultant",
-                    "Lead Food Tech Engineer"
+                    "Food Technologist",
+                    "Food R&D Manager"
                 ],
                 "projects": {
-                    "beginner": [
-                        "Basic food-tech Project",
-                        "food-tech Simulation",
-                        "Introduction to food-tech"
-                    ],
+                    "beginner": [],
                     "intermediate": [
-                        "Advanced food-tech System",
-                        "Cross-platform food-tech",
-                        "food-tech Analytics"
+                        "Farm Management System",
+                        "Carbon Footprint Calculator",
+                        "Weather-Based Planting Scheduler",
+                        "Farm-to-Table Marketplace"
                     ],
                     "advanced": [
-                        "Enterprise food-tech Suite",
-                        "High-Performance food-tech",
-                        "Global food-tech Infrastructure"
+                        "Precision Agriculture Dashboard",
+                        "Crop Disease Identifier"
                     ]
                 },
                 "certifications": {
                     "free": [
-                        "food-tech Foundations",
-                        "Google food-tech Intro"
+                        "Food Technology Foundations (Free)",
+                        "Google Food Technology Intro"
                     ],
                     "pro": [
-                        "Professional food-tech Cert",
-                        "Microsoft food-tech Master"
+                        "Professional Food Technology Certificate",
+                        "Microsoft Certified: Food Technology"
                     ],
                     "premium": [
-                        "Industry Certified food-tech",
-                        "food-tech Expert Professional"
+                        "Advanced Food Technology Expert",
+                        "Enterprise Food Technology Professional"
                     ]
                 }
             },
             "climate-agriculture": {
-                "displayName": "Climate Agriculture",
+                "displayName": "Climate-Smart Agriculture",
                 "branch": null,
                 "careerPaths": [
-                    "Senior Climate Agriculture Specialist",
-                    "Climate Agriculture Consultant",
-                    "Lead Climate Agriculture Engineer"
+                    "Climate-Smart Ag Specialist",
+                    "Sustainability Manager"
                 ],
                 "projects": {
-                    "beginner": [
-                        "Basic climate-agriculture Project",
-                        "climate-agriculture Simulation",
-                        "Introduction to climate-agriculture"
-                    ],
+                    "beginner": [],
                     "intermediate": [
-                        "Advanced climate-agriculture System",
-                        "Cross-platform climate-agriculture",
-                        "climate-agriculture Analytics"
+                        "Farm Management System",
+                        "Carbon Footprint Calculator",
+                        "Weather-Based Planting Scheduler",
+                        "Farm-to-Table Marketplace"
                     ],
                     "advanced": [
-                        "Enterprise climate-agriculture Suite",
-                        "High-Performance climate-agriculture",
-                        "Global climate-agriculture Infrastructure"
+                        "Precision Agriculture Dashboard",
+                        "Crop Disease Identifier"
                     ]
                 },
                 "certifications": {
                     "free": [
-                        "climate-agriculture Foundations",
-                        "Google climate-agriculture Intro"
+                        "Climate-Smart Agriculture Foundations (Free)",
+                        "Google Climate-Smart Agriculture Intro"
                     ],
                     "pro": [
-                        "Professional climate-agriculture Cert",
-                        "Microsoft climate-agriculture Master"
+                        "Professional Climate-Smart Agriculture Certificate",
+                        "Microsoft Certified: Climate-Smart Agriculture"
                     ],
                     "premium": [
-                        "Industry Certified climate-agriculture",
-                        "climate-agriculture Expert Professional"
+                        "Advanced Climate-Smart Agriculture Expert",
+                        "Enterprise Climate-Smart Agriculture Professional"
                     ]
                 }
             },
             "fisheries": {
-                "displayName": "Fisheries",
+                "displayName": "Fisheries & Aquaculture",
                 "branch": null,
                 "careerPaths": [
-                    "Senior Fisheries Specialist",
-                    "Fisheries Consultant",
-                    "Lead Fisheries Engineer"
+                    "Aquaculture Manager",
+                    "Fisheries Scientist"
                 ],
                 "projects": {
-                    "beginner": [
-                        "Basic fisheries Project",
-                        "fisheries Simulation",
-                        "Introduction to fisheries"
-                    ],
+                    "beginner": [],
                     "intermediate": [
-                        "Advanced fisheries System",
-                        "Cross-platform fisheries",
-                        "fisheries Analytics"
+                        "Farm Management System",
+                        "Carbon Footprint Calculator",
+                        "Weather-Based Planting Scheduler",
+                        "Farm-to-Table Marketplace"
                     ],
                     "advanced": [
-                        "Enterprise fisheries Suite",
-                        "High-Performance fisheries",
-                        "Global fisheries Infrastructure"
+                        "Precision Agriculture Dashboard",
+                        "Crop Disease Identifier"
                     ]
                 },
                 "certifications": {
                     "free": [
-                        "fisheries Foundations",
-                        "Google fisheries Intro"
+                        "Fisheries & Aquaculture Foundations (Free)",
+                        "Google Fisheries & Aquaculture Intro"
                     ],
                     "pro": [
-                        "Professional fisheries Cert",
-                        "Microsoft fisheries Master"
+                        "Professional Fisheries & Aquaculture Certificate",
+                        "Microsoft Certified: Fisheries & Aquaculture"
                     ],
                     "premium": [
-                        "Industry Certified fisheries",
-                        "fisheries Expert Professional"
+                        "Advanced Fisheries & Aquaculture Expert",
+                        "Enterprise Fisheries & Aquaculture Professional"
                     ]
                 }
             },
             "veterinary": {
-                "displayName": "Veterinary",
+                "displayName": "Veterinary & Animal Sciences",
                 "branch": null,
                 "careerPaths": [
-                    "Senior Veterinary Specialist",
-                    "Veterinary Consultant",
-                    "Lead Veterinary Engineer"
+                    "Veterinarian",
+                    "Veterinary Specialist"
                 ],
                 "projects": {
-                    "beginner": [
-                        "Basic veterinary Project",
-                        "veterinary Simulation",
-                        "Introduction to veterinary"
-                    ],
+                    "beginner": [],
                     "intermediate": [
-                        "Advanced veterinary System",
-                        "Cross-platform veterinary",
-                        "veterinary Analytics"
+                        "Farm Management System",
+                        "Carbon Footprint Calculator",
+                        "Weather-Based Planting Scheduler",
+                        "Farm-to-Table Marketplace"
                     ],
                     "advanced": [
-                        "Enterprise veterinary Suite",
-                        "High-Performance veterinary",
-                        "Global veterinary Infrastructure"
+                        "Precision Agriculture Dashboard",
+                        "Crop Disease Identifier"
                     ]
                 },
                 "certifications": {
                     "free": [
-                        "veterinary Foundations",
-                        "Google veterinary Intro"
+                        "Veterinary & Animal Sciences Foundations (Free)",
+                        "Google Veterinary & Animal Sciences Intro"
                     ],
                     "pro": [
-                        "Professional veterinary Cert",
-                        "Microsoft veterinary Master"
+                        "Professional Veterinary & Animal Sciences Certificate",
+                        "Microsoft Certified: Veterinary & Animal Sciences"
                     ],
                     "premium": [
-                        "Industry Certified veterinary",
-                        "veterinary Expert Professional"
+                        "Advanced Veterinary & Animal Sciences Expert",
+                        "Enterprise Veterinary & Animal Sciences Professional"
                     ]
                 }
             }
         }
     },
     "hospitality": {
-        "displayName": "Hospitality",
+        "displayName": "Hospitality, Travel & Tourism",
         "specializations": {
             "aviation": {
-                "displayName": "Aviation",
+                "displayName": "Aviation & Cabin Crew Services",
                 "branch": null,
                 "careerPaths": [
-                    "Senior Aviation Specialist",
-                    "Aviation Consultant",
-                    "Lead Aviation Engineer"
+                    "Cabin Crew",
+                    "Airline Operations Manager"
                 ],
                 "projects": {
                     "beginner": [
-                        "Basic aviation Project",
-                        "aviation Simulation",
-                        "Introduction to aviation"
+                        "Travel Itinerary Builder"
                     ],
                     "intermediate": [
-                        "Advanced aviation System",
-                        "Cross-platform aviation",
-                        "aviation Analytics"
+                        "Restaurant Reservation Platform",
+                        "Event Planning and Management Tool",
+                        "Guest Experience Survey System",
+                        "Menu and Inventory Manager"
                     ],
                     "advanced": [
-                        "Enterprise aviation Suite",
-                        "High-Performance aviation",
-                        "Global aviation Infrastructure"
+                        "Hotel Property Management System"
                     ]
                 },
                 "certifications": {
                     "free": [
-                        "aviation Foundations",
-                        "Google aviation Intro"
+                        "Aviation & Cabin Crew Services Foundations (Free)",
+                        "Google Aviation & Cabin Crew Services Intro"
                     ],
                     "pro": [
-                        "Professional aviation Cert",
-                        "Microsoft aviation Master"
+                        "Professional Aviation & Cabin Crew Services Certificate",
+                        "Microsoft Certified: Aviation & Cabin Crew Services"
                     ],
                     "premium": [
-                        "Industry Certified aviation",
-                        "aviation Expert Professional"
+                        "Advanced Aviation & Cabin Crew Services Expert",
+                        "Enterprise Aviation & Cabin Crew Services Professional"
                     ]
                 }
             },
             "hotel-mgmt": {
-                "displayName": "Hotel Mgmt",
+                "displayName": "Hotel & Resort Management",
                 "branch": null,
                 "careerPaths": [
-                    "Senior Hotel Mgmt Specialist",
-                    "Hotel Mgmt Consultant",
-                    "Lead Hotel Mgmt Engineer"
+                    "Hotel Manager",
+                    "Resort General Manager"
                 ],
                 "projects": {
                     "beginner": [
-                        "Basic hotel-mgmt Project",
-                        "hotel-mgmt Simulation",
-                        "Introduction to hotel-mgmt"
+                        "Travel Itinerary Builder"
                     ],
                     "intermediate": [
-                        "Advanced hotel-mgmt System",
-                        "Cross-platform hotel-mgmt",
-                        "hotel-mgmt Analytics"
+                        "Restaurant Reservation Platform",
+                        "Event Planning and Management Tool",
+                        "Guest Experience Survey System",
+                        "Menu and Inventory Manager"
                     ],
                     "advanced": [
-                        "Enterprise hotel-mgmt Suite",
-                        "High-Performance hotel-mgmt",
-                        "Global hotel-mgmt Infrastructure"
+                        "Hotel Property Management System"
                     ]
                 },
                 "certifications": {
                     "free": [
-                        "hotel-mgmt Foundations",
-                        "Google hotel-mgmt Intro"
+                        "Hotel & Resort Management Foundations (Free)",
+                        "Google Hotel & Resort Management Intro"
                     ],
                     "pro": [
-                        "Professional hotel-mgmt Cert",
-                        "Microsoft hotel-mgmt Master"
+                        "Professional Hotel & Resort Management Certificate",
+                        "Microsoft Certified: Hotel & Resort Management"
                     ],
                     "premium": [
-                        "Industry Certified hotel-mgmt",
-                        "hotel-mgmt Expert Professional"
+                        "Advanced Hotel & Resort Management Expert",
+                        "Enterprise Hotel & Resort Management Professional"
                     ]
                 }
             },
             "travel-ops": {
-                "displayName": "Travel Ops",
+                "displayName": "Travel Operations & Management",
                 "branch": null,
                 "careerPaths": [
-                    "Senior Travel Ops Specialist",
-                    "Travel Ops Consultant",
-                    "Lead Travel Ops Engineer"
+                    "Travel Consultant",
+                    "Travel Operations Director"
                 ],
                 "projects": {
                     "beginner": [
-                        "Basic travel-ops Project",
-                        "travel-ops Simulation",
-                        "Introduction to travel-ops"
+                        "Travel Itinerary Builder"
                     ],
                     "intermediate": [
-                        "Advanced travel-ops System",
-                        "Cross-platform travel-ops",
-                        "travel-ops Analytics"
+                        "Restaurant Reservation Platform",
+                        "Event Planning and Management Tool",
+                        "Guest Experience Survey System",
+                        "Menu and Inventory Manager"
                     ],
                     "advanced": [
-                        "Enterprise travel-ops Suite",
-                        "High-Performance travel-ops",
-                        "Global travel-ops Infrastructure"
+                        "Hotel Property Management System"
                     ]
                 },
                 "certifications": {
                     "free": [
-                        "travel-ops Foundations",
-                        "Google travel-ops Intro"
+                        "Travel Operations & Management Foundations (Free)",
+                        "Google Travel Operations & Management Intro"
                     ],
                     "pro": [
-                        "Professional travel-ops Cert",
-                        "Microsoft travel-ops Master"
+                        "Professional Travel Operations & Management Certificate",
+                        "Microsoft Certified: Travel Operations & Management"
                     ],
                     "premium": [
-                        "Industry Certified travel-ops",
-                        "travel-ops Expert Professional"
+                        "Advanced Travel Operations & Management Expert",
+                        "Enterprise Travel Operations & Management Professional"
                     ]
                 }
             },
             "event-mgmt": {
-                "displayName": "Event Mgmt",
+                "displayName": "Event & Luxury Management",
                 "branch": null,
                 "careerPaths": [
-                    "Senior Event Mgmt Specialist",
-                    "Event Mgmt Consultant",
-                    "Lead Event Mgmt Engineer"
+                    "Event Planner",
+                    "Event Director"
                 ],
                 "projects": {
                     "beginner": [
-                        "Basic event-mgmt Project",
-                        "event-mgmt Simulation",
-                        "Introduction to event-mgmt"
+                        "Travel Itinerary Builder"
                     ],
                     "intermediate": [
-                        "Advanced event-mgmt System",
-                        "Cross-platform event-mgmt",
-                        "event-mgmt Analytics"
+                        "Restaurant Reservation Platform",
+                        "Event Planning and Management Tool",
+                        "Guest Experience Survey System",
+                        "Menu and Inventory Manager"
                     ],
                     "advanced": [
-                        "Enterprise event-mgmt Suite",
-                        "High-Performance event-mgmt",
-                        "Global event-mgmt Infrastructure"
+                        "Hotel Property Management System"
                     ]
                 },
                 "certifications": {
                     "free": [
-                        "event-mgmt Foundations",
-                        "Google event-mgmt Intro"
+                        "Event & Luxury Management Foundations (Free)",
+                        "Google Event & Luxury Management Intro"
                     ],
                     "pro": [
-                        "Professional event-mgmt Cert",
-                        "Microsoft event-mgmt Master"
+                        "Professional Event & Luxury Management Certificate",
+                        "Microsoft Certified: Event & Luxury Management"
                     ],
                     "premium": [
-                        "Industry Certified event-mgmt",
-                        "event-mgmt Expert Professional"
+                        "Advanced Event & Luxury Management Expert",
+                        "Enterprise Event & Luxury Management Professional"
                     ]
                 }
             },
             "cruise": {
-                "displayName": "Cruise",
+                "displayName": "Cruise & Maritime Hospitality",
                 "branch": null,
                 "careerPaths": [
-                    "Senior Cruise Specialist",
-                    "Cruise Consultant",
-                    "Lead Cruise Engineer"
+                    "Cruise Ship Staff",
+                    "Cruise Director"
                 ],
                 "projects": {
                     "beginner": [
-                        "Basic cruise Project",
-                        "cruise Simulation",
-                        "Introduction to cruise"
+                        "Travel Itinerary Builder"
                     ],
                     "intermediate": [
-                        "Advanced cruise System",
-                        "Cross-platform cruise",
-                        "cruise Analytics"
+                        "Restaurant Reservation Platform",
+                        "Event Planning and Management Tool",
+                        "Guest Experience Survey System",
+                        "Menu and Inventory Manager"
                     ],
                     "advanced": [
-                        "Enterprise cruise Suite",
-                        "High-Performance cruise",
-                        "Global cruise Infrastructure"
+                        "Hotel Property Management System"
                     ]
                 },
                 "certifications": {
                     "free": [
-                        "cruise Foundations",
-                        "Google cruise Intro"
+                        "Cruise & Maritime Hospitality Foundations (Free)",
+                        "Google Cruise & Maritime Hospitality Intro"
                     ],
                     "pro": [
-                        "Professional cruise Cert",
-                        "Microsoft cruise Master"
+                        "Professional Cruise & Maritime Hospitality Certificate",
+                        "Microsoft Certified: Cruise & Maritime Hospitality"
                     ],
                     "premium": [
-                        "Industry Certified cruise",
-                        "cruise Expert Professional"
+                        "Advanced Cruise & Maritime Hospitality Expert",
+                        "Enterprise Cruise & Maritime Hospitality Professional"
                     ]
                 }
             }
         }
     },
     "sports": {
-        "displayName": "Sports",
+        "displayName": "Sports, Fitness & Lifestyle",
         "specializations": {
             "sports-science": {
-                "displayName": "Sports Science",
+                "displayName": "Sports Science & Performance",
                 "branch": null,
                 "careerPaths": [
-                    "Senior Sports Science Specialist",
-                    "Sports Science Consultant",
-                    "Lead Sports Science Engineer"
+                    "Sports Scientist",
+                    "Performance Director"
                 ],
                 "projects": {
-                    "beginner": [
-                        "Basic sports-science Project",
-                        "sports-science Simulation",
-                        "Introduction to sports-science"
-                    ],
+                    "beginner": [],
                     "intermediate": [
-                        "Advanced sports-science System",
-                        "Cross-platform sports-science",
-                        "sports-science Analytics"
+                        "Workout Plan Generator",
+                        "Sports League Management System",
+                        "Nutrition and Meal Tracker",
+                        "Personal Training Client Manager"
                     ],
                     "advanced": [
-                        "Enterprise sports-science Suite",
-                        "High-Performance sports-science",
-                        "Global sports-science Infrastructure"
+                        "Athlete Performance Analytics Dashboard",
+                        "Sports Video Analysis Tool"
                     ]
                 },
                 "certifications": {
                     "free": [
-                        "sports-science Foundations",
-                        "Google sports-science Intro"
+                        "Sports Science & Performance Foundations (Free)",
+                        "Google Sports Science & Performance Intro"
                     ],
                     "pro": [
-                        "Professional sports-science Cert",
-                        "Microsoft sports-science Master"
+                        "Professional Sports Science & Performance Certificate",
+                        "Microsoft Certified: Sports Science & Performance"
                     ],
                     "premium": [
-                        "Industry Certified sports-science",
-                        "sports-science Expert Professional"
+                        "Advanced Sports Science & Performance Expert",
+                        "Enterprise Sports Science & Performance Professional"
                     ]
                 }
             },
             "strength-conditioning": {
-                "displayName": "Strength Conditioning",
+                "displayName": "Strength & Conditioning",
                 "branch": null,
                 "careerPaths": [
-                    "Senior Strength Conditioning Specialist",
-                    "Strength Conditioning Consultant",
-                    "Lead Strength Conditioning Engineer"
+                    "Strength & Conditioning Coach",
+                    "Head Strength Coach"
                 ],
                 "projects": {
-                    "beginner": [
-                        "Basic strength-conditioning Project",
-                        "strength-conditioning Simulation",
-                        "Introduction to strength-conditioning"
-                    ],
+                    "beginner": [],
                     "intermediate": [
-                        "Advanced strength-conditioning System",
-                        "Cross-platform strength-conditioning",
-                        "strength-conditioning Analytics"
+                        "Workout Plan Generator",
+                        "Sports League Management System",
+                        "Nutrition and Meal Tracker",
+                        "Personal Training Client Manager"
                     ],
                     "advanced": [
-                        "Enterprise strength-conditioning Suite",
-                        "High-Performance strength-conditioning",
-                        "Global strength-conditioning Infrastructure"
+                        "Athlete Performance Analytics Dashboard",
+                        "Sports Video Analysis Tool"
                     ]
                 },
                 "certifications": {
                     "free": [
-                        "strength-conditioning Foundations",
-                        "Google strength-conditioning Intro"
+                        "Strength & Conditioning Foundations (Free)",
+                        "Google Strength & Conditioning Intro"
                     ],
                     "pro": [
-                        "Professional strength-conditioning Cert",
-                        "Microsoft strength-conditioning Master"
+                        "Professional Strength & Conditioning Certificate",
+                        "Microsoft Certified: Strength & Conditioning"
                     ],
                     "premium": [
-                        "Industry Certified strength-conditioning",
-                        "strength-conditioning Expert Professional"
+                        "Advanced Strength & Conditioning Expert",
+                        "Enterprise Strength & Conditioning Professional"
                     ]
                 }
             },
             "coaching": {
-                "displayName": "Coaching",
+                "displayName": "Professional Coaching",
                 "branch": null,
                 "careerPaths": [
-                    "Senior Coaching Specialist",
-                    "Coaching Consultant",
-                    "Lead Coaching Engineer"
+                    "Sports Coach",
+                    "Head Coach"
                 ],
                 "projects": {
-                    "beginner": [
-                        "Basic coaching Project",
-                        "coaching Simulation",
-                        "Introduction to coaching"
-                    ],
+                    "beginner": [],
                     "intermediate": [
-                        "Advanced coaching System",
-                        "Cross-platform coaching",
-                        "coaching Analytics"
+                        "Workout Plan Generator",
+                        "Sports League Management System",
+                        "Nutrition and Meal Tracker",
+                        "Personal Training Client Manager"
                     ],
                     "advanced": [
-                        "Enterprise coaching Suite",
-                        "High-Performance coaching",
-                        "Global coaching Infrastructure"
+                        "Athlete Performance Analytics Dashboard",
+                        "Sports Video Analysis Tool"
                     ]
                 },
                 "certifications": {
                     "free": [
-                        "coaching Foundations",
-                        "Google coaching Intro"
+                        "Professional Coaching Foundations (Free)",
+                        "Google Professional Coaching Intro"
                     ],
                     "pro": [
-                        "Professional coaching Cert",
-                        "Microsoft coaching Master"
+                        "Professional Professional Coaching Certificate",
+                        "Microsoft Certified: Professional Coaching"
                     ],
                     "premium": [
-                        "Industry Certified coaching",
-                        "coaching Expert Professional"
+                        "Advanced Professional Coaching Expert",
+                        "Enterprise Professional Coaching Professional"
                     ]
                 }
             },
             "yoga-naturopathy": {
-                "displayName": "Yoga Naturopathy",
+                "displayName": "Yoga Therapy & Naturopathy",
                 "branch": null,
                 "careerPaths": [
-                    "Senior Yoga Naturopathy Specialist",
-                    "Yoga Naturopathy Consultant",
-                    "Lead Yoga Naturopathy Engineer"
+                    "Yoga Instructor",
+                    "Wellness Director"
                 ],
                 "projects": {
-                    "beginner": [
-                        "Basic yoga-naturopathy Project",
-                        "yoga-naturopathy Simulation",
-                        "Introduction to yoga-naturopathy"
-                    ],
+                    "beginner": [],
                     "intermediate": [
-                        "Advanced yoga-naturopathy System",
-                        "Cross-platform yoga-naturopathy",
-                        "yoga-naturopathy Analytics"
+                        "Workout Plan Generator",
+                        "Sports League Management System",
+                        "Nutrition and Meal Tracker",
+                        "Personal Training Client Manager"
                     ],
                     "advanced": [
-                        "Enterprise yoga-naturopathy Suite",
-                        "High-Performance yoga-naturopathy",
-                        "Global yoga-naturopathy Infrastructure"
+                        "Athlete Performance Analytics Dashboard",
+                        "Sports Video Analysis Tool"
                     ]
                 },
                 "certifications": {
                     "free": [
-                        "yoga-naturopathy Foundations",
-                        "Google yoga-naturopathy Intro"
+                        "Yoga Therapy & Naturopathy Foundations (Free)",
+                        "Google Yoga Therapy & Naturopathy Intro"
                     ],
                     "pro": [
-                        "Professional yoga-naturopathy Cert",
-                        "Microsoft yoga-naturopathy Master"
+                        "Professional Yoga Therapy & Naturopathy Certificate",
+                        "Microsoft Certified: Yoga Therapy & Naturopathy"
                     ],
                     "premium": [
-                        "Industry Certified yoga-naturopathy",
-                        "yoga-naturopathy Expert Professional"
+                        "Advanced Yoga Therapy & Naturopathy Expert",
+                        "Enterprise Yoga Therapy & Naturopathy Professional"
                     ]
                 }
             },
             "fitness-business": {
-                "displayName": "Fitness Business",
+                "displayName": "Fitness Entrepreneurship",
                 "branch": null,
                 "careerPaths": [
-                    "Senior Fitness Business Specialist",
-                    "Fitness Business Consultant",
-                    "Lead Fitness Business Engineer"
+                    "Gym Owner",
+                    "Fitness Entrepreneur"
                 ],
                 "projects": {
-                    "beginner": [
-                        "Basic fitness-business Project",
-                        "fitness-business Simulation",
-                        "Introduction to fitness-business"
-                    ],
+                    "beginner": [],
                     "intermediate": [
-                        "Advanced fitness-business System",
-                        "Cross-platform fitness-business",
-                        "fitness-business Analytics"
+                        "Workout Plan Generator",
+                        "Sports League Management System",
+                        "Nutrition and Meal Tracker",
+                        "Personal Training Client Manager"
                     ],
                     "advanced": [
-                        "Enterprise fitness-business Suite",
-                        "High-Performance fitness-business",
-                        "Global fitness-business Infrastructure"
+                        "Athlete Performance Analytics Dashboard",
+                        "Sports Video Analysis Tool"
                     ]
                 },
                 "certifications": {
                     "free": [
-                        "fitness-business Foundations",
-                        "Google fitness-business Intro"
+                        "Fitness Entrepreneurship Foundations (Free)",
+                        "Google Fitness Entrepreneurship Intro"
                     ],
                     "pro": [
-                        "Professional fitness-business Cert",
-                        "Microsoft fitness-business Master"
+                        "Professional Fitness Entrepreneurship Certificate",
+                        "Microsoft Certified: Fitness Entrepreneurship"
                     ],
                     "premium": [
-                        "Industry Certified fitness-business",
-                        "fitness-business Expert Professional"
+                        "Advanced Fitness Entrepreneurship Expert",
+                        "Enterprise Fitness Entrepreneurship Professional"
                     ]
                 }
             }
         }
     },
     "vocational": {
-        "displayName": "Vocational",
+        "displayName": "Skill-Based & Vocational Fields",
         "specializations": {
             "industrial-trades": {
-                "displayName": "Industrial Trades",
+                "displayName": "Industrial & Technical Trades",
                 "branch": null,
                 "careerPaths": [
-                    "Senior Industrial Trades Specialist",
-                    "Industrial Trades Consultant",
-                    "Lead Industrial Trades Engineer"
+                    "Skilled Tradesperson",
+                    "Master Craftsman"
                 ],
                 "projects": {
                     "beginner": [
-                        "Basic industrial-trades Project",
-                        "industrial-trades Simulation",
-                        "Introduction to industrial-trades"
+                        "Apprenticeship Progress Portal"
                     ],
                     "intermediate": [
-                        "Advanced industrial-trades System",
-                        "Cross-platform industrial-trades",
-                        "industrial-trades Analytics"
+                        "Trade Certification Tracker",
+                        "Job Estimation Calculator",
+                        "Equipment Maintenance Scheduler",
+                        "Safety Inspection Checklist App"
                     ],
                     "advanced": [
-                        "Enterprise industrial-trades Suite",
-                        "High-Performance industrial-trades",
-                        "Global industrial-trades Infrastructure"
+                        "Field Service Management App"
                     ]
                 },
                 "certifications": {
                     "free": [
-                        "industrial-trades Foundations",
-                        "Google industrial-trades Intro"
+                        "Industrial & Technical Trades Foundations (Free)",
+                        "Google Industrial & Technical Trades Intro"
                     ],
                     "pro": [
-                        "Professional industrial-trades Cert",
-                        "Microsoft industrial-trades Master"
+                        "Professional Industrial & Technical Trades Certificate",
+                        "Microsoft Certified: Industrial & Technical Trades"
                     ],
                     "premium": [
-                        "Industry Certified industrial-trades",
-                        "industrial-trades Expert Professional"
+                        "Advanced Industrial & Technical Trades Expert",
+                        "Enterprise Industrial & Technical Trades Professional"
                     ]
                 }
             },
             "iti-polytechnic": {
-                "displayName": "Iti Polytechnic",
+                "displayName": "ITI & Polytechnic Certifications",
                 "branch": null,
                 "careerPaths": [
-                    "Senior Iti Polytechnic Specialist",
-                    "Iti Polytechnic Consultant",
-                    "Lead Iti Polytechnic Engineer"
+                    "Technician",
+                    "Technical Supervisor"
                 ],
                 "projects": {
                     "beginner": [
-                        "Basic iti-polytechnic Project",
-                        "iti-polytechnic Simulation",
-                        "Introduction to iti-polytechnic"
+                        "Apprenticeship Progress Portal"
                     ],
                     "intermediate": [
-                        "Advanced iti-polytechnic System",
-                        "Cross-platform iti-polytechnic",
-                        "iti-polytechnic Analytics"
+                        "Trade Certification Tracker",
+                        "Job Estimation Calculator",
+                        "Equipment Maintenance Scheduler",
+                        "Safety Inspection Checklist App"
                     ],
                     "advanced": [
-                        "Enterprise iti-polytechnic Suite",
-                        "High-Performance iti-polytechnic",
-                        "Global iti-polytechnic Infrastructure"
+                        "Field Service Management App"
                     ]
                 },
                 "certifications": {
                     "free": [
-                        "iti-polytechnic Foundations",
-                        "Google iti-polytechnic Intro"
+                        "ITI & Polytechnic Certifications Foundations (Free)",
+                        "Google ITI & Polytechnic Certifications Intro"
                     ],
                     "pro": [
-                        "Professional iti-polytechnic Cert",
-                        "Microsoft iti-polytechnic Master"
+                        "Professional ITI & Polytechnic Certifications Certificate",
+                        "Microsoft Certified: ITI & Polytechnic Certifications"
                     ],
                     "premium": [
-                        "Industry Certified iti-polytechnic",
-                        "iti-polytechnic Expert Professional"
+                        "Advanced ITI & Polytechnic Certifications Expert",
+                        "Enterprise ITI & Polytechnic Certifications Professional"
                     ]
                 }
             },
             "ev-tech": {
-                "displayName": "Ev Tech",
+                "displayName": "Electric Vehicle Technology",
                 "branch": null,
                 "careerPaths": [
-                    "Senior Ev Tech Specialist",
-                    "Ev Tech Consultant",
-                    "Lead Ev Tech Engineer"
+                    "EV Technician",
+                    "EV Systems Engineer"
                 ],
                 "projects": {
                     "beginner": [
-                        "Basic ev-tech Project",
-                        "ev-tech Simulation",
-                        "Introduction to ev-tech"
+                        "Apprenticeship Progress Portal"
                     ],
                     "intermediate": [
-                        "Advanced ev-tech System",
-                        "Cross-platform ev-tech",
-                        "ev-tech Analytics"
+                        "Trade Certification Tracker",
+                        "Job Estimation Calculator",
+                        "Equipment Maintenance Scheduler",
+                        "Safety Inspection Checklist App"
                     ],
                     "advanced": [
-                        "Enterprise ev-tech Suite",
-                        "High-Performance ev-tech",
-                        "Global ev-tech Infrastructure"
+                        "Field Service Management App"
                     ]
                 },
                 "certifications": {
                     "free": [
-                        "ev-tech Foundations",
-                        "Google ev-tech Intro"
+                        "Electric Vehicle Technology Foundations (Free)",
+                        "Google Electric Vehicle Technology Intro"
                     ],
                     "pro": [
-                        "Professional ev-tech Cert",
-                        "Microsoft ev-tech Master"
+                        "Professional Electric Vehicle Technology Certificate",
+                        "Microsoft Certified: Electric Vehicle Technology"
                     ],
                     "premium": [
-                        "Industry Certified ev-tech",
-                        "ev-tech Expert Professional"
+                        "Advanced Electric Vehicle Technology Expert",
+                        "Enterprise Electric Vehicle Technology Professional"
                     ]
                 }
             },
             "renewable-energy": {
-                "displayName": "Renewable Energy",
+                "displayName": "Renewable Energy Systems",
                 "branch": null,
                 "careerPaths": [
-                    "Senior Renewable Energy Specialist",
-                    "Renewable Energy Consultant",
-                    "Lead Renewable Energy Engineer"
+                    "Solar Technician",
+                    "Renewable Energy Engineer"
                 ],
                 "projects": {
                     "beginner": [
-                        "Basic renewable-energy Project",
-                        "renewable-energy Simulation",
-                        "Introduction to renewable-energy"
+                        "Apprenticeship Progress Portal"
                     ],
                     "intermediate": [
-                        "Advanced renewable-energy System",
-                        "Cross-platform renewable-energy",
-                        "renewable-energy Analytics"
+                        "Trade Certification Tracker",
+                        "Job Estimation Calculator",
+                        "Equipment Maintenance Scheduler",
+                        "Safety Inspection Checklist App"
                     ],
                     "advanced": [
-                        "Enterprise renewable-energy Suite",
-                        "High-Performance renewable-energy",
-                        "Global renewable-energy Infrastructure"
+                        "Field Service Management App"
                     ]
                 },
                 "certifications": {
                     "free": [
-                        "renewable-energy Foundations",
-                        "Google renewable-energy Intro"
+                        "Renewable Energy Systems Foundations (Free)",
+                        "Google Renewable Energy Systems Intro"
                     ],
                     "pro": [
-                        "Professional renewable-energy Cert",
-                        "Microsoft renewable-energy Master"
+                        "Professional Renewable Energy Systems Certificate",
+                        "Microsoft Certified: Renewable Energy Systems"
                     ],
                     "premium": [
-                        "Industry Certified renewable-energy",
-                        "renewable-energy Expert Professional"
+                        "Advanced Renewable Energy Systems Expert",
+                        "Enterprise Renewable Energy Systems Professional"
                     ]
                 }
             },
             "skill-india": {
-                "displayName": "Skill India",
+                "displayName": "Skill India & Government Skill Programs",
                 "branch": null,
                 "careerPaths": [
-                    "Senior Skill India Specialist",
-                    "Skill India Consultant",
-                    "Lead Skill India Engineer"
+                    "Certified Professional",
+                    "Skill Development Trainer"
                 ],
                 "projects": {
                     "beginner": [
-                        "Basic skill-india Project",
-                        "skill-india Simulation",
-                        "Introduction to skill-india"
+                        "Apprenticeship Progress Portal"
                     ],
                     "intermediate": [
-                        "Advanced skill-india System",
-                        "Cross-platform skill-india",
-                        "skill-india Analytics"
+                        "Trade Certification Tracker",
+                        "Job Estimation Calculator",
+                        "Equipment Maintenance Scheduler",
+                        "Safety Inspection Checklist App"
                     ],
                     "advanced": [
-                        "Enterprise skill-india Suite",
-                        "High-Performance skill-india",
-                        "Global skill-india Infrastructure"
+                        "Field Service Management App"
                     ]
                 },
                 "certifications": {
                     "free": [
-                        "skill-india Foundations",
-                        "Google skill-india Intro"
+                        "Skill India & Government Skill Programs Foundations (Free)",
+                        "Google Skill India & Government Skill Programs Intro"
                     ],
                     "pro": [
-                        "Professional skill-india Cert",
-                        "Microsoft skill-india Master"
+                        "Professional Skill India & Government Skill Programs Certificate",
+                        "Microsoft Certified: Skill India & Government Skill Programs"
                     ],
                     "premium": [
-                        "Industry Certified skill-india",
-                        "skill-india Expert Professional"
+                        "Advanced Skill India & Government Skill Programs Expert",
+                        "Enterprise Skill India & Government Skill Programs Professional"
                     ]
                 }
             }
@@ -6045,534 +4486,512 @@ const COMPLETE_REAL_WORLD_DATA = {
         "displayName": "Cloud Computing",
         "specializations": {
             "cloud-architecture": {
-                "displayName": "Cloud Architecture",
+                "displayName": "Cloud Architecture & Solutions Design",
                 "branch": null,
                 "careerPaths": [
-                    "Senior Cloud Architecture Specialist",
-                    "Cloud Architecture Consultant",
-                    "Lead Cloud Architecture Engineer"
+                    "Cloud Solutions Architect",
+                    "Principal Cloud Architect",
+                    "Cloud Consultant"
                 ],
                 "projects": {
-                    "beginner": [
-                        "Basic cloud-architecture Project",
-                        "cloud-architecture Simulation",
-                        "Introduction to cloud-architecture"
-                    ],
+                    "beginner": [],
                     "intermediate": [
-                        "Advanced cloud-architecture System",
-                        "Cross-platform cloud-architecture",
-                        "cloud-architecture Analytics"
+                        "Infrastructure as Code Template Library",
+                        "Container Registry and Image Scanner",
+                        "Cloud Migration Assessment Tool"
                     ],
                     "advanced": [
-                        "Enterprise cloud-architecture Suite",
-                        "High-Performance cloud-architecture",
-                        "Global cloud-architecture Infrastructure"
+                        "Multi-Cloud Cost Optimizer",
+                        "Serverless Application Framework",
+                        "Cloud Security Posture Dashboard"
                     ]
                 },
                 "certifications": {
                     "free": [
-                        "cloud-architecture Foundations",
-                        "Google cloud-architecture Intro"
+                        "AWS Certified Solutions Architect – Associate"
                     ],
-                    "pro": [
-                        "Professional cloud-architecture Cert",
-                        "Microsoft cloud-architecture Master"
-                    ],
-                    "premium": [
-                        "Industry Certified cloud-architecture",
-                        "cloud-architecture Expert Professional"
-                    ]
+                    "pro": [],
+                    "premium": []
                 }
             },
             "cloud-security": {
-                "displayName": "Cloud Security",
+                "displayName": "Cloud Security & Compliance",
                 "branch": null,
                 "careerPaths": [
-                    "Senior Cloud Security Specialist",
-                    "Cloud Security Consultant",
-                    "Lead Cloud Security Engineer"
+                    "Cloud Security Engineer",
+                    "Cloud Security Architect"
                 ],
                 "projects": {
-                    "beginner": [
-                        "Basic cloud-security Project",
-                        "cloud-security Simulation",
-                        "Introduction to cloud-security"
-                    ],
+                    "beginner": [],
                     "intermediate": [
-                        "Advanced cloud-security System",
-                        "Cross-platform cloud-security",
-                        "cloud-security Analytics"
+                        "Infrastructure as Code Template Library",
+                        "Container Registry and Image Scanner",
+                        "Cloud Migration Assessment Tool"
                     ],
                     "advanced": [
-                        "Enterprise cloud-security Suite",
-                        "High-Performance cloud-security",
-                        "Global cloud-security Infrastructure"
+                        "Multi-Cloud Cost Optimizer",
+                        "Serverless Application Framework",
+                        "Cloud Security Posture Dashboard"
                     ]
                 },
                 "certifications": {
                     "free": [
-                        "cloud-security Foundations",
-                        "Google cloud-security Intro"
+                        "AWS Certified Solutions Architect – Associate"
                     ],
-                    "pro": [
-                        "Professional cloud-security Cert",
-                        "Microsoft cloud-security Master"
-                    ],
-                    "premium": [
-                        "Industry Certified cloud-security",
-                        "cloud-security Expert Professional"
-                    ]
+                    "pro": [],
+                    "premium": []
                 }
             }
         }
     },
     "devops": {
-        "displayName": "Devops",
+        "displayName": "DevOps & Site Reliability Engineering",
         "specializations": {
             "cloud-devops": {
-                "displayName": "Cloud Devops",
+                "displayName": "Cloud DevOps & SRE",
                 "branch": null,
                 "careerPaths": [
                     "DevOps Engineer",
-                    "SRE Engineer",
-                    "Platform Engineer"
+                    "Platform Engineer",
+                    "SRE Manager"
                 ],
                 "projects": {
                     "beginner": [
-                        "CI/CD Setup",
-                        "Dockerized App"
+                        "Basic Cloud DevOps & SRE Project",
+                        "Cloud DevOps & SRE Starter Kit",
+                        "Introduction to Cloud DevOps & SRE"
                     ],
                     "intermediate": [
-                        "Kubernetes Cluster Setup",
-                        "Infrastructure as Code"
+                        "Advanced Cloud DevOps & SRE Implementation",
+                        "Cloud DevOps & SRE Integration Service",
+                        "Cloud DevOps & SRE Analytics Suite"
                     ],
                     "advanced": [
-                        "Enterprise DevOps Pipeline",
-                        "Cloud-native Microservices Platform"
+                        "Enterprise Cloud DevOps & SRE Solution",
+                        "High-Performance Cloud DevOps & SRE System",
+                        "Global Cloud DevOps & SRE Architecture"
                     ]
                 },
                 "certifications": {
                     "free": [
-                        "GitHub Actions Certification",
-                        "Docker Fundamentals"
+                        "Certified Kubernetes Administrator (CKA)"
                     ],
-                    "pro": [
-                        "Docker Certified Associate",
-                        "Kubernetes CKA"
-                    ],
-                    "premium": [
-                        "AWS DevOps Engineer"
-                    ]
+                    "pro": [],
+                    "premium": []
                 }
             }
         }
     },
     "blockchain-web3": {
-        "displayName": "Blockchain Web3",
+        "displayName": "Blockchain & Web3",
         "specializations": {
             "web3-smart-contracts": {
-                "displayName": "Web3 Smart Contracts",
+                "displayName": "Smart Contract Development",
                 "branch": null,
                 "careerPaths": [
-                    "Blockchain Developer",
-                    "Smart Contract Engineer",
-                    "Web3 Developer"
+                    "Senior Smart Contract Development Specialist",
+                    "Smart Contract Development Consultant",
+                    "Lead Smart Contract Development Engineer"
                 ],
                 "projects": {
-                    "beginner": [
-                        "Simple Smart Contract",
-                        "Crypto Wallet UI"
-                    ],
+                    "beginner": [],
                     "intermediate": [
-                        "NFT Marketplace",
-                        "Token Creation Platform"
+                        "Blockchain Explorer",
+                        "Web3 Wallet Integration Library"
                     ],
                     "advanced": [
-                        "DAO System",
-                        "DeFi Lending Platform"
+                        "NFT Marketplace",
+                        "DeFi Yield Aggregator",
+                        "DAO Governance Platform",
+                        "Smart Contract Testing Framework"
                     ]
                 },
                 "certifications": {
                     "free": [
-                        "Binance Blockchain Intro"
+                        "Smart Contract Development Foundations (Free)",
+                        "Google Smart Contract Development Intro"
                     ],
                     "pro": [
-                        "Certified Blockchain Developer"
+                        "Professional Smart Contract Development Certificate",
+                        "Microsoft Certified: Smart Contract Development"
                     ],
                     "premium": [
-                        "Ethereum Professional Certification"
+                        "Advanced Smart Contract Development Expert",
+                        "Enterprise Smart Contract Development Professional"
                     ]
                 }
             },
             "web3-dapps": {
-                "displayName": "Web3 Dapps",
+                "displayName": "DApp Development",
                 "branch": null,
                 "careerPaths": [
-                    "Senior Web3 Dapps Specialist",
-                    "Web3 Dapps Consultant",
-                    "Lead Web3 Dapps Engineer"
+                    "Senior DApp Development Specialist",
+                    "DApp Development Consultant",
+                    "Lead DApp Development Engineer"
                 ],
                 "projects": {
-                    "beginner": [
-                        "Basic web3-dapps Project",
-                        "web3-dapps Simulation",
-                        "Introduction to web3-dapps"
-                    ],
+                    "beginner": [],
                     "intermediate": [
-                        "Advanced web3-dapps System",
-                        "Cross-platform web3-dapps",
-                        "web3-dapps Analytics"
+                        "Blockchain Explorer",
+                        "Web3 Wallet Integration Library"
                     ],
                     "advanced": [
-                        "Enterprise web3-dapps Suite",
-                        "High-Performance web3-dapps",
-                        "Global web3-dapps Infrastructure"
+                        "NFT Marketplace",
+                        "DeFi Yield Aggregator",
+                        "DAO Governance Platform",
+                        "Smart Contract Testing Framework"
                     ]
                 },
                 "certifications": {
                     "free": [
-                        "web3-dapps Foundations",
-                        "Google web3-dapps Intro"
+                        "DApp Development Foundations (Free)",
+                        "Google DApp Development Intro"
                     ],
                     "pro": [
-                        "Professional web3-dapps Cert",
-                        "Microsoft web3-dapps Master"
+                        "Professional DApp Development Certificate",
+                        "Microsoft Certified: DApp Development"
                     ],
                     "premium": [
-                        "Industry Certified web3-dapps",
-                        "web3-dapps Expert Professional"
+                        "Advanced DApp Development Expert",
+                        "Enterprise DApp Development Professional"
                     ]
                 }
             }
         }
     },
     "ar-vr": {
-        "displayName": "Ar Vr",
+        "displayName": "AR / VR / Mixed Reality",
         "specializations": {
             "tech-xr": {
-                "displayName": "Tech Xr",
+                "displayName": "AR/VR & Spatial Computing",
                 "branch": null,
                 "careerPaths": [
-                    "Senior Tech Xr Specialist",
-                    "Tech Xr Consultant",
-                    "Lead Tech Xr Engineer"
+                    "Senior AR/VR & Spatial Computing Specialist",
+                    "AR/VR & Spatial Computing Consultant",
+                    "Lead AR/VR & Spatial Computing Engineer"
                 ],
                 "projects": {
                     "beginner": [
-                        "Basic tech-xr Project",
-                        "tech-xr Simulation",
-                        "Introduction to tech-xr"
+                        "Basic AR/VR & Spatial Computing Project",
+                        "AR/VR & Spatial Computing Starter Kit",
+                        "Introduction to AR/VR & Spatial Computing"
                     ],
                     "intermediate": [
-                        "Advanced tech-xr System",
-                        "Cross-platform tech-xr",
-                        "tech-xr Analytics"
+                        "Advanced AR/VR & Spatial Computing Implementation",
+                        "AR/VR & Spatial Computing Integration Service",
+                        "AR/VR & Spatial Computing Analytics Suite"
                     ],
                     "advanced": [
-                        "Enterprise tech-xr Suite",
-                        "High-Performance tech-xr",
-                        "Global tech-xr Infrastructure"
+                        "Enterprise AR/VR & Spatial Computing Solution",
+                        "High-Performance AR/VR & Spatial Computing System",
+                        "Global AR/VR & Spatial Computing Architecture"
                     ]
                 },
                 "certifications": {
                     "free": [
-                        "tech-xr Foundations",
-                        "Google tech-xr Intro"
+                        "AR/VR & Spatial Computing Foundations (Free)",
+                        "Google AR/VR & Spatial Computing Intro"
                     ],
                     "pro": [
-                        "Professional tech-xr Cert",
-                        "Microsoft tech-xr Master"
+                        "Professional AR/VR & Spatial Computing Certificate",
+                        "Microsoft Certified: AR/VR & Spatial Computing"
                     ],
                     "premium": [
-                        "Industry Certified tech-xr",
-                        "tech-xr Expert Professional"
+                        "Advanced AR/VR & Spatial Computing Expert",
+                        "Enterprise AR/VR & Spatial Computing Professional"
                     ]
                 }
             }
         }
     },
     "quantum": {
-        "displayName": "Quantum",
+        "displayName": "Quantum Computing",
         "specializations": {
             "tech-quantum": {
-                "displayName": "Tech Quantum",
+                "displayName": "Quantum Computing",
                 "branch": null,
                 "careerPaths": [
-                    "Quantum Computing Engineer",
-                    "Quantum Software Developer",
-                    "Quantum Research Scientist"
+                    "Senior Quantum Computing Specialist",
+                    "Quantum Computing Consultant",
+                    "Lead Quantum Computing Engineer"
                 ],
                 "projects": {
                     "beginner": [
-                        "Quantum Circuit Simulator using Qiskit"
+                        "Basic Quantum Computing Project",
+                        "Quantum Computing Starter Kit",
+                        "Introduction to Quantum Computing"
                     ],
                     "intermediate": [
-                        "Quantum Algorithm Implementation"
+                        "Advanced Quantum Computing Implementation",
+                        "Quantum Computing Integration Service",
+                        "Quantum Computing Analytics Suite"
                     ],
                     "advanced": [
-                        "Quantum Secure Communication System"
+                        "Enterprise Quantum Computing Solution",
+                        "High-Performance Quantum Computing System",
+                        "Global Quantum Computing Architecture"
                     ]
                 },
                 "certifications": {
                     "free": [
-                        "IBM Quantum Computing Fundamentals"
+                        "Quantum Computing Foundations (Free)",
+                        "Google Quantum Computing Intro"
                     ],
                     "pro": [
-                        "IBM Quantum Developer Certification"
+                        "Professional Quantum Computing Certificate",
+                        "Microsoft Certified: Quantum Computing"
                     ],
                     "premium": [
-                        "Professional Quantum Computing Developer Certification"
+                        "Advanced Quantum Computing Expert",
+                        "Enterprise Quantum Computing Professional"
                     ]
                 }
             }
         }
     },
     "robotics-automation": {
-        "displayName": "Robotics Automation",
+        "displayName": "Robotics & Automation",
         "specializations": {
             "tech-robotics": {
-                "displayName": "Tech Robotics",
+                "displayName": "Robotics & Autonomous Systems",
                 "branch": null,
                 "careerPaths": [
-                    "Robotics Engineer",
-                    "Automation Engineer",
-                    "Control Systems Engineer"
+                    "Senior Robotics & Autonomous Systems Specialist",
+                    "Robotics & Autonomous Systems Consultant",
+                    "Lead Robotics & Autonomous Systems Engineer"
                 ],
                 "projects": {
-                    "beginner": [
-                        "Line Follower Robot"
-                    ],
+                    "beginner": [],
                     "intermediate": [
-                        "Robotic Arm"
+                        "Drone Flight Path Planner",
+                        "RPA Workflow Designer"
                     ],
                     "advanced": [
-                        "Autonomous Robotics System"
+                        "Robot Simulation Environment",
+                        "Industrial Automation Dashboard",
+                        "Computer Vision Object Detection System",
+                        "Sensor Fusion Visualization Tool"
                     ]
                 },
                 "certifications": {
                     "free": [
-                        "Robotics Intro Courses"
+                        "Robotics & Autonomous Systems Foundations (Free)",
+                        "Google Robotics & Autonomous Systems Intro"
                     ],
                     "pro": [
-                        "PLC Certification"
+                        "Professional Robotics & Autonomous Systems Certificate",
+                        "Microsoft Certified: Robotics & Autonomous Systems"
                     ],
                     "premium": [
-                        "Robotics Specialization"
+                        "Advanced Robotics & Autonomous Systems Expert",
+                        "Enterprise Robotics & Autonomous Systems Professional"
                     ]
                 }
             }
         }
     },
     "bioinformatics": {
-        "displayName": "Bioinformatics",
+        "displayName": "Bioinformatics & Computational Biology",
         "specializations": {
             "tech-bio": {
-                "displayName": "Tech Bio",
+                "displayName": "Bioinformatics & Computational Biology",
                 "branch": null,
                 "careerPaths": [
-                    "Senior Tech Bio Specialist",
-                    "Tech Bio Consultant",
-                    "Lead Tech Bio Engineer"
+                    "Senior Bioinformatics & Computational Biology Specialist",
+                    "Bioinformatics & Computational Biology Consultant",
+                    "Lead Bioinformatics & Computational Biology Engineer"
                 ],
                 "projects": {
                     "beginner": [
-                        "Basic tech-bio Project",
-                        "tech-bio Simulation",
-                        "Introduction to tech-bio"
+                        "Basic Bioinformatics & Computational Biology Project",
+                        "Bioinformatics & Computational Biology Starter Kit",
+                        "Introduction to Bioinformatics & Computational Biology"
                     ],
                     "intermediate": [
-                        "Advanced tech-bio System",
-                        "Cross-platform tech-bio",
-                        "tech-bio Analytics"
+                        "Advanced Bioinformatics & Computational Biology Implementation",
+                        "Bioinformatics & Computational Biology Integration Service",
+                        "Bioinformatics & Computational Biology Analytics Suite"
                     ],
                     "advanced": [
-                        "Enterprise tech-bio Suite",
-                        "High-Performance tech-bio",
-                        "Global tech-bio Infrastructure"
+                        "Enterprise Bioinformatics & Computational Biology Solution",
+                        "High-Performance Bioinformatics & Computational Biology System",
+                        "Global Bioinformatics & Computational Biology Architecture"
                     ]
                 },
                 "certifications": {
                     "free": [
-                        "tech-bio Foundations",
-                        "Google tech-bio Intro"
+                        "Bioinformatics & Computational Biology Foundations (Free)",
+                        "Google Bioinformatics & Computational Biology Intro"
                     ],
                     "pro": [
-                        "Professional tech-bio Cert",
-                        "Microsoft tech-bio Master"
+                        "Professional Bioinformatics & Computational Biology Certificate",
+                        "Microsoft Certified: Bioinformatics & Computational Biology"
                     ],
                     "premium": [
-                        "Industry Certified tech-bio",
-                        "tech-bio Expert Professional"
+                        "Advanced Bioinformatics & Computational Biology Expert",
+                        "Enterprise Bioinformatics & Computational Biology Professional"
                     ]
                 }
             }
         }
     },
     "product-management": {
-        "displayName": "Product Management",
+        "displayName": "Product Management & Tech Leadership",
         "specializations": {
             "prod-pm": {
-                "displayName": "Prod Pm",
+                "displayName": "Technical Product Management",
                 "branch": null,
                 "careerPaths": [
-                    "Senior Prod Pm Specialist",
-                    "Prod Pm Consultant",
-                    "Lead Prod Pm Engineer"
+                    "Senior Technical Product Management Specialist",
+                    "Technical Product Management Consultant",
+                    "Lead Technical Product Management Engineer"
                 ],
                 "projects": {
                     "beginner": [
-                        "Basic prod-pm Project",
-                        "prod-pm Simulation",
-                        "Introduction to prod-pm"
+                        "OKR Tracking Dashboard"
                     ],
                     "intermediate": [
-                        "Advanced prod-pm System",
-                        "Cross-platform prod-pm",
-                        "prod-pm Analytics"
+                        "Product Roadmap Visualization Tool",
+                        "Feature Prioritization Framework",
+                        "User Feedback Analytics Platform",
+                        "A/B Test Results Analyzer",
+                        "Competitive Intelligence Dashboard"
                     ],
-                    "advanced": [
-                        "Enterprise prod-pm Suite",
-                        "High-Performance prod-pm",
-                        "Global prod-pm Infrastructure"
-                    ]
+                    "advanced": []
                 },
                 "certifications": {
                     "free": [
-                        "prod-pm Foundations",
-                        "Google prod-pm Intro"
+                        "Technical Product Management Foundations (Free)",
+                        "Google Technical Product Management Intro"
                     ],
                     "pro": [
-                        "Professional prod-pm Cert",
-                        "Microsoft prod-pm Master"
+                        "Professional Technical Product Management Certificate",
+                        "Microsoft Certified: Technical Product Management"
                     ],
                     "premium": [
-                        "Industry Certified prod-pm",
-                        "prod-pm Expert Professional"
+                        "Advanced Technical Product Management Expert",
+                        "Enterprise Technical Product Management Professional"
                     ]
                 }
             },
             "prod-leadership": {
-                "displayName": "Prod Leadership",
+                "displayName": "Tech Leadership & Strategy",
                 "branch": null,
                 "careerPaths": [
-                    "Senior Prod Leadership Specialist",
-                    "Prod Leadership Consultant",
-                    "Lead Prod Leadership Engineer"
+                    "Senior Tech Leadership & Strategy Specialist",
+                    "Tech Leadership & Strategy Consultant",
+                    "Lead Tech Leadership & Strategy Engineer"
                 ],
                 "projects": {
                     "beginner": [
-                        "Basic prod-leadership Project",
-                        "prod-leadership Simulation",
-                        "Introduction to prod-leadership"
+                        "OKR Tracking Dashboard"
                     ],
                     "intermediate": [
-                        "Advanced prod-leadership System",
-                        "Cross-platform prod-leadership",
-                        "prod-leadership Analytics"
+                        "Product Roadmap Visualization Tool",
+                        "Feature Prioritization Framework",
+                        "User Feedback Analytics Platform",
+                        "A/B Test Results Analyzer",
+                        "Competitive Intelligence Dashboard"
                     ],
-                    "advanced": [
-                        "Enterprise prod-leadership Suite",
-                        "High-Performance prod-leadership",
-                        "Global prod-leadership Infrastructure"
-                    ]
+                    "advanced": []
                 },
                 "certifications": {
                     "free": [
-                        "prod-leadership Foundations",
-                        "Google prod-leadership Intro"
+                        "Tech Leadership & Strategy Foundations (Free)",
+                        "Google Tech Leadership & Strategy Intro"
                     ],
                     "pro": [
-                        "Professional prod-leadership Cert",
-                        "Microsoft prod-leadership Master"
+                        "Professional Tech Leadership & Strategy Certificate",
+                        "Microsoft Certified: Tech Leadership & Strategy"
                     ],
                     "premium": [
-                        "Industry Certified prod-leadership",
-                        "prod-leadership Expert Professional"
+                        "Advanced Tech Leadership & Strategy Expert",
+                        "Enterprise Tech Leadership & Strategy Professional"
                     ]
                 }
             }
         }
     },
     "ui-ux": {
-        "displayName": "Ui Ux",
+        "displayName": "UI / UX & Human-Computer Interaction",
         "specializations": {
             "ui-ux-design": {
-                "displayName": "Ui Ux Design",
+                "displayName": "UI / UX Design",
                 "branch": null,
                 "careerPaths": [
-                    "Senior Ui Ux Design Specialist",
-                    "Ui Ux Design Consultant",
-                    "Lead Ui Ux Design Engineer"
+                    "Senior UI / UX Design Specialist",
+                    "UI / UX Design Consultant",
+                    "Lead UI / UX Design Engineer"
                 ],
                 "projects": {
                     "beginner": [
-                        "Basic ui-ux-design Project",
-                        "ui-ux-design Simulation",
-                        "Introduction to ui-ux-design"
+                        "Basic UI / UX Design Project",
+                        "UI / UX Design Starter Kit",
+                        "Introduction to UI / UX Design"
                     ],
                     "intermediate": [
-                        "Advanced ui-ux-design System",
-                        "Cross-platform ui-ux-design",
-                        "ui-ux-design Analytics"
+                        "Advanced UI / UX Design Implementation",
+                        "UI / UX Design Integration Service",
+                        "UI / UX Design Analytics Suite"
                     ],
                     "advanced": [
-                        "Enterprise ui-ux-design Suite",
-                        "High-Performance ui-ux-design",
-                        "Global ui-ux-design Infrastructure"
+                        "Enterprise UI / UX Design Solution",
+                        "High-Performance UI / UX Design System",
+                        "Global UI / UX Design Architecture"
                     ]
                 },
                 "certifications": {
                     "free": [
-                        "ui-ux-design Foundations",
-                        "Google ui-ux-design Intro"
+                        "UI / UX Design Foundations (Free)",
+                        "Google UI / UX Design Intro"
                     ],
                     "pro": [
-                        "Professional ui-ux-design Cert",
-                        "Microsoft ui-ux-design Master"
+                        "Professional UI / UX Design Certificate",
+                        "Microsoft Certified: UI / UX Design"
                     ],
                     "premium": [
-                        "Industry Certified ui-ux-design",
-                        "ui-ux-design Expert Professional"
+                        "Advanced UI / UX Design Expert",
+                        "Enterprise UI / UX Design Professional"
                     ]
                 }
             },
             "ui-research": {
-                "displayName": "Ui Research",
+                "displayName": "UX Research & HCI",
                 "branch": null,
                 "careerPaths": [
-                    "Senior Ui Research Specialist",
-                    "Ui Research Consultant",
-                    "Lead Ui Research Engineer"
+                    "Senior UX Research & HCI Specialist",
+                    "UX Research & HCI Consultant",
+                    "Lead UX Research & HCI Engineer"
                 ],
                 "projects": {
                     "beginner": [
-                        "Basic ui-research Project",
-                        "ui-research Simulation",
-                        "Introduction to ui-research"
+                        "Basic UX Research & HCI Project",
+                        "UX Research & HCI Starter Kit",
+                        "Introduction to UX Research & HCI"
                     ],
                     "intermediate": [
-                        "Advanced ui-research System",
-                        "Cross-platform ui-research",
-                        "ui-research Analytics"
+                        "Advanced UX Research & HCI Implementation",
+                        "UX Research & HCI Integration Service",
+                        "UX Research & HCI Analytics Suite"
                     ],
                     "advanced": [
-                        "Enterprise ui-research Suite",
-                        "High-Performance ui-research",
-                        "Global ui-research Infrastructure"
+                        "Enterprise UX Research & HCI Solution",
+                        "High-Performance UX Research & HCI System",
+                        "Global UX Research & HCI Architecture"
                     ]
                 },
                 "certifications": {
                     "free": [
-                        "ui-research Foundations",
-                        "Google ui-research Intro"
+                        "UX Research & HCI Foundations (Free)",
+                        "Google UX Research & HCI Intro"
                     ],
                     "pro": [
-                        "Professional ui-research Cert",
-                        "Microsoft ui-research Master"
+                        "Professional UX Research & HCI Certificate",
+                        "Microsoft Certified: UX Research & HCI"
                     ],
                     "premium": [
-                        "Industry Certified ui-research",
-                        "ui-research Expert Professional"
+                        "Advanced UX Research & HCI Expert",
+                        "Enterprise UX Research & HCI Professional"
                     ]
                 }
             }
