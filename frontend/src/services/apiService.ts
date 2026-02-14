@@ -1,5 +1,6 @@
 // API service to call Express backend instead of Supabase
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+import { auth } from '@/lib/firebase';
 
 interface ContentRequest {
     type: 'fields' | 'specializations' | 'career-paths' | 'roadmap' | 'certifications' | 'projects';
@@ -65,4 +66,14 @@ export async function getCertifications(params: { field?: string; specialization
         console.error('Certifications API failure:', error);
         return [];
     }
+}
+export async function getQuotaStats(): Promise<any> {
+    const token = await auth.currentUser?.getIdToken();
+    const response = await fetch(`${API_URL}/api/admin/quota`, {
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    });
+    if (!response.ok) throw new Error('Failed to fetch quota');
+    return await response.json();
 }

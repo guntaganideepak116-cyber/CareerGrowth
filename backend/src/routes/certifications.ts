@@ -7,6 +7,9 @@ const router = Router();
 // Query params: field, specialization, careerPath
 router.get('/', async (req: Request, res: Response) => {
     try {
+        const { UsageTracker } = await import('../services/usageTracker');
+        await UsageTracker.logFirestoreRead(1);
+
         const { field, specialization, careerPath, id } = req.query;
 
         // 1. If ID is provided, return specific certification (Direct Access)

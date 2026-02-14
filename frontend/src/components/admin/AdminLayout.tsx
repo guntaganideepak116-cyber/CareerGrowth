@@ -1,4 +1,4 @@
-import { ReactNode, useState } from 'react';
+import { ReactNode, useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import {
     LayoutDashboard,
@@ -15,7 +15,8 @@ import {
     Monitor,
     FileCheck,
     Menu,
-    BarChart3
+    BarChart3,
+    TrendingUp
 } from 'lucide-react';
 
 import { auth } from '@/lib/firebase';
@@ -23,6 +24,7 @@ import { useAuthContext } from '@/contexts/AuthContext';
 import { AdminGuard } from './AdminGuard';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { Button } from '@/components/ui/button';
+import { getQuotaStats } from '@/services/apiService';
 
 interface AdminLayoutProps {
     children: ReactNode;
@@ -45,6 +47,24 @@ export function AdminLayout({ children }: AdminLayoutProps) {
     const navigate = useNavigate();
     const { signOut } = useAuthContext();
     const [open, setOpen] = useState(false);
+    const [quota, setQuota] = useState<any>(null);
+
+    useEffect(() => {
+        const fetchQuota = async () => {
+            try {
+                const data = await getQuotaStats();
+                if (data.success) {
+                    setQuota(data);
+                }
+            } catch (error) {
+                console.error('Failed to fetch quota:', error);
+            }
+        };
+
+        fetchQuota();
+        const interval = setInterval(fetchQuota, 30000); // Update every 30s
+        return () => clearInterval(interval);
+    }, []);
 
     const handleLogout = async () => {
         try {
@@ -91,6 +111,62 @@ export function AdminLayout({ children }: AdminLayoutProps) {
                     );
                 })}
             </nav>
+
+            {/* Quota Usage Monitor */}
+            <div className="mx-4 mb-4 rounded-xl border border-primary/20 bg-primary/5 p-4 backdrop-blur-sm">
+                <div className="flex items-center justify-between mb-3">
+                    <h3 className="text-[10px] font-bold uppercase tracking-wider text-primary">Quota Consumption</h3>
+                    <TrendingUp className="h-3 w-3 text-primary animate-pulse" />
+                </div>
+
+                <div className="space-y-3 font-mono">
+                    {/* Firestore Reads */}
+                    <div className="space-y-1">
+                        <div className="flex justify-between text-[10px]">
+                            <span className="text-muted-foreground">Firestore Reads</span>
+                            <span className="font-medium">{quota?.stats?.firestore_reads || 0} / {quota?.limits?.firestore_reads || 50000}</span>
+                        </div>
+                        <div className="h-1.5 w-full rounded-full bg-primary/10 overflow-hidden">
+                            <div
+                                className="h-full bg-primary rounded-full transition-all duration-1000"
+                                style={{ width: `${Math.min(100, ((quota?.stats?.firestore_reads || 0) / (quota?.limits?.firestore_reads || 50000)) * 100)}%` }}
+                            ></div>
+                        </div>
+                    </div>
+
+                    {/* Firestore Writes */}
+                    <div className="space-y-1">
+                        <div className="flex justify-between text-[10px]">
+                            <span className="text-muted-foreground">Firestore Writes</span>
+                            <span className="font-medium">{quota?.stats?.firestore_writes || 0} / {quota?.limits?.firestore_writes || 20000}</span>
+                        </div>
+                        <div className="h-1.5 w-full rounded-full bg-primary/10 overflow-hidden">
+                            <div
+                                className="h-full bg-amber-500 rounded-full transition-all duration-1000"
+                                style={{ width: `${Math.min(100, ((quota?.stats?.firestore_writes || 0) / (quota?.limits?.firestore_writes || 20000)) * 100)}%` }}
+                            ></div>
+                        </div>
+                    </div>
+
+                    {/* Gemini AI Requests */}
+                    <div className="space-y-1">
+                        <div className="flex justify-between text-[10px]">
+                            <span className="text-muted-foreground">Gemini AI API</span>
+                            <span className="font-medium">{quota?.stats?.gemini_requests || 0} / {quota?.limits?.gemini_requests || 1500}</span>
+                        </div>
+                        <div className="h-1.5 w-full rounded-full bg-primary/10 overflow-hidden">
+                            <div
+                                className="h-full bg-cyan-500 rounded-full transition-all duration-1000"
+                                style={{ width: `${Math.min(100, ((quota?.stats?.gemini_requests || 0) / (quota?.limits?.gemini_requests || 1500)) * 100)}%` }}
+                            ></div>
+                        </div>
+                    </div>
+                </div>
+
+                <p className="mt-3 text-[9px] text-muted-foreground leading-tight">
+                    * REAL-TIME usage tracking active. Limits based on Daily Free Quota.
+                </p>
+            </div>
 
             <div className="border-t bg-muted/30 p-4">
                 <div className="mb-3 rounded-lg border bg-background/50 p-3 shadow-sm backdrop-blur-sm">

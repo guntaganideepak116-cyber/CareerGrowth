@@ -29,6 +29,9 @@ function cleanAIResponse(rawText: string): string {
 // ============================================
 async function getCachedContent(cacheKey: string): Promise<any | null> {
     try {
+        const { UsageTracker } = await import('./usageTracker');
+        await UsageTracker.logFirestoreRead(1);
+
         const doc = await db.collection('ai_generated_content').doc(cacheKey).get();
         if (doc.exists) {
             const data = doc.data();
@@ -45,6 +48,9 @@ async function getCachedContent(cacheKey: string): Promise<any | null> {
 
 async function setCachedContent(cacheKey: string, content: any): Promise<void> {
     try {
+        const { UsageTracker } = await import('./usageTracker');
+        await UsageTracker.logFirestoreWrite(1);
+
         await db.collection('ai_generated_content').doc(cacheKey).set({
             content,
             createdAt: new Date().toISOString(),
@@ -254,6 +260,9 @@ export async function generateDynamicContent(
         }
 
         // Generate content
+        const { UsageTracker } = await import('./usageTracker');
+        await UsageTracker.logGeminiRequest();
+
         const result = await model.generateContent(prompt);
 
         const response = await result.response;

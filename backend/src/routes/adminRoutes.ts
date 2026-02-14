@@ -122,4 +122,27 @@ router.get('/users', verifyAdminToken, async (req, res) => {
     }
 });
 
+/**
+ * Get daily quota usage statistics
+ */
+router.get('/quota', verifyAdminToken, async (req, res) => {
+    try {
+        const { UsageTracker } = await import('../services/usageTracker');
+        const stats = await UsageTracker.getDailyStats();
+        res.json({
+            success: true,
+            stats,
+            limits: {
+                firestore_reads: 50000,
+                firestore_writes: 20000,
+                gemini_requests: 1500 // Assuming a safe soft limit for free tier
+            }
+        });
+    } catch (error) {
+        console.error('Error fetching quota stats:', error);
+        res.status(500).json({ success: false, error: 'Failed to fetch quota statistics' });
+    }
+});
+
 export default router;
+
