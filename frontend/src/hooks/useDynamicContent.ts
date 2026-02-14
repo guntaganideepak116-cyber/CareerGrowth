@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { generateContent } from '@/services/apiService';
+import { generateContent, getCareerPaths } from '@/services/apiService';
 
 interface ContentRequest {
   type: 'fields' | 'specializations' | 'career-paths' | 'roadmap' | 'certifications' | 'projects';
@@ -82,12 +82,8 @@ export interface DynamicCareerPath {
 export function useCareerPaths(fieldId: string | null, specializationId: string | null) {
   const { data: careerPaths = [], isLoading: loading, error, refetch } = useQuery({
     queryKey: ['dynamic_career_paths', fieldId, specializationId],
-    queryFn: () => fetchDynamicContent<DynamicCareerPath[]>({
-      type: 'career-paths',
-      fieldId: fieldId!,
-      specializationId: specializationId!,
-    }),
-    enabled: !!fieldId && !!specializationId,
+    queryFn: () => getCareerPaths({ fieldId: fieldId!, specializationId: specializationId || undefined }),
+    enabled: !!fieldId,
     staleTime: 1000 * 60 * 30,
   });
 

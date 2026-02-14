@@ -77,3 +77,16 @@ export async function getQuotaStats(): Promise<any> {
     if (!response.ok) throw new Error('Failed to fetch quota');
     return await response.json();
 }
+
+export async function getCareerPaths(params: { fieldId: string; specializationId?: string }): Promise<any[]> {
+    try {
+        const query = new URLSearchParams(params as any).toString();
+        const response = await fetch(`${API_URL}/api/career-paths?${query}`);
+        if (!response.ok) throw new Error('API Error');
+        const result = await response.json();
+        return result.success ? result.paths : [];
+    } catch (error) {
+        console.error('Career Paths API failure:', error);
+        return [];
+    }
+}
