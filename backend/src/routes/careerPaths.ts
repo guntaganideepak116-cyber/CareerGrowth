@@ -138,6 +138,10 @@ router.get('/field/:fieldId', async (req, res) => {
 
         // Generate new paths using AI
         console.log(`🤖 Generating AI career paths for field: ${fieldId}`);
+
+        const { UsageTracker } = await import('../services/usageTracker');
+        await UsageTracker.logGeminiRequest();
+
         const generatedPaths = await generateCareerPathsForField(fieldId);
 
         // Save to Firestore
@@ -208,6 +212,10 @@ router.post('/generate-all', async (req, res) => {
 
                 // Generate paths
                 console.log(`🤖 Generating for ${field}...`);
+
+                const { UsageTracker } = await import('../services/usageTracker');
+                await UsageTracker.logGeminiRequest();
+
                 const paths = await generateCareerPathsForField(field);
 
                 // Save to Firestore
@@ -269,6 +277,9 @@ router.get('/', async (req, res) => {
     try {
         const { fieldId, specializationId } = req.query;
 
+        const { UsageTracker } = await import('../services/usageTracker');
+        await UsageTracker.logFirestoreRead(1);
+
         console.log(`[CareerPaths] Fetching paths - Field: ${fieldId}, Specialization: ${specializationId}`);
 
         let query: any = db.collection('career_paths');
@@ -328,6 +339,9 @@ router.get('/structured/:fieldId', async (req, res) => {
         const { fieldId } = req.params;
 
         console.log(`[CareerPaths] Fetching structured data for field: ${fieldId}`);
+
+        const { UsageTracker } = await import('../services/usageTracker');
+        await UsageTracker.logFirestoreRead(1);
 
         // 1. Get field info
         const fieldDoc = await db.collection('fields').doc(fieldId).get();

@@ -44,6 +44,9 @@ interface ValidationResult {
 async function fetchDatabaseCareerPaths(userContext: UserContext): Promise<any[]> {
     const { field, specialization, branch } = userContext;
 
+    const { UsageTracker } = await import('./usageTracker');
+    await UsageTracker.logFirestoreRead(1);
+
     console.log(`📊 Fetching career paths from DB: ${field} / ${specialization || branch || 'any'}`);
 
     try {
@@ -76,6 +79,9 @@ async function fetchDatabaseCareerPaths(userContext: UserContext): Promise<any[]
 async function fetchDatabaseProjects(userContext: UserContext): Promise<any[]> {
     const { field, specialization, branch } = userContext;
 
+    const { UsageTracker } = await import('./usageTracker');
+    await UsageTracker.logFirestoreRead(1);
+
     console.log(`📊 Fetching projects from DB: ${field} / ${specialization || branch || 'any'}`);
 
     try {
@@ -107,6 +113,9 @@ async function fetchDatabaseProjects(userContext: UserContext): Promise<any[]> {
 
 async function fetchDatabaseCertifications(userContext: UserContext): Promise<any[]> {
     const { field, specialization, branch } = userContext;
+
+    const { UsageTracker } = await import('./usageTracker');
+    await UsageTracker.logFirestoreRead(1);
 
     console.log(`📊 Fetching certifications from DB: ${field} / ${specialization || branch || 'any'}`);
 
@@ -259,6 +268,9 @@ async function generateAIFallback(
     }
 
     console.log(`⚠️  No database data found for ${type}, using AI fallback...`);
+
+    const { UsageTracker } = await import('./usageTracker');
+    await UsageTracker.logGeminiRequest();
 
     const { field, specialization, branch, skillLevel, assessmentScore } = userContext;
     const spec = specialization || branch || 'general';

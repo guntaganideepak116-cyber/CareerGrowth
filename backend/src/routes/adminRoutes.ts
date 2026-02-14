@@ -16,6 +16,9 @@ router.get('/check', verifyAdminToken, (req, res) => {
  */
 router.get('/stats', verifyAdminToken, async (req, res) => {
     try {
+        const { UsageTracker } = await import('../services/usageTracker');
+        await UsageTracker.logFirestoreRead(1);
+
         const db = admin.firestore();
 
         // Time period constants
@@ -95,6 +98,9 @@ router.get('/stats', verifyAdminToken, async (req, res) => {
  */
 router.get('/users', verifyAdminToken, async (req, res) => {
     try {
+        const { UsageTracker } = await import('../services/usageTracker');
+        await UsageTracker.logFirestoreRead(1);
+
         const db = admin.firestore();
         const usersSnapshot = await db.collection('users').orderBy('created_at', 'desc').get();
 
@@ -128,6 +134,9 @@ router.get('/users', verifyAdminToken, async (req, res) => {
 router.get('/quota', verifyAdminToken, async (req, res) => {
     try {
         const { UsageTracker } = await import('../services/usageTracker');
+        // Log a read for fetching stats themselves
+        await UsageTracker.logFirestoreRead(1);
+
         const stats = await UsageTracker.getDailyStats();
         const history = await UsageTracker.getUsageHistory(7);
 
