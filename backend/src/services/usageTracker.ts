@@ -63,34 +63,40 @@ export class UsageTracker {
     }
 
     static async getUsageHistory(days: number = 7) {
-        const history = [];
         const now = new Date();
         const istOffset = 5.5 * 60 * 60 * 1000;
 
-        for (let i = 0; i < days; i++) {
+        // Generate list of dates to fetch
+        const dates = Array.from({ length: days }, (_, i) => {
             const date = new Date(now.getTime() + istOffset);
             date.setDate(date.getDate() - i);
-            const docId = `usage_${date.toISOString().split('T')[0]}`;
+            return date.toISOString().split('T')[0];
+        });
+
+        // Parallel fetch for all days
+        const promises = dates.map(async (dateStr) => {
+            const docId = `usage_${dateStr}`;
             const doc = await db.collection('admin_metrics').doc(docId).get();
 
             if (doc.exists) {
                 const data = doc.data();
-                history.push({
-                    date: date.toISOString().split('T')[0],
+                return {
+                    date: dateStr,
                     firestore_reads: data?.firestore_reads || 0,
                     firestore_writes: data?.firestore_writes || 0,
                     gemini_requests: data?.gemini_requests || 0
-                });
+                };
             } else {
-                history.push({
-                    date: date.toISOString().split('T')[0],
+                return {
+                    date: dateStr,
                     firestore_reads: 0,
                     firestore_writes: 0,
                     gemini_requests: 0
-                });
+                };
             }
-        }
+        });
 
+        const history = await Promise.all(promises);
         return history.reverse();
     }
 }
