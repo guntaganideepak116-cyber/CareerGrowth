@@ -1,6 +1,5 @@
 import * as admin from 'firebase-admin';
-
-const db = admin.firestore();
+import { db } from '../config/firebase';
 
 interface DailyUsage {
     firestore_reads: number;
@@ -10,10 +9,18 @@ interface DailyUsage {
 }
 
 export class UsageTracker {
+    /**
+     * Calculates the document ID based on IST (UTC+5:30) to ensure 
+     * the reset happens at Midnight local time for the user.
+     */
     private static getDocId() {
-        const date = new Date();
-        // Use YYYY-MM-DD format for document ID
-        return `usage_${date.toISOString().split('T')[0]}`;
+        const now = new Date();
+        // Shift to IST (UTC + 5:30)
+        const istOffset = 5.5 * 60 * 60 * 1000;
+        const istDate = new Date(now.getTime() + istOffset);
+
+        // Return YYYY-MM-DD in IST
+        return `usage_${istDate.toISOString().split('T')[0]}`;
     }
 
     private static async updateCounter(field: keyof Omit<DailyUsage, 'last_updated'>, amount: number = 1) {
@@ -26,7 +33,6 @@ export class UsageTracker {
                 last_updated: admin.firestore.FieldValue.serverTimestamp()
             }, { merge: true });
         } catch (error) {
-            // Silently fail if quota exceeded or other DB issues
             console.warn(`[UsageTracker] Failed to update ${field}:`, error);
         }
     }
@@ -59,17 +65,21 @@ export class UsageTracker {
     static async getUsageHistory(days: number = 7) {
         const history = [];
         const now = new Date();
+        const istOffset = 5.5 * 60 * 60 * 1000;
 
         for (let i = 0; i < days; i++) {
-            const date = new Date(now);
-            date.setDate(now.getDate() - i);
+            const date = new Date(now.getTime() + istOffset);
+            date.setDate(date.getDate() - i);
             const docId = `usage_${date.toISOString().split('T')[0]}`;
             const doc = await db.collection('admin_metrics').doc(docId).get();
 
             if (doc.exists) {
+                const data = doc.data();
                 history.push({
                     date: date.toISOString().split('T')[0],
-                    ...doc.data()
+                    firestore_reads: data?.firestore_reads || 0,
+                    firestore_writes: data?.firestore_writes || 0,
+                    gemini_requests: data?.gemini_requests || 0
                 });
             } else {
                 history.push({
@@ -81,6 +91,6 @@ export class UsageTracker {
             }
         }
 
-        return history.reverse(); // Return oldest to newest
+        return history.reverse();
     }
 }

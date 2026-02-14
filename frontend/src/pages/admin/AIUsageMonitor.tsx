@@ -189,7 +189,7 @@ export default function AIUsageMonitor() {
                                         7-Day Usage History
                                     </CardTitle>
                                     <CardDescription>
-                                        Analyzing consumption patterns from today onwards
+                                        Analyzing consumption patterns across the active tracking period
                                     </CardDescription>
                                 </div>
                                 <div className="hidden md:flex gap-4 text-xs">
@@ -247,7 +247,7 @@ export default function AIUsageMonitor() {
                                     <Clock className="h-4 w-4 text-muted-foreground" />
                                     <span className="text-sm font-medium">Daily Reset Timeline</span>
                                 </div>
-                                <span className="text-xs text-primary font-bold">Midnight PST</span>
+                                <span className="text-xs text-primary font-bold">12:00 AM IST</span>
                             </div>
                             <div className="flex items-center justify-between p-3 bg-muted/50 rounded-lg">
                                 <div className="flex items-center gap-3">
