@@ -4677,46 +4677,6 @@ const COMPLETE_REAL_WORLD_DATA = {
     "design": {
         "displayName": "Design",
         "specializations": {
-            "ui-ux": {
-                "displayName": "Ui Ux",
-                "branch": null,
-                "careerPaths": [
-                    "Senior Ui Ux Specialist",
-                    "Ui Ux Consultant",
-                    "Lead Ui Ux Engineer"
-                ],
-                "projects": {
-                    "beginner": [
-                        "Basic ui-ux Project",
-                        "ui-ux Simulation",
-                        "Introduction to ui-ux"
-                    ],
-                    "intermediate": [
-                        "Advanced ui-ux System",
-                        "Cross-platform ui-ux",
-                        "ui-ux Analytics"
-                    ],
-                    "advanced": [
-                        "Enterprise ui-ux Suite",
-                        "High-Performance ui-ux",
-                        "Global ui-ux Infrastructure"
-                    ]
-                },
-                "certifications": {
-                    "free": [
-                        "ui-ux Foundations",
-                        "Google ui-ux Intro"
-                    ],
-                    "pro": [
-                        "Professional ui-ux Cert",
-                        "Microsoft ui-ux Master"
-                    ],
-                    "premium": [
-                        "Industry Certified ui-ux",
-                        "ui-ux Expert Professional"
-                    ]
-                }
-            },
             "motion": {
                 "displayName": "Motion",
                 "branch": null,
@@ -4914,6 +4874,86 @@ const COMPLETE_REAL_WORLD_DATA = {
                     "premium": [
                         "Industry Certified branding",
                         "branding Expert Professional"
+                    ]
+                }
+            },
+            "media-journalism": {
+                "displayName": "Media Journalism",
+                "branch": null,
+                "careerPaths": [
+                    "Senior Media Journalism Specialist",
+                    "Media Journalism Consultant",
+                    "Lead Media Journalism Engineer"
+                ],
+                "projects": {
+                    "beginner": [
+                        "Basic media-journalism Project",
+                        "media-journalism Simulation",
+                        "Introduction to media-journalism"
+                    ],
+                    "intermediate": [
+                        "Advanced media-journalism System",
+                        "Cross-platform media-journalism",
+                        "media-journalism Analytics"
+                    ],
+                    "advanced": [
+                        "Enterprise media-journalism Suite",
+                        "High-Performance media-journalism",
+                        "Global media-journalism Infrastructure"
+                    ]
+                },
+                "certifications": {
+                    "free": [
+                        "media-journalism Foundations",
+                        "Google media-journalism Intro"
+                    ],
+                    "pro": [
+                        "Professional media-journalism Cert",
+                        "Microsoft media-journalism Master"
+                    ],
+                    "premium": [
+                        "Industry Certified media-journalism",
+                        "media-journalism Expert Professional"
+                    ]
+                }
+            },
+            "media-digital": {
+                "displayName": "Media Digital",
+                "branch": null,
+                "careerPaths": [
+                    "Senior Media Digital Specialist",
+                    "Media Digital Consultant",
+                    "Lead Media Digital Engineer"
+                ],
+                "projects": {
+                    "beginner": [
+                        "Basic media-digital Project",
+                        "media-digital Simulation",
+                        "Introduction to media-digital"
+                    ],
+                    "intermediate": [
+                        "Advanced media-digital System",
+                        "Cross-platform media-digital",
+                        "media-digital Analytics"
+                    ],
+                    "advanced": [
+                        "Enterprise media-digital Suite",
+                        "High-Performance media-digital",
+                        "Global media-digital Infrastructure"
+                    ]
+                },
+                "certifications": {
+                    "free": [
+                        "media-digital Foundations",
+                        "Google media-digital Intro"
+                    ],
+                    "pro": [
+                        "Professional media-digital Cert",
+                        "Microsoft media-digital Master"
+                    ],
+                    "premium": [
+                        "Industry Certified media-digital",
+                        "media-digital Expert Professional"
                     ]
                 }
             }
@@ -6024,346 +6064,6 @@ const COMPLETE_REAL_WORLD_DATA = {
             }
         }
     },
-    "media": {
-        "displayName": "Media",
-        "specializations": {
-            "media-journalism": {
-                "displayName": "Media Journalism",
-                "branch": null,
-                "careerPaths": [
-                    "Senior Media Journalism Specialist",
-                    "Media Journalism Consultant",
-                    "Lead Media Journalism Engineer"
-                ],
-                "projects": {
-                    "beginner": [
-                        "Basic media-journalism Project",
-                        "media-journalism Simulation",
-                        "Introduction to media-journalism"
-                    ],
-                    "intermediate": [
-                        "Advanced media-journalism System",
-                        "Cross-platform media-journalism",
-                        "media-journalism Analytics"
-                    ],
-                    "advanced": [
-                        "Enterprise media-journalism Suite",
-                        "High-Performance media-journalism",
-                        "Global media-journalism Infrastructure"
-                    ]
-                },
-                "certifications": {
-                    "free": [
-                        "media-journalism Foundations",
-                        "Google media-journalism Intro"
-                    ],
-                    "pro": [
-                        "Professional media-journalism Cert",
-                        "Microsoft media-journalism Master"
-                    ],
-                    "premium": [
-                        "Industry Certified media-journalism",
-                        "media-journalism Expert Professional"
-                    ]
-                }
-            },
-            "media-digital": {
-                "displayName": "Media Digital",
-                "branch": null,
-                "careerPaths": [
-                    "Senior Media Digital Specialist",
-                    "Media Digital Consultant",
-                    "Lead Media Digital Engineer"
-                ],
-                "projects": {
-                    "beginner": [
-                        "Basic media-digital Project",
-                        "media-digital Simulation",
-                        "Introduction to media-digital"
-                    ],
-                    "intermediate": [
-                        "Advanced media-digital System",
-                        "Cross-platform media-digital",
-                        "media-digital Analytics"
-                    ],
-                    "advanced": [
-                        "Enterprise media-digital Suite",
-                        "High-Performance media-digital",
-                        "Global media-digital Infrastructure"
-                    ]
-                },
-                "certifications": {
-                    "free": [
-                        "media-digital Foundations",
-                        "Google media-digital Intro"
-                    ],
-                    "pro": [
-                        "Professional media-digital Cert",
-                        "Microsoft media-digital Master"
-                    ],
-                    "premium": [
-                        "Industry Certified media-digital",
-                        "media-digital Expert Professional"
-                    ]
-                }
-            }
-        }
-    },
-    "civil-services": {
-        "displayName": "Civil Services",
-        "specializations": {
-            "civil-admin": {
-                "displayName": "Civil Admin",
-                "branch": null,
-                "careerPaths": [
-                    "Senior Civil Admin Specialist",
-                    "Civil Admin Consultant",
-                    "Lead Civil Admin Engineer"
-                ],
-                "projects": {
-                    "beginner": [
-                        "Basic civil-admin Project",
-                        "civil-admin Simulation",
-                        "Introduction to civil-admin"
-                    ],
-                    "intermediate": [
-                        "Advanced civil-admin System",
-                        "Cross-platform civil-admin",
-                        "civil-admin Analytics"
-                    ],
-                    "advanced": [
-                        "Enterprise civil-admin Suite",
-                        "High-Performance civil-admin",
-                        "Global civil-admin Infrastructure"
-                    ]
-                },
-                "certifications": {
-                    "free": [
-                        "civil-admin Foundations",
-                        "Google civil-admin Intro"
-                    ],
-                    "pro": [
-                        "Professional civil-admin Cert",
-                        "Microsoft civil-admin Master"
-                    ],
-                    "premium": [
-                        "Industry Certified civil-admin",
-                        "civil-admin Expert Professional"
-                    ]
-                }
-            },
-            "civil-police": {
-                "displayName": "Civil Police",
-                "branch": null,
-                "careerPaths": [
-                    "Senior Civil Police Specialist",
-                    "Civil Police Consultant",
-                    "Lead Civil Police Engineer"
-                ],
-                "projects": {
-                    "beginner": [
-                        "Basic civil-police Project",
-                        "civil-police Simulation",
-                        "Introduction to civil-police"
-                    ],
-                    "intermediate": [
-                        "Advanced civil-police System",
-                        "Cross-platform civil-police",
-                        "civil-police Analytics"
-                    ],
-                    "advanced": [
-                        "Enterprise civil-police Suite",
-                        "High-Performance civil-police",
-                        "Global civil-police Infrastructure"
-                    ]
-                },
-                "certifications": {
-                    "free": [
-                        "civil-police Foundations",
-                        "Google civil-police Intro"
-                    ],
-                    "pro": [
-                        "Professional civil-police Cert",
-                        "Microsoft civil-police Master"
-                    ],
-                    "premium": [
-                        "Industry Certified civil-police",
-                        "civil-police Expert Professional"
-                    ]
-                }
-            }
-        }
-    },
-    "logistics": {
-        "displayName": "Logistics",
-        "specializations": {
-            "supply-chain-analytics": {
-                "displayName": "Supply Chain Analytics",
-                "branch": null,
-                "careerPaths": [
-                    "Senior Supply Chain Analytics Specialist",
-                    "Supply Chain Analytics Consultant",
-                    "Lead Supply Chain Analytics Engineer"
-                ],
-                "projects": {
-                    "beginner": [
-                        "Basic supply-chain-analytics Project",
-                        "supply-chain-analytics Simulation",
-                        "Introduction to supply-chain-analytics"
-                    ],
-                    "intermediate": [
-                        "Advanced supply-chain-analytics System",
-                        "Cross-platform supply-chain-analytics",
-                        "supply-chain-analytics Analytics"
-                    ],
-                    "advanced": [
-                        "Enterprise supply-chain-analytics Suite",
-                        "High-Performance supply-chain-analytics",
-                        "Global supply-chain-analytics Infrastructure"
-                    ]
-                },
-                "certifications": {
-                    "free": [
-                        "supply-chain-analytics Foundations",
-                        "Google supply-chain-analytics Intro"
-                    ],
-                    "pro": [
-                        "Professional supply-chain-analytics Cert",
-                        "Microsoft supply-chain-analytics Master"
-                    ],
-                    "premium": [
-                        "Industry Certified supply-chain-analytics",
-                        "supply-chain-analytics Expert Professional"
-                    ]
-                }
-            },
-            "warehouse-transport-management": {
-                "displayName": "Warehouse Transport Management",
-                "branch": null,
-                "careerPaths": [
-                    "Senior Warehouse Transport Management Specialist",
-                    "Warehouse Transport Management Consultant",
-                    "Lead Warehouse Transport Management Engineer"
-                ],
-                "projects": {
-                    "beginner": [
-                        "Basic warehouse-transport-management Project",
-                        "warehouse-transport-management Simulation",
-                        "Introduction to warehouse-transport-management"
-                    ],
-                    "intermediate": [
-                        "Advanced warehouse-transport-management System",
-                        "Cross-platform warehouse-transport-management",
-                        "warehouse-transport-management Analytics"
-                    ],
-                    "advanced": [
-                        "Enterprise warehouse-transport-management Suite",
-                        "High-Performance warehouse-transport-management",
-                        "Global warehouse-transport-management Infrastructure"
-                    ]
-                },
-                "certifications": {
-                    "free": [
-                        "warehouse-transport-management Foundations",
-                        "Google warehouse-transport-management Intro"
-                    ],
-                    "pro": [
-                        "Professional warehouse-transport-management Cert",
-                        "Microsoft warehouse-transport-management Master"
-                    ],
-                    "premium": [
-                        "Industry Certified warehouse-transport-management",
-                        "warehouse-transport-management Expert Professional"
-                    ]
-                }
-            }
-        }
-    },
-    "aviation": {
-        "displayName": "Aviation",
-        "specializations": {
-            "commercial-pilot-operations": {
-                "displayName": "Commercial Pilot Operations",
-                "branch": null,
-                "careerPaths": [
-                    "Senior Commercial Pilot Operations Specialist",
-                    "Commercial Pilot Operations Consultant",
-                    "Lead Commercial Pilot Operations Engineer"
-                ],
-                "projects": {
-                    "beginner": [
-                        "Basic commercial-pilot-operations Project",
-                        "commercial-pilot-operations Simulation",
-                        "Introduction to commercial-pilot-operations"
-                    ],
-                    "intermediate": [
-                        "Advanced commercial-pilot-operations System",
-                        "Cross-platform commercial-pilot-operations",
-                        "commercial-pilot-operations Analytics"
-                    ],
-                    "advanced": [
-                        "Enterprise commercial-pilot-operations Suite",
-                        "High-Performance commercial-pilot-operations",
-                        "Global commercial-pilot-operations Infrastructure"
-                    ]
-                },
-                "certifications": {
-                    "free": [
-                        "commercial-pilot-operations Foundations",
-                        "Google commercial-pilot-operations Intro"
-                    ],
-                    "pro": [
-                        "Professional commercial-pilot-operations Cert",
-                        "Microsoft commercial-pilot-operations Master"
-                    ],
-                    "premium": [
-                        "Industry Certified commercial-pilot-operations",
-                        "commercial-pilot-operations Expert Professional"
-                    ]
-                }
-            },
-            "merchant-navy-deck-engine": {
-                "displayName": "Merchant Navy Deck Engine",
-                "branch": null,
-                "careerPaths": [
-                    "Senior Merchant Navy Deck Engine Specialist",
-                    "Merchant Navy Deck Engine Consultant",
-                    "Lead Merchant Navy Deck Engine Engineer"
-                ],
-                "projects": {
-                    "beginner": [
-                        "Basic merchant-navy-deck-engine Project",
-                        "merchant-navy-deck-engine Simulation",
-                        "Introduction to merchant-navy-deck-engine"
-                    ],
-                    "intermediate": [
-                        "Advanced merchant-navy-deck-engine System",
-                        "Cross-platform merchant-navy-deck-engine",
-                        "merchant-navy-deck-engine Analytics"
-                    ],
-                    "advanced": [
-                        "Enterprise merchant-navy-deck-engine Suite",
-                        "High-Performance merchant-navy-deck-engine",
-                        "Global merchant-navy-deck-engine Infrastructure"
-                    ]
-                },
-                "certifications": {
-                    "free": [
-                        "merchant-navy-deck-engine Foundations",
-                        "Google merchant-navy-deck-engine Intro"
-                    ],
-                    "pro": [
-                        "Professional merchant-navy-deck-engine Cert",
-                        "Microsoft merchant-navy-deck-engine Master"
-                    ],
-                    "premium": [
-                        "Industry Certified merchant-navy-deck-engine",
-                        "merchant-navy-deck-engine Expert Professional"
-                    ]
-                }
-            }
-        }
-    },
     "cloud-computing": {
         "displayName": "Cloud Computing",
         "specializations": {
@@ -6404,46 +6104,6 @@ const COMPLETE_REAL_WORLD_DATA = {
                     "premium": [
                         "Industry Certified cloud-architecture",
                         "cloud-architecture Expert Professional"
-                    ]
-                }
-            },
-            "cloud-devops": {
-                "displayName": "Cloud Devops",
-                "branch": null,
-                "careerPaths": [
-                    "Senior Cloud Devops Specialist",
-                    "Cloud Devops Consultant",
-                    "Lead Cloud Devops Engineer"
-                ],
-                "projects": {
-                    "beginner": [
-                        "Basic cloud-devops Project",
-                        "cloud-devops Simulation",
-                        "Introduction to cloud-devops"
-                    ],
-                    "intermediate": [
-                        "Advanced cloud-devops System",
-                        "Cross-platform cloud-devops",
-                        "cloud-devops Analytics"
-                    ],
-                    "advanced": [
-                        "Enterprise cloud-devops Suite",
-                        "High-Performance cloud-devops",
-                        "Global cloud-devops Infrastructure"
-                    ]
-                },
-                "certifications": {
-                    "free": [
-                        "cloud-devops Foundations",
-                        "Google cloud-devops Intro"
-                    ],
-                    "pro": [
-                        "Professional cloud-devops Cert",
-                        "Microsoft cloud-devops Master"
-                    ],
-                    "premium": [
-                        "Industry Certified cloud-devops",
-                        "cloud-devops Expert Professional"
                     ]
                 }
             },
@@ -6489,251 +6149,46 @@ const COMPLETE_REAL_WORLD_DATA = {
             }
         }
     },
-    "ai-ml": {
-        "displayName": "Ai Ml",
+    "devops": {
+        "displayName": "Devops",
         "specializations": {
-            "ai-deep-learning": {
-                "displayName": "Ai Deep Learning",
+            "cloud-devops": {
+                "displayName": "Cloud Devops",
                 "branch": null,
                 "careerPaths": [
-                    "Senior Ai Deep Learning Specialist",
-                    "Ai Deep Learning Consultant",
-                    "Lead Ai Deep Learning Engineer"
+                    "Senior Cloud Devops Specialist",
+                    "Cloud Devops Consultant",
+                    "Lead Cloud Devops Engineer"
                 ],
                 "projects": {
                     "beginner": [
-                        "Basic ai-deep-learning Project",
-                        "ai-deep-learning Simulation",
-                        "Introduction to ai-deep-learning"
+                        "Basic cloud-devops Project",
+                        "cloud-devops Simulation",
+                        "Introduction to cloud-devops"
                     ],
                     "intermediate": [
-                        "Advanced ai-deep-learning System",
-                        "Cross-platform ai-deep-learning",
-                        "ai-deep-learning Analytics"
+                        "Advanced cloud-devops System",
+                        "Cross-platform cloud-devops",
+                        "cloud-devops Analytics"
                     ],
                     "advanced": [
-                        "Enterprise ai-deep-learning Suite",
-                        "High-Performance ai-deep-learning",
-                        "Global ai-deep-learning Infrastructure"
+                        "Enterprise cloud-devops Suite",
+                        "High-Performance cloud-devops",
+                        "Global cloud-devops Infrastructure"
                     ]
                 },
                 "certifications": {
                     "free": [
-                        "ai-deep-learning Foundations",
-                        "Google ai-deep-learning Intro"
+                        "cloud-devops Foundations",
+                        "Google cloud-devops Intro"
                     ],
                     "pro": [
-                        "Professional ai-deep-learning Cert",
-                        "Microsoft ai-deep-learning Master"
+                        "Professional cloud-devops Cert",
+                        "Microsoft cloud-devops Master"
                     ],
                     "premium": [
-                        "Industry Certified ai-deep-learning",
-                        "ai-deep-learning Expert Professional"
-                    ]
-                }
-            },
-            "ai-ds": {
-                "displayName": "Ai Ds",
-                "branch": null,
-                "careerPaths": [
-                    "Senior Ai Ds Specialist",
-                    "Ai Ds Consultant",
-                    "Lead Ai Ds Engineer"
-                ],
-                "projects": {
-                    "beginner": [
-                        "Basic ai-ds Project",
-                        "ai-ds Simulation",
-                        "Introduction to ai-ds"
-                    ],
-                    "intermediate": [
-                        "Advanced ai-ds System",
-                        "Cross-platform ai-ds",
-                        "ai-ds Analytics"
-                    ],
-                    "advanced": [
-                        "Enterprise ai-ds Suite",
-                        "High-Performance ai-ds",
-                        "Global ai-ds Infrastructure"
-                    ]
-                },
-                "certifications": {
-                    "free": [
-                        "ai-ds Foundations",
-                        "Google ai-ds Intro"
-                    ],
-                    "pro": [
-                        "Professional ai-ds Cert",
-                        "Microsoft ai-ds Master"
-                    ],
-                    "premium": [
-                        "Industry Certified ai-ds",
-                        "ai-ds Expert Professional"
-                    ]
-                }
-            },
-            "ai-nlp": {
-                "displayName": "Ai Nlp",
-                "branch": null,
-                "careerPaths": [
-                    "Senior Ai Nlp Specialist",
-                    "Ai Nlp Consultant",
-                    "Lead Ai Nlp Engineer"
-                ],
-                "projects": {
-                    "beginner": [
-                        "Basic ai-nlp Project",
-                        "ai-nlp Simulation",
-                        "Introduction to ai-nlp"
-                    ],
-                    "intermediate": [
-                        "Advanced ai-nlp System",
-                        "Cross-platform ai-nlp",
-                        "ai-nlp Analytics"
-                    ],
-                    "advanced": [
-                        "Enterprise ai-nlp Suite",
-                        "High-Performance ai-nlp",
-                        "Global ai-nlp Infrastructure"
-                    ]
-                },
-                "certifications": {
-                    "free": [
-                        "ai-nlp Foundations",
-                        "Google ai-nlp Intro"
-                    ],
-                    "pro": [
-                        "Professional ai-nlp Cert",
-                        "Microsoft ai-nlp Master"
-                    ],
-                    "premium": [
-                        "Industry Certified ai-nlp",
-                        "ai-nlp Expert Professional"
-                    ]
-                }
-            }
-        }
-    },
-    "cybersecurity": {
-        "displayName": "Cybersecurity",
-        "specializations": {
-            "cyber-offensive": {
-                "displayName": "Cyber Offensive",
-                "branch": null,
-                "careerPaths": [
-                    "Senior Cyber Offensive Specialist",
-                    "Cyber Offensive Consultant",
-                    "Lead Cyber Offensive Engineer"
-                ],
-                "projects": {
-                    "beginner": [
-                        "Basic cyber-offensive Project",
-                        "cyber-offensive Simulation",
-                        "Introduction to cyber-offensive"
-                    ],
-                    "intermediate": [
-                        "Advanced cyber-offensive System",
-                        "Cross-platform cyber-offensive",
-                        "cyber-offensive Analytics"
-                    ],
-                    "advanced": [
-                        "Enterprise cyber-offensive Suite",
-                        "High-Performance cyber-offensive",
-                        "Global cyber-offensive Infrastructure"
-                    ]
-                },
-                "certifications": {
-                    "free": [
-                        "cyber-offensive Foundations",
-                        "Google cyber-offensive Intro"
-                    ],
-                    "pro": [
-                        "Professional cyber-offensive Cert",
-                        "Microsoft cyber-offensive Master"
-                    ],
-                    "premium": [
-                        "Industry Certified cyber-offensive",
-                        "cyber-offensive Expert Professional"
-                    ]
-                }
-            },
-            "cyber-defensive": {
-                "displayName": "Cyber Defensive",
-                "branch": null,
-                "careerPaths": [
-                    "Senior Cyber Defensive Specialist",
-                    "Cyber Defensive Consultant",
-                    "Lead Cyber Defensive Engineer"
-                ],
-                "projects": {
-                    "beginner": [
-                        "Basic cyber-defensive Project",
-                        "cyber-defensive Simulation",
-                        "Introduction to cyber-defensive"
-                    ],
-                    "intermediate": [
-                        "Advanced cyber-defensive System",
-                        "Cross-platform cyber-defensive",
-                        "cyber-defensive Analytics"
-                    ],
-                    "advanced": [
-                        "Enterprise cyber-defensive Suite",
-                        "High-Performance cyber-defensive",
-                        "Global cyber-defensive Infrastructure"
-                    ]
-                },
-                "certifications": {
-                    "free": [
-                        "cyber-defensive Foundations",
-                        "Google cyber-defensive Intro"
-                    ],
-                    "pro": [
-                        "Professional cyber-defensive Cert",
-                        "Microsoft cyber-defensive Master"
-                    ],
-                    "premium": [
-                        "Industry Certified cyber-defensive",
-                        "cyber-defensive Expert Professional"
-                    ]
-                }
-            },
-            "cyber-grc": {
-                "displayName": "Cyber Grc",
-                "branch": null,
-                "careerPaths": [
-                    "Senior Cyber Grc Specialist",
-                    "Cyber Grc Consultant",
-                    "Lead Cyber Grc Engineer"
-                ],
-                "projects": {
-                    "beginner": [
-                        "Basic cyber-grc Project",
-                        "cyber-grc Simulation",
-                        "Introduction to cyber-grc"
-                    ],
-                    "intermediate": [
-                        "Advanced cyber-grc System",
-                        "Cross-platform cyber-grc",
-                        "cyber-grc Analytics"
-                    ],
-                    "advanced": [
-                        "Enterprise cyber-grc Suite",
-                        "High-Performance cyber-grc",
-                        "Global cyber-grc Infrastructure"
-                    ]
-                },
-                "certifications": {
-                    "free": [
-                        "cyber-grc Foundations",
-                        "Google cyber-grc Intro"
-                    ],
-                    "pro": [
-                        "Professional cyber-grc Cert",
-                        "Microsoft cyber-grc Master"
-                    ],
-                    "premium": [
-                        "Industry Certified cyber-grc",
-                        "cyber-grc Expert Professional"
+                        "Industry Certified cloud-devops",
+                        "cloud-devops Expert Professional"
                     ]
                 }
             }
@@ -6824,8 +6279,53 @@ const COMPLETE_REAL_WORLD_DATA = {
             }
         }
     },
-    "emerging-tech": {
-        "displayName": "Emerging Tech",
+    "ar-vr": {
+        "displayName": "Ar Vr",
+        "specializations": {
+            "tech-xr": {
+                "displayName": "Tech Xr",
+                "branch": null,
+                "careerPaths": [
+                    "Senior Tech Xr Specialist",
+                    "Tech Xr Consultant",
+                    "Lead Tech Xr Engineer"
+                ],
+                "projects": {
+                    "beginner": [
+                        "Basic tech-xr Project",
+                        "tech-xr Simulation",
+                        "Introduction to tech-xr"
+                    ],
+                    "intermediate": [
+                        "Advanced tech-xr System",
+                        "Cross-platform tech-xr",
+                        "tech-xr Analytics"
+                    ],
+                    "advanced": [
+                        "Enterprise tech-xr Suite",
+                        "High-Performance tech-xr",
+                        "Global tech-xr Infrastructure"
+                    ]
+                },
+                "certifications": {
+                    "free": [
+                        "tech-xr Foundations",
+                        "Google tech-xr Intro"
+                    ],
+                    "pro": [
+                        "Professional tech-xr Cert",
+                        "Microsoft tech-xr Master"
+                    ],
+                    "premium": [
+                        "Industry Certified tech-xr",
+                        "tech-xr Expert Professional"
+                    ]
+                }
+            }
+        }
+    },
+    "quantum": {
+        "displayName": "Quantum",
         "specializations": {
             "tech-quantum": {
                 "displayName": "Tech Quantum",
@@ -6866,47 +6366,12 @@ const COMPLETE_REAL_WORLD_DATA = {
                         "tech-quantum Expert Professional"
                     ]
                 }
-            },
-            "tech-xr": {
-                "displayName": "Tech Xr",
-                "branch": null,
-                "careerPaths": [
-                    "Senior Tech Xr Specialist",
-                    "Tech Xr Consultant",
-                    "Lead Tech Xr Engineer"
-                ],
-                "projects": {
-                    "beginner": [
-                        "Basic tech-xr Project",
-                        "tech-xr Simulation",
-                        "Introduction to tech-xr"
-                    ],
-                    "intermediate": [
-                        "Advanced tech-xr System",
-                        "Cross-platform tech-xr",
-                        "tech-xr Analytics"
-                    ],
-                    "advanced": [
-                        "Enterprise tech-xr Suite",
-                        "High-Performance tech-xr",
-                        "Global tech-xr Infrastructure"
-                    ]
-                },
-                "certifications": {
-                    "free": [
-                        "tech-xr Foundations",
-                        "Google tech-xr Intro"
-                    ],
-                    "pro": [
-                        "Professional tech-xr Cert",
-                        "Microsoft tech-xr Master"
-                    ],
-                    "premium": [
-                        "Industry Certified tech-xr",
-                        "tech-xr Expert Professional"
-                    ]
-                }
-            },
+            }
+        }
+    },
+    "robotics-automation": {
+        "displayName": "Robotics Automation",
+        "specializations": {
             "tech-robotics": {
                 "displayName": "Tech Robotics",
                 "branch": null,
@@ -6946,7 +6411,12 @@ const COMPLETE_REAL_WORLD_DATA = {
                         "tech-robotics Expert Professional"
                     ]
                 }
-            },
+            }
+        }
+    },
+    "bioinformatics": {
+        "displayName": "Bioinformatics",
+        "specializations": {
             "tech-bio": {
                 "displayName": "Tech Bio",
                 "branch": null,
@@ -6984,6 +6454,176 @@ const COMPLETE_REAL_WORLD_DATA = {
                     "premium": [
                         "Industry Certified tech-bio",
                         "tech-bio Expert Professional"
+                    ]
+                }
+            }
+        }
+    },
+    "product-management": {
+        "displayName": "Product Management",
+        "specializations": {
+            "prod-pm": {
+                "displayName": "Prod Pm",
+                "branch": null,
+                "careerPaths": [
+                    "Senior Prod Pm Specialist",
+                    "Prod Pm Consultant",
+                    "Lead Prod Pm Engineer"
+                ],
+                "projects": {
+                    "beginner": [
+                        "Basic prod-pm Project",
+                        "prod-pm Simulation",
+                        "Introduction to prod-pm"
+                    ],
+                    "intermediate": [
+                        "Advanced prod-pm System",
+                        "Cross-platform prod-pm",
+                        "prod-pm Analytics"
+                    ],
+                    "advanced": [
+                        "Enterprise prod-pm Suite",
+                        "High-Performance prod-pm",
+                        "Global prod-pm Infrastructure"
+                    ]
+                },
+                "certifications": {
+                    "free": [
+                        "prod-pm Foundations",
+                        "Google prod-pm Intro"
+                    ],
+                    "pro": [
+                        "Professional prod-pm Cert",
+                        "Microsoft prod-pm Master"
+                    ],
+                    "premium": [
+                        "Industry Certified prod-pm",
+                        "prod-pm Expert Professional"
+                    ]
+                }
+            },
+            "prod-leadership": {
+                "displayName": "Prod Leadership",
+                "branch": null,
+                "careerPaths": [
+                    "Senior Prod Leadership Specialist",
+                    "Prod Leadership Consultant",
+                    "Lead Prod Leadership Engineer"
+                ],
+                "projects": {
+                    "beginner": [
+                        "Basic prod-leadership Project",
+                        "prod-leadership Simulation",
+                        "Introduction to prod-leadership"
+                    ],
+                    "intermediate": [
+                        "Advanced prod-leadership System",
+                        "Cross-platform prod-leadership",
+                        "prod-leadership Analytics"
+                    ],
+                    "advanced": [
+                        "Enterprise prod-leadership Suite",
+                        "High-Performance prod-leadership",
+                        "Global prod-leadership Infrastructure"
+                    ]
+                },
+                "certifications": {
+                    "free": [
+                        "prod-leadership Foundations",
+                        "Google prod-leadership Intro"
+                    ],
+                    "pro": [
+                        "Professional prod-leadership Cert",
+                        "Microsoft prod-leadership Master"
+                    ],
+                    "premium": [
+                        "Industry Certified prod-leadership",
+                        "prod-leadership Expert Professional"
+                    ]
+                }
+            }
+        }
+    },
+    "ui-ux": {
+        "displayName": "Ui Ux",
+        "specializations": {
+            "ui-ux-design": {
+                "displayName": "Ui Ux Design",
+                "branch": null,
+                "careerPaths": [
+                    "Senior Ui Ux Design Specialist",
+                    "Ui Ux Design Consultant",
+                    "Lead Ui Ux Design Engineer"
+                ],
+                "projects": {
+                    "beginner": [
+                        "Basic ui-ux-design Project",
+                        "ui-ux-design Simulation",
+                        "Introduction to ui-ux-design"
+                    ],
+                    "intermediate": [
+                        "Advanced ui-ux-design System",
+                        "Cross-platform ui-ux-design",
+                        "ui-ux-design Analytics"
+                    ],
+                    "advanced": [
+                        "Enterprise ui-ux-design Suite",
+                        "High-Performance ui-ux-design",
+                        "Global ui-ux-design Infrastructure"
+                    ]
+                },
+                "certifications": {
+                    "free": [
+                        "ui-ux-design Foundations",
+                        "Google ui-ux-design Intro"
+                    ],
+                    "pro": [
+                        "Professional ui-ux-design Cert",
+                        "Microsoft ui-ux-design Master"
+                    ],
+                    "premium": [
+                        "Industry Certified ui-ux-design",
+                        "ui-ux-design Expert Professional"
+                    ]
+                }
+            },
+            "ui-research": {
+                "displayName": "Ui Research",
+                "branch": null,
+                "careerPaths": [
+                    "Senior Ui Research Specialist",
+                    "Ui Research Consultant",
+                    "Lead Ui Research Engineer"
+                ],
+                "projects": {
+                    "beginner": [
+                        "Basic ui-research Project",
+                        "ui-research Simulation",
+                        "Introduction to ui-research"
+                    ],
+                    "intermediate": [
+                        "Advanced ui-research System",
+                        "Cross-platform ui-research",
+                        "ui-research Analytics"
+                    ],
+                    "advanced": [
+                        "Enterprise ui-research Suite",
+                        "High-Performance ui-research",
+                        "Global ui-research Infrastructure"
+                    ]
+                },
+                "certifications": {
+                    "free": [
+                        "ui-research Foundations",
+                        "Google ui-research Intro"
+                    ],
+                    "pro": [
+                        "Professional ui-research Cert",
+                        "Microsoft ui-research Master"
+                    ],
+                    "premium": [
+                        "Industry Certified ui-research",
+                        "ui-research Expert Professional"
                     ]
                 }
             }

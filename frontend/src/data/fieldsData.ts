@@ -104,7 +104,7 @@ export const fields: Field[] = [
   },
   {
     id: 'commerce',
-    name: 'Commerce & Business',
+    name: 'Commerce, Business & Management',
     icon: TrendingUp,
     description: 'Business, finance, and entrepreneurship',
     demand: 'High',
@@ -113,7 +113,7 @@ export const fields: Field[] = [
   },
   {
     id: 'law',
-    name: 'Law & Legal Studies',
+    name: 'Law & Public Services',
     icon: Scale,
     description: 'Legal profession and public administration',
     demand: 'Moderate',
@@ -131,7 +131,7 @@ export const fields: Field[] = [
   },
   {
     id: 'design',
-    name: 'Design & Creative Arts',
+    name: 'Design, Media & Creative Arts',
     icon: Palette,
     description: 'Visual design, media production, and creativity',
     demand: 'High',
@@ -140,7 +140,7 @@ export const fields: Field[] = [
   },
   {
     id: 'defense',
-    name: 'Defense & Security',
+    name: 'Defense, Security & Physical Services',
     icon: Shield,
     description: 'Armed forces, security, and emergency services',
     demand: 'High',
@@ -149,7 +149,7 @@ export const fields: Field[] = [
   },
   {
     id: 'agriculture',
-    name: 'Agriculture & Environment',
+    name: 'Agriculture & Environmental Studies',
     icon: Sprout,
     description: 'Farming, sustainability, and environmental science',
     demand: 'Moderate',
@@ -158,7 +158,7 @@ export const fields: Field[] = [
   },
   {
     id: 'hospitality',
-    name: 'Hospitality & Tourism',
+    name: 'Hospitality, Travel & Tourism',
     icon: Plane,
     description: 'Hotels, travel, events, and tourism management',
     demand: 'High',
@@ -167,7 +167,7 @@ export const fields: Field[] = [
   },
   {
     id: 'sports',
-    name: 'Sports & Fitness',
+    name: 'Sports, Fitness & Lifestyle',
     icon: Dumbbell,
     description: 'Sports science, fitness, and wellness coaching',
     demand: 'Moderate',
@@ -175,49 +175,13 @@ export const fields: Field[] = [
     color: 'from-rose-500 to-rose-600',
   },
   {
-    id: 'media',
-    name: 'Media & Entertainment',
-    icon: Film,
-    description: 'Journalism, film production, and digital media',
-    demand: 'High',
-    growth: '+18%',
-    color: 'from-violet-500 to-violet-600',
-  },
-  {
     id: 'vocational',
-    name: 'Vocational & Skills',
+    name: 'Skill-Based & Vocational Fields',
     icon: Wrench,
     description: 'Technical trades, certifications, and practical skills',
     demand: 'High',
     growth: '+24%',
     color: 'from-teal-500 to-teal-600',
-  },
-  {
-    id: 'civil-services',
-    name: 'Civil Services & Govt',
-    icon: Landmark,
-    description: 'Public administration and government services',
-    demand: 'Very High',
-    growth: '+15%',
-    color: 'from-stone-500 to-stone-600',
-  },
-  {
-    id: 'logistics',
-    name: 'Logistics & Supply Chain',
-    icon: Truck,
-    description: 'Supply chain management and logistics operations',
-    demand: 'High',
-    growth: '+22%',
-    color: 'from-emerald-500 to-emerald-600',
-  },
-  {
-    id: 'aviation',
-    name: 'Aviation & Merchant Navy',
-    icon: Plane,
-    description: 'Flight operations, maritime, and aerospace',
-    demand: 'High',
-    growth: '+18%',
-    color: 'from-sky-500 to-sky-600',
   },
   {
     id: 'cloud-computing',
@@ -229,40 +193,76 @@ export const fields: Field[] = [
     color: 'from-blue-400 to-blue-500',
   },
   {
-    id: 'ai-ml',
-    name: 'AI & Machine Learning',
-    icon: Bot,
-    description: 'Artificial intelligence and neural networks',
+    id: 'devops',
+    name: 'DevOps & Site Reliability Engineering',
+    icon: GitBranch,
+    description: 'Automation, CI/CD, and system reliability',
     demand: 'Very High',
-    growth: '+35%',
-    color: 'from-indigo-600 to-indigo-700',
-  },
-  {
-    id: 'cybersecurity',
-    name: 'Cybersecurity',
-    icon: Shield,
-    description: 'Digital security and network protection',
-    demand: 'Very High',
-    growth: '+30%',
-    color: 'from-red-600 to-red-700',
+    growth: '+32%',
+    color: 'from-emerald-500 to-emerald-600',
   },
   {
     id: 'blockchain-web3',
     name: 'Blockchain & Web3',
     icon: Link,
-    description: 'Decentralized systems and smart contracts',
+    description: 'Decentralized applications and smart contracts',
     demand: 'High',
     growth: '+22%',
     color: 'from-purple-600 to-purple-700',
   },
   {
-    id: 'emerging-tech',
-    name: 'Emerging Technologies',
-    icon: Sparkles,
-    description: 'Quantum computing, VR/AR, and future tech',
+    id: 'ar-vr',
+    name: 'AR / VR / Mixed Reality',
+    icon: Glasses,
+    description: 'Immersive experiences and spatial computing',
     demand: 'High',
-    growth: '+40%',
-    color: 'from-amber-400 to-amber-500',
+    growth: '+35%',
+    color: 'from-pink-600 to-pink-700',
+  },
+  {
+    id: 'quantum',
+    name: 'Quantum Computing',
+    icon: Atom,
+    description: 'Quantum algorithms and information science',
+    demand: 'Medium',
+    growth: '+45%',
+    color: 'from-cyan-600 to-cyan-700',
+  },
+  {
+    id: 'robotics-automation',
+    name: 'Robotics & Automation',
+    icon: Bot,
+    description: 'Industrial robots, autonomous systems, and automation',
+    demand: 'High',
+    growth: '+30%',
+    color: 'from-orange-600 to-orange-700',
+  },
+  {
+    id: 'bioinformatics',
+    name: 'Bioinformatics & Computational Biology',
+    icon: Dna,
+    description: 'Genomics, proteomics, and computational bio sciences',
+    demand: 'High',
+    growth: '+25%',
+    color: 'from-green-600 to-green-700',
+  },
+  {
+    id: 'product-management',
+    name: 'Product Management & Tech Leadership',
+    icon: Target,
+    description: 'Product strategy, roadmapping, and tech leadership',
+    demand: 'Very High',
+    growth: '+20%',
+    color: 'from-blue-600 to-blue-700',
+  },
+  {
+    id: 'ui-ux',
+    name: 'UI / UX & Human-Computer Interaction',
+    icon: MousePointer,
+    description: 'User experience design and human-centered computing',
+    demand: 'Very High',
+    growth: '+22%',
+    color: 'from-rose-600 to-rose-700',
   },
 ];
 
@@ -484,12 +484,13 @@ export const specializationsMap: Record<string, Specialization[]> = {
     { id: 'academic-research', name: 'Academic Research & Doctoral Track', type: 'core', growthPotential: 'medium', riskLevel: 'medium', marketDemand: 68, description: 'Pursue advanced academic research', skills: ['Research Methods', 'Publication', 'Grant Writing', 'Teaching'] },
   ],
   design: [
-    { id: 'ui-ux', name: 'UI / UX Design', type: 'core', growthPotential: 'high', riskLevel: 'low', marketDemand: 92, description: 'Create intuitive and beautiful user experiences', skills: ['Figma', 'User Research', 'Prototyping', 'Design Systems'] },
     { id: 'motion', name: 'Motion Graphics & Animation', type: 'emerging', growthPotential: 'high', riskLevel: 'medium', marketDemand: 82, description: 'Bring designs to life with motion', skills: ['After Effects', 'Cinema 4D', 'Animation', 'Storytelling'] },
     { id: 'game-design', name: 'Game Design', type: 'emerging', growthPotential: 'high', riskLevel: 'medium', marketDemand: 78, description: 'Create engaging interactive experiences', skills: ['Unity/Unreal', 'Game Mechanics', '3D Art', 'Narrative Design'] },
     { id: 'film', name: 'Film Production & Direction', type: 'core', growthPotential: 'medium', riskLevel: 'high', marketDemand: 72, description: 'Produce and direct video content', skills: ['Cinematography', 'Editing', 'Directing', 'Sound Design'] },
     { id: 'content-creation', name: 'Digital Content Creation', type: 'emerging', growthPotential: 'high', riskLevel: 'medium', marketDemand: 86, description: 'Create engaging digital content', skills: ['Video Production', 'Social Media', 'Copywriting', 'Analytics'] },
     { id: 'branding', name: 'Branding & Visual Communication', type: 'core', growthPotential: 'medium', riskLevel: 'low', marketDemand: 80, description: 'Build memorable brand identities', skills: ['Brand Strategy', 'Visual Design', 'Typography', 'Marketing'] },
+    { id: 'media-journalism', name: 'Journalism & Mass Communication', type: 'core', growthPotential: 'medium', riskLevel: 'low', marketDemand: 82, description: 'Master news reporting, anchoring, and digital journalism', skills: ['Reporting', 'News Analysis', 'Video Editing', 'Content Strategy'] },
+    { id: 'media-digital', name: 'Digital Content & Influencer Strategy', type: 'emerging', growthPotential: 'high', riskLevel: 'medium', marketDemand: 90, description: 'Build and manage digital media brands and content platforms', skills: ['Social Media Analytics', 'YouTube SEO', 'Content Marketing', 'Monetization'] },
   ],
   defense: [
     { id: 'armed-forces', name: 'Indian Armed Forces (NDA, CDS, AFCAT, OTA)', type: 'core', growthPotential: 'high', riskLevel: 'low', marketDemand: 85, description: 'Serve as an officer in the armed forces', skills: ['Physical Fitness', 'Leadership', 'Strategy', 'Discipline'] },
@@ -531,46 +532,36 @@ export const specializationsMap: Record<string, Specialization[]> = {
   // ============================================
   // NEW FIELD SPECIALIZATIONS
   // ============================================
-  'media': [
-    { id: 'media-journalism', name: 'Journalism & Mass Communication', type: 'core', growthPotential: 'medium', riskLevel: 'low', marketDemand: 82, description: 'Master news reporting, anchoring, and digital journalism', skills: ['Reporting', 'News Analysis', 'Video Editing', 'Content Strategy'] },
-    { id: 'media-digital', name: 'Digital Content & Influencer Strategy', type: 'emerging', growthPotential: 'high', riskLevel: 'medium', marketDemand: 90, description: 'Build and manage digital media brands and content platforms', skills: ['Social Media Analytics', 'YouTube SEO', 'Content Marketing', 'Monetization'] },
-  ],
-  'civil-services': [
-    { id: 'civil-admin', name: 'IAS & Administrative Services', type: 'core', growthPotential: 'high', riskLevel: 'low', marketDemand: 95, description: 'Lead district and national level public administration', skills: ['Policy Analysis', 'Public Administration', 'Leadership', 'Governance'] },
-    { id: 'civil-police', name: 'IPS & Internal Security', type: 'core', growthPotential: 'high', riskLevel: 'medium', marketDemand: 92, description: 'Maintain law and order and manage national internal security', skills: ['Law Enforcement', 'Security Strategy', 'Criminology', 'Crisis Response'] },
-  ],
-  'logistics': [
-    { id: 'supply-chain-analytics', name: 'Supply Chain Analytics', type: 'core', growthPotential: 'high', riskLevel: 'low', marketDemand: 92, description: 'Optimize global supply chains and procurement strategies', skills: ['SCM', 'Procurement', 'Inventory Optimization', 'Six Sigma'] },
-    { id: 'warehouse-transport-management', name: 'Warehouse & Transport Management', type: 'core', growthPotential: 'medium', riskLevel: 'low', marketDemand: 85, description: 'Manage large-scale warehouse operations and inventory systems', skills: ['Warehouse Management Systems', 'Lean Inventory', 'Safety Compliance'] },
-  ],
-  'aviation': [
-    { id: 'commercial-pilot-operations', name: 'Commercial Pilot & Flight Operations', type: 'core', growthPotential: 'high', riskLevel: 'medium', marketDemand: 88, description: 'Master aircraft operations and international flight standards', skills: ['Flight Navigation', 'Meteorology', 'Cockpit Procedures', 'Radio Communications'] },
-    { id: 'merchant-navy-deck-engine', name: 'Merchant Navy (Deck & Engine)', type: 'core', growthPotential: 'high', riskLevel: 'medium', marketDemand: 82, description: 'Navigate global maritime routes and manage ship engineering', skills: ['Marine Engineering', 'Navigation', 'Safety at Sea', 'Cargo Handling'] },
-  ],
   'cloud-computing': [
     { id: 'cloud-architecture', name: 'Cloud Architecture & Solutions Design', type: 'core', growthPotential: 'high', riskLevel: 'low', marketDemand: 94, description: 'Design enterprise-grade cloud solutions', skills: ['AWS', 'Azure', 'GCP', 'Architecture Patterns'] },
-    { id: 'cloud-devops', name: 'Cloud DevOps & SRE', type: 'core', growthPotential: 'high', riskLevel: 'low', marketDemand: 95, description: 'Automate deployments and ensure cloud system reliability', skills: ['Terraform', 'Kubernetes', 'CI/CD', 'Docker', 'Prometheus'] },
     { id: 'cloud-security', name: 'Cloud Security & Compliance', type: 'core', growthPotential: 'high', riskLevel: 'low', marketDemand: 92, description: 'Secure cloud infrastructure and ensure compliance', skills: ['IAM', 'Security Controls', 'Compliance', 'Zero Trust'] },
   ],
-  'ai-ml': [
-    { id: 'ai-deep-learning', name: 'Deep Learning & Neural Networks', type: 'emerging', growthPotential: 'high', riskLevel: 'low', marketDemand: 96, description: 'Build advanced AI models using deep learning frameworks', skills: ['PyTorch', 'TensorFlow', 'Neural Networks', 'Python'] },
-    { id: 'ai-ds', name: 'Data Science & Big Data Analytics', type: 'core', growthPotential: 'high', riskLevel: 'low', marketDemand: 94, description: 'Extract insights from massive datasets to drive decisions', skills: ['SQL', 'Spark', 'Statistics', 'Data Visualization'] },
-    { id: 'ai-nlp', name: 'Natural Language Processing (NLP)', type: 'emerging', growthPotential: 'high', riskLevel: 'low', marketDemand: 90, description: 'Develop AI systems that understand and generate human language', skills: ['LLMs', 'Transformers', 'Text Mining', 'LangChain'] },
-  ],
-  'cybersecurity': [
-    { id: 'cyber-offensive', name: 'Ethical Hacking & Pen Testing', type: 'core', growthPotential: 'high', riskLevel: 'low', marketDemand: 92, description: 'Identify and exploit vulnerabilities to improve security', skills: ['Metasploit', 'Burp Suite', 'Network Hacking', 'Bug Bounty'] },
-    { id: 'cyber-defensive', name: 'SOC Analysis & Incident Response', type: 'core', growthPotential: 'high', riskLevel: 'low', marketDemand: 90, description: 'Monitor, detect, and respond to security threats in real-time', skills: ['SIEM', 'Threat Hunting', 'Digital Forensics', 'Incident Mgmt'] },
-    { id: 'cyber-grc', name: 'Governance, Risk & Compliance (GRC)', type: 'core', growthPotential: 'medium', riskLevel: 'low', marketDemand: 85, description: 'Ensure organizational compliance with global security standards', skills: ['ISO 27001', 'SOC2', 'GDPR', 'Risk Assessment'] },
+  devops: [
+    { id: 'cloud-devops', name: 'Cloud DevOps & SRE', type: 'core', growthPotential: 'high', riskLevel: 'low', marketDemand: 95, description: 'Automate deployments and ensure cloud system reliability', skills: ['Terraform', 'Kubernetes', 'CI/CD', 'Docker', 'Prometheus'] },
   ],
   'blockchain-web3': [
     { id: 'web3-smart-contracts', name: 'Smart Contract Development', type: 'core', growthPotential: 'high', riskLevel: 'medium', marketDemand: 85, description: 'Write and audit smart contracts on Ethereum and other chains', skills: ['Solidity', 'Rust', 'Security Auditing', 'Truffle/Hardhat'] },
     { id: 'web3-dapps', name: 'DApp Development', type: 'emerging', growthPotential: 'high', riskLevel: 'medium', marketDemand: 84, description: 'Build decentralized application frontends and backends', skills: ['ethers.js', 'React', 'IPFS', 'Wallet Integration'] },
   ],
-  'emerging-tech': [
-    { id: 'tech-quantum', name: 'Quantum Computing', type: 'emerging', growthPotential: 'high', riskLevel: 'high', marketDemand: 70, description: 'Algorithm design and programming for quantum computers', skills: ['Qiskit', 'Quantum Gates', 'Complex Math'] },
+  'ar-vr': [
     { id: 'tech-xr', name: 'AR/VR & Spatial Computing', type: 'emerging', growthPotential: 'high', riskLevel: 'medium', marketDemand: 82, description: 'Create immersive experiences combining virtual and physical worlds', skills: ['Unity', 'Unreal Engine', 'C#', '3D Modeling'] },
+  ],
+  quantum: [
+    { id: 'tech-quantum', name: 'Quantum Computing', type: 'emerging', growthPotential: 'high', riskLevel: 'high', marketDemand: 70, description: 'Algorithm design and programming for quantum computers', skills: ['Qiskit', 'Quantum Gates', 'Complex Math'] },
+  ],
+  'robotics-automation': [
     { id: 'tech-robotics', name: 'Robotics & Autonomous Systems', type: 'emerging', growthPotential: 'high', riskLevel: 'medium', marketDemand: 86, description: 'Design and program autonomous robots and industrial systems', skills: ['ROS', 'Control Systems', 'Embedded C', 'AI'] },
-    { id: 'tech-bio', name: 'Bioinformatics', type: 'emerging', growthPotential: 'high', riskLevel: 'low', marketDemand: 88, description: 'Analyze biological data using computational tools', skills: ['Genomics', 'Python/R', 'Sequence Analysis'] },
+  ],
+  bioinformatics: [
+    { id: 'tech-bio', name: 'Bioinformatics & Computational Biology', type: 'emerging', growthPotential: 'high', riskLevel: 'low', marketDemand: 88, description: 'Analyze biological data using computational tools', skills: ['Genomics', 'Python/R', 'Sequence Analysis'] },
+  ],
+  'product-management': [
+    { id: 'prod-pm', name: 'Technical Product Management', type: 'core', growthPotential: 'high', riskLevel: 'low', marketDemand: 92, description: 'Lead product development from discovery to launch', skills: ['Agile', 'Roadmapping', 'User Feedback', 'Jira'] },
+    { id: 'prod-leadership', name: 'Tech Leadership & Strategy', type: 'core', growthPotential: 'high', riskLevel: 'low', marketDemand: 88, description: 'Scale engineering teams and define tech vision', skills: ['Leadership', 'System Design', 'Strategy', 'Mentorship'] },
+  ],
+  'ui-ux': [
+    { id: 'ui-ux-design', name: 'UI / UX Design', type: 'core', growthPotential: 'high', riskLevel: 'low', marketDemand: 92, description: 'Create intuitive and beautiful user experiences', skills: ['Figma', 'User Research', 'Prototyping', 'Design Systems'] },
+    { id: 'ui-research', name: 'UX Research & HCI', type: 'core', growthPotential: 'high', riskLevel: 'low', marketDemand: 85, description: 'Deep dive into user behavior and psychology', skills: ['Surveys', 'User Testing', 'Psychology', 'Statistics'] },
   ],
 };
 

@@ -22,26 +22,23 @@ const IDs = [
     "msc-finance", "mcom",
     "corporate-law", "cyber-law", "constitutional", "judiciary", "public-policy-law", "international-law",
     "edtech", "curriculum", "edu-psychology", "online-teaching", "academic-research",
-    "ui-ux", "motion", "game-design", "film", "content-creation", "branding",
+    "motion", "game-design", "film", "content-creation", "branding",
     "armed-forces", "paramilitary", "intelligence", "digital-forensics", "disaster-mgmt", "fire-safety",
     "agritech", "organic-farming", "food-tech", "climate-agriculture", "fisheries", "veterinary",
     "aviation", "hotel-mgmt", "travel-ops", "event-mgmt", "cruise",
     "sports-science", "strength-conditioning", "coaching", "yoga-naturopathy", "fitness-business",
     "industrial-trades", "iti-polytechnic", "ev-tech", "renewable-energy", "skill-india",
     "media-journalism", "media-digital",
-    "civil-admin", "civil-police",
-    "supply-chain-analytics", "warehouse-transport-management",
-    "commercial-pilot-operations", "merchant-navy-deck-engine",
-    "cloud-architecture", "cloud-devops", "cloud-security",
-    "ai-deep-learning", "ai-ds", "ai-nlp",
-    "cyber-offensive", "cyber-defensive", "cyber-grc",
+    "cloud-architecture", "cloud-security",
+    "cloud-devops",
     "web3-smart-contracts", "web3-dapps",
-    "tech-quantum", "tech-xr", "tech-robotics", "tech-bio"
+    "tech-xr", "tech-quantum", "tech-robotics", "tech-bio",
+    "prod-pm", "prod-leadership",
+    "ui-ux-design", "ui-research"
 ];
 
 const data = {};
 
-// Helper to generate generic but realistic data
 function genPaths(id) {
     const name = id.split('-').map(s => s.charAt(0).toUpperCase() + s.slice(1)).join(' ');
     return [`Senior ${name} Specialist`, `${name} Consultant`, `Lead ${name} Engineer`];
@@ -63,7 +60,6 @@ function genCerts(id) {
     };
 }
 
-// Map IDs to Fields
 IDs.forEach(id => {
     let field = 'engineering';
     let branch = null;
@@ -79,21 +75,21 @@ IDs.forEach(id => {
     else if (id === 'financial-analysis' || id === 'accounting' || id === 'hrm' || id === 'business-analytics' || id === 'entrepreneurship' || id === 'marketing-analytics' || id === 'supply-chain' || id.startsWith('mba-') || id === 'msc-finance' || id === 'mcom') { field = 'commerce'; }
     else if (id.endsWith('-law') || id === 'constitutional' || id === 'judiciary' || id === 'public-policy-law') { field = 'law'; }
     else if (id === 'edtech' || id === 'curriculum' || id === 'edu-psychology' || id === 'online-teaching' || id === 'academic-research') { field = 'education'; }
-    else if (id === 'ui-ux' || id === 'motion' || id === 'game-design' || id === 'film' || id === 'content-creation' || id === 'branding') { field = 'design'; }
+    else if (id === 'motion' || id === 'game-design' || id === 'film' || id === 'content-creation' || id === 'branding' || id.startsWith('media-')) { field = 'design'; }
     else if (id === 'armed-forces' || id === 'paramilitary' || id === 'intelligence' || id === 'digital-forensics' || id === 'disaster-mgmt' || id === 'fire-safety') { field = 'defense'; }
     else if (id === 'agritech' || id === 'organic-farming' || id === 'food-tech' || id === 'climate-agriculture' || id === 'fisheries' || id === 'veterinary') { field = 'agriculture'; }
     else if (id === 'aviation' || id === 'hotel-mgmt' || id === 'travel-ops' || id === 'event-mgmt' || id === 'cruise') { field = 'hospitality'; }
     else if (id === 'sports-science' || id === 'strength-conditioning' || id === 'coaching' || id === 'yoga-naturopathy' || id === 'fitness-business') { field = 'sports'; }
     else if (id === 'industrial-trades' || id === 'iti-polytechnic' || id === 'ev-tech' || id === 'renewable-energy' || id === 'skill-india') { field = 'vocational'; }
-    else if (id.startsWith('media-')) { field = 'media'; }
-    else if (id.startsWith('civil-admin') || id === 'civil-police') { field = 'civil-services'; }
-    else if (id === 'supply-chain-analytics' || id === 'warehouse-transport-management') { field = 'logistics'; }
-    else if (id === 'commercial-pilot-operations' || id === 'merchant-navy-deck-engine') { field = 'aviation'; }
-    else if (id.startsWith('cloud-')) { field = 'cloud-computing'; }
-    else if (id.startsWith('ai-')) { field = 'ai-ml'; }
-    else if (id.startsWith('cyber-')) { field = 'cybersecurity'; }
+    else if (id === 'cloud-architecture' || id === 'cloud-security') { field = 'cloud-computing'; }
+    else if (id === 'cloud-devops') { field = 'devops'; }
     else if (id.startsWith('web3-')) { field = 'blockchain-web3'; }
-    else if (id.startsWith('tech-')) { field = 'emerging-tech'; }
+    else if (id === 'tech-xr') { field = 'ar-vr'; }
+    else if (id === 'tech-quantum') { field = 'quantum'; }
+    else if (id === 'tech-robotics') { field = 'robotics-automation'; }
+    else if (id === 'tech-bio') { field = 'bioinformatics'; }
+    else if (id.startsWith('prod-')) { field = 'product-management'; }
+    else if (id.startsWith('ui-')) { field = 'ui-ux'; }
 
     if (!data[field]) data[field] = { displayName: field.split('-').map(s => s.charAt(0).toUpperCase() + s.slice(1)).join(' '), specializations: {} };
 
@@ -107,4 +103,4 @@ IDs.forEach(id => {
 });
 
 fs.writeFileSync('allFieldsData.js', 'const COMPLETE_REAL_WORLD_DATA = ' + JSON.stringify(data, null, 4) + ';\n\nmodule.exports = { COMPLETE_REAL_WORLD_DATA };\n');
-console.log('Successfully generated allFieldsData.js with ' + IDs.length + ' specializations');
+console.log('Successfully generated allFieldsData.js with ' + IDs.length + ' specializations for 22 fields');
