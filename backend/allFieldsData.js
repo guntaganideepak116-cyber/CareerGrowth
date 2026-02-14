@@ -1,450 +1,466 @@
 /**
  * COMPLETE REAL-WORLD DATA - ALL 22 FIELDS
- * Structured with IDs matching frontend fieldsData.ts
+ * This file is the "Source of Truth" for the Career Architecture.
+ * It contains structured data for Field -> Specialization -> Career Paths/Projects/Certs.
  */
 
 const COMPLETE_REAL_WORLD_DATA = {
-
+    // 1. ENGINEERING (Branch-based)
     engineering: {
         displayName: 'Engineering',
         specializations: {
+            'cse-software-dev': {
+                displayName: 'Software Development & Programming',
+                careerPaths: ['Software Engineer', 'Backend Developer', 'Systems Architect'],
+                projects: { beginner: ['Snake Game', 'Calculator'], intermediate: ['E-commerce API'], advanced: ['Distributed System'] },
+                certifications: { free: ['HackerRank'], pro: ['Oracle Java'], premium: ['Meta SE Cert'] }
+            },
             'cse-web-dev': {
                 displayName: 'Full Stack Web Development',
-                careerPaths: ['Frontend Developer', 'Backend Developer', 'Full Stack Developer'],
-                projects: {
-                    beginner: ['Personal Portfolio Website', 'To-Do CRUD App', 'Blog with Admin Panel'],
-                    intermediate: ['Full Stack E-commerce Platform', 'JWT Authentication System', 'Real-time Chat App'],
-                    advanced: ['SaaS Platform', 'Multi-role Enterprise Web App', 'AI-powered Web Application']
-                },
-                certifications: {
-                    free: ['freeCodeCamp Full Stack', 'NPTEL Web Programming', 'Infosys Springboard Web Dev'],
-                    pro: ['Meta Frontend Developer (Coursera)', 'IBM Full Stack Developer'],
-                    premium: ['AWS Developer Associate', 'Microsoft Azure Developer']
-                }
+                careerPaths: ['Frontend Developer', 'Full Stack Developer', 'Cloud Web Architect'],
+                projects: { beginner: ['Portfolio'], intermediate: ['Social Media Clone'], advanced: ['SaaS Platform'] },
+                certifications: { free: ['freeCodeCamp'], pro: ['Meta Frontend'], premium: ['AWS Dev Associate'] }
             },
-            'cse-cloud': {
-                displayName: 'Cloud Computing & DevOps',
-                careerPaths: ['DevOps Engineer', 'Cloud Engineer', 'Platform Engineer'],
-                projects: {
-                    beginner: ['Deploy Static Site on AWS', 'Dockerizing a Python App', 'CI/CD with GitHub Actions'],
-                    intermediate: ['Kubernetes Cluster Setup', 'Infrastructure as Code with Terraform', 'Serverless API Deployment'],
-                    advanced: ['Enterprise Multi-Cloud Infrastructure', 'Hybrid Cloud Networking Architecture']
-                },
-                certifications: {
-                    free: ['AWS Cloud Practitioner Essentials', 'Google Cloud Fundamentals'],
-                    pro: ['AWS Certified Solutions Architect - Associate', 'Microsoft Azure Administrator'],
-                    premium: ['Google Professional Cloud Architect', 'AWS Certified DevOps Engineer']
-                }
+            'cse-mobile-dev': {
+                displayName: 'Mobile App Development',
+                careerPaths: ['iOS Developer', 'Android Developer', 'Cross-platform Mobile Lead'],
+                projects: { beginner: ['To-Do App'], intermediate: ['Food Delivery App'], advanced: ['Fitness Tracker'] },
+                certifications: { free: ['Flutter Basics'], pro: ['Google Android Cert'], premium: ['Apple Developer'] }
             },
             'cse-ai-ml': {
                 displayName: 'AI & Machine Learning',
-                careerPaths: ['ML Engineer', 'Data Scientist', 'AI Researcher'],
-                projects: {
-                    beginner: ['Spam Mail Classifier', 'Handwritten Digit Recognition', 'Movie Recommendation System'],
-                    intermediate: ['Object Detection with YOLO', 'Sentiment Analysis on Twitter Data', 'Medical Image Segmentation'],
-                    advanced: ['Custom LLM Fine-tuning', 'Autonomous Drone Navigation System', 'Generative AI Art Studio']
-                },
-                certifications: {
-                    free: ['Google ML Crash Course', 'Kaggle Micro-courses'],
-                    pro: ['DeepLearning.AI ML Specialization', 'IBM AI Engineering'],
-                    premium: ['Google Professional ML Engineer', 'NVIDIA Deep Learning Institute']
-                }
+                careerPaths: ['ML Engineer', 'Data Scientist', 'AI Research Scientist'],
+                projects: { beginner: ['Digit Recognizer'], intermediate: ['Sentiment Bot'], advanced: ['Autonomous Bot'] },
+                certifications: { free: ['Kaggle'], pro: ['DeepLearning.AI'], premium: ['Google ML Professional'] }
             },
-            'cse-cybersecurity': {
-                displayName: 'Cybersecurity & Ethical Hacking',
-                careerPaths: ['Ethical Hacker', 'SOC Analyst', 'Security Engineer'],
-                projects: {
-                    beginner: ['Network Scanner Tool', 'Simple Keylogger for Educational Purpose', 'Secure Password Manager'],
-                    intermediate: ['Vulnerability Assessment of a Website', 'Intrusion Detection System Setup', 'Penetrating testing of a Mock Target'],
-                    advanced: ['Zero-Day Exploit Research Simulation', 'Enterprise Security Architecture Design', 'Digital Forensics Investigation']
-                },
-                certifications: {
-                    free: ['Google Cybersecurity Cert (Audit)', 'Cisco Introduction to Cybersecurity'],
-                    pro: ['CompTIA Security+', 'Certified Ethical Hacker (CEH)'],
-                    premium: ['OSCP (Offensive Security Certified Professional)', 'CISSP']
-                }
-            },
-            'cse-software-dev': {
-                displayName: 'Software Development & Programming',
-                careerPaths: ['Software Engineer', 'Java Developer', 'Python Developer'],
-                projects: {
-                    beginner: ['Scientific Calculator', 'Library Management System', 'Snake Game in Python'],
-                    intermediate: ['Student Grading System', 'Inventory Management API', 'Multiplayer Online Game'],
-                    advanced: ['Distributed Database Engine', 'Compiler for a Custom Language', 'Real-time Operating System Kernel']
-                },
-                certifications: {
-                    free: ['Programming Foundations (Coursera)', 'HackerRank Python Certification'],
-                    pro: ['Oracle Certified Java Professional', 'Microsoft Certified: Azure Developer'],
-                    premium: ['Meta Software Engineering Specialization', 'Google Software Product Management']
-                }
+            'ece-vlsi': {
+                displayName: 'VLSI Design & Chip Engineering',
+                careerPaths: ['VLSI Design Engineer', 'ASIC Designer', 'SoC Architect'],
+                projects: { beginner: ['Logic Gate Sim'], intermediate: ['8-bit CPU'], advanced: ['Nvidia-grade GPU block'] },
+                certifications: { free: ['Verilog Basics'], pro: ['Cadence Tool Training'], premium: ['M.Tech VLSI'] }
             },
             'ece-embedded': {
                 displayName: 'Embedded Systems & IoT',
-                careerPaths: ['Embedded Systems Engineer', 'IoT Developer', 'Hardware Engineer'],
-                projects: {
-                    beginner: ['Smart Home Light Controller', 'Temperature Monitor with Arduino', 'Blinking LED with 8051'],
-                    intermediate: ['IoT Based Smart Agriculture System', 'Real-time Health Monitoring Wearable', 'Autonomous Line Follower'],
-                    advanced: ['Embedded Linux Driver Development', 'Smart City Infrastructure IoT Network', 'Industrial Automation with ESP32']
-                },
-                certifications: {
-                    free: ['Introduction to IoT (Cisco)', 'Arduino Fundamentals'],
-                    pro: ['Embedded Systems Certification (NPTEL)', 'ARM Certified Developer'],
-                    premium: ['Master\'s in Embedded Systems Engineering', 'Professional IoT Architect']
-                }
+                careerPaths: ['Embedded Systems Engineer', 'IoT Solutions Architect', 'Hardware Designer'],
+                projects: { beginner: ['Arduino Light'], intermediate: ['Smart Home Hub'], advanced: ['RTOS Kernel'] },
+                certifications: { free: ['Cisco IoT'], pro: ['ARM Developer'], premium: ['Masters in ES'] }
+            },
+            'eee-power-systems': {
+                displayName: 'Power Systems & Grid',
+                careerPaths: ['Power Systems Engineer', 'Grid Manager', 'Electrical Consultant'],
+                projects: { beginner: ['Basic Circuit'], intermediate: ['Micro-grid model'], advanced: ['Smart Grid AI'] },
+                certifications: { free: ['NPTEL Power'], pro: ['IEEE Cert'], premium: ['Smart Grid Expert'] }
+            },
+            'eee-ev': {
+                displayName: 'Electric Vehicles & Battery',
+                careerPaths: ['EV Powertrain Engineer', 'BMS Designer', 'Battery Scientist'],
+                projects: { beginner: ['Motor Control'], intermediate: ['BMS Simulation'], advanced: ['EV Prototype'] },
+                certifications: { free: ['EV Intro'], pro: ['Tesla-style Training'], premium: ['Masters in EV'] }
+            },
+            'mech-design': {
+                displayName: 'Design & Manufacturing',
+                careerPaths: ['Design Engineer', 'CAD Specialist', 'Production Manager'],
+                projects: { beginner: ['3D Bridge'], intermediate: ['Engine Crankshaft'], advanced: ['Factory Automation'] },
+                certifications: { free: ['SolidWorks Basic'], pro: ['AutoCAD Pro'], premium: ['M.Tech Design'] }
             },
             'mech-robotics': {
                 displayName: 'Robotics & Automation',
-                careerPaths: ['Robotics Engineer', 'Automation Architect', 'Mechatronics Specialist'],
-                projects: {
-                    beginner: ['Simple Robotic Arm with Servo', 'Remote Controlled Car', 'Robot Path Simulator'],
-                    intermediate: ['Autonomous Mobile Robot with LiDAR', 'Industrial Automation Prototype', 'Robotic Vacuum Cleaner Logic'],
-                    advanced: ['Humanoid Robot Prototype', 'Multi-robot Coordination Project', 'Space Exploration Rover Model']
-                },
-                certifications: {
-                    free: ['ROS for Beginners', 'Robotics Specialization (Audit)'],
-                    pro: ['NPTEL Robotics', 'Diploma in Mechatronics'],
-                    premium: ['Professional Robotic Engineer (Industry Certified)', 'Masters in Robotics']
-                }
+                careerPaths: ['Robotics Engineer', 'Automation Lead', 'Mechatronics Expert'],
+                projects: { beginner: ['Robot Arm'], intermediate: ['Drone Kit'], advanced: ['Humanoid Model'] },
+                certifications: { free: ['ROS Basics'], pro: ['Fanuc Robotics'], premium: ['Masters Robotics'] }
             },
             'civil-structural': {
                 displayName: 'Structural Engineering',
-                careerPaths: ['Structural Engineer', 'Bridge Designer', 'Site Engineer'],
-                projects: {
-                    beginner: ['Building Model (Small Scale)', 'Basic CAD Schematic', 'Concrete Strength Analysis'],
-                    intermediate: ['Steel Bridge Structural Design', 'Apartment Complex Planning', 'Earthquake Resistant Building Simulation'],
-                    advanced: ['Metro Station Structural Design', 'Skyscraper Aeroelastic Analysis', 'National Highway Bridge Infrastructure']
-                },
-                certifications: {
-                    free: ['Structural Analysis Intro', 'Autodesk Civil 3D Basics'],
-                    pro: ['STAAD.Pro Certification', 'ETABS Professional Training'],
-                    premium: ['Chartered Engineer Certification', 'M.Tech in Structural Engineering']
-                }
+                careerPaths: ['Structural Engineer', 'Project Manager', 'Bridge Designer'],
+                projects: { beginner: ['Truss Model'], intermediate: ['Apartment Design'], advanced: ['Skyscraper Analysis'] },
+                certifications: { free: ['STAAD.Pro Basic'], pro: ['ETABS Pro'], premium: ['Chartered Engineer'] }
+            },
+            'civil-construction': {
+                displayName: 'Construction Management',
+                careerPaths: ['Site Engineer', 'Quantity Surveyor', 'Construction Manager'],
+                projects: { beginner: ['Costing Sheet'], intermediate: ['BIM model'], advanced: ['Metro Project'] },
+                certifications: { free: ['Project Mgmt Basic'], pro: ['PMP (Construction)'], premium: ['RICS'] }
             }
         }
     },
 
-    'ai-ml': {
-        displayName: 'AI & Machine Learning',
+    // 2. MEDICAL
+    medical: {
+        displayName: 'Medical & Health Sciences',
         specializations: {
-            'ai-deep-learning': {
-                displayName: 'Deep Learning & Neural Networks',
-                careerPaths: ['Deep Learning Engineer', 'Computer Vision Specialist', 'Research Scientist'],
-                projects: {
-                    beginner: ['Simple Neural Network', 'MNIST Classifier'],
-                    intermediate: ['Object Detection System', 'Style Transfer App'],
-                    advanced: ['Custom LLM Fine-tuning', 'Generative AI Platform']
-                },
-                certifications: {
-                    free: ['Coursera Deep Learning Intro', 'Fast.ai Courses'],
-                    pro: ['NVIDIA Deep Learning Institute'],
-                    premium: ['Google Professional ML Engineer']
-                }
+            'hospital-admin': {
+                displayName: 'Hospital Administration',
+                careerPaths: ['Hospital Manager', 'Chief Operations Officer', 'Patient Relation Manager'],
+                projects: { beginner: ['OPD Flow Chart'], intermediate: ['Clinic Website'], advanced: ['HMS Software'] },
+                certifications: { free: ['WHO Clinical Mgmt'], pro: ['PGDHA'], premium: ['MBA Healthcare'] }
             },
-            'ai-ds': {
-                displayName: 'Data Science & Big Data Analytics',
-                careerPaths: ['Data Scientist', 'Data Analyst', 'BI Developer'],
-                projects: {
-                    beginner: ['Sales Dashboard', 'Titanic Survival Prediction'],
-                    intermediate: ['Customer Churn Prediction', 'Time Series Forecasting'],
-                    advanced: ['Big Data Pipeline', 'Real-time Analytics Engine']
-                },
-                certifications: {
-                    free: ['Kaggle Data Science', 'Google Data Analytics'],
-                    pro: ['IBM Data Science Professional'],
-                    premium: ['AWS Data Analytics Specialty']
-                }
+            'clinical-research': {
+                displayName: 'Clinical Research',
+                careerPaths: ['Clinical Trial Manager', 'Drug Safety Physician', 'Protocol Designer'],
+                projects: { beginner: ['Trial Data Study'], intermediate: ['FDA Filing Mockup'], advanced: ['Phase 1 Trial'] },
+                certifications: { free: ['GCP Cert'], pro: ['Advanced Clinical'], premium: ['PhD Res'] }
             },
-            'ai-nlp': {
-                displayName: 'Natural Language Processing (NLP)',
-                careerPaths: ['NLP Engineer', 'Conversational AI Designer', 'Data Scientist (NLP)'],
-                projects: {
-                    beginner: ['Spam Detection', 'Sentiment Analysis'],
-                    intermediate: ['Chatbot with Rasa/Dialogflow', 'Translation Tool'],
-                    advanced: ['Custom GPT Model', 'Semantic Search Engine']
-                },
-                certifications: {
-                    free: ['LangChain Documentation Guides', 'Hugging Face Course'],
-                    pro: ['NLP Specialization (DeepLearning.AI)'],
-                    premium: ['AWS Certified Machine Learning']
-                }
+            'health-informatics': {
+                displayName: 'Health Informatics',
+                careerPaths: ['Health Data Analyst', 'Informatics Specialist', 'IT Healthcare Lead'],
+                projects: { beginner: ['EHR Mockup'], intermediate: ['Disease Tracker'], advanced: ['AI Diagnosis'] },
+                certifications: { free: ['Coursera IT Health'], pro: ['IBM Data Health'], premium: ['M.Sc Informatics'] }
             }
         }
     },
 
-    'cloud-computing': {
-        displayName: 'Cloud Computing',
+    // 3. SCIENCE
+    science: {
+        displayName: 'Science & Research',
         specializations: {
-            'cloud-architecture': {
-                displayName: 'Cloud Architecture & Solutions Design',
-                careerPaths: ['Cloud Architect', 'Solutions Architect', 'Cloud Infrastructure Lead'],
-                projects: {
-                    beginner: ['Static site on AWS S3', 'VPC Setup'],
-                    intermediate: ['Multi-tier Architecture Deployment', 'Serverless API with Lambda'],
-                    advanced: ['Global Cloud Infrastructure with Terraform']
-                },
-                certifications: {
-                    free: ['AWS Cloud Practitioner Essentials'],
-                    pro: ['AWS Certified Solutions Architect – Associate'],
-                    premium: ['Google Professional Cloud Architect']
-                }
+            'rnd': {
+                displayName: 'Research & Development',
+                careerPaths: ['Scientist', 'Lab Director', 'Research Lead'],
+                projects: { beginner: ['Lit Review'], intermediate: ['Experiment Set'], advanced: ['Novel Discovery'] },
+                certifications: { free: ['Science Writing'], pro: ['Lab Safety'], premium: ['PhD'] }
             },
-            'cloud-devops': {
-                displayName: 'Cloud DevOps & SRE',
-                careerPaths: ['DevOps Engineer', 'SRE Engineer', 'Site Reliability Engineer'],
-                projects: {
-                    beginner: ['Dockerizing an App', 'Basic CI/CD with Git'],
-                    intermediate: ['Kubernetes Deployment on Cloud', 'Infrastructure as Code (Terraform)'],
-                    advanced: ['Enterprise-Scale SRE Dashboard', 'Zero-Downtime Migration Strategy']
-                },
-                certifications: {
-                    free: ['Docker Fundamentals', 'Linux Academy CI/CD'],
-                    pro: ['CKA (Certified Kubernetes Administrator)', 'AWS DevOps Engineer'],
-                    premium: ['Google Professional DevOps Engineer', 'SRE Certification']
-                }
+            'applied-math': {
+                displayName: 'Applied Mathematics',
+                careerPaths: ['Actuary', 'Quantitative Analyst', 'Computational Math'],
+                projects: { beginner: ['Stat Calculator'], intermediate: ['Market Sim'], advanced: ['Algorithm Design'] },
+                certifications: { free: ['Khan Academy'], pro: ['Actuarial Level'], premium: ['Masters Math'] }
+            },
+            'bioinformatics': {
+                displayName: 'Bioinformatics',
+                careerPaths: ['Genomics Analyst', 'Bio-IT Developer', 'Data Scientist'],
+                projects: { beginner: ['DNA Seq'], intermediate: ['Proteomics App'], advanced: ['Drug Discovery'] },
+                certifications: { free: ['NCBI Guide'], pro: ['Python Bio'], premium: ['M.Sc Bioinfo'] }
             }
         }
     },
 
-    'cybersecurity': {
-        displayName: 'Cybersecurity',
+    // 4. COMMERCE
+    commerce: {
+        displayName: 'Commerce & Business',
         specializations: {
-            'cyber-offensive': {
-                displayName: 'Offensive Security & Pen Testing',
-                careerPaths: ['Ethical Hacker', 'Penetration Tester', 'Red Team Specialist'],
-                projects: {
-                    beginner: ['Password Cracker Study', 'SQL Injection Lab'],
-                    intermediate: ['Network Vulnerability Assessment', 'Metasploit Lab'],
-                    advanced: ['Full-scale Enterprise Pen Test (Simulated)']
-                },
-                certifications: {
-                    free: ['HTB Academy Intro', 'TryHackMe Paths'],
-                    pro: ['CompTIA PenTest+', 'Certified Ethical Hacker'],
-                    premium: ['OSCP (Offensive Security Certified Professional)']
-                }
+            'financial-analysis': {
+                displayName: 'Financial Analysis',
+                careerPaths: ['Investment Banker', 'Financial Analyst', 'Portfolio Manager'],
+                projects: { beginner: ['Budget Plan'], intermediate: ['Stock Valuation'], advanced: ['M&A Model'] },
+                certifications: { free: ['Corporate Finance'], pro: ['CFA Level 1'], premium: ['CFA Charter'] }
             },
-            'cyber-defensive': {
-                displayName: 'Defensive Security & SOC',
-                careerPaths: ['SOC Analyst', 'Incident Responder', 'Security Engineer'],
-                projects: {
-                    beginner: ['Log Analysis', 'Firewall Setup'],
-                    intermediate: ['SIEM Implementation', 'Intrusion Detection System'],
-                    advanced: ['Threat Intelligence Platform', 'Incident Management Simulation']
-                },
-                certifications: {
-                    free: ['Google Cybersecurity Cert (Audit)', 'Cisco CyberOps Associate'],
-                    pro: ['CompTIA Security+', 'GSEC'],
-                    premium: ['CISSP', 'CISM']
-                }
+            'accounting': {
+                displayName: 'Accounting',
+                careerPaths: ['Chartered Accountant', 'Tax Consultant', 'Auditor'],
+                projects: { beginner: ['Tally Setup'], intermediate: ['Tax Audit'], advanced: ['CFO Level Strategy'] },
+                certifications: { free: ['GST Basics'], pro: ['CA Final'], premium: ['CPA / ACCA'] }
+            },
+            'business-analytics': {
+                displayName: 'Business Analytics',
+                careerPaths: ['Data Analyst', 'Business Intelligence Developer', 'Strategy Head'],
+                projects: { beginner: ['Excel Dash'], intermediate: ['Power BI Sales'], advanced: ['Customer Churn'] },
+                certifications: { free: ['Google Data Analytics'], pro: ['Microsoft PL-300'], premium: ['IBM Data Expert'] }
             }
         }
     },
 
-    'blockchain-web3': {
-        displayName: 'Blockchain & Web3',
+    // 5. LAW
+    law: {
+        displayName: 'Law & Legal Studies',
         specializations: {
-            'web3-smart-contracts': {
-                displayName: 'Smart Contract Development',
-                careerPaths: ['Smart Contract Engineer', 'Blockchain Developer', 'Web3 Architect'],
-                projects: {
-                    beginner: ['ERC20 Token', 'Simple NFT'],
-                    intermediate: ['Voting DAO', 'DeFi Liquidity Pool'],
-                    advanced: ['Flash Loan Bot', 'Cross-chain Bridge']
-                },
-                certifications: {
-                    free: ['Alchemy University', 'CryptoZombies'],
-                    pro: ['Certified Blockchain Developer'],
-                    premium: ['ConsenSys Blockchain Developer']
-                }
+            'corporate-law': {
+                displayName: 'Corporate Law',
+                careerPaths: ['Corporate Counsel', 'M&A Lawyer', 'Legal Compliance Head'],
+                projects: { beginner: ['Contract Draft'], intermediate: ['Startup Legal Kit'], advanced: ['Litigation Strategy'] },
+                certifications: { free: ['IPR Basics'], pro: ['LLM Corporate'], premium: ['Bar Council Pro'] }
             },
-            'web3-dapps': {
-                displayName: 'DApp Development',
-                careerPaths: ['Web3 Developer', 'Frontend DApp Engineer'],
-                projects: {
-                    beginner: ['Metamask Connect App'],
-                    intermediate: ['NFT Marketplace Frontend'],
-                    advanced: ['DApp with WalletConnect & Subgraph']
-                },
-                certifications: {
-                    free: ['Ethers.js Guide'],
-                    pro: ['Web3JS Mastery'],
-                    premium: ['Certified Blockchain Architect']
-                }
+            'cyber-law': {
+                displayName: 'Cyber Law',
+                careerPaths: ['Cyber Lawyer', 'Privacy Consultant', 'Policy Researcher'],
+                projects: { beginner: ['T&C Policy'], intermediate: ['GDPR Audit'], advanced: ['Cyber Crime Case'] },
+                certifications: { free: ['MeitY Modules'], pro: ['Certified Privacy Pro'], premium: ['LLM Cyber'] }
             }
         }
     },
 
+    // 6. ARTS
+    arts: {
+        displayName: 'Arts & Humanities',
+        specializations: {
+            'psychology': {
+                displayName: 'Psychology',
+                careerPaths: ['Clinical Psychologist', 'Counselor', 'HR Specialist'],
+                projects: { beginner: ['Survey'], intermediate: ['Counseling Mock'], advanced: ['Research Paper'] },
+                certifications: { free: ['Psych 101'], pro: ['M.A. Psych'], premium: ['RCI License'] }
+            }
+        }
+    },
+
+    // 7. DESIGN
+    design: {
+        displayName: 'Design & Creative Arts',
+        specializations: {
+            'ui-ux': {
+                displayName: 'UI/UX Design',
+                careerPaths: ['UI Designer', 'UX Researcher', 'Product Lead'],
+                projects: { beginner: ['Mobile App Mockup'], intermediate: ['Design System'], advanced: ['Complex SaaS UI'] },
+                certifications: { free: ['Figma Guide'], pro: ['Google UX Design'], premium: ['HCI Master'] }
+            },
+            'game-design': {
+                displayName: 'Game Design',
+                careerPaths: ['Game Designer', 'Level Designer', 'Indie Dev'],
+                projects: { beginner: ['Platformer'], intermediate: ['RPG World'], advanced: ['Multiplayer Logic'] },
+                certifications: { free: ['Unity Essentials'], pro: ['Unreal Engine Cert'], premium: ['Indie Dev Pro'] }
+            }
+        }
+    },
+
+    // 8. DEFENSE
+    defense: {
+        displayName: 'Defense & Security',
+        specializations: {
+            'armed-forces': {
+                displayName: 'Armed Forces',
+                careerPaths: ['Army Officer', 'Navy Pilot', 'Commando'],
+                projects: { beginner: ['Fitness Plan'], intermediate: ['Strategy Doc'], advanced: ['Leadership Mock'] },
+                certifications: { free: ['NCC'], pro: ['NDA/CDS Prep'], premium: ['Academy Commission'] }
+            }
+        }
+    },
+
+    // 9. MEDIA & COMMUNICATION
+    media: {
+        displayName: 'Media & Mass Comm',
+        specializations: {
+            'media-journalism': {
+                displayName: 'Journalism',
+                careerPaths: ['News Reporter', 'Digital Editor', 'Anchor'],
+                projects: { beginner: ['News Blog'], intermediate: ['Video Doc'], advanced: ['News Channel Setup'] },
+                certifications: { free: ['Google News Init'], pro: ['BJMC'], premium: ['MJMC'] }
+            },
+            'media-digital': {
+                displayName: 'Digital Content',
+                careerPaths: ['Content Strategist', 'Influencer Lead', 'Social Media Head'],
+                projects: { beginner: ['Ad Campaign'], intermediate: ['YouTube Channel'], advanced: ['Brand Pivot'] },
+                certifications: { free: ['HubSpot Marketing'], pro: ['Meta Social Admin'], premium: ['Masters Media'] }
+            }
+        }
+    },
+
+    // 10. CIVIL SERVICES
     'civil-services': {
-        displayName: 'Civil Services & Government',
+        displayName: 'Civil Services',
         specializations: {
             'civil-admin': {
-                displayName: 'IAS & Administrative Services',
-                careerPaths: ['IAS Officer', 'State Civil Services Officer', 'Policy Advisor'],
-                projects: {
-                    beginner: ['Social Problem Analysis Report'],
-                    intermediate: ['District Development Plan Simulation'],
-                    advanced: ['National Policy Implementation Research']
-                },
-                certifications: {
-                    free: ['Unacademy / Byju\'s Free Resources'],
-                    pro: ['Civil Services Foundation Training'],
-                    premium: ['National Academy (LBSNAA) Training']
-                }
+                displayName: 'IAS Administration',
+                careerPaths: ['IAS Officer', 'Sub-Collector', 'Chief Secretary'],
+                projects: { beginner: ['UPSC Mock'], intermediate: ['District Plan'], advanced: ['Policy Proposal'] },
+                certifications: { free: ['Civils Prep Free'], pro: ['Foundation Course'], premium: ['Service Training'] }
             },
             'civil-police': {
-                displayName: 'IPS & Internal Security',
-                careerPaths: ['IPS Officer', 'Police Inspector', 'Intelligence Officer'],
-                projects: {
-                    beginner: ['Community Policing Awareness'],
-                    intermediate: ['Crime Prevention Plan for Locality'],
-                    advanced: ['Urban Security Infrastructure Design']
-                },
-                certifications: {
-                    free: ['Police Academy Awareness Modules'],
-                    pro: ['National Police Academy (SVP NPA) Training'],
-                    premium: ['Higher Defense/Security Research']
-                }
+                displayName: 'IPS & Security',
+                careerPaths: ['IPS Officer', 'SP', 'DGP'],
+                projects: { beginner: ['Security Audit'], intermediate: ['Patrol Optimization'], advanced: ['Crime Data Hub'] },
+                certifications: { free: ['SVP NPA Guide'], pro: ['Police Academy'], premium: ['Senior Security'] }
             }
         }
     },
 
+    // 11. LOGISTICS
     logistics: {
         displayName: 'Logistics & Supply Chain',
         specializations: {
             'supply-chain-analytics': {
                 displayName: 'Supply Chain Analytics',
-                careerPaths: ['SCM Analyst', 'Operations Researcher', 'Demand Planner'],
-                projects: {
-                    beginner: ['Inventory Data Analysis'],
-                    intermediate: ['Supply Chain Simulation Model'],
-                    advanced: ['AI-driven Logistics Optimization Platform']
-                },
-                certifications: {
-                    free: ['Intro to SCM (Coursera Audit)'],
-                    pro: ['CSCP Certification'],
-                    premium: ['Masters in SCM Analytics']
-                }
+                careerPaths: ['SCM Consultant', 'Sustainability Lead', 'Supply Chain Head'],
+                projects: { beginner: ['Tracker'], intermediate: ['Route Optimizer'], advanced: ['Global Ops Hub'] },
+                certifications: { free: ['Logistics 101'], pro: ['Six Sigma Green'], premium: ['CSCP'] }
             },
             'warehouse-transport-management': {
-                displayName: 'Warehouse & Transport Management',
-                careerPaths: ['Warehouse Manager', 'Fleet Manager', 'Logistics Coordinator'],
-                projects: {
-                    beginner: ['Warehouse Layout Plan'],
-                    intermediate: ['Fleet Tracking Dashboard Mockup'],
-                    advanced: ['Centralized Logistics Command Center Blueprint']
-                },
-                certifications: {
-                    free: ['Warehouse Safety Basics'],
-                    pro: ['Six Sigma Green Belt for Logistics'],
-                    premium: ['Advanced Logistics Management Degree']
-                }
+                displayName: 'Warehouse Management',
+                careerPaths: ['Warehouse Manager', 'Cold Chain Lead', 'Regional Ops Head'],
+                projects: { beginner: ['Layout Design'], intermediate: ['WMS Setup'], advanced: ['Automated Warehouse'] },
+                certifications: { free: ['5S Training'], pro: ['Safety Cert'], premium: ['Lean Expert'] }
             }
         }
     },
 
+    // 12. AVIATION
     aviation: {
         displayName: 'Aviation & Merchant Navy',
         specializations: {
             'commercial-pilot-operations': {
                 displayName: 'Commercial Pilot & Flight Operations',
-                careerPaths: ['Commercial Pilot', 'Flight Instructor', 'Air Traffic Controller'],
-                projects: {
-                    beginner: ['Flight Simulation Log'],
-                    intermediate: ['Navigation Plan Study'],
-                    advanced: ['Airline Operational Management Research']
-                },
-                certifications: {
-                    free: ['Aviation Awareness Modules'],
-                    pro: ['Private Pilot License (PPL)'],
-                    premium: ['Commercial Pilot License (CPL)']
-                }
+                careerPaths: ['Airline Pilot', 'First Officer', 'Captain'],
+                projects: { beginner: ['Sim Log'], intermediate: ['IFR Training'], advanced: ['ATPL Theory'] },
+                certifications: { free: ['DGCA Ground'], pro: ['CPL License'], premium: ['Type Rating'] }
             },
             'merchant-navy-deck-engine': {
-                displayName: 'Merchant Navy (Deck & Engine)',
-                careerPaths: ['Deck Officer', 'Marine Engineer', 'Captain'],
-                projects: {
-                    beginner: ['Basic Ship Navigation Study'],
-                    intermediate: ['Marine Engine Troubleshooting Report'],
-                    advanced: ['International Maritime Policy Analysis']
-                },
-                certifications: {
-                    free: ['Basic Safety Training (STCW) Awareness'],
-                    pro: ['GME / DNS Certification'],
-                    premium: ['B.Sc Nautical Science / Marine Engineering']
-                }
+                displayName: 'Merchant Navy',
+                careerPaths: ['Deck Officer', 'Chief Engineer', 'Master Mariner'],
+                projects: { beginner: ['Sea Log'], intermediate: ['Navigation Mock'], advanced: ['Engine Overhaul'] },
+                certifications: { free: ['STCW'], pro: ['GME / DNS'], premium: ['COC Master'] }
             }
         }
     },
 
+    // 13. CLOUD COMPUTING (Promoted)
+    'cloud-computing': {
+        displayName: 'Cloud Computing',
+        specializations: {
+            'cloud-architecture': {
+                displayName: 'Cloud Architecture',
+                careerPaths: ['Cloud Architect', 'Solutions Architect', 'Infrastructure Head'],
+                projects: { beginner: ['VPC Setup'], intermediate: ['Serverless API'], advanced: ['Global Cloud Infra'] },
+                certifications: { free: ['AWS Cloud Practitioner'], pro: ['AWS Solutions Architect'], premium: ['Google Cloud Architect'] }
+            },
+            'cloud-devops': {
+                displayName: 'Cloud DevOps',
+                careerPaths: ['DevOps Engineer', 'SRE', 'DevSecOps Manager'],
+                projects: { beginner: ['Dockerize App'], intermediate: ['K8s Cluster'], advanced: ['Zero Downtime CI/CD'] },
+                certifications: { free: ['Linux Basics'], pro: ['CKA Certification'], premium: ['AWS DevOps Pro'] }
+            }
+        }
+    },
+
+    // 14. AI & ML (Promoted)
+    'ai-ml': {
+        displayName: 'AI & Machine Learning',
+        specializations: {
+            'ai-deep-learning': {
+                displayName: 'Deep Learning',
+                careerPaths: ['DL Engineer', 'Computer Vision Expert', 'Researcher'],
+                projects: { beginner: ['Digit Classifier'], intermediate: ['Face Recognition'], advanced: ['Generative AI'] },
+                certifications: { free: ['Fast.ai'], pro: ['Pytorch Spec'], premium: ['Nvidia Deep Learning'] }
+            },
+            'ai-ds': {
+                displayName: 'Data Science',
+                careerPaths: ['Data Scientist', 'BI Developer', 'Analytics Head'],
+                projects: { beginner: ['Sales EDA'], intermediate: ['Predictive Model'], advanced: ['Big Data Pipeline'] },
+                certifications: { free: ['Kaggle DS'], pro: ['IBM DS Professional'], premium: ['AWS Data Analytics'] }
+            },
+            'ai-nlp': {
+                displayName: 'Natural Language Processing',
+                careerPaths: ['NLP Engineer', 'Conversation AI Lead', 'LLM Scientist'],
+                projects: { beginner: ['Spam Filter'], intermediate: ['Chatbot'], advanced: ['Custom GPT'] },
+                certifications: { free: ['Hugging Face'], pro: ['LangChain Cert'], premium: ['NLP Specialization'] }
+            }
+        }
+    },
+
+    // 15. CYBERSECURITY (Promoted)
+    'cybersecurity': {
+        displayName: 'Cybersecurity',
+        specializations: {
+            'cyber-offensive': {
+                displayName: 'Offensive Security',
+                careerPaths: ['Ethical Hacker', 'Red Team Lead', 'Security Researcher'],
+                projects: { beginner: ['SQLi Lab'], intermediate: ['Vuln Scanner'], advanced: ['Full APT Mock'] },
+                certifications: { free: ['TryHackMe'], pro: ['CEH / PenTest+'], premium: ['OSCP'] }
+            },
+            'cyber-defensive': {
+                displayName: 'Defensive Security',
+                careerPaths: ['SOC Analyst', 'BRP Manager', 'CISO'],
+                projects: { beginner: ['Log Analytics'], intermediate: ['SIEM Setup'], advanced: ['Incident Response Pro'] },
+                certifications: { free: ['Google Cyber'], pro: ['Security+'], premium: ['CISSP'] }
+            }
+        }
+    },
+
+    // 16. BLOCKCHAIN (Promoted)
+    'blockchain-web3': {
+        displayName: 'Blockchain & Web3',
+        specializations: {
+            'web3-smart-contracts': {
+                displayName: 'Smart Contract Dev',
+                careerPaths: ['Blockchain Engineer', 'Solidity Dev', 'Web3 Architect'],
+                projects: { beginner: ['ERC20 Token'], intermediate: ['DeFi Loan'], advanced: ['DEX Engine'] },
+                certifications: { free: ['CryptoZombies'], pro: ['ConsenSys Dev'], premium: ['Blockchain Architect'] }
+            },
+            'web3-dapps': {
+                displayName: 'DApp Development',
+                careerPaths: ['Web3 Frontend Engineer', 'Fullstack Web3 Dev', 'EVM Specialist'],
+                projects: { beginner: ['Wallet Connect'], intermediate: ['NFT Gallery'], advanced: ['Metaverse DApp'] },
+                certifications: { free: ['Alchemy University'], pro: ['Web3JS Mastery'], premium: ['Certified Web3 Pro'] }
+            }
+        }
+    },
+
+    // 17. EMERGING TECH
     'emerging-tech': {
-        displayName: 'Emerging Technologies',
+        displayName: 'Emerging Tech',
         specializations: {
             'tech-quantum': {
                 displayName: 'Quantum Computing',
-                careerPaths: ['Quantum Algorithm Researcher', 'Quantum Software Engineer'],
-                projects: {
-                    beginner: ['Qiskit Circuit Builder'],
-                    intermediate: ['Quantum Key Distribution Study'],
-                    advanced: ['Hybrid Quantum-Classical Algorithm']
-                },
-                certifications: {
-                    free: ['IBM Quantum Learning'],
-                    pro: ['Microsoft Quantum Solutions'],
-                    premium: ['PhD in Quantum Computing']
-                }
+                careerPaths: ['Quantum Researcher', 'Quantum Algorithms Lead'],
+                projects: { beginner: ['Quantum Gate'], intermediate: ['QKD Sim'], advanced: ['Shor\'s Demo'] },
+                certifications: { free: ['IBM Qiskit'], pro: ['MS Quantum'], premium: ['PhD Quantum'] }
             },
             'tech-robotics': {
-                displayName: 'Robotics & Automation',
-                careerPaths: ['Robotics Engineer', 'Autonomous Systems Specialist'],
-                projects: {
-                    beginner: ['Simple Robot Arm Control'],
-                    intermediate: ['Path Finding Algorithm for Mobile Robot'],
-                    advanced: ['Autonomous Warehouse Robot Design']
-                },
-                certifications: {
-                    free: ['ROS for Beginners'],
-                    pro: ['Robotics Specialization (Penn)'],
-                    premium: ['Masters in Robotics']
-                }
+                displayName: 'Space Tech & Robotics',
+                careerPaths: ['Satellite Engineer', 'Robotics Researcher', 'Space Ops'],
+                projects: { beginner: ['Drone'], intermediate: ['SmallSat Mock'], advanced: ['Mars Rover Unit'] },
+                certifications: { free: ['NASA Free Ed'], pro: ['STK Software'], premium: ['Master Space Tech'] }
             }
         }
     },
 
-    'media': {
-        displayName: 'Media & Entertainment',
+    // 18. EDUCATION
+    education: {
+        displayName: 'Education',
         specializations: {
-            'media-journalism': {
-                displayName: 'Journalism & Mass Communication',
-                careerPaths: ['Journalist', 'Media Editor', 'Digital Reporter'],
-                projects: {
-                    beginner: ['News Blog Portfolio'],
-                    intermediate: ['Investigative Documentary Short'],
-                    advanced: ['Digital News Startup Blueprint']
-                },
-                certifications: {
-                    free: ['Google News Initiative Training'],
-                    pro: ['Journalism Diploma'],
-                    premium: ['Master\'s in Journalism']
-                }
+            'edtech': {
+                displayName: 'EdTech & Digital Learning',
+                careerPaths: ['Instructional Designer', 'EdTech Product Manager', 'E-Learning Lead'],
+                projects: { beginner: ['Lesson Plan'], intermediate: ['LMS Course'], advanced: ['AI Tutor'] },
+                certifications: { free: ['Google Educator'], pro: ['Instructional Design'], premium: ['EdTech Leader'] }
             }
         }
     },
 
-    medical: {
-        displayName: 'Medical & Health Sciences',
+    // 19. AGRICULTURE
+    agriculture: {
+        displayName: 'Agriculture',
         specializations: {
-            'hospital-admin': {
-                displayName: 'Hospital Administration & Healthcare Management',
-                careerPaths: ['Hospital Administrator', 'Operations Manager', 'Medical Superintendent'],
-                projects: {
-                    beginner: ['Hospital Workflow Analysis'],
-                    intermediate: ['Patient Data Visualization Platform'],
-                    advanced: ['AI-based Hospital Resource Optimization']
-                },
-                certifications: {
-                    free: ['WHO Online Health Courses'],
-                    pro: ['PG Diploma in Hospital Administration'],
-                    premium: ['MBA in Healthcare Management']
-                }
+            'agritech': {
+                displayName: 'Agri-Tech',
+                careerPaths: ['Agri-Tech Founder', 'Smart Farming Specialist', 'Agri Data Scientist'],
+                projects: { beginner: ['Soil Sensor'], intermediate: ['Drone Agri'], advanced: ['Precision Supply'] },
+                certifications: { free: ['Agri 101'], pro: ['Agri-data Cert'], premium: ['Agri-MBA'] }
+            }
+        }
+    },
+
+    // 20. HOSPITALITY
+    hospitality: {
+        displayName: 'Hospitality',
+        specializations: {
+            'hotel-mgmt': {
+                displayName: 'Hotel Management',
+                careerPaths: ['Hotel GM', 'F&B Director', 'Luxury Concierge'],
+                projects: { beginner: ['Guest Plan'], intermediate: ['Event Budget'], advanced: ['Property Setup'] },
+                certifications: { free: ['Front Office'], pro: ['IHM Degree'], premium: ['Swiss Hotel Mgmt'] }
+            }
+        }
+    },
+
+    // 21. SPORTS
+    sports: {
+        displayName: 'Sports',
+        specializations: {
+            'sports-science': {
+                displayName: 'Sports Science',
+                careerPaths: ['Performance Analyst', 'Strength Coach', 'Sports Scientist'],
+                projects: { beginner: ['Fitness Metrics'], intermediate: ['Injury Map'], advanced: ['Pro Team Stats'] },
+                certifications: { free: ['Anatomy Basic'], pro: ['CSCS Cert'], premium: ['PHD Sports'] }
+            }
+        }
+    },
+
+    // 22. VOCATIONAL
+    vocational: {
+        displayName: 'Vocational',
+        specializations: {
+            'ev-tech': {
+                displayName: 'EV Maintenance',
+                careerPaths: ['EV Technician', 'Workshop owner', 'EV Fleet Repair'],
+                projects: { beginner: ['Battery Check'], intermediate: ['Motor Repair'], advanced: ['EV Retrofit'] },
+                certifications: { free: ['EV Safety'], pro: ['Skill India EV'], premium: ['Advanced EV Tech'] }
             }
         }
     }
