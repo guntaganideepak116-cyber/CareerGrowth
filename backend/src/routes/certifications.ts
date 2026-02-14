@@ -36,7 +36,8 @@ router.get('/', async (req: Request, res: Response) => {
         // Build strict query
         let query = db.collection('certifications')
             .where('field', '==', field)
-            .where('specialization', '==', specialization);
+            .where('specialization', '==', specialization)
+            .limit(50);
 
         let snapshot = await query.get();
         let certs = snapshot.docs.map((doc: any) => ({
@@ -48,7 +49,8 @@ router.get('/', async (req: Request, res: Response) => {
         if (certs.length === 0) {
             query = db.collection('certifications')
                 .where('fieldId', '==', field)
-                .where('specializationId', '==', specialization);
+                .where('specializationId', '==', specialization)
+                .limit(50);
 
             snapshot = await query.get();
             certs = snapshot.docs.map((doc: any) => ({

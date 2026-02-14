@@ -38,7 +38,8 @@ router.get('/', async (req: Request, res: Response) => {
         // to maintain compatibility with different data versions while enforcing the filter.
         let query = db.collection('projects')
             .where('field', '==', field)
-            .where('specialization', '==', specialization);
+            .where('specialization', '==', specialization)
+            .limit(50);
 
         let snapshot = await query.get();
         let projects = snapshot.docs.map((doc: any) => ({
@@ -50,7 +51,8 @@ router.get('/', async (req: Request, res: Response) => {
         if (projects.length === 0) {
             query = db.collection('projects')
                 .where('fieldId', '==', field)
-                .where('specializationId', '==', specialization);
+                .where('specializationId', '==', specialization)
+                .limit(50);
 
             snapshot = await query.get();
             projects = snapshot.docs.map((doc: any) => ({
