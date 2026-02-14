@@ -141,8 +141,8 @@ export const fieldIntroductions: Record<string, FieldIntroContent> = {
         whyCertificationsMatter: 'Cloud certifications from AWS, Azure, or GCP are highly valued by employers, validate your expertise, and often lead to significantly higher salaries in the cloud computing field.',
         whyProjectsMatter: 'Cloud projects demonstrate your ability to design scalable architectures, optimize costs, or implement cloud solutions. They showcase practical cloud expertise valued by employers.',
     },
-    'devops-sre': {
-        fieldId: 'devops-sre',
+    'devops': {
+        fieldId: 'devops',
         fieldName: 'DevOps & Site Reliability Engineering',
         shortDescription: 'Automation, CI/CD, and system reliability for efficient software delivery.',
         aboutField: 'DevOps & SRE focuses on automating software delivery, ensuring system reliability, and bridging development and operations. This field is essential for modern software development practices.',
@@ -161,8 +161,8 @@ export const fieldIntroductions: Record<string, FieldIntroContent> = {
         whyCertificationsMatter: 'Blockchain certifications demonstrate your expertise in this emerging field, validate your knowledge of decentralized technologies, and enhance credibility with employers and clients.',
         whyProjectsMatter: 'Blockchain projects demonstrate your ability to build decentralized applications, write secure smart contracts, or implement Web3 solutions. They form your portfolio in this emerging field.',
     },
-    'ar-vr-mr': {
-        fieldId: 'ar-vr-mr',
+    'ar-vr': {
+        fieldId: 'ar-vr',
         fieldName: 'AR / VR / Mixed Reality',
         shortDescription: 'Immersive experiences and spatial computing for the next computing platform.',
         aboutField: 'AR/VR/Mixed Reality focuses on creating immersive experiences using augmented reality, virtual reality, and spatial computing. This field is shaping the future of human-computer interaction.',
@@ -171,8 +171,8 @@ export const fieldIntroductions: Record<string, FieldIntroContent> = {
         whyCertificationsMatter: 'XR certifications in Unity, Unreal Engine, or platform-specific development (ARKit, ARCore) validate your technical skills in this emerging field.',
         whyProjectsMatter: 'XR projects demonstrate your ability to create immersive experiences, design spatial interfaces, or develop innovative applications. They showcase your creativity and technical expertise.',
     },
-    'quantum-computing': {
-        fieldId: 'quantum-computing',
+    'quantum': {
+        fieldId: 'quantum',
         fieldName: 'Quantum Computing',
         shortDescription: 'Quantum algorithms and quantum information science for next-generation computing.',
         aboutField: 'Quantum Computing focuses on quantum algorithms, quantum programming, and quantum information science. This cutting-edge field promises to revolutionize computing for specific problem domains.',
@@ -191,8 +191,8 @@ export const fieldIntroductions: Record<string, FieldIntroContent> = {
         whyCertificationsMatter: 'Robotics certifications in RPA tools, robot programming, or automation platforms validate your technical skills and enhance employability in the growing automation sector.',
         whyProjectsMatter: 'Robotics projects demonstrate your ability to design robotic systems, implement automation solutions, or develop autonomous capabilities. They showcase practical robotics expertise.',
     },
-    'bioinformatics-compbio': {
-        fieldId: 'bioinformatics-compbio',
+    'bioinformatics': {
+        fieldId: 'bioinformatics',
         fieldName: 'Bioinformatics & Computational Biology',
         shortDescription: 'Genomics, proteomics, and computational life sciences for biological discovery.',
         aboutField: 'Bioinformatics & Computational Biology applies computational methods to biological data, including genomics, proteomics, and drug discovery. This field bridges biology and computer science.',
@@ -211,8 +211,8 @@ export const fieldIntroductions: Record<string, FieldIntroContent> = {
         whyCertificationsMatter: 'Product management certifications demonstrate your knowledge of product frameworks, agile methodologies, and product strategy, enhancing credibility with employers.',
         whyProjectsMatter: 'Product projects demonstrate your ability to identify user needs, define product strategy, or launch successful products. They showcase your product thinking and leadership.',
     },
-    'uiux-hci': {
-        fieldId: 'uiux-hci',
+    'ui-ux': {
+        fieldId: 'ui-ux',
         fieldName: 'UI/UX & Human–Computer Interaction',
         shortDescription: 'User experience design and human-centered computing for intuitive interfaces.',
         aboutField: 'UI/UX & HCI focuses on designing user-centered interfaces, conducting user research, and creating intuitive experiences. This field ensures technology serves human needs effectively.',

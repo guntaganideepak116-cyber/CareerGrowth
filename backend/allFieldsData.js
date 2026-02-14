@@ -6,39 +6,40 @@ const COMPLETE_REAL_WORLD_DATA = {
                 "displayName": "Cse Software Dev",
                 "branch": "cse",
                 "careerPaths": [
-                    "Senior Cse Software Dev Specialist",
-                    "Cse Software Dev Consultant",
-                    "Lead Cse Software Dev Engineer"
+                    "Frontend Developer",
+                    "Backend Developer",
+                    "Full Stack Developer"
                 ],
                 "projects": {
                     "beginner": [
-                        "Basic cse-software-dev Project",
-                        "cse-software-dev Simulation",
-                        "Introduction to cse-software-dev"
+                        "Personal Portfolio Website",
+                        "To-Do CRUD App",
+                        "Blog with Admin Panel"
                     ],
                     "intermediate": [
-                        "Advanced cse-software-dev System",
-                        "Cross-platform cse-software-dev",
-                        "cse-software-dev Analytics"
+                        "Full Stack E-commerce Platform",
+                        "JWT Authentication System",
+                        "Real-time Chat App"
                     ],
                     "advanced": [
-                        "Enterprise cse-software-dev Suite",
-                        "High-Performance cse-software-dev",
-                        "Global cse-software-dev Infrastructure"
+                        "SaaS Platform",
+                        "Multi-role Enterprise Web App",
+                        "AI-powered Web Application"
                     ]
                 },
                 "certifications": {
                     "free": [
-                        "cse-software-dev Foundations",
-                        "Google cse-software-dev Intro"
+                        "freeCodeCamp Full Stack",
+                        "NPTEL Web Programming",
+                        "Infosys Springboard Web Dev"
                     ],
                     "pro": [
-                        "Professional cse-software-dev Cert",
-                        "Microsoft cse-software-dev Master"
+                        "Meta Frontend Developer (Coursera)",
+                        "IBM Full Stack Developer"
                     ],
                     "premium": [
-                        "Industry Certified cse-software-dev",
-                        "cse-software-dev Expert Professional"
+                        "AWS Developer Associate",
+                        "Microsoft Azure Developer"
                     ]
                 }
             },
@@ -126,39 +127,39 @@ const COMPLETE_REAL_WORLD_DATA = {
                 "displayName": "Cse Ai Ml",
                 "branch": "cse",
                 "careerPaths": [
-                    "Senior Cse Ai Ml Specialist",
-                    "Cse Ai Ml Consultant",
-                    "Lead Cse Ai Ml Engineer"
+                    "AI Engineer",
+                    "ML Engineer",
+                    "NLP Engineer"
                 ],
                 "projects": {
                     "beginner": [
-                        "Basic cse-ai-ml Project",
-                        "cse-ai-ml Simulation",
-                        "Introduction to cse-ai-ml"
+                        "Spam Detection",
+                        "Movie Recommendation",
+                        "House Price Prediction"
                     ],
                     "intermediate": [
-                        "Advanced cse-ai-ml System",
-                        "Cross-platform cse-ai-ml",
-                        "cse-ai-ml Analytics"
+                        "Resume Screening AI",
+                        "Face Recognition System",
+                        "Sentiment Analysis"
                     ],
                     "advanced": [
-                        "Enterprise cse-ai-ml Suite",
-                        "High-Performance cse-ai-ml",
-                        "Global cse-ai-ml Infrastructure"
+                        "LLM-based AI Assistant",
+                        "AI SaaS Platform",
+                        "Deep Learning Deployment Pipeline"
                     ]
                 },
                 "certifications": {
                     "free": [
-                        "cse-ai-ml Foundations",
-                        "Google cse-ai-ml Intro"
+                        "Google ML Crash Course",
+                        "Kaggle Micro Courses"
                     ],
                     "pro": [
-                        "Professional cse-ai-ml Cert",
-                        "Microsoft cse-ai-ml Master"
+                        "IBM AI Engineering",
+                        "DeepLearning.AI ML Specialization"
                     ],
                     "premium": [
-                        "Industry Certified cse-ai-ml",
-                        "cse-ai-ml Expert Professional"
+                        "Google Professional ML Engineer",
+                        "Azure AI Engineer"
                     ]
                 }
             },
@@ -166,39 +167,36 @@ const COMPLETE_REAL_WORLD_DATA = {
                 "displayName": "Cse Data Science",
                 "branch": "cse",
                 "careerPaths": [
-                    "Senior Cse Data Science Specialist",
-                    "Cse Data Science Consultant",
-                    "Lead Cse Data Science Engineer"
+                    "Data Analyst",
+                    "Data Scientist",
+                    "BI Developer"
                 ],
                 "projects": {
                     "beginner": [
-                        "Basic cse-data-science Project",
-                        "cse-data-science Simulation",
-                        "Introduction to cse-data-science"
+                        "Excel Sales Dashboard",
+                        "Basic Data Visualization"
                     ],
                     "intermediate": [
-                        "Advanced cse-data-science System",
-                        "Cross-platform cse-data-science",
-                        "cse-data-science Analytics"
+                        "Power BI Dashboard",
+                        "Customer Segmentation"
                     ],
                     "advanced": [
-                        "Enterprise cse-data-science Suite",
-                        "High-Performance cse-data-science",
-                        "Global cse-data-science Infrastructure"
+                        "Big Data Pipeline",
+                        "Real-time Analytics System"
                     ]
                 },
                 "certifications": {
                     "free": [
-                        "cse-data-science Foundations",
-                        "Google cse-data-science Intro"
+                        "Google Data Analytics (Audit Mode)",
+                        "Kaggle SQL"
                     ],
                     "pro": [
-                        "Professional cse-data-science Cert",
-                        "Microsoft cse-data-science Master"
+                        "Microsoft Power BI",
+                        "IBM Data Science"
                     ],
                     "premium": [
-                        "Industry Certified cse-data-science",
-                        "cse-data-science Expert Professional"
+                        "AWS Data Analytics Specialty",
+                        "Tableau Professional"
                     ]
                 }
             },
@@ -2011,39 +2009,36 @@ const COMPLETE_REAL_WORLD_DATA = {
                 "displayName": "Hospital Admin",
                 "branch": null,
                 "careerPaths": [
-                    "Senior Hospital Admin Specialist",
-                    "Hospital Admin Consultant",
-                    "Lead Hospital Admin Engineer"
+                    "Hospital Administrator",
+                    "Healthcare Operations Manager",
+                    "Medical Superintendent"
                 ],
                 "projects": {
                     "beginner": [
-                        "Basic hospital-admin Project",
-                        "hospital-admin Simulation",
-                        "Introduction to hospital-admin"
+                        "Hospital Workflow Analysis",
+                        "Patient Registration System"
                     ],
                     "intermediate": [
-                        "Advanced hospital-admin System",
-                        "Cross-platform hospital-admin",
-                        "hospital-admin Analytics"
+                        "Hospital Management System",
+                        "Patient Data Analytics Dashboard"
                     ],
                     "advanced": [
-                        "Enterprise hospital-admin Suite",
-                        "High-Performance hospital-admin",
-                        "Global hospital-admin Infrastructure"
+                        "AI-based Hospital Resource Optimization",
+                        "Enterprise Healthcare ERP System"
                     ]
                 },
                 "certifications": {
                     "free": [
-                        "hospital-admin Foundations",
-                        "Google hospital-admin Intro"
+                        "WHO Online Health Courses",
+                        "Coursera Healthcare Management (Audit)"
                     ],
                     "pro": [
-                        "Professional hospital-admin Cert",
-                        "Microsoft hospital-admin Master"
+                        "PG Diploma in Hospital Administration",
+                        "Healthcare Management Certification"
                     ],
                     "premium": [
-                        "Industry Certified hospital-admin",
-                        "hospital-admin Expert Professional"
+                        "MBA in Healthcare Management",
+                        "CPHQ"
                     ]
                 }
             },
@@ -2051,39 +2046,30 @@ const COMPLETE_REAL_WORLD_DATA = {
                 "displayName": "Clinical Research",
                 "branch": null,
                 "careerPaths": [
-                    "Senior Clinical Research Specialist",
-                    "Clinical Research Consultant",
-                    "Lead Clinical Research Engineer"
+                    "Clinical Research Associate",
+                    "Medical Research Analyst",
+                    "Clinical Trial Coordinator"
                 ],
                 "projects": {
                     "beginner": [
-                        "Basic clinical-research Project",
-                        "clinical-research Simulation",
-                        "Introduction to clinical-research"
+                        "Literature Review on Medical Study"
                     ],
                     "intermediate": [
-                        "Advanced clinical-research System",
-                        "Cross-platform clinical-research",
-                        "clinical-research Analytics"
+                        "Clinical Trial Data Analysis"
                     ],
                     "advanced": [
-                        "Enterprise clinical-research Suite",
-                        "High-Performance clinical-research",
-                        "Global clinical-research Infrastructure"
+                        "Full Clinical Trial Management Simulation"
                     ]
                 },
                 "certifications": {
                     "free": [
-                        "clinical-research Foundations",
-                        "Google clinical-research Intro"
+                        "NIH Clinical Research Training"
                     ],
                     "pro": [
-                        "Professional clinical-research Cert",
-                        "Microsoft clinical-research Master"
+                        "Clinical Research Certification (CRS)"
                     ],
                     "premium": [
-                        "Industry Certified clinical-research",
-                        "clinical-research Expert Professional"
+                        "Certified Clinical Research Professional (CCRP)"
                     ]
                 }
             },
@@ -2171,39 +2157,30 @@ const COMPLETE_REAL_WORLD_DATA = {
                 "displayName": "Public Health",
                 "branch": null,
                 "careerPaths": [
-                    "Senior Public Health Specialist",
-                    "Public Health Consultant",
-                    "Lead Public Health Engineer"
+                    "Public Health Officer",
+                    "Epidemiologist",
+                    "Health Policy Analyst"
                 ],
                 "projects": {
                     "beginner": [
-                        "Basic public-health Project",
-                        "public-health Simulation",
-                        "Introduction to public-health"
+                        "Community Health Survey"
                     ],
                     "intermediate": [
-                        "Advanced public-health System",
-                        "Cross-platform public-health",
-                        "public-health Analytics"
+                        "Public Health Data Dashboard"
                     ],
                     "advanced": [
-                        "Enterprise public-health Suite",
-                        "High-Performance public-health",
-                        "Global public-health Infrastructure"
+                        "National Health Strategy Plan"
                     ]
                 },
                 "certifications": {
                     "free": [
-                        "public-health Foundations",
-                        "Google public-health Intro"
+                        "WHO Public Health Courses"
                     ],
                     "pro": [
-                        "Professional public-health Cert",
-                        "Microsoft public-health Master"
+                        "PG Diploma in Public Health"
                     ],
                     "premium": [
-                        "Industry Certified public-health",
-                        "public-health Expert Professional"
+                        "Master of Public Health (MPH)"
                     ]
                 }
             },
@@ -6156,39 +6133,35 @@ const COMPLETE_REAL_WORLD_DATA = {
                 "displayName": "Cloud Devops",
                 "branch": null,
                 "careerPaths": [
-                    "Senior Cloud Devops Specialist",
-                    "Cloud Devops Consultant",
-                    "Lead Cloud Devops Engineer"
+                    "DevOps Engineer",
+                    "SRE Engineer",
+                    "Platform Engineer"
                 ],
                 "projects": {
                     "beginner": [
-                        "Basic cloud-devops Project",
-                        "cloud-devops Simulation",
-                        "Introduction to cloud-devops"
+                        "CI/CD Setup",
+                        "Dockerized App"
                     ],
                     "intermediate": [
-                        "Advanced cloud-devops System",
-                        "Cross-platform cloud-devops",
-                        "cloud-devops Analytics"
+                        "Kubernetes Cluster Setup",
+                        "Infrastructure as Code"
                     ],
                     "advanced": [
-                        "Enterprise cloud-devops Suite",
-                        "High-Performance cloud-devops",
-                        "Global cloud-devops Infrastructure"
+                        "Enterprise DevOps Pipeline",
+                        "Cloud-native Microservices Platform"
                     ]
                 },
                 "certifications": {
                     "free": [
-                        "cloud-devops Foundations",
-                        "Google cloud-devops Intro"
+                        "GitHub Actions Certification",
+                        "Docker Fundamentals"
                     ],
                     "pro": [
-                        "Professional cloud-devops Cert",
-                        "Microsoft cloud-devops Master"
+                        "Docker Certified Associate",
+                        "Kubernetes CKA"
                     ],
                     "premium": [
-                        "Industry Certified cloud-devops",
-                        "cloud-devops Expert Professional"
+                        "AWS DevOps Engineer"
                     ]
                 }
             }
@@ -6201,39 +6174,33 @@ const COMPLETE_REAL_WORLD_DATA = {
                 "displayName": "Web3 Smart Contracts",
                 "branch": null,
                 "careerPaths": [
-                    "Senior Web3 Smart Contracts Specialist",
-                    "Web3 Smart Contracts Consultant",
-                    "Lead Web3 Smart Contracts Engineer"
+                    "Blockchain Developer",
+                    "Smart Contract Engineer",
+                    "Web3 Developer"
                 ],
                 "projects": {
                     "beginner": [
-                        "Basic web3-smart-contracts Project",
-                        "web3-smart-contracts Simulation",
-                        "Introduction to web3-smart-contracts"
+                        "Simple Smart Contract",
+                        "Crypto Wallet UI"
                     ],
                     "intermediate": [
-                        "Advanced web3-smart-contracts System",
-                        "Cross-platform web3-smart-contracts",
-                        "web3-smart-contracts Analytics"
+                        "NFT Marketplace",
+                        "Token Creation Platform"
                     ],
                     "advanced": [
-                        "Enterprise web3-smart-contracts Suite",
-                        "High-Performance web3-smart-contracts",
-                        "Global web3-smart-contracts Infrastructure"
+                        "DAO System",
+                        "DeFi Lending Platform"
                     ]
                 },
                 "certifications": {
                     "free": [
-                        "web3-smart-contracts Foundations",
-                        "Google web3-smart-contracts Intro"
+                        "Binance Blockchain Intro"
                     ],
                     "pro": [
-                        "Professional web3-smart-contracts Cert",
-                        "Microsoft web3-smart-contracts Master"
+                        "Certified Blockchain Developer"
                     ],
                     "premium": [
-                        "Industry Certified web3-smart-contracts",
-                        "web3-smart-contracts Expert Professional"
+                        "Ethereum Professional Certification"
                     ]
                 }
             },
@@ -6331,39 +6298,30 @@ const COMPLETE_REAL_WORLD_DATA = {
                 "displayName": "Tech Quantum",
                 "branch": null,
                 "careerPaths": [
-                    "Senior Tech Quantum Specialist",
-                    "Tech Quantum Consultant",
-                    "Lead Tech Quantum Engineer"
+                    "Quantum Computing Engineer",
+                    "Quantum Software Developer",
+                    "Quantum Research Scientist"
                 ],
                 "projects": {
                     "beginner": [
-                        "Basic tech-quantum Project",
-                        "tech-quantum Simulation",
-                        "Introduction to tech-quantum"
+                        "Quantum Circuit Simulator using Qiskit"
                     ],
                     "intermediate": [
-                        "Advanced tech-quantum System",
-                        "Cross-platform tech-quantum",
-                        "tech-quantum Analytics"
+                        "Quantum Algorithm Implementation"
                     ],
                     "advanced": [
-                        "Enterprise tech-quantum Suite",
-                        "High-Performance tech-quantum",
-                        "Global tech-quantum Infrastructure"
+                        "Quantum Secure Communication System"
                     ]
                 },
                 "certifications": {
                     "free": [
-                        "tech-quantum Foundations",
-                        "Google tech-quantum Intro"
+                        "IBM Quantum Computing Fundamentals"
                     ],
                     "pro": [
-                        "Professional tech-quantum Cert",
-                        "Microsoft tech-quantum Master"
+                        "IBM Quantum Developer Certification"
                     ],
                     "premium": [
-                        "Industry Certified tech-quantum",
-                        "tech-quantum Expert Professional"
+                        "Professional Quantum Computing Developer Certification"
                     ]
                 }
             }
@@ -6376,39 +6334,30 @@ const COMPLETE_REAL_WORLD_DATA = {
                 "displayName": "Tech Robotics",
                 "branch": null,
                 "careerPaths": [
-                    "Senior Tech Robotics Specialist",
-                    "Tech Robotics Consultant",
-                    "Lead Tech Robotics Engineer"
+                    "Robotics Engineer",
+                    "Automation Engineer",
+                    "Control Systems Engineer"
                 ],
                 "projects": {
                     "beginner": [
-                        "Basic tech-robotics Project",
-                        "tech-robotics Simulation",
-                        "Introduction to tech-robotics"
+                        "Line Follower Robot"
                     ],
                     "intermediate": [
-                        "Advanced tech-robotics System",
-                        "Cross-platform tech-robotics",
-                        "tech-robotics Analytics"
+                        "Robotic Arm"
                     ],
                     "advanced": [
-                        "Enterprise tech-robotics Suite",
-                        "High-Performance tech-robotics",
-                        "Global tech-robotics Infrastructure"
+                        "Autonomous Robotics System"
                     ]
                 },
                 "certifications": {
                     "free": [
-                        "tech-robotics Foundations",
-                        "Google tech-robotics Intro"
+                        "Robotics Intro Courses"
                     ],
                     "pro": [
-                        "Professional tech-robotics Cert",
-                        "Microsoft tech-robotics Master"
+                        "PLC Certification"
                     ],
                     "premium": [
-                        "Industry Certified tech-robotics",
-                        "tech-robotics Expert Professional"
+                        "Robotics Specialization"
                     ]
                 }
             }

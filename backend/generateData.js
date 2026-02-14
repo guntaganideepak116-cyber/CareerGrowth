@@ -1,5 +1,6 @@
 
 const fs = require('fs');
+const { REAL_WORLD_DATA } = require('./realWorldData');
 
 const IDs = [
     "cse-software-dev", "cse-web-dev", "cse-mobile-dev", "cse-ai-ml", "cse-data-science", "cse-cloud", "cse-cybersecurity", "cse-database",
@@ -22,15 +23,13 @@ const IDs = [
     "msc-finance", "mcom",
     "corporate-law", "cyber-law", "constitutional", "judiciary", "public-policy-law", "international-law",
     "edtech", "curriculum", "edu-psychology", "online-teaching", "academic-research",
-    "motion", "game-design", "film", "content-creation", "branding",
+    "motion", "game-design", "film", "content-creation", "branding", "media-journalism", "media-digital",
     "armed-forces", "paramilitary", "intelligence", "digital-forensics", "disaster-mgmt", "fire-safety",
     "agritech", "organic-farming", "food-tech", "climate-agriculture", "fisheries", "veterinary",
     "aviation", "hotel-mgmt", "travel-ops", "event-mgmt", "cruise",
     "sports-science", "strength-conditioning", "coaching", "yoga-naturopathy", "fitness-business",
     "industrial-trades", "iti-polytechnic", "ev-tech", "renewable-energy", "skill-india",
-    "media-journalism", "media-digital",
-    "cloud-architecture", "cloud-security",
-    "cloud-devops",
+    "cloud-architecture", "cloud-security", "cloud-devops",
     "web3-smart-contracts", "web3-dapps",
     "tech-xr", "tech-quantum", "tech-robotics", "tech-bio",
     "prod-pm", "prod-leadership",
@@ -38,6 +37,14 @@ const IDs = [
 ];
 
 const data = {};
+
+// Flatten real-world data for easy lookup
+const flatRealData = {};
+Object.keys(REAL_WORLD_DATA).forEach(f => {
+    Object.keys(REAL_WORLD_DATA[f].specializations).forEach(s => {
+        flatRealData[s] = REAL_WORLD_DATA[f].specializations[s];
+    });
+});
 
 function genPaths(id) {
     const name = id.split('-').map(s => s.charAt(0).toUpperCase() + s.slice(1)).join(' ');
@@ -64,6 +71,7 @@ IDs.forEach(id => {
     let field = 'engineering';
     let branch = null;
 
+    // Mapping logic
     if (id.startsWith('cse')) { field = 'engineering'; branch = 'cse'; }
     else if (id.startsWith('ece')) { field = 'engineering'; branch = 'ece'; }
     else if (id.startsWith('eee')) { field = 'engineering'; branch = 'eee'; }
@@ -93,14 +101,43 @@ IDs.forEach(id => {
 
     if (!data[field]) data[field] = { displayName: field.split('-').map(s => s.charAt(0).toUpperCase() + s.slice(1)).join(' '), specializations: {} };
 
+    // Check if we have MORNING data for this (even if mapped differently)
+    let finalPaths, finalProj, finalCert;
+
+    // Manual mapping for morning data
+    let morningKey = id;
+    if (id === 'cse-ai-ml') morningKey = 'artificial-intelligence-machine-learning';
+    if (id === 'cse-software-dev') morningKey = 'full-stack-web-development';
+    if (id === 'cse-data-science') morningKey = 'data-science-analytics';
+    if (id === 'cloud-devops') morningKey = 'devops-site-reliability';
+    if (id === 'web3-smart-contracts') morningKey = 'blockchain-web3';
+    if (id === 'tech-xr') morningKey = 'ar-vr-mixed';
+    if (id === 'tech-quantum') morningKey = 'quantum-computing';
+    if (id === 'tech-robotics') morningKey = 'robotics-automation';
+    if (id === 'hospital-admin') morningKey = 'hospital-administration';
+    if (id === 'clinical-research') morningKey = 'clinical-research';
+    if (id === 'public-health') morningKey = 'public-health';
+
+    const real = flatRealData[morningKey] || flatRealData[id];
+
+    if (real) {
+        finalPaths = real.careerPaths.map(p => typeof p === 'string' ? p : p.title);
+        finalProj = real.projects;
+        finalCert = real.certifications;
+    } else {
+        finalPaths = genPaths(id);
+        finalProj = genProjects(id);
+        finalCert = genCerts(id);
+    }
+
     data[field].specializations[id] = {
         displayName: id.split('-').map(s => s.charAt(0).toUpperCase() + s.slice(1)).join(' '),
         branch: branch,
-        careerPaths: genPaths(id),
-        projects: genProjects(id),
-        certifications: genCerts(id)
+        careerPaths: finalPaths,
+        projects: finalProj,
+        certifications: finalCert
     };
 });
 
 fs.writeFileSync('allFieldsData.js', 'const COMPLETE_REAL_WORLD_DATA = ' + JSON.stringify(data, null, 4) + ';\n\nmodule.exports = { COMPLETE_REAL_WORLD_DATA };\n');
-console.log('Successfully generated allFieldsData.js with ' + IDs.length + ' specializations for 22 fields');
+console.log('Successfully generated allFieldsData.js with synchronized MORNING data and exhaustive IDs');
