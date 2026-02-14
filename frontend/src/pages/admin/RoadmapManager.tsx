@@ -180,8 +180,10 @@ export default function RoadmapManager() {
     };
 
     const filteredItems = items.filter(p => {
-        const searchStr = searchTerm.toLowerCase();
-        return p.title.toLowerCase().includes(searchStr) || p.fieldId.toLowerCase().includes(searchStr);
+        const searchStr = (searchTerm || '').toLowerCase();
+        const pTitle = (p.title || '').toLowerCase();
+        const pField = (p.fieldId || '').toLowerCase();
+        return pTitle.includes(searchStr) || pField.includes(searchStr);
     });
 
     return (
