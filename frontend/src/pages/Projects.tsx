@@ -27,7 +27,8 @@ import {
   ChevronRight,
   Loader2,
   Lock,
-  Database
+  Database,
+  Zap
 } from 'lucide-react';
 
 export default function Projects() {
@@ -188,89 +189,94 @@ export default function Projects() {
             {filteredProjects.map((project, index) => (
               <div
                 key={project.id}
-                className="group bg-card rounded-xl border border-border p-6 hover:shadow-lg hover:border-primary/50 transition-all duration-300 animate-slide-up"
-                style={{ animationDelay: `${index * 0.03}s` }}
+                className="group bg-card rounded-xl border border-border overflow-hidden hover:shadow-lg hover:border-primary/50 transition-all duration-300 animate-slide-up"
+                style={{ animationDelay: `${index * 0.05}s` }}
               >
-                {/* Header */}
-                <div className="flex items-start justify-between mb-4">
-                  <div className="flex items-center gap-3 flex-1">
-                    <div className="p-2 bg-primary/10 rounded-lg transition-transform group-hover:scale-110">
-                      <Folder className="w-5 h-5 text-primary" />
+                {/* Project Thumbnail */}
+                <div className="relative h-40 w-full overflow-hidden bg-muted">
+                  {project.thumbnailUrl ? (
+                    <img
+                      src={project.thumbnailUrl}
+                      alt={project.title}
+                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                    />
+                  ) : (
+                    <div className="w-full h-full flex items-center justify-center bg-primary/5">
+                      <Folder className="w-12 h-12 text-primary/20" />
                     </div>
+                  )}
+                  <div className="absolute top-3 right-3 flex gap-2">
+                    <Badge className="bg-background/80 backdrop-blur-sm text-foreground border-border shadow-sm">
+                      {project.difficulty?.toUpperCase() || 'INTERMEDIATE'}
+                    </Badge>
+                  </div>
+                </div>
+
+                <div className="p-6">
+                  {/* Header */}
+                  <div className="flex items-start justify-between mb-3">
                     <div className="flex-1">
-                      <div className="flex items-center gap-2">
-                        <h3 className="font-semibold text-foreground">{project.title}</h3>
+                      <div className="flex items-center gap-2 mb-1">
+                        <h3 className="font-semibold text-foreground line-clamp-1">{project.title}</h3>
                         {project.planAccess && project.planAccess !== 'free' && (
-                          <span className="text-[10px] px-1.5 py-0.5 rounded-full font-medium bg-purple-500/10 text-purple-600 border border-purple-200">
-                            {formatTier(project.planAccess)}
-                          </span>
+                          <Lock className="w-3 h-3 text-purple-500" />
                         )}
                       </div>
-                      <span className={`text-xs px-2 py-0.5 rounded-full ${difficultyColors[project.difficulty]}`}>
-                        {formatTier(project.difficulty)}
+                      <p className="text-xs text-muted-foreground">{project.industryRelevance || 'Standard industry practice'}</p>
+                    </div>
+                  </div>
+
+                  <p className="text-sm text-muted-foreground mb-4 line-clamp-2 h-10">{project.description}</p>
+
+                  {/* Skills */}
+                  <div className="flex flex-wrap gap-1.5 mb-4">
+                    {project.requiredSkills?.slice(0, 3).map((skill) => (
+                      <Badge key={skill} variant="secondary" className="text-[10px] px-2 py-0 h-5 font-normal">
+                        {skill}
+                      </Badge>
+                    ))}
+                    {(project.requiredSkills?.length || 0) > 3 && (
+                      <span className="text-[10px] text-muted-foreground ml-1">
+                        +{(project.requiredSkills?.length || 0) - 3} more
+                      </span>
+                    )}
+                  </div>
+
+                  {/* Metrics */}
+                  <div className="flex items-center justify-between mb-4 pt-4 border-t border-border">
+                    <div className="flex items-center gap-1.5">
+                      <Star className="w-3.5 h-3.5 text-warning fill-warning" />
+                      <span className="text-sm font-semibold">{project.resumeStrength || 85}%</span>
+                      <span className="text-[10px] text-muted-foreground">Impact</span>
+                    </div>
+                    <div className="flex items-center gap-1.5">
+                      <TrendingUp className="w-3.5 h-3.5 text-primary" />
+                      <span className="text-[10px] font-medium px-2 py-0.5 bg-primary/10 text-primary rounded-full">
+                        {project.estimatedTime || '4 weeks'}
                       </span>
                     </div>
                   </div>
-                </div>
 
-                <p className="text-sm text-muted-foreground mb-4 line-clamp-2">{project.description}</p>
-
-                {/* Skills - Replaced Tech Stack */}
-                <div className="mb-4">
-                  <p className="text-xs font-medium text-muted-foreground mb-2">Key Skills:</p>
-                  <div className="flex flex-wrap gap-2">
-                    {project.requiredSkills?.slice(0, 4).map((skill) => (
-                      <span key={skill} className="px-2 py-1 bg-secondary text-muted-foreground text-xs rounded-md">
-                        {skill}
-                      </span>
-                    ))}
-                    {(project.requiredSkills?.length || 0) > 4 && (
-                      <span className="px-2 py-1 bg-secondary text-muted-foreground text-xs rounded-md">+{project.requiredSkills!.length - 4}</span>
-                    )}
+                  {/* Actions */}
+                  <div className="flex gap-2">
+                    <Button
+                      variant="default"
+                      size="sm"
+                      className="flex-1 gap-2 h-9"
+                      onClick={() => handleStartProject(project)}
+                    >
+                      {project.planAccess && project.planAccess !== 'free' ? <Lock className="w-3.5 h-3.5" /> : <Plus className="w-3.5 h-3.5" />}
+                      Start
+                    </Button>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="gap-2 h-9 px-3"
+                      onClick={() => setSelectedProject(project)}
+                    >
+                      Details
+                    </Button>
                   </div>
-                </div>
-
-                {/* Metrics */}
-                <div className="flex items-center gap-4 mb-4">
-                  <div className="flex items-center gap-1.5">
-                    <Star className="w-4 h-4 text-warning" />
-                    <span className="text-sm font-medium text-foreground">{project.resumeStrength || 0}%</span>
-                    <span className="text-xs text-muted-foreground">Resume Impact</span>
-                  </div>
-                  <div className="flex items-center gap-1.5">
-                    <TrendingUp className={`w-4 h-4 ${impactColors[project.careerImpact || 'medium'].split(' ')[0]}`} />
-                    <span className={`text-xs px-2 py-0.5 rounded-full ${impactColors[project.careerImpact || 'medium']}`}>
-                      {project.careerImpact || 'Medium'} impact
-                    </span>
-                  </div>
-                </div>
-
-                {/* Extra Info */}
-                <div className="space-y-1 mb-4 text-xs text-muted-foreground">
-                  <p>⏱️ Estimated Time: {project.estimatedTime || 'Self-paced'}</p>
-                  <p>💼 Real-world: {project.industryRelevance || 'Standard industry practice'}</p>
-                </div>
-
-                {/* Actions */}
-                <div className="flex gap-3 pt-4 border-t border-border">
-                  <Button
-                    variant={project.planAccess && project.planAccess !== 'free' ? "outline" : "default"}
-                    size="sm"
-                    className="flex-1 gap-2"
-                    onClick={() => handleStartProject(project)}
-                  >
-                    {project.planAccess && project.planAccess !== 'free' ? <Lock className="w-4 h-4" /> : <Plus className="w-4 h-4" />}
-                    {project.planAccess && project.planAccess !== 'free' ? 'Unlock Project' : 'Start Project'}
-                  </Button>
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    className="gap-2"
-                    onClick={() => setSelectedProject(project)}
-                  >
-                    <ExternalLink className="w-4 h-4" />
-                    Details
-                  </Button>
                 </div>
               </div>
             ))}
@@ -298,58 +304,85 @@ export default function Projects() {
       </div>
 
       <Dialog open={!!selectedProject} onOpenChange={(open) => !open && setSelectedProject(null)}>
-        <DialogContent className="max-w-2xl">
-          <DialogHeader>
-            <DialogTitle className="flex items-center gap-2">
-              <Folder className="w-5 h-5 text-primary" />
-              {selectedProject?.title}
-              {selectedProject?.planAccess && selectedProject.planAccess !== 'free' && (
-                <Badge variant="secondary" className="bg-purple-500/10 text-purple-600 border-purple-200">
-                  {formatTier(selectedProject.planAccess)}
-                </Badge>
-              )}
-            </DialogTitle>
-            <DialogDescription>
-              {selectedProject?.description}
-            </DialogDescription>
-          </DialogHeader>
+        <DialogContent className="max-w-2xl overflow-hidden p-0 gap-0">
+          {selectedProject && (
+            <>
+              {/* Modal Banner */}
+              <div className="relative h-48 w-full bg-muted">
+                {selectedProject.thumbnailUrl ? (
+                  <img src={selectedProject.thumbnailUrl} alt={selectedProject.title} className="w-full h-full object-cover" />
+                ) : (
+                  <div className="w-full h-full bg-primary/10 flex items-center justify-center">
+                    <Folder className="w-16 h-16 text-primary/20" />
+                  </div>
+                )}
+                <div className="absolute inset-0 bg-gradient-to-t from-background to-transparent" />
+                <div className="absolute bottom-4 left-6 right-6">
+                  <Badge className="mb-2 bg-primary text-primary-foreground">{selectedProject.difficulty?.toUpperCase()}</Badge>
+                  <h2 className="text-2xl font-bold text-foreground">{selectedProject.title}</h2>
+                </div>
+              </div>
 
-          <div className="grid gap-4 py-4">
-            <div>
-              <h4 className="mb-2 text-sm font-medium">Key Skills</h4>
-              <div className="flex flex-wrap gap-2">
-                {selectedProject?.requiredSkills?.map((skill) => (
-                  <Badge key={skill} variant="outline">{skill}</Badge>
-                ))}
-              </div>
-            </div>
+              <div className="p-6 space-y-6">
+                <div className="space-y-2">
+                  <h4 className="text-sm font-semibold flex items-center gap-2">
+                    <Database className="w-4 h-4 text-primary" />
+                    Project Description
+                  </h4>
+                  <p className="text-sm text-muted-foreground leading-relaxed">
+                    {selectedProject.description}
+                  </p>
+                </div>
 
-            <div className="grid grid-cols-2 gap-4">
-              <div className="p-3 rounded-lg bg-secondary/50">
-                <p className="text-xs font-medium text-muted-foreground">Estimated Time</p>
-                <p className="text-sm font-semibold">{selectedProject?.estimatedTime}</p>
-              </div>
-              <div className="p-3 rounded-lg bg-secondary/50">
-                <p className="text-xs font-medium text-muted-foreground">Resume Impact</p>
-                <p className="text-sm font-semibold flex items-center gap-1">
-                  <Star className="w-3 h-3 text-warning fill-warning" />
-                  {selectedProject?.resumeStrength}%
-                </p>
-              </div>
-            </div>
+                <div className="grid grid-cols-2 gap-8">
+                  <div>
+                    <h4 className="text-sm font-semibold mb-3">Technologies Stack</h4>
+                    <div className="flex flex-wrap gap-2">
+                      {selectedProject.requiredSkills?.map(skill => (
+                        <Badge key={skill} variant="outline" className="px-2 py-1 text-[11px]">{skill}</Badge>
+                      ))}
+                    </div>
+                  </div>
+                  <div className="space-y-4">
+                    <div className="flex items-center justify-between p-3 bg-secondary/30 rounded-lg">
+                      <div className="flex items-center gap-2">
+                        <Star className="w-4 h-4 text-warning fill-warning" />
+                        <span className="text-sm font-medium">Resume Impact</span>
+                      </div>
+                      <span className="text-sm font-bold">{selectedProject.resumeStrength}%</span>
+                    </div>
+                    <div className="flex items-center justify-between p-3 bg-secondary/30 rounded-lg">
+                      <div className="flex items-center gap-2">
+                        <Zap className="w-4 h-4 text-primary" />
+                        <span className="text-sm font-medium">Duration</span>
+                      </div>
+                      <span className="text-sm font-bold">{selectedProject.estimatedTime}</span>
+                    </div>
+                  </div>
+                </div>
 
-            {selectedProject?.industryRelevance && (
-              <div className="space-y-2">
-                <h4 className="text-sm font-medium flex items-center gap-2">
-                  <Sparkles className="w-4 h-4 text-primary" />
-                  Real World Application
-                </h4>
-                <p className="text-sm text-muted-foreground bg-primary/5 p-3 rounded-lg border border-primary/10">
-                  {selectedProject.industryRelevance}
-                </p>
+                {selectedProject.realWorldUseCase && (
+                  <div className="p-4 bg-primary/5 rounded-xl border border-primary/10">
+                    <h4 className="text-sm font-semibold mb-2 flex items-center gap-2 text-primary">
+                      <Sparkles className="w-4 h-4" />
+                      Industry Relevance
+                    </h4>
+                    <p className="text-sm text-muted-foreground italic">
+                      "{selectedProject.realWorldUseCase}"
+                    </p>
+                  </div>
+                )}
+
+                <div className="flex gap-3 pt-4 border-t">
+                  <Button className="flex-1 gap-2" onClick={() => handleStartProject(selectedProject)}>
+                    {selectedProject.planAccess && selectedProject.planAccess !== 'free' ? <Lock className="w-4 h-4" /> : <Plus className="w-4 h-4" />}
+                    Begin Transformation
+                  </Button>
+                  <Button variant="outline" onClick={() => setSelectedProject(null)}>Close</Button>
+                </div>
               </div>
-            )}
-          </div>
+            </>
+          )}
         </DialogContent>
       </Dialog>
 

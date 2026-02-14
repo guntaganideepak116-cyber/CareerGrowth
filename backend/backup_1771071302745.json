@@ -1,0 +1,290 @@
+{
+  "career_paths": [
+    {
+      "id": "5JqgFMlnKQNdrx7F9UqT",
+      "title": "Software Engineer",
+      "field": "engineering",
+      "fieldId": "engineering",
+      "specializationId": "cse-software-dev",
+      "branch": "cse",
+      "level": "Intermediate",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "createdAt": {
+        "_seconds": 1771071234,
+        "_nanoseconds": 115000000
+      }
+    },
+    {
+      "id": "zg56Zuo0vYjhtC4NIbSF",
+      "title": "Senior Software Engineer",
+      "field": "engineering",
+      "fieldId": "engineering",
+      "specializationId": "cse-software-dev",
+      "branch": "cse",
+      "level": "Intermediate",
+      "requiredSkills": [],
+      "industryValue": "high",
+      "createdAt": {
+        "_seconds": 1771071234,
+        "_nanoseconds": 115000000
+      }
+    }
+  ],
+  "projects": [
+    {
+      "id": "34NSLOY2yusYTwYRwdZM",
+      "title": "Google Beginner Project: Software Development & Programming Case Study #2",
+      "description": "A comprehensive beginner project designed by Google to master Software Development & Programming fundamentals in real-world scenarios.",
+      "level": "Beginner",
+      "field": "engineering",
+      "fieldId": "engineering",
+      "specializationId": "cse-software-dev",
+      "branch": "cse",
+      "technologies": [
+        "React",
+        "Node.js",
+        "Cloud Services"
+      ],
+      "difficultyScore": 3,
+      "estimatedDuration": "2 weeks",
+      "industryTag": "Technology",
+      "companyRelevance": [
+        "Google",
+        "Tech Giants"
+      ],
+      "realWorldUseCase": "Implementing Software Development & Programming for enterprise scalability and performance optimization.",
+      "thumbnailUrl": "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?q=80&w=2070&auto=format&fit=crop",
+      "createdAt": {
+        "_seconds": 1771071234,
+        "_nanoseconds": 390000000
+      }
+    },
+    {
+      "id": "3fKAhyewooaZJkrkgnO5",
+      "title": "MIT Beginner Project: Software Development & Programming Case Study #3",
+      "description": "A comprehensive beginner project designed by MIT to master Software Development & Programming fundamentals in real-world scenarios.",
+      "level": "Beginner",
+      "field": "engineering",
+      "fieldId": "engineering",
+      "specializationId": "cse-software-dev",
+      "branch": "cse",
+      "technologies": [
+        "React",
+        "Node.js",
+        "Cloud Services"
+      ],
+      "difficultyScore": 3,
+      "estimatedDuration": "2 weeks",
+      "industryTag": "Technology",
+      "companyRelevance": [
+        "MIT",
+        "Tech Giants"
+      ],
+      "realWorldUseCase": "Implementing Software Development & Programming for enterprise scalability and performance optimization.",
+      "thumbnailUrl": "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?q=80&w=2070&auto=format&fit=crop",
+      "createdAt": {
+        "_seconds": 1771071234,
+        "_nanoseconds": 390000000
+      }
+    },
+    {
+      "id": "5ZwFMVFENazKI2UOgYy2",
+      "title": "Stanford Advanced Project: Software Development & Programming Case Study #2",
+      "description": "A comprehensive advanced project designed by Stanford to master Software Development & Programming fundamentals in real-world scenarios.",
+      "level": "Advanced",
+      "field": "engineering",
+      "fieldId": "engineering",
+      "specializationId": "cse-software-dev",
+      "branch": "cse",
+      "technologies": [
+        "React",
+        "Node.js",
+        "Cloud Services"
+      ],
+      "difficultyScore": 9,
+      "estimatedDuration": "2-3 months",
+      "industryTag": "Technology",
+      "companyRelevance": [
+        "Stanford",
+        "Tech Giants"
+      ],
+      "realWorldUseCase": "Implementing Software Development & Programming for enterprise scalability and performance optimization.",
+      "thumbnailUrl": "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?q=80&w=2070&auto=format&fit=crop",
+      "createdAt": {
+        "_seconds": 1771071234,
+        "_nanoseconds": 390000000
+      }
+    },
+    {
+      "id": "CIdUkGeFsZvY43KaAtD4",
+      "title": "Coursera Intermediate Project: Software Development & Programming Case Study #1",
+      "description": "A comprehensive intermediate project designed by Coursera to master Software Development & Programming fundamentals in real-world scenarios.",
+      "level": "Intermediate",
+      "field": "engineering",
+      "fieldId": "engineering",
+      "specializationId": "cse-software-dev",
+      "branch": "cse",
+      "technologies": [
+        "React",
+        "Node.js",
+        "Cloud Services"
+      ],
+      "difficultyScore": 6,
+      "estimatedDuration": "4 weeks",
+      "industryTag": "Technology",
+      "companyRelevance": [
+        "Coursera",
+        "Tech Giants"
+      ],
+      "realWorldUseCase": "Implementing Software Development & Programming for enterprise scalability and performance optimization.",
+      "thumbnailUrl": "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?q=80&w=2070&auto=format&fit=crop",
+      "createdAt": {
+        "_seconds": 1771071234,
+        "_nanoseconds": 390000000
+      }
+    },
+    {
+      "id": "Kqt4Gnh69z3S8MN7g107",
+      "title": "IBM Intermediate Project: Software Development & Programming Case Study #3",
+      "description": "A comprehensive intermediate project designed by IBM to master Software Development & Programming fundamentals in real-world scenarios.",
+      "level": "Intermediate",
+      "field": "engineering",
+      "fieldId": "engineering",
+      "specializationId": "cse-software-dev",
+      "branch": "cse",
+      "technologies": [
+        "React",
+        "Node.js",
+        "Cloud Services"
+      ],
+      "difficultyScore": 6,
+      "estimatedDuration": "4 weeks",
+      "industryTag": "Technology",
+      "companyRelevance": [
+        "IBM",
+        "Tech Giants"
+      ],
+      "realWorldUseCase": "Implementing Software Development & Programming for enterprise scalability and performance optimization.",
+      "thumbnailUrl": "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?q=80&w=2070&auto=format&fit=crop",
+      "createdAt": {
+        "_seconds": 1771071234,
+        "_nanoseconds": 390000000
+      }
+    },
+    {
+      "id": "UDNsJPT7xKPwlLHRfgHG",
+      "title": "Harvard Beginner Project: Software Development & Programming Case Study #1",
+      "description": "A comprehensive beginner project designed by Harvard to master Software Development & Programming fundamentals in real-world scenarios.",
+      "level": "Beginner",
+      "field": "engineering",
+      "fieldId": "engineering",
+      "specializationId": "cse-software-dev",
+      "branch": "cse",
+      "technologies": [
+        "React",
+        "Node.js",
+        "Cloud Services"
+      ],
+      "difficultyScore": 3,
+      "estimatedDuration": "2 weeks",
+      "industryTag": "Technology",
+      "companyRelevance": [
+        "Harvard",
+        "Tech Giants"
+      ],
+      "realWorldUseCase": "Implementing Software Development & Programming for enterprise scalability and performance optimization.",
+      "thumbnailUrl": "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?q=80&w=2070&auto=format&fit=crop",
+      "createdAt": {
+        "_seconds": 1771071234,
+        "_nanoseconds": 390000000
+      }
+    },
+    {
+      "id": "a01uaCh8dhtizpFKLrwE",
+      "title": "AWS Advanced Project: Software Development & Programming Case Study #1",
+      "description": "A comprehensive advanced project designed by AWS to master Software Development & Programming fundamentals in real-world scenarios.",
+      "level": "Advanced",
+      "field": "engineering",
+      "fieldId": "engineering",
+      "specializationId": "cse-software-dev",
+      "branch": "cse",
+      "technologies": [
+        "React",
+        "Node.js",
+        "Cloud Services"
+      ],
+      "difficultyScore": 9,
+      "estimatedDuration": "2-3 months",
+      "industryTag": "Technology",
+      "companyRelevance": [
+        "AWS",
+        "Tech Giants"
+      ],
+      "realWorldUseCase": "Implementing Software Development & Programming for enterprise scalability and performance optimization.",
+      "thumbnailUrl": "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?q=80&w=2070&auto=format&fit=crop",
+      "createdAt": {
+        "_seconds": 1771071234,
+        "_nanoseconds": 390000000
+      }
+    },
+    {
+      "id": "d0g45reH9IlXwpCbSHp5",
+      "title": "Microsoft Intermediate Project: Software Development & Programming Case Study #2",
+      "description": "A comprehensive intermediate project designed by Microsoft to master Software Development & Programming fundamentals in real-world scenarios.",
+      "level": "Intermediate",
+      "field": "engineering",
+      "fieldId": "engineering",
+      "specializationId": "cse-software-dev",
+      "branch": "cse",
+      "technologies": [
+        "React",
+        "Node.js",
+        "Cloud Services"
+      ],
+      "difficultyScore": 6,
+      "estimatedDuration": "4 weeks",
+      "industryTag": "Technology",
+      "companyRelevance": [
+        "Microsoft",
+        "Tech Giants"
+      ],
+      "realWorldUseCase": "Implementing Software Development & Programming for enterprise scalability and performance optimization.",
+      "thumbnailUrl": "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?q=80&w=2070&auto=format&fit=crop",
+      "createdAt": {
+        "_seconds": 1771071234,
+        "_nanoseconds": 390000000
+      }
+    },
+    {
+      "id": "dCr6gd0VDZeTA3sfcZRQ",
+      "title": "Oracle Advanced Project: Software Development & Programming Case Study #3",
+      "description": "A comprehensive advanced project designed by Oracle to master Software Development & Programming fundamentals in real-world scenarios.",
+      "level": "Advanced",
+      "field": "engineering",
+      "fieldId": "engineering",
+      "specializationId": "cse-software-dev",
+      "branch": "cse",
+      "technologies": [
+        "React",
+        "Node.js",
+        "Cloud Services"
+      ],
+      "difficultyScore": 9,
+      "estimatedDuration": "2-3 months",
+      "industryTag": "Technology",
+      "companyRelevance": [
+        "Oracle",
+        "Tech Giants"
+      ],
+      "realWorldUseCase": "Implementing Software Development & Programming for enterprise scalability and performance optimization.",
+      "thumbnailUrl": "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?q=80&w=2070&auto=format&fit=crop",
+      "createdAt": {
+        "_seconds": 1771071234,
+        "_nanoseconds": 390000000
+      }
+    }
+  ],
+  "certifications": [],
+  "roadmaps": []
+}

@@ -20,6 +20,11 @@ export interface Certification {
     cost?: string;
     rolesUnlocked?: string[];
     salaryRange?: string;
+    logoUrl?: string;
+    duration?: string;
+    salaryImpact?: string;
+    certificationType?: string;
+    eligibility?: string;
 }
 
 export type UserPlan = "free" | "pro" | "premium";

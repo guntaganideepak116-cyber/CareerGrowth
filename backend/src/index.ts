@@ -13,10 +13,6 @@ const PORT = process.env.PORT || 5000;
 app.use(cors());
 app.use(express.json());
 
-// Initialize Firebase
-// Initialize Firebase (happens on import now)
-// import is side-effectful
-
 // Routes
 import contentRoutes from './routes/content';
 import strictContentRoutes from './routes/strictContent';
@@ -24,6 +20,7 @@ import adminRoutes from './routes/adminRoutes';
 import notificationRoutes from './routes/notifications';
 import aiMentorRoutes from './routes/ai-mentor';
 import projectsRoutes from './routes/projects';
+import certificationsRoutes from './routes/certifications';
 import portfolioRoutes from './routes/portfolioRoutes';
 import analyticsRoutes from './routes/analytics';
 import careerPathsRoutes from './routes/careerPaths';
@@ -54,8 +51,10 @@ app.use('/api/notifications', notificationRoutes);
 // AI Mentor routes
 app.use('/api/ai-mentor', aiMentorRoutes);
 
-// Projects routes
+// Projects and Certifications routes
 app.use('/api/projects', projectsRoutes);
+app.use('/api/certifications', certificationsRoutes);
+
 app.use('/api/portfolio', portfolioRoutes);
 app.use('/api/analytics', analyticsRoutes);
 
@@ -77,7 +76,5 @@ if (process.env.NODE_ENV !== 'production') {
         startNotificationScheduler();
     });
 } else {
-    // In production (Vercel), we still need to start the scheduler separately
-    // Note: Scheduled jobs work differently in serverless environments
     console.log('App initialized for Vercel environment');
 }

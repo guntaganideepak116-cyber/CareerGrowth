@@ -1,44 +1,68 @@
 import { Router, Request, Response } from 'express';
-import { projectsMap, FieldProject } from '../data/projectsData';
+import { db } from '../config/firebase';
 
 const router = Router();
 
 // GET /api/projects
-// Query params: field, branch
-router.get('/', (req: Request, res: Response) => {
+// Query params: field, specialization, careerPath
+router.get('/', async (req: Request, res: Response) => {
     try {
-        const { field, branch, id } = req.query;
+        const { field, specialization, careerPath, id } = req.query;
 
+        // If ID is provided, return specific project
         if (id && typeof id === 'string') {
-            const allProjects = Object.values(projectsMap).flat();
-            const project = allProjects.find(p => p.id === id);
-
-            if (project) {
+            const projectDoc = await db.collection('projects').doc(id).get();
+            if (projectDoc.exists) {
                 return res.json({
                     success: true,
-                    data: project
+                    data: { id: projectDoc.id, ...projectDoc.data() }
                 });
             } else {
                 return res.status(404).json({ success: false, error: 'Project not found' });
             }
         }
 
-        let projects: FieldProject[] = [];
+        // Build query
+        let query: any = db.collection('projects');
 
-        // Logic to select projects based on field/branch
-        // Priority: Branch -> Field -> Default (Engineering)
-
-        if (typeof branch === 'string' && projectsMap[branch.toLowerCase()]) {
-            projects = projectsMap[branch.toLowerCase()];
-        } else if (typeof field === 'string' && projectsMap[field.toLowerCase()]) {
-            projects = projectsMap[field.toLowerCase()];
-        } else {
-            // Fallback or empty
-            projects = projectsMap['engineering'] || [];
+        if (field) {
+            query = query.where('fieldId', '==', field); // Support both fieldId and field
         }
 
-        // Return successfully with the projects list
-        res.status(200).json({
+        if (specialization) {
+            query = query.where('specializationId', '==', specialization);
+        }
+
+        const snapshot = await query.get();
+        let projects = snapshot.docs.map((doc: any) => ({
+            id: doc.id,
+            ...doc.data()
+        }));
+
+        // Secondary filtering for field/specialization if where clauses failed (due to field vs fieldId inconsistency)
+        if (projects.length === 0 && field) {
+            const fallbackQuery = db.collection('projects').where('field', '==', field);
+            const fallbackSnapshot = await fallbackQuery.get();
+            projects = fallbackSnapshot.docs.map((doc: any) => ({
+                id: doc.id,
+                ...doc.data()
+            }));
+
+            if (specialization) {
+                projects = projects.filter((p: any) => p.specializationId === specialization || p.specialization === specialization);
+            }
+        }
+
+        // Additional filter for careerPath if provided
+        if (careerPath) {
+            const cp = String(careerPath).toLowerCase();
+            projects = projects.filter((p: any) =>
+                (p.careerPath && p.careerPath.toLowerCase().includes(cp)) ||
+                (p.careerPaths && p.careerPaths.some((path: string) => path.toLowerCase().includes(cp)))
+            );
+        }
+
+        res.json({
             success: true,
             count: projects.length,
             data: projects

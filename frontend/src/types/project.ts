@@ -12,6 +12,10 @@ export interface Project {
     estimatedTime: string;
     resumeStrength: number;
     careerImpact: "high" | "medium" | "low";
+    thumbnailUrl?: string;
+    difficultyScore?: number;
+    companyRelevance?: string[];
+    realWorldUseCase?: string;
     createdAt: string;
 }
 
