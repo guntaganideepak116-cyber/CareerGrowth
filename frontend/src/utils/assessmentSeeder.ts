@@ -1,6 +1,6 @@
 import { db } from "@/lib/firebase";
 import { collection, writeBatch, doc, getDocs, query, where } from "firebase/firestore";
-import { fields } from "@/data/fieldsData";
+import { fields, branchesMap } from "@/data/fieldsData";
 
 // Helper to create questions
 const createQuestion = (
@@ -134,13 +134,22 @@ const generateQuestionsForField = (fieldId: string, fieldName: string) => {
     });
 };
 
+
 export const seedAssessmentQuestions = async () => {
     console.log("Starting Assessment Seed...");
+
+    const selectableFields = fields.flatMap(f => {
+        const branches = branchesMap[f.id] || [];
+        return [
+            { id: f.id, name: f.name },
+            ...branches.map(b => ({ id: b.id, name: b.name }))
+        ];
+    });
 
     try {
         let totalQuestions = 0;
 
-        for (const field of fields) {
+        for (const field of selectableFields) {
             const qBatch = writeBatch(db);
 
             // Delete existing

@@ -1,60 +1,73 @@
-# Career Growth Platform
+# Welcome to your Lovable project
 
-This is the main repository for the Career Growth Platform, structured as a monorepo containing both frontend and backend code.
+## Project info
 
-## Project Structure
+**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
 
-- **frontend/**: React + Vite application (source code in `frontend/src`)
-- **backend/**: Express + Node.js server (source code in `backend/src` or root)
-- **docs/**: Project documentation, guides, and implementation details
-- **public/**: Static assets (if applicable at root)
+## How can I edit this code?
 
-## Documentation
+There are several ways of editing your application.
 
-Comprehensive documentation has been moved to the `docs/` folder. Please refer to the files there for specific implementation guides, API docs, and troubleshooting.
+**Use Lovable**
 
-## Getting Started
+Simply visit the [Lovable Project](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and start prompting.
 
-See `docs/QUICK_START.md` or `docs/HOW_TO_USE.md` for setup instructions.
+Changes made via Lovable will be committed automatically to this repo.
 
-### Frontend
-```bash
-cd frontend
-npm install
+**Use your preferred IDE**
+
+If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+
+The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+
+Follow these steps:
+
+```sh
+# Step 1: Clone the repository using the project's Git URL.
+git clone <YOUR_GIT_URL>
+
+# Step 2: Navigate to the project directory.
+cd <YOUR_PROJECT_NAME>
+
+# Step 3: Install the necessary dependencies.
+npm i
+
+# Step 4: Start the development server with auto-reloading and an instant preview.
 npm run dev
 ```
 
-### Backend
-```bash
-cd backend
-npm install
-npm run start
-```
+**Edit a file directly in GitHub**
 
-## Deployment
+- Navigate to the desired file(s).
+- Click the "Edit" button (pencil icon) at the top right of the file view.
+- Make your changes and commit the changes.
 
-Refer to `docs/SETUP_GUIDE.md` for deployment instructions.
+**Use GitHub Codespaces**
 
+- Navigate to the main page of your repository.
+- Click on the "Code" button (green button) near the top right.
+- Select the "Codespaces" tab.
+- Click on "New codespace" to launch a new Codespace environment.
+- Edit files directly within the Codespace and commit and push your changes once you're done.
 
+## What technologies are used for this project?
 
-## Documentation Index
+This project is built with:
 
-The documentation is organized into the following sections:
+- Vite
+- TypeScript
+- React
+- shadcn-ui
+- Tailwind CSS
 
-### 📂 [General Documentation](docs/general)
-System overview, setup guides, architecture, and deployment instructions.
-- [Setup Guide](docs/general/SETUP_GUIDE.md)
-- [Deployment Guide](docs/general/DEPLOYMENT_GUIDE_VERCEL.md)
-- [System Overview](docs/general/SYSTEM_OVERHAUL_COMPLETE.md)
+## How can I deploy this project?
 
-### 📂 [Frontend Documentation](docs/frontend)
-UI/UX, Components, Responsive Design, and Feature specifics.
-- [Mobile Responsiveness](docs/frontend/MOBILE_RESPONSIVENESS.md)
-- [Portfolio System](docs/frontend/PORTFOLIO_DOCUMENTATION.md)
+Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
 
-### 📂 [Backend Documentation](docs/backend)
-API, Firebase, Authentication, and Data Structures.
-- [Authentication](docs/backend/AUTH_SESSION_ISOLATION.md)
-- [Career Paths Architecture](docs/backend/CAREER_PATHS_ARCHITECTURE_COMPLETE.md)
-- [Firebase Config](docs/backend/FIREBASE_PERMISSIONS_FIX.md)
+## Can I connect a custom domain to my Lovable project?
 
+Yes, you can!
+
+To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+
+Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)

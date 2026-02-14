@@ -40,7 +40,7 @@ import {
     orderBy
 } from 'firebase/firestore';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { fields } from '@/data/fieldsData';
+import { fields, branchesMap } from '@/data/fieldsData';
 
 interface CareerPath {
     id: string;
@@ -51,6 +51,15 @@ interface CareerPath {
 }
 
 export default function CareerPathManager() {
+    // Generate flat list of selectable fields (including branches)
+    const selectableFields = fields.flatMap(f => {
+        const branches = branchesMap[f.id] || [];
+        return [
+            { id: f.id, name: f.name, isBranch: false },
+            ...branches.map(b => ({ id: b.id, name: b.name, isBranch: true }))
+        ];
+    });
+
     const [paths, setPaths] = useState<CareerPath[]>([]);
     const [loading, setLoading] = useState(true);
     const [search, setSearch] = useState('');
@@ -210,7 +219,7 @@ export default function CareerPathManager() {
                                                 </TableCell>
                                                 <TableCell>
                                                     <Badge variant="outline" className="text-[10px] uppercase font-bold tracking-widest text-muted-foreground">
-                                                        {fields.find(f => f.id === path.fieldId)?.name || path.fieldId}
+                                                        {selectableFields.find(f => f.id === path.fieldId)?.name || path.fieldId}
                                                     </Badge>
                                                 </TableCell>
                                                 <TableCell>
@@ -257,14 +266,16 @@ export default function CareerPathManager() {
                                             />
                                         </div>
                                         <div className="space-y-2">
-                                            <Label className="text-xs font-bold uppercase text-muted-foreground">Discipline</Label>
+                                            <Label className="text-xs font-bold uppercase text-muted-foreground">Discipline Mapping</Label>
                                             <Select value={formData.fieldId} onValueChange={v => setFormData({ ...formData, fieldId: v })}>
                                                 <SelectTrigger className="h-10">
-                                                    <SelectValue placeholder="Select Cluster" />
+                                                    <SelectValue placeholder="Select Branch/Field" />
                                                 </SelectTrigger>
                                                 <SelectContent>
-                                                    {fields.map(f => (
-                                                        <SelectItem key={f.id} value={f.id}>{f.name}</SelectItem>
+                                                    {selectableFields.map(f => (
+                                                        <SelectItem key={f.id} value={f.id}>
+                                                            {f.isBranch ? `↳ ${f.name}` : f.name}
+                                                        </SelectItem>
                                                     ))}
                                                 </SelectContent>
                                             </Select>

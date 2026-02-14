@@ -221,8 +221,8 @@ export default function Certifications() {
         {filteredCertifications.length === 0 ? (
           <div className="text-center py-12">
             <Award className="mx-auto h-12 w-12 text-muted-foreground" />
-            <p className="mt-4 text-muted-foreground">
-              {searchQuery ? 'No certifications match your search.' : 'No certifications available for this field yet.'}
+            <p className="mt-4 text-muted-foreground font-medium">
+              {searchQuery ? 'No certifications match your search.' : 'No certifications available for this specialization yet.'}
             </p>
           </div>
         ) : (
@@ -287,7 +287,7 @@ export default function Certifications() {
                 {/* Actions */}
                 <div className="flex gap-3 pt-4 border-t border-border">
                   <Button variant="default" size="sm" className="flex-1 gap-2" asChild>
-                    <a href={cert.officialLink || '#'} target="_blank" rel="noopener noreferrer" onClick={(e) => !cert.officialLink && e.preventDefault()}>
+                    <a href={cert.officialUrl || '#'} target="_blank" rel="noopener noreferrer" onClick={(e) => !cert.officialUrl && e.preventDefault()}>
                       <ExternalLink className="w-4 h-4" />
                       Enroll Now
                     </a>
@@ -435,7 +435,7 @@ export default function Certifications() {
 
                 <div className="flex gap-3 pt-4 border-t">
                   <Button className="flex-1 gap-2" asChild>
-                    <a href={selectedCertification.officialLink} target="_blank" rel="noopener noreferrer">
+                    <a href={selectedCertification.officialUrl} target="_blank" rel="noopener noreferrer">
                       <ExternalLink className="w-4 h-4" />
                       Enroll on Official Site
                     </a>

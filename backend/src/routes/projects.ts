@@ -9,7 +9,7 @@ router.get('/', async (req: Request, res: Response) => {
     try {
         const { field, specialization, careerPath, id } = req.query;
 
-        // If ID is provided, return specific project
+        // 1. If ID is provided, return specific project (Direct Access)
         if (id && typeof id === 'string') {
             const projectDoc = await db.collection('projects').doc(id).get();
             if (projectDoc.exists) {
@@ -22,58 +22,62 @@ router.get('/', async (req: Request, res: Response) => {
             }
         }
 
-        // Build query
-        let query: any = db.collection('projects');
-
-        if (field) {
-            query = query.where('fieldId', '==', field); // Support both fieldId and field
+        // 2. Strict Filtering Logic (MANDATORY)
+        // Under no circumstances should unrelated projects be visible.
+        if (!field || !specialization) {
+            return res.json({
+                success: true,
+                count: 0,
+                data: [],
+                message: 'Field and specialization are mandatory for filtered results.'
+            });
         }
 
-        if (req.query.branch) {
-            query = query.where('branch', '==', req.query.branch);
-        }
+        // Build strict query
+        // We support both 'field'/'specialization' and 'fieldId'/'specializationId' 
+        // to maintain compatibility with different data versions while enforcing the filter.
+        let query = db.collection('projects')
+            .where('field', '==', field)
+            .where('specialization', '==', specialization);
 
-        if (specialization) {
-            query = query.where('specializationId', '==', specialization);
-        }
-
-        const snapshot = await query.get();
+        let snapshot = await query.get();
         let projects = snapshot.docs.map((doc: any) => ({
             id: doc.id,
             ...doc.data()
         }));
 
-        // Secondary filtering for field/specialization if where clauses failed (due to field vs fieldId inconsistency)
-        if (projects.length === 0 && field) {
-            const fallbackQuery = db.collection('projects').where('field', '==', field);
-            const fallbackSnapshot = await fallbackQuery.get();
-            projects = fallbackSnapshot.docs.map((doc: any) => ({
+        // Fallback for fieldId/specializationId schema if no results found with primary schema
+        if (projects.length === 0) {
+            query = db.collection('projects')
+                .where('fieldId', '==', field)
+                .where('specializationId', '==', specialization);
+
+            snapshot = await query.get();
+            projects = snapshot.docs.map((doc: any) => ({
                 id: doc.id,
                 ...doc.data()
             }));
-
-            if (specialization) {
-                projects = projects.filter((p: any) => p.specializationId === specialization || p.specialization === specialization);
-            }
         }
 
-        // Additional filter for careerPath if provided
-        if (careerPath) {
+        // 3. Optional Career Path Filtering (Hierarchy Step)
+        if (careerPath && projects.length > 0) {
             const cp = String(careerPath).toLowerCase();
             projects = projects.filter((p: any) =>
-                (p.careerPath && p.careerPath.toLowerCase().includes(cp)) ||
-                (p.careerPaths && p.careerPaths.some((path: string) => path.toLowerCase().includes(cp)))
+                (p.careerPath && String(p.careerPath).toLowerCase().includes(cp)) ||
+                (p.careerPaths && Array.isArray(p.careerPaths) && p.careerPaths.some((path: string) => String(path).toLowerCase().includes(cp)))
             );
         }
 
         res.json({
             success: true,
+            status: projects.length > 0 ? 'success' : 'empty',
             count: projects.length,
-            data: projects
+            data: projects,
+            message: projects.length === 0 ? "No projects available for this specialization yet." : undefined
         });
 
     } catch (error) {
-        console.error('Error fetching projects:', error);
+        console.error('STRICT_PROJECTS_FILTER_ERROR:', error);
         res.status(500).json({
             success: false,
             error: 'Internal Server Error'

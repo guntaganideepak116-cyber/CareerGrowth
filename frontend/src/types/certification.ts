@@ -8,7 +8,7 @@ export interface Certification {
     specializationId?: string;
     level: "beginner" | "intermediate" | "advanced";
     planAccess: "free" | "pro" | "premium";
-    officialLink: string;
+    officialUrl: string;
     industryRecognitionLevel: "high" | "medium" | "low";
     validity: string;
     skillsCovered: string[];

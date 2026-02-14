@@ -29,7 +29,9 @@ const generatePlaceholderCertifications = (fieldId: string, fieldName: string): 
             provider: `${fieldName} Institute of Technology`,
             description: `A comprehensive ${level} certification in ${fieldName} covering essential skills and industry practices.`,
             fieldId: fieldId,
+            field: fieldId, // Mandatory property
             specializationId: 'general',
+            specialization: 'general', // Mandatory property
             level: level,
             planAccess: tier,
             industryRecognitionLevel: 'high',
@@ -43,7 +45,7 @@ const generatePlaceholderCertifications = (fieldId: string, fieldName: string): 
             cost: tier === 'free' ? 'Free' : '$49-$99',
             rolesUnlocked: [`${fieldName} Specialist`],
             salaryRange: '$60k-$100k'
-        });
+        } as any);
     }
     return certs;
 };
@@ -83,16 +85,19 @@ export const seedCertifications = async () => {
                 'High': 'advanced', 'Medium': 'intermediate', 'Low': 'beginner'
             };
 
-            const certData: Certification = {
+            const certData: any = {
                 id: c.id,
                 title: c.name,
                 provider: c.provider,
                 description: c.overview,
                 fieldId: targetFieldId,
-                specializationId: key !== targetFieldId ? key : undefined,
+                field: targetFieldId, // Mandatory property
+                specializationId: key !== targetFieldId ? key : 'general',
+                specialization: key !== targetFieldId ? key : 'general', // Mandatory property
                 level: 'intermediate', // Default or derive
                 planAccess: c.cost === 'Free' || c.cost === '$0' ? 'free' : (parseInt(c.valueScore.toString()) > 90 ? 'premium' : 'pro'), // Infer plan from cost/value
                 officialLink: c.officialUrl,
+                officialUrl: c.officialUrl, // Save as both for safety
                 industryRecognitionLevel: c.industryAcceptance,
                 validity: 'Lifetime', // Default
                 skillsCovered: c.skills,

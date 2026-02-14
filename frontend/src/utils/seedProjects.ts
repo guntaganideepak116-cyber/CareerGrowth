@@ -28,7 +28,9 @@ const generatePlaceholderProjects = (fieldId: string, fieldName: string): Projec
             title: `${fieldName} Project ${i + 1}: ${difficulty.charAt(0).toUpperCase() + difficulty.slice(1)}`,
             description: `Master ${fieldName} with this ${difficulty} level project. Involves real-world scenarios and extensive tool usage.`,
             fieldId: fieldId,
+            field: fieldId, // Explicit field
             specializationId: 'general',
+            specialization: 'general', // Explicit specialization
             difficulty: difficulty,
             requiredSkills: ['Fundamentals', 'Analysis', 'Implementation'],
             planAccess: tier,
@@ -38,7 +40,7 @@ const generatePlaceholderProjects = (fieldId: string, fieldName: string): Projec
             resumeStrength: 75 + (i * 2),
             careerImpact: i % 2 === 0 ? 'high' : 'medium',
             createdAt: new Date().toISOString()
-        });
+        } as any);
     }
     return projects;
 };
@@ -74,12 +76,14 @@ export const seedProjects = async () => {
 
         for (const p of projectList) {
             // Map old structure to new structure
-            const projectData: Project = {
+            const projectData: any = {
                 id: p.id,
                 title: p.name,
                 description: p.description,
                 fieldId: targetFieldId,
-                specializationId: key !== targetFieldId ? key : undefined,
+                field: targetFieldId, // Mandatory property
+                specializationId: key !== targetFieldId ? key : 'general',
+                specialization: key !== targetFieldId ? key : 'general', // Mandatory property
                 difficulty: p.difficulty,
                 requiredSkills: p.skills,
                 planAccess: p.tier ? priceMap[p.tier] : 'free',

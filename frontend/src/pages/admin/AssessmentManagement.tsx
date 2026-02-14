@@ -54,11 +54,20 @@ import {
     BrainCircuit,
     Wand2
 } from 'lucide-react';
-import { fields } from '@/data/fieldsData';
+import { fields, branchesMap } from '@/data/fieldsData';
 import { AssessmentQuestion } from '@/types/assessment';
 import { seedAssessmentQuestions } from '@/utils/assessmentSeeder';
 
 export default function AssessmentManagement() {
+    // Generate flat list of selectable fields (including branches)
+    const selectableFields = fields.flatMap(f => {
+        const branches = branchesMap[f.id] || [];
+        return [
+            { id: f.id, name: f.name, isBranch: false, parentName: null },
+            ...branches.map(b => ({ id: b.id, name: b.name, isBranch: true, parentName: f.name }))
+        ];
+    });
+
     const [selectedField, setSelectedField] = useState<string>('');
     const [editingQuestion, setEditingQuestion] = useState<AssessmentQuestion | null>(null);
     const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -245,18 +254,22 @@ export default function AssessmentManagement() {
                 <div className="grid lg:grid-cols-3 gap-6">
                     {/* Field Overview */}
                     <Card className="lg:col-span-1 border-primary/10">
-                        <CardHeader className="pb-2"><CardTitle className="text-lg">Field Banks</CardTitle></CardHeader>
+                        <CardHeader className="pb-2"><CardTitle className="text-lg">Field & Branch Banks</CardTitle></CardHeader>
                         <CardContent className="p-0">
                             <div className="max-h-[500px] overflow-y-auto divide-y">
-                                {fields.map((field) => (
+                                {selectableFields.map((field) => (
                                     <div
                                         key={field.id}
                                         onClick={() => setSelectedField(field.id)}
                                         className={`p-3 flex items-center justify-between cursor-pointer transition-colors hover:bg-muted/50 ${selectedField === field.id ? 'bg-primary/5 border-l-4 border-primary' : ''}`}
                                     >
-                                        <div className="flex flex-col">
-                                            <span className="text-sm font-semibold">{field.name}</span>
-                                            <span className="text-[10px] text-muted-foreground uppercase opacity-70">{field.id}</span>
+                                        <div className={`flex flex-col ${field.isBranch ? 'pl-4' : ''}`}>
+                                            <span className={`text-sm ${field.isBranch ? 'font-medium' : 'font-bold'}`}>
+                                                {field.isBranch ? `↳ ${field.name}` : field.name}
+                                            </span>
+                                            <span className="text-[10px] text-muted-foreground uppercase opacity-70">
+                                                {field.id} {field.parentName && `• ${field.parentName}`}
+                                            </span>
                                         </div>
                                         <Badge variant={fieldStats[field.id] > 0 ? 'default' : 'outline'} className="h-5 px-1.5 min-w-[30px] justify-center">
                                             {fieldStats[field.id] || 0}
@@ -271,7 +284,7 @@ export default function AssessmentManagement() {
                     <Card className="lg:col-span-2 shadow-xl">
                         <CardHeader className="flex flex-row items-center justify-between border-b bg-muted/20">
                             <div>
-                                <CardTitle>{selectedField ? `Repository: ${fields.find(f => f.id === selectedField)?.name}` : 'Select a Field'}</CardTitle>
+                                <CardTitle>{selectedField ? `Repository: ${selectableFields.find(f => f.id === selectedField)?.name}` : 'Select a Category'}</CardTitle>
                                 <CardDescription>Direct database interaction layer</CardDescription>
                             </div>
                             {selectedField && (

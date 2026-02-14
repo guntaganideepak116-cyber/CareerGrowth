@@ -16,8 +16,7 @@ export function useProjects() {
             try {
                 const projects = await getProjects({
                     field: fieldId,
-                    specialization: profile?.specialization,
-                    branch: profile?.branch
+                    specialization: profile?.specialization || profile?.branch || ''
                 });
 
                 if (projects && projects.length > 0) {

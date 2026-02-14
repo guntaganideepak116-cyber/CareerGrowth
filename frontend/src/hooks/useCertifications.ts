@@ -16,8 +16,7 @@ export function useCertifications() {
             try {
                 const certs = await getCertifications({
                     field: fieldId,
-                    specialization: profile?.specialization,
-                    branch: profile?.branch
+                    specialization: profile?.specialization || profile?.branch || ''
                 });
 
                 if (certs && certs.length > 0) {
@@ -33,7 +32,7 @@ export function useCertifications() {
                         industryRecognitionLevel: (c.industryValue || c.industryRecognitionLevel || 'high').toLowerCase(),
                         validity: c.validity || 'Lifetime',
                         skillsCovered: c.skillsCovered || c.skills || [],
-                        officialLink: c.officialUrl || c.officialLink,
+                        officialUrl: c.officialUrl || c.officialLink,
                         logoUrl: c.logoUrl,
                         duration: c.duration || c.timeToComplete,
                         cost: c.cost,

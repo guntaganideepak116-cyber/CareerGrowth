@@ -175,8 +175,8 @@ export default function Projects() {
         {filteredProjects.length === 0 ? (
           <div className="text-center py-12">
             <Folder className="mx-auto h-12 w-12 text-muted-foreground" />
-            <p className="mt-4 text-muted-foreground">
-              No projects available for this selection.
+            <p className="mt-4 text-muted-foreground font-medium">
+              No projects available for this specialization yet.
             </p>
             {projects.length === 0 && (
               <p className="text-xs text-muted-foreground mt-2">

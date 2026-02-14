@@ -9,7 +9,7 @@ router.get('/', async (req: Request, res: Response) => {
     try {
         const { field, specialization, careerPath, id } = req.query;
 
-        // If ID is provided, return specific certification
+        // 1. If ID is provided, return specific certification (Direct Access)
         if (id && typeof id === 'string') {
             const certDoc = await db.collection('certifications').doc(id).get();
             if (certDoc.exists) {
@@ -22,58 +22,60 @@ router.get('/', async (req: Request, res: Response) => {
             }
         }
 
-        // Build query
-        let query: any = db.collection('certifications');
-
-        if (field) {
-            query = query.where('fieldId', '==', field);
+        // 2. Strict Filtering Logic (MANDATORY)
+        // Under no circumstances should unrelated certifications be visible.
+        if (!field || !specialization) {
+            return res.json({
+                success: true,
+                count: 0,
+                data: [],
+                message: 'Field and specialization are mandatory for filtered results.'
+            });
         }
 
-        if (req.query.branch) {
-            query = query.where('branch', '==', req.query.branch);
-        }
+        // Build strict query
+        let query = db.collection('certifications')
+            .where('field', '==', field)
+            .where('specialization', '==', specialization);
 
-        if (specialization) {
-            query = query.where('specializationId', '==', specialization);
-        }
-
-        const snapshot = await query.get();
+        let snapshot = await query.get();
         let certs = snapshot.docs.map((doc: any) => ({
             id: doc.id,
             ...doc.data()
         }));
 
-        // Fallback for field naming inconsistency
-        if (certs.length === 0 && field) {
-            const fallbackQuery = db.collection('certifications').where('field', '==', field);
-            const fallbackSnapshot = await fallbackQuery.get();
-            certs = fallbackSnapshot.docs.map((doc: any) => ({
+        // Fallback for fieldId/specializationId schema if no results found with primary schema
+        if (certs.length === 0) {
+            query = db.collection('certifications')
+                .where('fieldId', '==', field)
+                .where('specializationId', '==', specialization);
+
+            snapshot = await query.get();
+            certs = snapshot.docs.map((doc: any) => ({
                 id: doc.id,
                 ...doc.data()
             }));
-
-            if (specialization) {
-                certs = certs.filter((c: any) => c.specializationId === specialization || c.specialization === specialization);
-            }
         }
 
-        // Additional filter for careerPath if provided
-        if (careerPath) {
+        // 3. Optional Career Path Filtering (Hierarchy Step)
+        if (careerPath && certs.length > 0) {
             const cp = String(careerPath).toLowerCase();
             certs = certs.filter((c: any) =>
-                (c.careerPath && c.careerPath.toLowerCase().includes(cp)) ||
-                (c.careerPaths && c.careerPaths.some((path: string) => path.toLowerCase().includes(cp)))
+                (c.careerPath && String(c.careerPath).toLowerCase().includes(cp)) ||
+                (c.careerPaths && Array.isArray(c.careerPaths) && c.careerPaths.some((path: string) => String(path).toLowerCase().includes(cp)))
             );
         }
 
         res.json({
             success: true,
+            status: certs.length > 0 ? 'success' : 'empty',
             count: certs.length,
-            data: certs
+            data: certs,
+            message: certs.length === 0 ? "No certifications available for this specialization yet." : undefined
         });
 
     } catch (error) {
-        console.error('Error fetching certifications:', error);
+        console.error('STRICT_CERTIFICATIONS_FILTER_ERROR:', error);
         res.status(500).json({
             success: false,
             error: 'Internal Server Error'
