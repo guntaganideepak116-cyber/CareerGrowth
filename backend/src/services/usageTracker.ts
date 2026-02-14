@@ -55,4 +55,32 @@ export class UsageTracker {
             gemini_requests: 0
         };
     }
+
+    static async getUsageHistory(days: number = 7) {
+        const history = [];
+        const now = new Date();
+
+        for (let i = 0; i < days; i++) {
+            const date = new Date(now);
+            date.setDate(now.getDate() - i);
+            const docId = `usage_${date.toISOString().split('T')[0]}`;
+            const doc = await db.collection('admin_metrics').doc(docId).get();
+
+            if (doc.exists) {
+                history.push({
+                    date: date.toISOString().split('T')[0],
+                    ...doc.data()
+                });
+            } else {
+                history.push({
+                    date: date.toISOString().split('T')[0],
+                    firestore_reads: 0,
+                    firestore_writes: 0,
+                    gemini_requests: 0
+                });
+            }
+        }
+
+        return history.reverse(); // Return oldest to newest
+    }
 }

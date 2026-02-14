@@ -129,13 +129,16 @@ router.get('/quota', verifyAdminToken, async (req, res) => {
     try {
         const { UsageTracker } = await import('../services/usageTracker');
         const stats = await UsageTracker.getDailyStats();
+        const history = await UsageTracker.getUsageHistory(7);
+
         res.json({
             success: true,
             stats,
+            history,
             limits: {
                 firestore_reads: 50000,
                 firestore_writes: 20000,
-                gemini_requests: 1500 // Assuming a safe soft limit for free tier
+                gemini_requests: 1500
             }
         });
     } catch (error) {
