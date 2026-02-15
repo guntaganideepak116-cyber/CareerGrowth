@@ -29,6 +29,7 @@ export interface AssessmentResult {
   status: 'passed' | 'needs_improvement';
   attemptDate: Date;
   timeSpent?: number; // Total time in seconds
+  questionsWithAnswers?: AssessmentQuestion[];
 }
 
 export interface FieldAssessmentStatus {
