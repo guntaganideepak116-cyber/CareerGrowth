@@ -66,7 +66,7 @@ export const seedCertifications = async () => {
 
     // 1. Process existing certifications from certificationsMap
     for (const [key, certList] of Object.entries(certificationsMap)) {
-        let targetFieldId = branchToFieldMap[key] || key;
+        const targetFieldId = branchToFieldMap[key] || key;
 
         // Validate field ID
         const isValidField = fields.some(f => f.id === targetFieldId);

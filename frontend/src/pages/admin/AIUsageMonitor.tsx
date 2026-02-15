@@ -28,8 +28,27 @@ import { getQuotaStats } from '@/services/apiService';
 import { Button } from '@/components/ui/button';
 import { toast } from 'sonner';
 
+interface QuotaStats {
+    stats: {
+        firestore_reads: number;
+        firestore_writes: number;
+        gemini_requests: number;
+    };
+    limits: {
+        firestore_reads: number;
+        firestore_writes: number;
+        gemini_requests: number;
+    };
+    history: Array<{
+        date: string;
+        firestore_reads: number;
+        firestore_writes: number;
+        gemini_requests: number;
+    }>;
+}
+
 export default function AIUsageMonitor() {
-    const [data, setData] = useState<any>(null);
+    const [data, setData] = useState<QuotaStats | null>(null);
     const [loading, setLoading] = useState(true);
     const [refreshing, setRefreshing] = useState(false);
 

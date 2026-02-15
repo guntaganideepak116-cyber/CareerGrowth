@@ -20,6 +20,7 @@ export function useCertifications() {
                 });
 
                 if (certs && certs.length > 0) {
+                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
                     return certs.map((c: any) => ({
                         id: c.id,
                         title: c.title || c.name,

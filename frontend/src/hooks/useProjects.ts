@@ -20,6 +20,7 @@ export function useProjects() {
                 });
 
                 if (projects && projects.length > 0) {
+                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
                     return projects.map((p: any) => ({
                         id: p.id,
                         title: p.title || p.name,

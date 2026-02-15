@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { DashboardLayout } from '@/components/dashboard/DashboardLayout';
 import { useAuthContext } from '@/contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
@@ -25,9 +25,24 @@ export default function FieldSelection() {
   const [searchQuery, setSearchQuery] = useState('');
   const [demandFilter, setDemandFilter] = useState<DemandFilter>('all');
 
+  const filteredFields = useMemo(() => {
+    return fields.filter((field) => {
+      const matchesSearch =
+        field.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        field.description.toLowerCase().includes(searchQuery.toLowerCase());
+      const matchesDemand = demandFilter === 'all' || field.demand === demandFilter;
+      return matchesSearch && matchesDemand;
+    });
+  }, [searchQuery, demandFilter]);
+
   // Redirect if not authenticated
+  useEffect(() => {
+    if (!loading && !user) {
+      navigate('/login');
+    }
+  }, [loading, user, navigate]);
+
   if (!loading && !user) {
-    navigate('/login');
     return null;
   }
 
@@ -47,17 +62,6 @@ export default function FieldSelection() {
       toast.error('Failed to save selection. Please try again.');
     }
   };
-
-
-  const filteredFields = useMemo(() => {
-    return fields.filter((field) => {
-      const matchesSearch =
-        field.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        field.description.toLowerCase().includes(searchQuery.toLowerCase());
-      const matchesDemand = demandFilter === 'all' || field.demand === demandFilter;
-      return matchesSearch && matchesDemand;
-    });
-  }, [searchQuery, demandFilter]);
 
   const clearFilters = () => {
     setSearchQuery('');

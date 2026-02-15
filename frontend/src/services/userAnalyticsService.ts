@@ -304,7 +304,7 @@ export const calculateAnalytics = (progress: UserProgress | null) => {
     const projectScore = (progress.completedProjects?.length || 0) * 15;
     const skillScore = (progress.completedSkills?.length || 0) * 2;
 
-    let calculatedProgress = Math.min(100, roadmapScore + projectScore + skillScore);
+    const calculatedProgress = Math.min(100, roadmapScore + projectScore + skillScore);
 
     return {
         overallProgress: calculatedProgress,

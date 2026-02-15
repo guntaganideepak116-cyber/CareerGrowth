@@ -51,7 +51,7 @@ export interface Profile {
   skills: string[];
   experience_years: number;
   preferred_roles: string[];
-  skill_gap_analysis: Record<string, any>;
+  skill_gap_analysis: Record<string, unknown>;
   resume_url: string | null;
   completed_projects: string[];
   roadmap_progress: number;
@@ -133,7 +133,7 @@ export function useAuth() {
       const docSnap = await getDoc(docRef);
 
       if (docSnap.exists()) {
-        const data = docSnap.data() as any;
+        const data = docSnap.data();
         if (!data.role) {
           const role = isAdminEmail(data.email) ? 'admin' : 'user';
           const updatedData = { ...data, role } as Profile;
@@ -199,8 +199,9 @@ export function useAuth() {
       setProfile(newProfile);
       localStorage.setItem('user_profile', JSON.stringify(newProfile));
       return user;
-    } catch (error: any) {
-      if (error.code === 'auth/email-already-in-use') {
+    } catch (error: unknown) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      if ((error as any).code === 'auth/email-already-in-use') {
         throw new Error('This email is already registered. Please sign in instead.');
       }
       throw error;
@@ -224,8 +225,9 @@ export function useAuth() {
       }).catch(err => console.error('Error updating lastLogin:', err));
 
       return result;
-    } catch (error: any) {
-      if (error.code === 'auth/invalid-credential' || error.code === 'auth/user-not-found' || error.code === 'auth/wrong-password') {
+    } catch (error: unknown) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      if ((error as any).code === 'auth/invalid-credential' || (error as any).code === 'auth/user-not-found' || (error as any).code === 'auth/wrong-password') {
         throw new Error('Invalid email or password. Please try again.');
       }
       throw error;
@@ -251,11 +253,12 @@ export function useAuth() {
       const updatedData = { ...updates, updated_at: new Date().toISOString() };
       await updateDoc(docRef, updatedData);
       return newItem;
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error("Error updating profile in Firestore:", error);
 
       // If quota is exceeded, we still consider the update "locally successful"
-      if (error?.code === 'resource-exhausted') {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      if ((error as any)?.code === 'resource-exhausted') {
         console.warn("Firestore quota exceeded, acting in local-only mode.");
         return newItem;
       }
@@ -326,8 +329,9 @@ export function useAuth() {
       }
 
       return result;
-    } catch (error: any) {
-      if (error.code === 'auth/popup-closed-by-user') {
+    } catch (error: unknown) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      if ((error as any).code === 'auth/popup-closed-by-user') {
         throw new Error('Sign in cancelled');
       }
       throw error;
