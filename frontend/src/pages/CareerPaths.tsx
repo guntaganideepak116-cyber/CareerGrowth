@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { DashboardLayout } from '@/components/dashboard/DashboardLayout';
 import { useAuthContext } from '@/contexts/AuthContext';
 import { Button } from '@/components/ui/button';
@@ -22,6 +22,7 @@ interface CareerPath {
   title: string;
   fieldId: string;
   specializationId?: string;
+  branch?: string;
   requiredSkills: string[];
   level: string;
 }
@@ -46,13 +47,7 @@ export default function CareerPaths() {
     }
   }, [user, profile?.field, loading, navigate]);
 
-  useEffect(() => {
-    if (profile?.field) {
-      fetchCareerPaths();
-    }
-  }, [profile?.field]);
-
-  const fetchCareerPaths = async () => {
+  const fetchCareerPaths = useCallback(async () => {
     if (!profile?.field) {
       setPathsLoading(false);
       return;
@@ -111,7 +106,13 @@ export default function CareerPaths() {
     } finally {
       setPathsLoading(false);
     }
-  };
+  }, [profile]);
+
+  useEffect(() => {
+    if (profile?.field) {
+      fetchCareerPaths();
+    }
+  }, [profile?.field, fetchCareerPaths]);
 
   const handleSelectPath = async (path: CareerPath) => {
     setSelectedPath(path.id);
