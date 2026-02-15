@@ -84,14 +84,16 @@ export default function FieldAssessment() {
                 return snapshot.docs.map(doc => {
                     const data = doc.data();
                     // Security: Do not expose correctAnswer to frontend (Grading fetched separately)
+                    // eslint-disable-next-line @typescript-eslint/no-unused-vars
                     const { correctAnswer, ...rest } = data;
                     return {
                         id: doc.id,
                         ...rest
                     } as AssessmentQuestion;
                 });
-            } catch (firestoreError: any) {
-                if (firestoreError?.code === 'resource-exhausted') {
+            } catch (firestoreError: unknown) {
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                if ((firestoreError as any)?.code === 'resource-exhausted') {
                     console.warn('Firestore quota exceeded for questions. Returning empty list.');
                     toast.error('System is busy. Assessment questions currently unavailable.');
                     return [];
@@ -101,8 +103,9 @@ export default function FieldAssessment() {
         },
         enabled: !!fieldId,
         staleTime: Infinity, // Questions don't change often
-        retry: (failureCount, error: any) => {
-            if (error?.code === 'resource-exhausted') return false;
+        retry: (failureCount, error: unknown) => {
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            if ((error as any)?.code === 'resource-exhausted') return false;
             return failureCount < 2;
         }
     });
@@ -123,7 +126,7 @@ export default function FieldAssessment() {
     };
 
     // Handle quiz completion
-    const handleQuizComplete = async (answers: AssessmentAnswer[], timeSpent: number, metadata?: any) => {
+    const handleQuizComplete = async (answers: AssessmentAnswer[], timeSpent: number, metadata?: Record<string, unknown>) => {
         if (!field || !fieldContent) return;
 
         try {
@@ -132,13 +135,11 @@ export default function FieldAssessment() {
                 answers,
                 timeSpent,
                 fieldContent.fieldName,
-                metadata
+                metadata as { tabSwitchCount?: number; terminated?: boolean }
             );
 
             // If result contains the full questions with answers (from fallback grading), use them to show correct answers
-            // @ts-ignore
             if (assessmentResult.questionsWithAnswers) {
-                // @ts-ignore
                 setQuestions(assessmentResult.questionsWithAnswers);
             }
 
