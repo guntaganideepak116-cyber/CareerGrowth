@@ -56,6 +56,7 @@ export default function Profile() {
   });
 
   const [showMyProjects, setShowMyProjects] = useState(false);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [myProjects, setMyProjects] = useState<any[]>([]);
 
   useEffect(() => {
