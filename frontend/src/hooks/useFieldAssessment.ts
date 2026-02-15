@@ -63,8 +63,9 @@ export function useFieldAssessment(fieldId: string) {
                             attemptsCount: data.attemptsCount || 1,
                         };
                     }
-                } catch (firestoreError: any) {
-                    if (firestoreError?.code === 'resource-exhausted') {
+                } catch (firestoreError: unknown) {
+                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                    if ((firestoreError as any)?.code === 'resource-exhausted') {
                         console.warn('Firestore quota exceeded. Returning default state.');
                         toast.error('System traffic is high. Some features may be limited.');
                         return {
@@ -97,19 +98,20 @@ export function useFieldAssessment(fieldId: string) {
         enabled: !!user && !!fieldId,
         staleTime: Infinity,
         gcTime: 1000 * 60 * 60,
-        retry: (failureCount, error: any) => {
+        retry: (failureCount, error: unknown) => {
             // Don't retry if quota exceeded
-            if (error?.code === 'resource-exhausted') return false;
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            if ((error as any)?.code === 'resource-exhausted') return false;
             return failureCount < 2;
         }
     });
 
-    const updateLocalStatus = (result: any) => {
+    const updateLocalStatus = (result: Partial<AssessmentResult> & { attemptsCount?: number }) => {
         const newStatus = {
             fieldId,
             hasAttempted: true,
             hasPassed: result.status === 'passed',
-            score: result.score,
+            score: result.score || 0,
             lastAttemptDate: new Date(),
             attemptsCount: result.attemptsCount || 1,
         };
@@ -121,7 +123,7 @@ export function useFieldAssessment(fieldId: string) {
         queryClient.invalidateQueries({ queryKey: ['dashboard_metrics'] });
     };
 
-    const showCompletionToast = (result: any) => {
+    const showCompletionToast = (result: Partial<AssessmentResult> & { score?: number; status?: string }) => {
         if (result.status === 'passed') {
             toast.success('Congratulations! Assessment Passed', {
                 description: `You scored ${result.score}%. All sections are unlocked.`,
@@ -208,7 +210,7 @@ export function useFieldAssessment(fieldId: string) {
                             correctAnswer: data.correctAnswer !== undefined ? data.correctAnswer : data.correctAnswerIndex
                         } as AssessmentQuestion;
                     });
-                } catch (e) {
+                } catch (e: unknown) {
                     console.error("Failed to fetch grading key", e);
                 }
             }
@@ -219,9 +221,13 @@ export function useFieldAssessment(fieldId: string) {
                 const question = gradingQuestions.find(q => q.id === ans.questionId);
                 let isCorrect = false;
 
-                if (question && typeof (question as any).correctAnswer === 'number') {
-                    const expected = (question as any).correctAnswer;
-                    isCorrect = ans.selectedOption === expected;
+                if (question) {
+                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                    const qAny = question as any;
+                    if (typeof qAny.correctAnswer === 'number') {
+                        const expected = qAny.correctAnswer;
+                        isCorrect = ans.selectedOption === expected;
+                    }
                 }
 
                 if (isCorrect) correctCount++;
@@ -252,9 +258,10 @@ export function useFieldAssessment(fieldId: string) {
             // Save to Firestore
             try {
                 await setDoc(doc(db, 'users', user.uid, 'assessments', fieldId), resultData);
-            } catch (firestoreError: any) {
+            } catch (firestoreError: unknown) {
                 console.warn('Failed to save assessment to Firestore (Quota/Offline):', firestoreError);
-                if (firestoreError?.code === 'resource-exhausted') {
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                if ((firestoreError as any)?.code === 'resource-exhausted') {
                     // Don't throw, let the user proceed with local result
                 } else {
                     // For other errors, maybe still allow local-only flow
@@ -286,7 +293,7 @@ export function useFieldAssessment(fieldId: string) {
             }).catch(() => { });
 
             return result;
-        } catch (error: any) {
+        } catch (error: unknown) {
             console.error('Error submitting assessment:', error);
             // Even on general error, we might want to try and return a basic result if possible, 
             // but for now, we'll just allow the local evaluation result above to be the main path.
