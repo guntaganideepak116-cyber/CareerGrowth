@@ -145,7 +145,7 @@ export default function FieldAssessment() {
     // Handle continue after results
     const handleContinue = () => {
         // Navigate to specializations or next step
-        if (field?.hasBranches) {
+        if (field?.hasBranches && !profile?.branch) {
             navigate('/branches');
         } else {
             navigate('/specializations');
