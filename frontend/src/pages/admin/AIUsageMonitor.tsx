@@ -242,6 +242,7 @@ export default function AIUsageMonitor() {
                                         />
                                         <Tooltip
                                             contentStyle={{ borderRadius: '12px', border: '1px solid #e2e8f0', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' }}
+                                            cursor={{ stroke: '#e2e8f0' }}
                                         />
                                         <Area type="monotone" dataKey="firestore_reads" name="Reads" stroke="#3b82f6" fillOpacity={1} fill="url(#colorReads)" strokeWidth={2} />
                                         <Area type="monotone" dataKey="firestore_writes" name="Writes" stroke="#f59e0b" fillOpacity={0} strokeWidth={2} strokeDasharray="5 5" />

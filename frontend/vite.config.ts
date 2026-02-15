@@ -9,8 +9,8 @@ export default defineConfig(({ mode }) => ({
     host: "::",
     port: 8080,
     headers: {
-      // Allow Google Sign-In popup to work
-      'Cross-Origin-Opener-Policy': 'same-origin-allow-popups',
+      // Allow Google Sign-In popup to work without COOP blocking
+      'Cross-Origin-Opener-Policy': 'unsafe-none',
       'Cross-Origin-Embedder-Policy': 'unsafe-none'
     }
   },
