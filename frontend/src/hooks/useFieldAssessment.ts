@@ -194,7 +194,7 @@ export function useFieldAssessment(fieldId: string) {
 
             // If questions passed, use them. If they don't have correctAnswer, fetch them securely now.
             let gradingQuestions = questions;
-            const needsFetching = questions.some(q => (q as any).correctAnswer === undefined);
+            const needsFetching = questions.some(q => (q as { correctAnswer?: number }).correctAnswer === undefined);
 
             if (needsFetching) {
                 try {
