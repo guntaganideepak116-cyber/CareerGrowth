@@ -44,31 +44,46 @@ export function useFieldAssessment(fieldId: string) {
                         };
                     }
                 } catch (backendError) {
-                    console.warn('Backend status fetch failed, falling back to Firestore directly', backendError);
+                    // Backend failed, silence and try firestore
                 }
 
                 // Fallback: Read directly from Firestore
-                const docRef = doc(db, 'users', user.uid, 'assessments', fieldId);
-                const docSnap = await getDoc(docRef);
+                try {
+                    const docRef = doc(db, 'users', user.uid, 'assessments', fieldId);
+                    const docSnap = await getDoc(docRef);
 
-                if (docSnap.exists()) {
-                    const data = docSnap.data();
-                    return {
-                        fieldId,
-                        hasAttempted: true,
-                        hasPassed: data.status === 'passed',
-                        score: data.score,
-                        lastAttemptDate: data.attemptDate?.toDate(),
-                        attemptsCount: data.attemptsCount || 1,
-                    };
-                } else {
-                    return {
-                        fieldId,
-                        hasAttempted: false,
-                        hasPassed: false,
-                        attemptsCount: 0,
-                    };
+                    if (docSnap.exists()) {
+                        const data = docSnap.data();
+                        return {
+                            fieldId,
+                            hasAttempted: true,
+                            hasPassed: data.status === 'passed',
+                            score: data.score,
+                            lastAttemptDate: data.attemptDate?.toDate(),
+                            attemptsCount: data.attemptsCount || 1,
+                        };
+                    }
+                } catch (firestoreError: any) {
+                    if (firestoreError?.code === 'resource-exhausted') {
+                        console.warn('Firestore quota exceeded. Returning default state.');
+                        toast.error('System traffic is high. Some features may be limited.');
+                        return {
+                            fieldId,
+                            hasAttempted: false,
+                            hasPassed: false,
+                            attemptsCount: 0,
+                            isQuotaExceeded: true
+                        };
+                    }
+                    throw firestoreError;
                 }
+
+                return {
+                    fieldId,
+                    hasAttempted: false,
+                    hasPassed: false,
+                    attemptsCount: 0,
+                };
             } catch (error) {
                 console.error('Error fetching assessment status:', error);
                 return {
@@ -80,8 +95,13 @@ export function useFieldAssessment(fieldId: string) {
             }
         },
         enabled: !!user && !!fieldId,
-        staleTime: Infinity, // Status doesn't change unless user submits
-        gcTime: 1000 * 60 * 60, // Keep in cache for 1 hour
+        staleTime: Infinity,
+        gcTime: 1000 * 60 * 60,
+        retry: (failureCount, error: any) => {
+            // Don't retry if quota exceeded
+            if (error?.code === 'resource-exhausted') return false;
+            return failureCount < 2;
+        }
     });
 
     const updateLocalStatus = (result: any) => {

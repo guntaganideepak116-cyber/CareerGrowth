@@ -75,23 +75,36 @@ export default function FieldAssessment() {
             }
 
             // Fallback to Firestore getDocs (not listener)
-            const q = query(
-                collection(db, 'assessment_questions'),
-                where('fieldId', '==', effectiveFieldId.toLowerCase().trim())
-            );
-            const snapshot = await getDocs(q);
-            return snapshot.docs.map(doc => {
-                const data = doc.data();
-                // Security: Do not expose correctAnswer to frontend (Grading fetched separately)
-                const { correctAnswer, ...rest } = data;
-                return {
-                    id: doc.id,
-                    ...rest
-                } as AssessmentQuestion;
-            });
+            try {
+                const q = query(
+                    collection(db, 'assessment_questions'),
+                    where('fieldId', '==', effectiveFieldId.toLowerCase().trim())
+                );
+                const snapshot = await getDocs(q);
+                return snapshot.docs.map(doc => {
+                    const data = doc.data();
+                    // Security: Do not expose correctAnswer to frontend (Grading fetched separately)
+                    const { correctAnswer, ...rest } = data;
+                    return {
+                        id: doc.id,
+                        ...rest
+                    } as AssessmentQuestion;
+                });
+            } catch (firestoreError: any) {
+                if (firestoreError?.code === 'resource-exhausted') {
+                    console.warn('Firestore quota exceeded for questions. Returning empty list.');
+                    toast.error('System is busy. Assessment questions currently unavailable.');
+                    return [];
+                }
+                throw firestoreError;
+            }
         },
         enabled: !!fieldId,
         staleTime: Infinity, // Questions don't change often
+        retry: (failureCount, error: any) => {
+            if (error?.code === 'resource-exhausted') return false;
+            return failureCount < 2;
+        }
     });
 
     useEffect(() => {
