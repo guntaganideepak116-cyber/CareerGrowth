@@ -155,7 +155,7 @@ export default function UserDashboardControl() {
             const updated = users.find(u => u.id === selectedUser.id);
             if (updated) setSelectedUser(updated);
         }
-    }, [searchTerm, users]);
+    }, [searchTerm, users, selectedUser]);
 
     // Actions
     const toggleUserBlock = async (userId: string, currentlyBlocked: boolean) => {
@@ -357,7 +357,7 @@ export default function UserDashboardControl() {
                                             <Label className="text-xs font-bold uppercase text-muted-foreground">Security Role</Label>
                                             <Select
                                                 value={selectedUser.role || 'user'}
-                                                onValueChange={(v: any) => updateUserRole(selectedUser.id, v)}
+                                                onValueChange={(v) => updateUserRole(selectedUser.id, v as 'admin' | 'user')}
                                                 disabled={processingAction === selectedUser.id}
                                             >
                                                 <SelectTrigger className="h-9">

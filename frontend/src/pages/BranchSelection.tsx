@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { DashboardLayout } from '@/components/dashboard/DashboardLayout';
 import { useAuthContext } from '@/contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
@@ -16,24 +16,27 @@ export default function BranchSelection() {
 
     // Get field info
     const currentField = fields.find(f => f.id === profile?.field);
-    const branches = profile?.field ? branchesMap[profile.field] || [] : [];
+    const branches = useMemo(() => profile?.field ? branchesMap[profile.field] || [] : [], [profile?.field]);
 
-    // Redirect if not authenticated or no field selected
-    if (!loading && !user) {
-        navigate('/login');
-        return null;
-    }
+    const filteredBranches = useMemo(() => {
+        return branches.filter((branch) =>
+            branch.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            branch.description.toLowerCase().includes(searchQuery.toLowerCase())
+        );
+    }, [branches, searchQuery]);
 
-    if (!loading && !profile?.field) {
-        navigate('/fields');
-        return null;
-    }
-
-    // If field doesn't have branches, skip to specializations
-    if (!loading && currentField && !currentField.hasBranches) {
-        navigate('/specializations');
-        return null;
-    }
+    // Handle redirects
+    useEffect(() => {
+        if (!loading) {
+            if (!user) {
+                navigate('/login');
+            } else if (!profile?.field) {
+                navigate('/fields');
+            } else if (currentField && !currentField.hasBranches) {
+                navigate('/specializations');
+            }
+        }
+    }, [loading, user, profile?.field, currentField, navigate]);
 
     const handleSelectBranch = async (branch: Branch) => {
         try {
@@ -46,13 +49,6 @@ export default function BranchSelection() {
         }
     };
 
-    const filteredBranches = useMemo(() => {
-        return branches.filter((branch) =>
-            branch.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            branch.description.toLowerCase().includes(searchQuery.toLowerCase())
-        );
-    }, [branches, searchQuery]);
-
     if (loading) {
         return (
             <DashboardLayout>
@@ -61,6 +57,11 @@ export default function BranchSelection() {
                 </div>
             </DashboardLayout>
         );
+    }
+
+    // Redirecting state (optimistic)
+    if (!user || !profile?.field || (currentField && !currentField.hasBranches)) {
+        return null;
     }
 
     return (

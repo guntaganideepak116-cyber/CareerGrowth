@@ -40,7 +40,7 @@ const generatePlaceholderProjects = (fieldId: string, fieldName: string): Projec
             resumeStrength: 75 + (i * 2),
             careerImpact: i % 2 === 0 ? 'high' : 'medium',
             createdAt: new Date().toISOString()
-        } as any);
+        } as Project & { field: string; specialization: string });
     }
     return projects;
 };
@@ -76,7 +76,7 @@ export const seedProjects = async () => {
 
         for (const p of projectList) {
             // Map old structure to new structure
-            const projectData: any = {
+            const projectData: Record<string, unknown> = {
                 id: p.id,
                 title: p.name,
                 description: p.description,

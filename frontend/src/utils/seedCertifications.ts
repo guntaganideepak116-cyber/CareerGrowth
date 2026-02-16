@@ -37,7 +37,7 @@ const generatePlaceholderCertifications = (fieldId: string, fieldName: string): 
             industryRecognitionLevel: 'high',
             validity: 'Lifetime',
             skillsCovered: [fieldName, 'Analysis', 'Professional Practice'],
-            officialLink: `https://www.google.com/search?q=${encodeURIComponent(fieldName + ' ' + level + ' certification')}`,
+            officialUrl: `https://www.google.com/search?q=${encodeURIComponent(fieldName + ' ' + level + ' certification')}`,
             createdAt: new Date().toISOString(),
             // Mapped fields
             valueScore: 80 + i,
@@ -45,7 +45,7 @@ const generatePlaceholderCertifications = (fieldId: string, fieldName: string): 
             cost: tier === 'free' ? 'Free' : '$49-$99',
             rolesUnlocked: [`${fieldName} Specialist`],
             salaryRange: '$60k-$100k'
-        } as any);
+        } as Certification & { field: string; specialization: string });
     }
     return certs;
 };
@@ -85,7 +85,7 @@ export const seedCertifications = async () => {
                 'High': 'advanced', 'Medium': 'intermediate', 'Low': 'beginner'
             };
 
-            const certData: any = {
+            const certData: Record<string, unknown> = {
                 id: c.id,
                 title: c.name,
                 provider: c.provider,

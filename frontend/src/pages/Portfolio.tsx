@@ -22,7 +22,7 @@ import {
     ExternalLink,
     Linkedin
 } from 'lucide-react';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { cn } from '@/lib/utils';
 
 interface PortfolioData {
@@ -96,40 +96,7 @@ export default function Portfolio() {
     const [activeSection, setActiveSection] = useState('about');
     const [isNewUser, setIsNewUser] = useState(false);
 
-    useEffect(() => {
-        if (!authLoading && user) {
-            loadPortfolioData();
-        }
-    }, [authLoading, user]);
-
-    useEffect(() => {
-        if (!portfolioData) return;
-        const handleScroll = () => {
-            const sections = DEFAULT_SECTIONS.map(item => item.id);
-            const current = sections.find(section => {
-                const element = document.getElementById(section);
-                if (element) {
-                    const rect = element.getBoundingClientRect();
-                    return rect.top <= 150 && rect.bottom >= 150;
-                }
-                return false;
-            });
-            if (current) setActiveSection(current);
-        };
-        window.addEventListener('scroll', handleScroll);
-        return () => window.removeEventListener('scroll', handleScroll);
-    }, [portfolioData]);
-
-    const scrollToSection = (sectionId: string) => {
-        const element = document.getElementById(sectionId);
-        if (element) {
-            const offset = 100;
-            const y = element.getBoundingClientRect().top + window.pageYOffset - offset;
-            window.scrollTo({ top: y, behavior: 'smooth' });
-        }
-    };
-
-    const loadPortfolioData = async () => {
+    const loadPortfolioData = useCallback(async () => {
         if (!user) return;
         try {
             setLoading(true);
@@ -160,7 +127,42 @@ export default function Portfolio() {
         } finally {
             setLoading(false);
         }
+    }, [user, toast]);
+
+    useEffect(() => {
+        if (!authLoading && user) {
+            loadPortfolioData();
+        }
+    }, [authLoading, user, loadPortfolioData]);
+
+    useEffect(() => {
+        if (!portfolioData) return;
+        const handleScroll = () => {
+            const sections = DEFAULT_SECTIONS.map(item => item.id);
+            const current = sections.find(section => {
+                const element = document.getElementById(section);
+                if (element) {
+                    const rect = element.getBoundingClientRect();
+                    return rect.top <= 150 && rect.bottom >= 150;
+                }
+                return false;
+            });
+            if (current) setActiveSection(current);
+        };
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, [portfolioData]);
+
+    const scrollToSection = (sectionId: string) => {
+        const element = document.getElementById(sectionId);
+        if (element) {
+            const offset = 100;
+            const y = element.getBoundingClientRect().top + window.pageYOffset - offset;
+            window.scrollTo({ top: y, behavior: 'smooth' });
+        }
     };
+
+
 
     const savePortfolio = async () => {
         if (!user || !portfolioData) return;

@@ -35,6 +35,51 @@ export const assessmentQuestions: Record<string, AssessmentQuestion[]> = {
             correctAnswer: 2,
             difficulty: 'easy',
             topic: 'Databases'
+        },
+        {
+            id: 'cse-3',
+            fieldId: 'cse',
+            question: 'What is a deadlock in an operating system?',
+            options: ['A system crash due to hardware failure', 'A situation where two or more processes are waiting for each other', 'A security breach', 'A memory leak'],
+            correctAnswer: 1,
+            difficulty: 'medium',
+            topic: 'Operating Systems'
+        },
+        {
+            id: 'cse-4',
+            fieldId: 'cse',
+            question: 'Which layer of the OSI model is responsible for routing?',
+            options: ['Physical Layer', 'Data Link Layer', 'Network Layer', 'Transport Layer'],
+            correctAnswer: 2,
+            difficulty: 'medium',
+            topic: 'Computer Networks'
+        },
+        {
+            id: 'cse-5',
+            fieldId: 'cse',
+            question: 'What is the main principle of Object-Oriented Programming that allows hiding internal details?',
+            options: ['Polymorphism', 'Encapsulation', 'Inheritance', 'Abstraction'],
+            correctAnswer: 1,
+            difficulty: 'easy',
+            topic: 'OOP'
+        },
+        {
+            id: 'cse-6',
+            fieldId: 'cse',
+            question: 'Which sorting algorithm has the best average-case time complexity?',
+            options: ['Bubble Sort', 'Insertion Sort', 'Merge Sort', 'Selection Sort'],
+            correctAnswer: 2,
+            difficulty: 'medium',
+            topic: 'Algorithms'
+        },
+        {
+            id: 'cse-7',
+            fieldId: 'cse',
+            question: 'What does HTTP stand for?',
+            options: ['HyperText Transfer Protocol', 'HyperText Transmission Process', 'High Transfer Text Protocol', 'HyperText Technical Protocol'],
+            correctAnswer: 0,
+            difficulty: 'easy',
+            topic: 'Web Technologies'
         }
     ],
     ece: [
@@ -55,6 +100,51 @@ export const assessmentQuestions: Record<string, AssessmentQuestion[]> = {
             correctAnswer: 1,
             difficulty: 'easy',
             topic: 'Electronics'
+        },
+        {
+            id: 'ece-3',
+            fieldId: 'ece',
+            question: 'Which component is used to amplify or switch electronic signals?',
+            options: ['Resistor', 'Capacitor', 'Transistor', 'Inductor'],
+            correctAnswer: 2,
+            difficulty: 'easy',
+            topic: 'Analog Electronics'
+        },
+        {
+            id: 'ece-4',
+            fieldId: 'ece',
+            question: 'In digital logic, which gate outputs high only when all inputs are high?',
+            options: ['OR Gate', 'NAND Gate', 'AND Gate', 'XOR Gate'],
+            correctAnswer: 2,
+            difficulty: 'easy',
+            topic: 'Digital Electronics'
+        },
+        {
+            id: 'ece-5',
+            fieldId: 'ece',
+            question: 'What is modulation in communication systems?',
+            options: ['Varying properties of a carrier signal with a modulating signal', 'Converting AC to DC', 'Filtering noise', 'Amplifying a signal'],
+            correctAnswer: 0,
+            difficulty: 'medium',
+            topic: 'Communication Systems'
+        },
+        {
+            id: 'ece-6',
+            fieldId: 'ece',
+            question: 'What is the function of a microcontroller?',
+            options: ['To display images', 'To control devices based on programmed instructions', 'To store large amounts of data', 'To generate power'],
+            correctAnswer: 1,
+            difficulty: 'medium',
+            topic: 'Embedded Systems'
+        },
+        {
+            id: 'ece-7',
+            fieldId: 'ece',
+            question: 'What is the unit of frequency?',
+            options: ['Watt', 'Volt', 'Hertz', 'Ampere'],
+            correctAnswer: 2,
+            difficulty: 'easy',
+            topic: 'Signals and Systems'
         }
     ],
     mech: [
@@ -66,6 +156,60 @@ export const assessmentQuestions: Record<string, AssessmentQuestion[]> = {
             correctAnswer: 1,
             difficulty: 'easy',
             topic: 'Thermodynamics'
+        },
+        {
+            id: 'mech-2',
+            fieldId: 'mech',
+            question: 'What is the ratio of inertia force to viscous force called?',
+            options: ['Mach Number', 'Reynolds Number', 'Froude Number', 'Euler Number'],
+            correctAnswer: 1,
+            difficulty: 'medium',
+            topic: 'Fluid Mechanics'
+        },
+        {
+            id: 'mech-3',
+            fieldId: 'mech',
+            question: 'Which process involves heating a metal and then cooling it slowly to remove internal stresses?',
+            options: ['Quenching', 'Annealing', 'Tempering', 'Hardening'],
+            correctAnswer: 1,
+            difficulty: 'medium',
+            topic: 'Manufacturing'
+        },
+        {
+            id: 'mech-4',
+            fieldId: 'mech',
+            question: 'What is the function of a flywheel in an engine?',
+            options: ['To store energy and smooth out fluctuations', 'To cool the engine', 'To filter fuel', 'To increase speed'],
+            correctAnswer: 0,
+            difficulty: 'easy',
+            topic: 'Theory of Machines'
+        },
+        {
+            id: 'mech-5',
+            fieldId: 'mech',
+            question: 'What unit is used to measure torque?',
+            options: ['Newton', 'Joule', 'Newton-meter', 'Watt'],
+            correctAnswer: 2,
+            difficulty: 'easy',
+            topic: 'Mechanics'
+        },
+        {
+            id: 'mech-6',
+            fieldId: 'mech',
+            question: 'What is the primary alloying element in stainless steel?',
+            options: ['Carbon', 'Chromium', 'Nickel', 'Copper'],
+            correctAnswer: 1,
+            difficulty: 'medium',
+            topic: 'Material Science'
+        },
+        {
+            id: 'mech-7',
+            fieldId: 'mech',
+            question: 'In a 4-stroke engine, how many revolutions of the crankshaft occur per power stroke?',
+            options: ['1', '2', '4', '0.5'],
+            correctAnswer: 1,
+            difficulty: 'medium',
+            topic: 'IC Engines'
         }
     ],
     civil: [
@@ -77,6 +221,60 @@ export const assessmentQuestions: Record<string, AssessmentQuestion[]> = {
             correctAnswer: 1,
             difficulty: 'easy',
             topic: 'Structural'
+        },
+        {
+            id: 'civil-2',
+            fieldId: 'civil',
+            question: 'Which material is most commonly used for reinforcement in concrete?',
+            options: ['Aluminum', 'Copper', 'Steel', 'Plastic'],
+            correctAnswer: 2,
+            difficulty: 'easy',
+            topic: 'Construction Materials'
+        },
+        {
+            id: 'civil-3',
+            fieldId: 'civil',
+            question: 'What instrument is used for measuring angles in surveying?',
+            options: ['Thermometer', 'Theodolite', 'Barometer', 'Speedometer'],
+            correctAnswer: 1,
+            difficulty: 'medium',
+            topic: 'Surveying'
+        },
+        {
+            id: 'civil-4',
+            fieldId: 'civil',
+            question: 'What is the measure of resistance of a fluid to flow?',
+            options: ['Density', 'Viscosity', 'Pressure', 'Buoyancy'],
+            correctAnswer: 1,
+            difficulty: 'medium',
+            topic: 'Fluid Mechanics'
+        },
+        {
+            id: 'civil-5',
+            fieldId: 'civil',
+            question: 'Which test is used to determine the workability of concrete?',
+            options: ['Tensile Test', 'Slump Test', 'Impact Test', 'Hardness Test'],
+            correctAnswer: 1,
+            difficulty: 'medium',
+            topic: 'Concrete Technology'
+        },
+        {
+            id: 'civil-6',
+            fieldId: 'civil',
+            question: 'What does "BIM" stand for in construction?',
+            options: ['Building Information Modeling', 'Basic Infrastructure Management', 'Building Internal Maintenance', 'Bridge Inspection Method'],
+            correctAnswer: 0,
+            difficulty: 'easy',
+            topic: 'Construction Management'
+        },
+        {
+            id: 'civil-7',
+            fieldId: 'civil',
+            question: 'What is the primary cause of soil erosion?',
+            options: ['Wind and Water', 'Temperature', 'Gravity', 'Magnetism'],
+            correctAnswer: 0,
+            difficulty: 'easy',
+            topic: 'Geotechnical Engineering'
         }
     ],
     eee: [
@@ -88,6 +286,60 @@ export const assessmentQuestions: Record<string, AssessmentQuestion[]> = {
             correctAnswer: 2,
             difficulty: 'easy',
             topic: 'Basic Electrical'
+        },
+        {
+            id: 'eee-2',
+            fieldId: 'eee',
+            question: 'Which law relates voltage, current, and resistance?',
+            options: ['Newton\'s Law', 'Ohm\'s Law', 'Faraday\'s Law', 'Kirchhoff\'s Law'],
+            correctAnswer: 1,
+            difficulty: 'easy',
+            topic: 'Circuit Theory'
+        },
+        {
+            id: 'eee-3',
+            fieldId: 'eee',
+            question: 'What passes DC but blocks AC?',
+            options: ['Capacitor', 'Inductor', 'Resistor', 'Transistor'],
+            correctAnswer: 1,
+            difficulty: 'medium',
+            topic: 'Circuit Elements'
+        },
+        {
+            id: 'eee-4',
+            fieldId: 'eee',
+            question: 'What is the main function of a transformer?',
+            options: ['To convert AC to DC', 'To store energy', 'To change voltage levels', 'To measure current'],
+            correctAnswer: 2,
+            difficulty: 'easy',
+            topic: 'Electrical Machines'
+        },
+        {
+            id: 'eee-5',
+            fieldId: 'eee',
+            question: 'Which device converts mechanical energy into electrical energy?',
+            options: ['Motor', 'Generator', 'Battery', 'Inverter'],
+            correctAnswer: 1,
+            difficulty: 'easy',
+            topic: 'Electrical Machines'
+        },
+        {
+            id: 'eee-6',
+            fieldId: 'eee',
+            question: 'What is the purpose of earthing?',
+            options: ['To save electricity', 'To provided safety against electric shock', 'To increase voltage', 'To reduce resistance'],
+            correctAnswer: 1,
+            difficulty: 'medium',
+            topic: 'Power Systems'
+        },
+        {
+            id: 'eee-7',
+            fieldId: 'eee',
+            question: 'What is the standard frequency of AC power supply in India?',
+            options: ['60 Hz', '50 Hz', '100 Hz', '120 Hz'],
+            correctAnswer: 1,
+            difficulty: 'easy',
+            topic: 'Power Systems'
         }
     ],
     medical: [
