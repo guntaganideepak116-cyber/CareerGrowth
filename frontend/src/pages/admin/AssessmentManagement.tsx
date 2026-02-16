@@ -227,7 +227,7 @@ export default function AssessmentManagement() {
                         className="bg-red-50 text-red-600 hover:bg-red-100 border-red-200"
                     >
                         {seeding ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : <Wand2 className="h-4 w-4 mr-2" />}
-                        Rebuild Core Bank
+                        Update Questions
                     </Button>
                 </div>
 
