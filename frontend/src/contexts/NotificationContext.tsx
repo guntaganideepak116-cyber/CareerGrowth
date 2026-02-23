@@ -1,26 +1,39 @@
-import { createContext, useContext, useEffect, useState, ReactNode, useCallback, useMemo } from 'react';
+import {
+    createContext, useContext, useEffect, useState,
+    ReactNode, useCallback, useMemo
+} from 'react';
 import { db } from '@/lib/firebase';
-import { collection, query, orderBy, limit, onSnapshot, doc, updateDoc, arrayUnion, getDoc } from 'firebase/firestore';
+import {
+    collection, query, orderBy, limit,
+    onSnapshot, doc, updateDoc, arrayUnion, getDoc
+} from 'firebase/firestore';
 import { useAuthContext } from '@/contexts/AuthContext';
 
+// ── Notification type —— mirrors Firestore schema ─────────────────────────────
 export interface Notification {
     id: string;
+    // Field identity
     field_id: string;
     field_name?: string;
+    // Content
     type: 'skill' | 'trend' | 'warning' | 'certification' | 'update' | 'opportunity';
     title: string;
     message: string;
     priority: 'high' | 'medium' | 'low';
     category?: string;
     source?: string;
+    // Actions
     action_text?: string;
     action_url?: string;
     action_required: boolean;
     source_url: string | null;
+    // Timestamps
     created_at: string;
-    generated_date: string;
+    generated_date: string;    // maps to dateKey
     timestamp: number;
+    // Read state
     is_read: boolean;
+    is_global: boolean;
 }
 
 interface NotificationContextType {
@@ -34,13 +47,61 @@ interface NotificationContextType {
 
 const NotificationContext = createContext<NotificationContextType | undefined>(undefined);
 
+// ── Helper: map raw Firestore doc → Notification ───────────────────────────────
+function mapDocToNotification(docId: string, data: Record<string, any>, userId: string): Notification | null {
+    // Target audience filter
+    // Global notifications (no userId field) are shown to everyone.
+    // User-specific notifications are shown only to the matching user.
+    const targetUserId: string = data.userId || 'all';
+    if (targetUserId !== 'all' && targetUserId !== userId) return null;
+
+    const readBy: string[] = data.readBy || [];
+
+    // Resolve createdAt — backend stores as ISO string; handle both
+    let createdAtStr = '';
+    let ts = data.timestamp || 0;
+
+    if (data.createdAt) {
+        if (typeof data.createdAt === 'string') {
+            createdAtStr = data.createdAt;
+            if (!ts) ts = new Date(data.createdAt).getTime();
+        } else if (typeof data.createdAt.toDate === 'function') {
+            // Firestore Timestamp
+            createdAtStr = data.createdAt.toDate().toISOString();
+            if (!ts) ts = data.createdAt.toMillis();
+        }
+    }
+    if (!createdAtStr) createdAtStr = new Date(ts || Date.now()).toISOString();
+
+    return {
+        id: docId,
+        field_id: data.fieldId || 'general',
+        field_name: data.fieldName || '',
+        type: (data.type as Notification['type']) || 'update',
+        title: data.title || 'Notification',
+        message: data.message || '',
+        priority: (data.priority as Notification['priority']) || 'medium',
+        category: data.category || '',
+        source: data.source || '',
+        action_text: data.actionText || data.action_text,
+        action_url: data.actionUrl || data.action_url,
+        action_required: data.actionRequired || false,
+        source_url: data.sourceUrl || data.source_url || null,
+        created_at: createdAtStr,
+        generated_date: data.dateKey || createdAtStr.split('T')[0] || '',
+        timestamp: ts,
+        is_read: readBy.includes(userId),
+        is_global: data.isGlobal !== false,
+    };
+}
+
+// ── Provider ───────────────────────────────────────────────────────────────────
 export function NotificationProvider({ children }: { children: ReactNode }) {
     const { user } = useAuthContext();
     const [notifications, setNotifications] = useState<Notification[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
 
-    // Real-time listener using onSnapshot - GLOBAL SINGLE INSTANCE
     useEffect(() => {
         if (!user) {
             setNotifications([]);
@@ -50,86 +111,67 @@ export function NotificationProvider({ children }: { children: ReactNode }) {
 
         setLoading(true);
 
-        try {
-            // Create query for real-time updates
-            // We want notifications where userId is 'all' OR the current user's UID
-            const q = query(
-                collection(db, 'notifications'),
-                orderBy('createdAt', 'desc'),
-                limit(50)
-            );
+        // Order by `timestamp` (number) for reliable sorting.
+        // Backend stores `timestamp: Date.now()` on every notification.
+        const q = query(
+            collection(db, 'notifications'),
+            orderBy('timestamp', 'desc'),
+            limit(60)
+        );
 
-            console.log('[NotificationContext] Setting up live segmented listener');
+        console.log('[NotificationContext] Attaching real-time Firestore listener');
 
-            const unsubscribe = onSnapshot(q, (snapshot) => {
-                const mappedNotifications: Notification[] = snapshot.docs
-                    .map(doc => {
-                        const data = doc.data();
-                        const readBy = data.readBy || [];
-                        const targetUserId = data.userId || 'all';
+        const unsubscribe = onSnapshot(
+            q,
+            (snapshot) => {
+                const mapped: Notification[] = [];
 
-                        // Filter in memory for UID or 'all' to avoid complex index requirements initially
-                        // Since limit is 50, this is performant.
-                        if (targetUserId !== 'all' && targetUserId !== user.uid) return null;
+                snapshot.docs.forEach(docSnap => {
+                    const notif = mapDocToNotification(docSnap.id, docSnap.data(), user.uid);
+                    if (notif) mapped.push(notif);
+                });
 
-                        return {
-                            id: doc.id,
-                            field_id: data.fieldId || 'general',
-                            type: (data.type as any) || 'update',
-                            title: data.title || 'Notification',
-                            message: data.message || '',
-                            priority: (data.priority as any) || 'medium',
-                            action_text: data.actionText,
-                            action_url: data.actionUrl,
-                            action_required: data.actionRequired || false,
-                            source_url: data.sourceUrl || null,
-                            created_at: data.createdAt?.toDate?.()?.toISOString() || data.createdAt || new Date().toISOString(),
-                            timestamp: data.createdAt?.toMillis?.() || Date.now(),
-                            is_read: readBy.includes(user.uid)
-                        };
-                    })
-                    .filter(n => n !== null) as Notification[];
-
-                setNotifications(mappedNotifications);
+                console.log(`[NotificationContext] Received ${snapshot.docs.length} docs, mapped ${mapped.length}`);
+                setNotifications(mapped);
                 setLoading(false);
                 setError(null);
-            }, (err) => {
-                console.error('Firestore snapshot error:', err);
-                setError('Failed to load live notification feed');
+            },
+            (err) => {
+                console.error('[NotificationContext] Firestore snapshot error:', err);
+                setError('Failed to load notification feed. Please refresh.');
                 setLoading(false);
-            });
+            }
+        );
 
-            return () => unsubscribe();
-        } catch (err) {
-            console.error('Error setting up listener:', err);
-            setError('System sync error');
-            setLoading(false);
-        }
+        return () => {
+            console.log('[NotificationContext] Detaching listener');
+            unsubscribe();
+        };
     }, [user]);
 
+    // ── markAsRead ──────────────────────────────────────────────────────────
     const markAsRead = useCallback(async (notificationId: string) => {
         if (!user) return;
-
         try {
-            // Optimistic update
-            setNotifications(prev => prev.map(n => n.id === notificationId ? { ...n, is_read: true } : n));
-
-            // Update Firestore directly (readBy array)
+            // Optimistic UI update
+            setNotifications(prev =>
+                prev.map(n => n.id === notificationId ? { ...n, is_read: true } : n)
+            );
+            // Persist to Firestore
             const docRef = doc(db, 'notifications', notificationId);
             const docSnap = await getDoc(docRef);
             if (docSnap.exists()) {
-                const readBy = docSnap.data().readBy || [];
+                const readBy: string[] = docSnap.data().readBy || [];
                 if (!readBy.includes(user.uid)) {
-                    await updateDoc(docRef, {
-                        readBy: arrayUnion(user.uid)
-                    });
+                    await updateDoc(docRef, { readBy: arrayUnion(user.uid) });
                 }
             }
         } catch (err) {
-            console.error('Error marking as read:', err);
+            console.error('[NotificationContext] Error marking as read:', err);
         }
     }, [user]);
 
+    // ── markAllAsRead ───────────────────────────────────────────────────────
     const markAllAsRead = useCallback(async () => {
         if (!user || notifications.length === 0) return;
 
@@ -137,19 +179,21 @@ export function NotificationProvider({ children }: { children: ReactNode }) {
         if (unreadIds.length === 0) return;
 
         // Optimistic update
-        setNotifications(prev => prev.map(n => unreadIds.includes(n.id) ? { ...n, is_read: true } : n));
+        setNotifications(prev => prev.map(n =>
+            unreadIds.includes(n.id) ? { ...n, is_read: true } : n
+        ));
 
-        // Update all in Firestore
+        // Persist all to Firestore in parallel
         try {
-            const batch = unreadIds.map(async (id) => {
-                const docRef = doc(db, 'notifications', id);
-                await updateDoc(docRef, {
-                    readBy: arrayUnion(user.uid)
-                });
-            });
-            await Promise.all(batch);
+            await Promise.all(
+                unreadIds.map(id =>
+                    updateDoc(doc(db, 'notifications', id), {
+                        readBy: arrayUnion(user.uid)
+                    })
+                )
+            );
         } catch (e) {
-            console.error('Batch read update failed:', e);
+            console.error('[NotificationContext] Batch read update failed:', e);
         }
     }, [notifications, user]);
 
@@ -159,7 +203,7 @@ export function NotificationProvider({ children }: { children: ReactNode }) {
         error,
         unreadCount: notifications.filter(n => !n.is_read).length,
         markAsRead,
-        markAllAsRead
+        markAllAsRead,
     }), [notifications, loading, error, markAsRead, markAllAsRead]);
 
     return (

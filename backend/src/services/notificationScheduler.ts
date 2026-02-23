@@ -1,73 +1,96 @@
 import cron from 'node-cron';
-import axios from 'axios';
+import { runDailyGeneration, runHourlyGeneration, runNewsFetch, runCleanup } from '../routes/notifications';
 
-const API_URL = process.env.API_URL || 'http://localhost:5000';
+/**
+ * Notification Scheduler — uses node-cron for local development.
+ *
+ * In production (Vercel), cron jobs are managed by Vercel's built-in
+ * scheduler via vercel.json crons, which call the GET /cron/* endpoints.
+ *
+ * Call startNotificationScheduler() on server startup.
+ * Call bootstrapNotificationsIfEmpty() to seed today's notifications immediately.
+ */
 
-// Run daily at 9:00 AM to generate notifications for all fields
-export function startNotificationScheduler() {
-    console.log('📅 Notification scheduler initialized');
+// ============================================================
+// BOOTSTRAP: Run on startup if no notifications exist for today
+// ============================================================
+export async function bootstrapNotificationsIfEmpty(): Promise<void> {
+    try {
+        // Dynamic import to avoid circular dep at module load time
+        const { db } = await import('../config/firebase');
+        const today = new Date().toISOString().split('T')[0];
 
-    // Run daily at 9:00 AM
-    cron.schedule('0 9 * * *', async () => {
-        try {
-            console.log(`\n🔔 [${new Date().toISOString()}] Running daily notification generation...`);
-            const response = await axios.post(`${API_URL}/api/notifications/generate-daily`);
-            if (response.data.success) {
-                console.log(`✅ Successfully generated ${response.data.count} notifications for ${response.data.fields} fields`);
-            } else {
-                console.error('❌ Failed to generate notifications:', response.data);
-            }
-        } catch (error) {
-            console.error('❌ Error in notification scheduler:', error);
+        const snapshot = await db.collection('notifications')
+            .where('dateKey', '==', today)
+            .limit(1)
+            .get();
+
+        if (snapshot.empty) {
+            console.log(`\n🚀 [Bootstrap] No notifications found for ${today}. Generating now...`);
+            const result = await runDailyGeneration(false);
+            console.log(`✅ [Bootstrap] Generated ${result.count} notifications for ${result.fields} fields`);
+        } else {
+            console.log(`✅ [Bootstrap] Notifications for ${today} already exist — skipping initial generation`);
         }
-    });
-
-    // Run hourly for AI Insights (top of every hour)
-    cron.schedule('0 * * * *', async () => {
-        try {
-            console.log(`\n🧠 [${new Date().toISOString()}] Running hourly AI Insight generation...`);
-            const response = await axios.post(`${API_URL}/api/notifications/generate-hourly`);
-            if (response.data.success) {
-                console.log(`✅ Generated AI insights.`);
-            }
-        } catch (error) {
-            console.error('❌ Error in hourly scheduler:', error);
-        }
-    });
-
-    // Run every 10 minutes for Live News
-    cron.schedule('*/10 * * * *', async () => {
-        try {
-            console.log(`\n📰 [${new Date().toISOString()}] Running news fetcher...`);
-            const response = await axios.post(`${API_URL}/api/notifications/fetch-news`);
-            if (response.data.success) {
-                console.log(`✅ Fetched live news.`);
-            }
-        } catch (error) {
-            console.error('❌ Error in news scheduler:', error);
-        }
-    });
-
-    // Run cleanup weekly on Sunday at 2:00 AM
-    cron.schedule('0 2 * * 0', async () => {
-        try {
-            console.log(`\n🧹 [${new Date().toISOString()}] Running weekly notification cleanup...`);
-
-            const response = await axios.delete(`${API_URL}/api/notifications/old`);
-
-            if (response.data.success) {
-                console.log(`✅ Cleaned up ${response.data.deletedCount} old notifications`);
-            }
-        } catch (error) {
-            console.error('❌ Error in cleanup scheduler:', error);
-        }
-    });
-
-    console.log('✅ Daily notification generation scheduled for 9:00 AM');
-    console.log('✅ Weekly cleanup scheduled for Sunday 2:00 AM');
-
-    // Optional: Run immediately on startup (for testing)
-    if (process.env.NODE_ENV === 'development') {
-        console.log('\n🧪 Development mode: Use POST /api/notifications/generate-daily to manually trigger generation');
+    } catch (error) {
+        console.error('❌ [Bootstrap] Failed to check/generate initial notifications:', error);
+        // Non-fatal — server continues to run
     }
+}
+
+// ============================================================
+// CRON SCHEDULER (local dev)
+// ============================================================
+export function startNotificationScheduler(): void {
+    console.log('\n📅 Starting notification scheduler (node-cron)...');
+
+    // ── Daily at 8:30 AM IST (3:00 AM UTC) ──────────────────────────────────
+    cron.schedule('0 3 * * *', async () => {
+        console.log(`\n🔔 [${new Date().toISOString()}] Cron: Daily notification generation`);
+        try {
+            const result = await runDailyGeneration(false);
+            console.log(`✅ Daily: ${result.count} notifications for ${result.fields} fields`);
+        } catch (error) {
+            console.error('❌ Daily cron error:', error);
+        }
+    }, { timezone: 'UTC' });
+
+    // ── Hourly AI Insights ──────────────────────────────────────────────────
+    cron.schedule('0 * * * *', async () => {
+        console.log(`\n🧠 [${new Date().toISOString()}] Cron: Hourly AI Insights`);
+        try {
+            const result = await runHourlyGeneration(false);
+            console.log(`✅ Hourly: ${result.count} AI insights generated`);
+        } catch (error) {
+            console.error('❌ Hourly cron error:', error);
+        }
+    });
+
+    // ── News every 30 minutes ────────────────────────────────────────────────
+    cron.schedule('*/30 * * * *', async () => {
+        console.log(`\n📰 [${new Date().toISOString()}] Cron: Live news fetch`);
+        try {
+            const result = await runNewsFetch();
+            console.log(`✅ News: ${result.count} new articles`);
+        } catch (error) {
+            console.error('❌ News cron error:', error);
+        }
+    });
+
+    // ── Cleanup every Sunday at 2:00 AM UTC ─────────────────────────────────
+    cron.schedule('0 2 * * 0', async () => {
+        console.log(`\n🧹 [${new Date().toISOString()}] Cron: Weekly cleanup`);
+        try {
+            const result = await runCleanup();
+            console.log(`✅ Cleanup: deleted ${result.deletedCount} old notifications`);
+        } catch (error) {
+            console.error('❌ Cleanup cron error:', error);
+        }
+    });
+
+    console.log('  ✅ Daily generation  — 3:00 AM UTC (8:30 AM IST)');
+    console.log('  ✅ Hourly AI Insights — top of every hour');
+    console.log('  ✅ Live News          — every 30 minutes');
+    console.log('  ✅ Weekly Cleanup     — Sunday 2:00 AM UTC');
+    console.log('📅 Scheduler ready.\n');
 }

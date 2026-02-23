@@ -2,14 +2,14 @@ import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import './config/firebase';
-import { startNotificationScheduler } from './services/notificationScheduler';
+import { startNotificationScheduler, bootstrapNotificationsIfEmpty } from './services/notificationScheduler';
 
 dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-// Middleware
+// ── CORS ──────────────────────────────────────────────────────────────────────
 const allowedOrigins = [
     'http://localhost:5173',
     'http://localhost:3000',
@@ -19,9 +19,7 @@ const allowedOrigins = [
 
 app.use(cors({
     origin: function (origin, callback) {
-        // Allow requests with no origin (like mobile apps or curl requests)
         if (!origin) return callback(null, true);
-
         if (allowedOrigins.indexOf(origin) !== -1 || origin.endsWith('.vercel.app')) {
             callback(null, true);
         } else {
@@ -35,7 +33,7 @@ app.use(cors({
 }));
 app.use(express.json());
 
-// Routes
+// ── Routes ────────────────────────────────────────────────────────────────────
 import contentRoutes from './routes/content';
 import strictContentRoutes from './routes/strictContent';
 import adminRoutes from './routes/adminRoutes';
@@ -49,54 +47,54 @@ import careerPathsRoutes from './routes/careerPaths';
 import assessmentRoutes from './routes/assessmentRoutes';
 import recommendationRoutes from './routes/recommendationRoutes';
 
-
-app.get('/', (req, res) => {
-    res.send('Hello from Intelligence Career Backend!');
+app.get('/', (_req, res) => {
+    res.send('CareerGrowth Backend — Running ✅');
 });
 
-app.get('/api/health', (req, res) => {
-    res.json({ status: 'ok', timestamp: new Date().toISOString() });
+app.get('/api/health', (_req, res) => {
+    res.json({ status: 'ok', timestamp: new Date().toISOString(), env: process.env.NODE_ENV });
 });
 
-// Content generation routes
 app.use('/api/content', contentRoutes);
-
-// STRICT content routes (database-first)
 app.use('/api/strict-content', strictContentRoutes);
-
-// Admin routes
 app.use('/api/admin', adminRoutes);
-
-// Notification routes
 app.use('/api/notifications', notificationRoutes);
-
-// AI Mentor routes
 app.use('/api/ai-mentor', aiMentorRoutes);
-
-// Projects and Certifications routes
 app.use('/api/projects', projectsRoutes);
 app.use('/api/certifications', certificationsRoutes);
-
 app.use('/api/portfolio', portfolioRoutes);
 app.use('/api/analytics', analyticsRoutes);
-
-// Career Paths routes (AI-powered)
 app.use('/api/career-paths', careerPathsRoutes);
-
-// Assessment routes
 app.use('/api/assessment', assessmentRoutes);
 app.use('/api/recommendation', recommendationRoutes);
 
+// ── Server startup ────────────────────────────────────────────────────────────
+//
+// In LOCAL development: start Express server + node-cron scheduler.
+// In Vercel production:  export app only — Vercel calls routes as serverless
+//   functions. Vercel Cron Jobs (vercel.json) call GET /api/notifications/cron/*
+//   automatically on schedule.
+//
+// Database writes happen on every request, so Firestore is always the source
+// of truth. The frontend reads from Firestore in real-time via onSnapshot.
 
-// For Vercel, we need to export the app
-export default app;
-
-// Only start the server if not running in Vercel (local dev)
 if (process.env.NODE_ENV !== 'production') {
-    app.listen(PORT, () => {
-        console.log(`Server is running on port ${PORT}`);
+    app.listen(PORT, async () => {
+        console.log(`\n🚀 Server running on port ${PORT} (${process.env.NODE_ENV || 'development'})`);
+
+        // Seed today's notifications immediately on startup
+        await bootstrapNotificationsIfEmpty();
+
+        // Start cron scheduler for local dev
         startNotificationScheduler();
     });
 } else {
-    console.log('App initialized for Vercel environment');
+    // Production: bootstrap runs on each cold start (Vercel warm-up)
+    // This ensures the DB is seeded even if the cron missed a day.
+    console.log('🌐 CareerGrowth Backend initialized for Vercel');
+    bootstrapNotificationsIfEmpty().catch(err =>
+        console.error('Bootstrap error on Vercel cold start:', err)
+    );
 }
+
+export default app;

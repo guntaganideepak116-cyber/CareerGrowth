@@ -1,4 +1,4 @@
-import { Router, Request, Response } from 'express';
+import { Router, Request, Response, NextFunction } from 'express';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import { db } from '../config/firebase';
 import axios from 'axios';
@@ -6,7 +6,9 @@ import axios from 'axios';
 const router = Router();
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '');
 
-// All 22 fields
+// ============================================================
+// ALL 22 FIELDS
+// ============================================================
 const ALL_FIELDS = [
     { id: 'engineering', name: 'Engineering & Technology' },
     { id: 'medical', name: 'Medical & Health Sciences' },
@@ -32,8 +34,30 @@ const ALL_FIELDS = [
     { id: 'uiux-hci', name: 'UI/UX & Human–Computer Interaction' },
 ];
 
+// ============================================================
+// CRON SECRET MIDDLEWARE
+// ============================================================
+function verifyCronSecret(req: Request, res: Response, next: NextFunction): void {
+    const expectedSecret = process.env.CRON_SECRET;
+    // If no CRON_SECRET configured, allow all (for initial setup / local dev)
+    if (!expectedSecret) {
+        next();
+        return;
+    }
+    const authHeader = req.headers.authorization;
+    if (authHeader !== `Bearer ${expectedSecret}`) {
+        res.status(401).json({ error: 'Unauthorized: Invalid cron secret' });
+        return;
+    }
+    next();
+}
+
+// ============================================================
+// CORE GENERATION FUNCTIONS (standalone — callable from anywhere)
+// ============================================================
+
 /**
- * Generate notifications for a specific field using Gemini AI
+ * Generate AI notifications for a single field using Gemini
  */
 async function generateFieldNotifications(fieldId: string, fieldName: string, date: string): Promise<any[]> {
     try {
@@ -54,109 +78,87 @@ For each notification, provide:
 - actionText: Clear call-to-action (e.g., "Learn More", "Explore Now", "Take Action")
 - actionUrl: Relevant external link (real, working URLs only)
 
-Return ONLY valid JSON in this exact format:
+Return ONLY valid JSON array in this exact format:
 [
   {
     "title": "...",
     "message": "...",
-    "type": "trend/skill/opportunity",
-    "priority": "high/medium/low",
-    "category": "...",
-    "actionText": "...",
+    "type": "trend",
+    "priority": "high",
+    "category": "Industry Update",
+    "actionText": "Learn More",
     "actionUrl": "https://..."
   }
 ]
 
-Make notifications:
-- Specific to ${fieldName}
-- Current (based on 2026 industry trends)
-- Actionable and valuable
-- Professional and motivating
-- Unique content for each day`;
+Make notifications specific to ${fieldName}, current (2026 trends), actionable, and professional.`;
 
         const result = await model.generateContent(prompt);
         const response = result.response.text();
 
-        // Extract JSON from response
         const jsonMatch = response.match(/\[[\s\S]*\]/);
-        if (!jsonMatch) {
-            throw new Error('Invalid response format from AI');
-        }
+        if (!jsonMatch) throw new Error('Invalid AI response format');
 
         const notifications = JSON.parse(jsonMatch[0]);
-
-        // Add metadata with unique timestamps
-        // Base timestamp from server (UTC)
         const baseTimestamp = Date.now();
-
-
-        // Calculate IST Date
-        const istDate = new Date().toLocaleString("en-US", { timeZone: "Asia/Kolkata" });
-        const todayIST = new Date(istDate);
 
         return notifications.map((notif: any, index: number) => {
             const uniqueTimestamp = baseTimestamp + (index * 1000);
-
             return {
-                id: `${fieldId}-${uniqueTimestamp}-${index}`,
-                fieldId: fieldId, // Updated per spec
-                fieldName: fieldName,
-                title: notif.title,
-                message: notif.message,
-                category: notif.category || 'General',
-                createdAt: new Date(uniqueTimestamp).toISOString(), // ISO string, can be parsed as IST on frontend
-                dateKey: date, // YYYY-MM-DD
-                readBy: [], // Initialize empty array for read tracking
-
-                // Legacy/Extra fields if needed by existing UI logic, but prioritizing spec
+                id: `${fieldId}-${date}-${index}`,
+                fieldId,
+                fieldName,
+                title: notif.title || `${fieldName} Update`,
+                message: notif.message || 'Stay updated with the latest in your field',
+                category: notif.category || 'Industry Update',
                 type: notif.type || 'update',
                 priority: notif.priority || 'medium',
-                actionText: notif.actionText,
-                actionUrl: notif.actionUrl,
-                timestamp: uniqueTimestamp
+                actionText: notif.actionText || 'Learn More',
+                actionUrl: notif.actionUrl || '#',
+                source: 'AI',
+                isGlobal: true,
+                createdAt: new Date(uniqueTimestamp).toISOString(),
+                dateKey: date,
+                readBy: [],
+                timestamp: uniqueTimestamp,
             };
         });
+
     } catch (error) {
         console.error(`Error generating notifications for ${fieldName}:`, error);
-        // Return fallback notification
-        const timestamp = Date.now();
-        const createdAtUTC = new Date(timestamp).toISOString();
-
+        // Return a meaningful fallback so the field is never empty
+        const ts = Date.now();
         return [{
-            id: `${fieldId}-${timestamp}-fallback`,
-            fieldId: fieldId,
-            fieldName: fieldName,
-            title: `${fieldName} Daily Update`,
-            message: 'Stay updated with the latest trends and opportunities in your field',
+            id: `${fieldId}-${date}-fallback`,
+            fieldId,
+            fieldName,
+            title: `${fieldName}: Daily Career Update`,
+            message: `Stay ahead in ${fieldName} — explore the latest trends and opportunities.`,
             category: 'Industry Update',
-            createdAt: new Date(timestamp).toISOString(),
-            dateKey: date,
-            readBy: [],
-
             type: 'update',
             priority: 'medium',
             actionText: 'Explore',
-            actionUrl: '#',
-            timestamp: timestamp
+            actionUrl: 'https://www.linkedin.com/jobs',
+            source: 'AI',
+            isGlobal: true,
+            createdAt: new Date(ts).toISOString(),
+            dateKey: date,
+            readBy: [],
+            timestamp: ts,
         }];
     }
 }
 
 /**
- * Check if notifications already exist for a specific date
- */
-/**
  * Check if notifications already exist for a specific field and date
  */
 async function notificationsExistForFieldAndDate(fieldId: string, date: string): Promise<boolean> {
     try {
-        const notificationsRef = db.collection('notifications');
-        const snapshot = await notificationsRef
+        const snapshot = await db.collection('notifications')
             .where('dateKey', '==', date)
             .where('fieldId', '==', fieldId)
             .limit(1)
             .get();
-
         return !snapshot.empty;
     } catch (error) {
         console.error(`Error checking existing notifications for ${fieldId}:`, error);
@@ -164,220 +166,369 @@ async function notificationsExistForFieldAndDate(fieldId: string, date: string):
     }
 }
 
+// ============================================================
+// EXPORTED CORE RUNNERS (used by scheduler + cron endpoints)
+// ============================================================
+
 /**
- * POST /api/notifications/generate-daily
- * Generate notifications for all fields (called by cron job)
+ * Run daily notification generation for all 22 fields.
+ * Exported so it can be called on server startup.
  */
-router.post('/generate-daily', async (req: Request, res: Response) => {
-    try {
-        const { force } = req.query;
-        const today = new Date().toISOString().split('T')[0]; // YYYY-MM-DD format
-        console.log(`🔄 Starting daily notification generation for ${today}${force === 'true' ? ' (FORCED)' : ''}...`);
+export async function runDailyGeneration(force = false): Promise<{ count: number; fields: number; date: string; skipped: number }> {
+    const today = new Date().toISOString().split('T')[0];
+    console.log(`\n🔄 Daily notification generation started for ${today} [force=${force}]`);
 
-        const allNotifications: any[] = [];
-        let skippedCount = 0;
+    const allNotifications: any[] = [];
+    let skipped = 0;
 
-        // Generate notifications for each field
-        for (const field of ALL_FIELDS) {
-            // Check if notifications already exist for this field today (unless forced)
-            if (force !== 'true') {
-                const fieldExists = await notificationsExistForFieldAndDate(field.id, today);
-
-                if (fieldExists) {
-                    console.log(`ℹ️ Notifications for ${field.name} (${today}) already exist. Skipping.`);
-                    skippedCount++;
-                    continue;
-                }
+    for (const field of ALL_FIELDS) {
+        if (!force) {
+            const exists = await notificationsExistForFieldAndDate(field.id, today);
+            if (exists) {
+                console.log(`  ℹ️  Skipping ${field.name} — already generated today`);
+                skipped++;
+                continue;
             }
-
-            console.log(`📝 Generating notifications for ${field.name}...`);
-            const notifications = await generateFieldNotifications(field.id, field.name, today);
-            allNotifications.push(...notifications);
-
-            // Add small delay to avoid rate limiting
-            await new Promise(resolve => setTimeout(resolve, 1000));
         }
-
-        // Save to Firestore using batch
-        const batch = db.batch();
-        const notificationsRef = db.collection('notifications');
-
-        for (const notification of allNotifications) {
-            const docRef = notificationsRef.doc(notification.id);
-            batch.set(docRef, notification);
-        }
-
-        await batch.commit();
-
-        console.log(`✅ Generated ${allNotifications.length} notifications for ${ALL_FIELDS.length} fields`);
-
-        res.json({
-            success: true,
-            message: `Generated ${allNotifications.length} notifications for ${today}`,
-            count: allNotifications.length,
-            fields: ALL_FIELDS.length,
-            date: today,
-            timestamp: new Date().toISOString(),
-        });
-    } catch (error) {
-        console.error('Error generating daily notifications:', error);
-        res.status(500).json({
-            success: false,
-            error: error instanceof Error ? error.message : 'Failed to generate notifications',
-        });
+        console.log(`  📝 Generating for ${field.name}...`);
+        const notifications = await generateFieldNotifications(field.id, field.name, today);
+        allNotifications.push(...notifications);
+        // Throttle to avoid Gemini rate limits
+        await new Promise(r => setTimeout(r, 800));
     }
-});
 
-
-/**
- * POST /api/notifications/generate-hourly
- * Generate AI Insights hourly
- */
-router.post('/generate-hourly', async (req: Request, res: Response) => {
-    try {
-        const { force } = req.query;
-        const now = new Date();
-        const dateKey = now.toISOString().split('T')[0];
-
-        console.log(`🔄 Starting Hourly AI Insight generation...`);
-
-        // Check if generated recently (within last 50 mins) unless forced
-        if (force !== 'true') {
-            const fiftyMinsAgo = new Date(Date.now() - 50 * 60 * 1000).toISOString();
-            const recentCheck = await db.collection('notifications')
-                .where('category', '==', 'AI Insight')
-                .where('createdAt', '>=', fiftyMinsAgo)
-                .limit(1)
-                .get();
-
-            if (!recentCheck.empty) {
-                console.log('Skipping hourly generation: Already ran recently.');
-                return res.json({ success: true, message: 'Skipped: Recently generated' });
-            }
-        }
-
-        const updates: any[] = [];
-        const baseTimestamp = Date.now();
-
-        // Loop through all fields (limit to 5 random if too many, or all)
-        // For scalability, we'll do all but proceed sequentially
-        for (const field of ALL_FIELDS) {
-            try {
-                const model = genAI.getGenerativeModel({ model: 'gemini-2.0-flash-001' });
-                const prompt = `Generate 1 short, real-world "AI Insight" or "Future Trend" update for the field: ${field.name}.
-                Make it relevant to 2026.
-                Return JSON: { "title": "...", "message": "...", "actionUrl": "..." }`;
-
-                const result = await model.generateContent(prompt);
-                const text = result.response.text();
-                const jsonMatch = text.match(/\{[\s\S]*\}/);
-                if (!jsonMatch) continue;
-
-                const json = JSON.parse(jsonMatch[0]);
-
-                if (json.title) {
-                    updates.push({
-                        id: `ai-${field.id}-${baseTimestamp}`,
-                        fieldId: field.id,
-                        fieldName: field.name,
-                        title: json.title,
-                        message: json.message,
-                        category: 'AI Insight',
-                        source: 'AI Analysis',
-                        type: 'trend',
-                        priority: 'medium',
-                        actionText: 'Learn More',
-                        actionUrl: json.actionUrl || '#',
-                        createdAt: new Date().toISOString(),
-                        dateKey,
-                        readBy: [],
-                        timestamp: Date.now()
-                    });
-                }
-            } catch (e) {
-                console.error(`Failed to generate AI insight for ${field.name}`);
-            }
-            // Small delay
-            await new Promise(r => setTimeout(r, 200));
-        }
-
-        if (updates.length > 0) {
+    if (allNotifications.length > 0) {
+        // Save in Firestore batches (max 500 per batch)
+        const BATCH_SIZE = 400;
+        for (let i = 0; i < allNotifications.length; i += BATCH_SIZE) {
+            const chunk = allNotifications.slice(i, i + BATCH_SIZE);
             const batch = db.batch();
-            updates.forEach(u => batch.set(db.collection('notifications').doc(u.id), u));
+            chunk.forEach(n => batch.set(db.collection('notifications').doc(n.id), n));
             await batch.commit();
         }
-
-        console.log(`✅ Generated ${updates.length} AI insights.`);
-        res.json({ success: true, count: updates.length });
-    } catch (error) {
-        console.error('Hourly generation error:', error);
-        res.status(500).json({ error: (error as Error).message });
     }
-});
+
+    console.log(`✅ Daily generation complete: ${allNotifications.length} notifications saved, ${skipped} fields skipped`);
+    return { count: allNotifications.length, fields: ALL_FIELDS.length, date: today, skipped };
+}
 
 /**
- * POST /api/notifications/fetch-news
- * Fetch Live News every 10 mins
+ * Run hourly AI Insight generation (1 insight per field)
  */
-router.post('/fetch-news', async (req: Request, res: Response) => {
+export async function runHourlyGeneration(force = false): Promise<{ count: number }> {
+    const now = new Date();
+    const dateKey = now.toISOString().split('T')[0];
+
+    if (!force) {
+        const fiftyMinsAgo = new Date(Date.now() - 50 * 60 * 1000).toISOString();
+        const recentCheck = await db.collection('notifications')
+            .where('category', '==', 'AI Insight')
+            .where('createdAt', '>=', fiftyMinsAgo)
+            .limit(1)
+            .get();
+        if (!recentCheck.empty) {
+            console.log('⏭️  Skipping hourly AI insights — already generated recently');
+            return { count: 0 };
+        }
+    }
+
+    const updates: any[] = [];
+    const baseTimestamp = Date.now();
+
+    for (const field of ALL_FIELDS) {
+        try {
+            const model = genAI.getGenerativeModel({ model: 'gemini-2.0-flash-001' });
+            const prompt = `Generate 1 short AI Insight or Future Trend for the career field: ${field.name}. Make it relevant to 2026. Return ONLY JSON: { "title": "...", "message": "...", "actionUrl": "https://..." }`;
+
+            const result = await model.generateContent(prompt);
+            const text = result.response.text();
+            const jsonMatch = text.match(/\{[\s\S]*\}/);
+            if (!jsonMatch) continue;
+
+            const insight = JSON.parse(jsonMatch[0]);
+            if (!insight.title) continue;
+
+            const ts = baseTimestamp + updates.length * 500;
+            updates.push({
+                id: `ai-insight-${field.id}-${ts}`,
+                fieldId: field.id,
+                fieldName: field.name,
+                title: insight.title,
+                message: insight.message || '',
+                category: 'AI Insight',
+                source: 'AI Analysis',
+                type: 'trend',
+                priority: 'medium',
+                actionText: 'Learn More',
+                actionUrl: insight.actionUrl || '#',
+                isGlobal: true,
+                createdAt: new Date(ts).toISOString(),
+                dateKey,
+                readBy: [],
+                timestamp: ts,
+            });
+        } catch {
+            console.error(`Failed AI insight for ${field.name}`);
+        }
+        await new Promise(r => setTimeout(r, 200));
+    }
+
+    if (updates.length > 0) {
+        const batch = db.batch();
+        updates.forEach(u => batch.set(db.collection('notifications').doc(u.id), u));
+        await batch.commit();
+    }
+
+    console.log(`✅ Hourly AI insights: ${updates.length} generated`);
+    return { count: updates.length };
+}
+
+/**
+ * Fetch live news from Google News RSS (every 30 min)
+ */
+export async function runNewsFetch(): Promise<{ count: number }> {
     try {
-        console.log('📰 Fetching Live News...');
-        const RSS_URL = 'https://news.google.com/rss/search?q=career+technology+future+skills&hl=en-IN&gl=IN&ceid=IN:en';
+        const RSS_URL = 'https://news.google.com/rss/search?q=career+technology+future+skills+2026&hl=en-IN&gl=IN&ceid=IN:en';
+        const response = await axios.get(RSS_URL, { timeout: 10000 });
+        const xml = response.data as string;
 
-        const response = await axios.get(RSS_URL);
-        const xml = response.data;
-
-        // Regex parse XML
         const itemRegex = /<item>[\s\S]*?<\/item>/g;
         const items = xml.match(itemRegex) || [];
+        const validItems = items.slice(0, 8);
 
-        const newNotifications: any[] = [];
-        const validItems = items.slice(0, 5);
+        const newNotifs: any[] = [];
 
         for (const itemStr of validItems) {
-            const titleMatch = itemStr.match(/<title>(.*?)<\/title>/);
+            const titleMatch = itemStr.match(/<title><!\[CDATA\[(.*?)\]\]><\/title>/) ||
+                itemStr.match(/<title>(.*?)<\/title>/);
             const linkMatch = itemStr.match(/<link>(.*?)<\/link>/);
 
-            const title = titleMatch ? titleMatch[1].replace('<![CDATA[', '').replace(']]>', '') : '';
-            const link = linkMatch ? linkMatch[1] : '';
+            const title = titleMatch?.[1]?.trim() || '';
+            const link = linkMatch?.[1]?.trim() || '';
 
-            if (!title) continue;
+            if (!title || title.length < 5) continue;
 
-            const exists = await db.collection('notifications').where('title', '==', title).limit(1).get();
-            if (!exists.empty) continue;
+            // Dedup check
+            const existing = await db.collection('notifications')
+                .where('title', '==', title)
+                .limit(1)
+                .get();
+            if (!existing.empty) continue;
 
-            newNotifications.push({
-                id: `news-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
+            const ts = Date.now() + newNotifs.length * 100;
+            newNotifs.push({
+                id: `news-${ts}-${Math.random().toString(36).slice(2, 8)}`,
                 fieldId: 'general',
                 fieldName: 'Global News',
-                title: title,
-                message: 'Latest update from Google News',
+                title: title.slice(0, 100),
+                message: 'Latest career & tech update from Google News',
                 category: 'Live News',
                 source: 'Google News',
                 type: 'update',
                 priority: 'medium',
                 actionText: 'Read Article',
-                actionUrl: link,
-                createdAt: new Date().toISOString(),
-                dateKey: new Date().toISOString().split('T')[0],
+                actionUrl: link || '#',
+                isGlobal: true,
+                createdAt: new Date(ts).toISOString(),
+                dateKey: new Date(ts).toISOString().split('T')[0],
                 readBy: [],
-                timestamp: Date.now()
+                timestamp: ts,
             });
         }
 
-        if (newNotifications.length > 0) {
+        if (newNotifs.length > 0) {
             const batch = db.batch();
-            // Use set with merge true just in case ID collision (unlikely)
-            newNotifications.forEach(n => batch.set(db.collection('notifications').doc(n.id), n));
+            newNotifs.forEach(n => batch.set(db.collection('notifications').doc(n.id), n));
             await batch.commit();
         }
 
-        console.log(`✅ Fetched ${newNotifications.length} news items.`);
-        res.json({ success: true, count: newNotifications.length });
-
+        console.log(`✅ News fetch: ${newNotifs.length} new articles`);
+        return { count: newNotifs.length };
     } catch (error) {
         console.error('News fetch error:', error);
-        res.status(500).json({ error: (error as Error).message });
+        return { count: 0 };
+    }
+}
+
+/**
+ * Clean up notifications older than 30 days
+ */
+export async function runCleanup(): Promise<{ deletedCount: number }> {
+    const thirtyDaysAgo = new Date();
+    thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+    const cutoffDate = thirtyDaysAgo.toISOString().split('T')[0];
+
+    // Use dateKey field (the correct field name stored by generateFieldNotifications)
+    const snapshot = await db.collection('notifications')
+        .where('dateKey', '<', cutoffDate)
+        .get();
+
+    if (snapshot.empty) {
+        console.log('🧹 No old notifications to clean up');
+        return { deletedCount: 0 };
+    }
+
+    const BATCH_SIZE = 400;
+    let deletedCount = 0;
+    const docs = snapshot.docs;
+
+    for (let i = 0; i < docs.length; i += BATCH_SIZE) {
+        const chunk = docs.slice(i, i + BATCH_SIZE);
+        const batch = db.batch();
+        chunk.forEach(doc => batch.delete(doc.ref));
+        await batch.commit();
+        deletedCount += chunk.length;
+    }
+
+    console.log(`🧹 Cleanup: deleted ${deletedCount} notifications older than ${cutoffDate}`);
+    return { deletedCount };
+}
+
+// ============================================================
+// VERCEL CRON ENDPOINTS — GET requests, protected by CRON_SECRET
+// These are called automatically by Vercel's scheduler
+// ============================================================
+
+/**
+ * GET /api/notifications/cron/daily
+ * Vercel Cron: runs daily at 3:00 AM UTC (8:30 AM IST)
+ */
+router.get('/cron/daily', verifyCronSecret, async (req: Request, res: Response) => {
+    try {
+        const force = req.query.force === 'true';
+        const result = await runDailyGeneration(force);
+        res.json({ success: true, ...result, triggeredBy: 'vercel-cron' });
+    } catch (error) {
+        console.error('Cron daily error:', error);
+        res.status(500).json({ success: false, error: (error as Error).message });
+    }
+});
+
+/**
+ * GET /api/notifications/cron/hourly
+ * Vercel Cron: runs every hour
+ */
+router.get('/cron/hourly', verifyCronSecret, async (req: Request, res: Response) => {
+    try {
+        const force = req.query.force === 'true';
+        const result = await runHourlyGeneration(force);
+        res.json({ success: true, ...result, triggeredBy: 'vercel-cron' });
+    } catch (error) {
+        console.error('Cron hourly error:', error);
+        res.status(500).json({ success: false, error: (error as Error).message });
+    }
+});
+
+/**
+ * GET /api/notifications/cron/news
+ * Vercel Cron: runs every 30 minutes
+ */
+router.get('/cron/news', verifyCronSecret, async (req: Request, res: Response) => {
+    try {
+        const result = await runNewsFetch();
+        res.json({ success: true, ...result, triggeredBy: 'vercel-cron' });
+    } catch (error) {
+        console.error('Cron news error:', error);
+        res.status(500).json({ success: false, error: (error as Error).message });
+    }
+});
+
+/**
+ * GET /api/notifications/cron/cleanup
+ * Vercel Cron: runs every Sunday at 2:00 AM
+ */
+router.get('/cron/cleanup', verifyCronSecret, async (req: Request, res: Response) => {
+    try {
+        const result = await runCleanup();
+        res.json({ success: true, ...result, triggeredBy: 'vercel-cron' });
+    } catch (error) {
+        console.error('Cron cleanup error:', error);
+        res.status(500).json({ success: false, error: (error as Error).message });
+    }
+});
+
+// ============================================================
+// MANUAL TRIGGER ENDPOINTS — POST, for admin dashboard use
+// ============================================================
+
+/**
+ * POST /api/notifications/generate-daily
+ * Manual trigger: generates for all 22 fields
+ */
+router.post('/generate-daily', async (req: Request, res: Response) => {
+    try {
+        const force = req.query.force === 'true';
+        const result = await runDailyGeneration(force);
+        res.json({
+            success: true,
+            message: `Generated ${result.count} notifications`,
+            ...result,
+            triggeredBy: 'manual',
+        });
+    } catch (error) {
+        console.error('Manual daily generation error:', error);
+        res.status(500).json({ success: false, error: (error as Error).message });
+    }
+});
+
+/**
+ * POST /api/notifications/generate-hourly
+ * Manual trigger: hourly AI insights
+ */
+router.post('/generate-hourly', async (req: Request, res: Response) => {
+    try {
+        const force = req.query.force === 'true';
+        const result = await runHourlyGeneration(force);
+        res.json({ success: true, ...result, triggeredBy: 'manual' });
+    } catch (error) {
+        console.error('Manual hourly generation error:', error);
+        res.status(500).json({ success: false, error: (error as Error).message });
+    }
+});
+
+/**
+ * POST /api/notifications/fetch-news
+ * Manual trigger: news fetch
+ */
+router.post('/fetch-news', async (req: Request, res: Response) => {
+    try {
+        const result = await runNewsFetch();
+        res.json({ success: true, ...result, triggeredBy: 'manual' });
+    } catch (error) {
+        console.error('Manual news fetch error:', error);
+        res.status(500).json({ success: false, error: (error as Error).message });
+    }
+});
+
+// ============================================================
+// FETCH ENDPOINTS
+// ============================================================
+
+/**
+ * GET /api/notifications/all
+ * Get latest notifications across all fields (limit 50)
+ */
+router.get('/all', async (req: Request, res: Response) => {
+    try {
+        const limitVal = Math.min(Number(req.query.limit) || 50, 100);
+        const fieldId = req.query.fieldId as string | undefined;
+
+        let query = db.collection('notifications').orderBy('timestamp', 'desc').limit(limitVal);
+
+        const snapshot = await (fieldId
+            ? db.collection('notifications')
+                .where('fieldId', 'in', [fieldId, 'general'])
+                .orderBy('timestamp', 'desc')
+                .limit(limitVal)
+                .get()
+            : query.get()
+        );
+
+        const notifications = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        res.json({ success: true, notifications, count: notifications.length });
+    } catch (error) {
+        console.error('Error fetching all notifications:', error);
+        res.status(500).json({ success: false, error: (error as Error).message });
     }
 });
 
@@ -388,135 +539,48 @@ router.post('/fetch-news', async (req: Request, res: Response) => {
 router.get('/field/:fieldId', async (req: Request, res: Response) => {
     try {
         const { fieldId } = req.params;
-        const { limit = 20 } = req.query;
+        const limitVal = Math.min(Number(req.query.limit) || 20, 50);
 
-        const notificationsRef = db.collection('notifications');
-        const snapshot = await notificationsRef
-            .where('fieldId', '==', fieldId)
+        const snapshot = await db.collection('notifications')
+            .where('fieldId', 'in', [fieldId, 'general'])
             .orderBy('timestamp', 'desc')
-            .limit(Number(limit))
+            .limit(limitVal)
             .get();
 
-        const notifications = snapshot.docs.map(doc => ({
-            id: doc.id,
-            ...doc.data(),
-        }));
-
-        res.json({
-            success: true,
-            notifications,
-            count: notifications.length,
-        });
+        const notifications = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        res.json({ success: true, notifications, count: notifications.length });
     } catch (error) {
-        console.error('Error fetching notifications:', error);
-        res.status(500).json({
-            success: false,
-            error: error instanceof Error ? error.message : 'Failed to fetch notifications',
-        });
-    }
-});
-
-/**
- * GET /api/notifications/all
- * Get all recent notifications across all fields
- */
-router.get('/all', async (req: Request, res: Response) => {
-    try {
-        const { limit = 50 } = req.query;
-
-        const notificationsRef = db.collection('notifications');
-        const snapshot = await notificationsRef
-            .orderBy('timestamp', 'desc')
-            .limit(Number(limit))
-            .get();
-
-        const notifications = snapshot.docs.map(doc => ({
-            id: doc.id,
-            ...doc.data(),
-        }));
-
-        res.json({
-            success: true,
-            notifications,
-            count: notifications.length,
-        });
-    } catch (error) {
-        console.error('Error fetching notifications:', error);
-        res.status(500).json({
-            success: false,
-            error: error instanceof Error ? error.message : 'Failed to fetch notifications',
-        });
-    }
-});
-
-/**
- * DELETE /api/notifications/old
- * Clean up notifications older than 30 days
- */
-router.delete('/old', async (req: Request, res: Response) => {
-    try {
-        const thirtyDaysAgo = new Date();
-        thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
-        const cutoffDate = thirtyDaysAgo.toISOString().split('T')[0];
-
-        const notificationsRef = db.collection('notifications');
-        const snapshot = await notificationsRef
-            .where('generated_date', '<', cutoffDate)
-            .get();
-
-        const batch = db.batch();
-        snapshot.docs.forEach(doc => {
-            batch.delete(doc.ref);
-        });
-
-        await batch.commit();
-
-        const deletedCount = snapshot.size;
-
-        console.log(`🧹 Cleaned up ${deletedCount} notifications older than ${cutoffDate}`);
-
-        res.json({
-            success: true,
-            message: `Deleted ${deletedCount} old notifications`,
-            deletedCount,
-            cutoffDate,
-        });
-    } catch (error) {
-        console.error('Error deleting old notifications:', error);
-        res.status(500).json({
-            success: false,
-            error: error instanceof Error ? error.message : 'Failed to delete old notifications',
-        });
+        console.error('Error fetching field notifications:', error);
+        res.status(500).json({ success: false, error: (error as Error).message });
     }
 });
 
 /**
  * GET /api/notifications/stats
- * Get notification statistics
+ * Get notification statistics (uses dateKey — the correct field)
  */
 router.get('/stats', async (req: Request, res: Response) => {
     try {
-        const notificationsRef = db.collection('notifications');
-
-        // Get total count
-        const totalSnapshot = await notificationsRef.get();
+        const totalSnapshot = await db.collection('notifications').get();
         const totalCount = totalSnapshot.size;
 
-        // Get recent (last 7 days)
         const sevenDaysAgo = new Date();
         sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
         const cutoffDate = sevenDaysAgo.toISOString().split('T')[0];
 
-        const recentSnapshot = await notificationsRef
-            .where('generated_date', '>=', cutoffDate)
+        const recentSnapshot = await db.collection('notifications')
+            .where('dateKey', '>=', cutoffDate)
             .get();
 
-        // Group by date
         const byDate: Record<string, number> = {};
+        const byField: Record<string, number> = {};
+
         recentSnapshot.docs.forEach(doc => {
             const data = doc.data();
-            const date = data.generated_date || '';
+            const date = data.dateKey || '';
+            const field = data.fieldId || 'unknown';
             byDate[date] = (byDate[date] || 0) + 1;
+            byField[field] = (byField[field] || 0) + 1;
         });
 
         res.json({
@@ -525,20 +589,23 @@ router.get('/stats', async (req: Request, res: Response) => {
                 total: totalCount,
                 last7Days: recentSnapshot.size,
                 byDate,
+                byField,
+                fieldsCount: ALL_FIELDS.length,
             },
         });
     } catch (error) {
-        console.error('Error fetching notification stats:', error);
-        res.status(500).json({
-            success: false,
-            error: error instanceof Error ? error.message : 'Failed to fetch stats',
-        });
+        console.error('Error fetching stats:', error);
+        res.status(500).json({ success: false, error: (error as Error).message });
     }
 });
 
+// ============================================================
+// READ MANAGEMENT
+// ============================================================
+
 /**
- * PUT /read/:id
- * Mark notification as read by user
+ * PUT /api/notifications/read/:id
+ * Mark a single notification as read by user
  */
 router.put('/read/:id', async (req: Request, res: Response) => {
     try {
@@ -546,72 +613,78 @@ router.put('/read/:id', async (req: Request, res: Response) => {
         const { userId } = req.body;
 
         if (!userId) {
-            return res.status(400).json({ success: false, error: 'User ID is required' });
+            return res.status(400).json({ success: false, error: 'userId is required' });
         }
 
-        const notificationRef = db.collection('notifications').doc(id);
-        const doc = await notificationRef.get();
+        const docRef = db.collection('notifications').doc(id);
+        const docSnap = await docRef.get();
 
-        if (!doc.exists) {
+        if (!docSnap.exists) {
             return res.status(404).json({ success: false, error: 'Notification not found' });
         }
 
-        const data = doc.data();
-        const readBy = data?.readBy || [];
-
+        const readBy: string[] = docSnap.data()?.readBy || [];
         if (!readBy.includes(userId)) {
-            await notificationRef.update({
-                readBy: [...readBy, userId]
-            });
+            await docRef.update({ readBy: [...readBy, userId] });
         }
 
-        res.json({ success: true, message: 'Notification marked as read' });
+        res.json({ success: true, message: 'Marked as read' });
     } catch (error) {
-        console.error('Error marking notification as read:', error);
-        res.status(500).json({
-            success: false,
-            error: error instanceof Error ? error.message : 'Failed to update notification',
-        });
+        console.error('Error marking as read:', error);
+        res.status(500).json({ success: false, error: (error as Error).message });
     }
 });
 
+/**
+ * PUT /api/notifications/read-all
+ * Mark all notifications as read for a user
+ */
+router.put('/read-all', async (req: Request, res: Response) => {
+    try {
+        const { userId, notificationIds } = req.body;
+
+        if (!userId || !Array.isArray(notificationIds)) {
+            return res.status(400).json({ success: false, error: 'userId and notificationIds[] required' });
+        }
+
+        const BATCH_SIZE = 400;
+        let updatedCount = 0;
+
+        for (let i = 0; i < notificationIds.length; i += BATCH_SIZE) {
+            const chunk = notificationIds.slice(i, i + BATCH_SIZE);
+            const batch = db.batch();
+            chunk.forEach((nId: string) => {
+                const ref = db.collection('notifications').doc(nId);
+                batch.update(ref, {
+                    readBy: require('firebase-admin').firestore.FieldValue.arrayUnion(userId)
+                });
+            });
+            await batch.commit();
+            updatedCount += chunk.length;
+        }
+
+        res.json({ success: true, updatedCount });
+    } catch (error) {
+        console.error('Error marking all as read:', error);
+        res.status(500).json({ success: false, error: (error as Error).message });
+    }
+});
+
+// ============================================================
+// CLEANUP
+// ============================================================
 
 /**
- * PUT /read/:id
- * Mark notification as read by user
+ * DELETE /api/notifications/old
+ * Clean up notifications older than 30 days (uses dateKey — fixed)
  */
-router.put('/read/:id', async (req: Request, res: Response) => {
+router.delete('/old', async (req: Request, res: Response) => {
     try {
-        const { id } = req.params;
-        const { userId } = req.body;
-
-        if (!userId) {
-            return res.status(400).json({ success: false, error: 'User ID is required' });
-        }
-
-        const notificationRef = db.collection('notifications').doc(id);
-        const doc = await notificationRef.get();
-
-        if (!doc.exists) {
-            return res.status(404).json({ success: false, error: 'Notification not found' });
-        }
-
-        const data = doc.data();
-        const readBy = data?.readBy || [];
-
-        if (!readBy.includes(userId)) {
-            await notificationRef.update({
-                readBy: [...readBy, userId]
-            });
-        }
-
-        res.json({ success: true, message: 'Notification marked as read' });
+        const result = await runCleanup();
+        res.json({ success: true, ...result });
     } catch (error) {
-        console.error('Error marking notification as read:', error);
-        res.status(500).json({
-            success: false,
-            error: error instanceof Error ? error.message : 'Failed to update notification',
-        });
+        console.error('Error cleaning old notifications:', error);
+        res.status(500).json({ success: false, error: (error as Error).message });
     }
 });
 
