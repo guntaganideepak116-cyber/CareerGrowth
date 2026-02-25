@@ -200,15 +200,15 @@ export default function Roadmap() {
         {/* ── Mode Banner (prominent, always visible when data loaded) ── */}
         {selectedField && selectedSpecialization && (
           <div className={`relative overflow-hidden rounded-2xl border-2 p-5 transition-all duration-500 ${isAIMode
-              ? 'bg-gradient-to-r from-violet-500/10 via-primary/10 to-cyan-500/10 border-primary/40 shadow-lg shadow-primary/10'
-              : 'bg-muted/40 border-border shadow-none'
+            ? 'bg-gradient-to-r from-violet-500/10 via-primary/10 to-cyan-500/10 border-primary/40 shadow-lg shadow-primary/10'
+            : 'bg-muted/40 border-border shadow-none'
             }`}>
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
               {/* Left: mode label */}
               <div className="flex items-center gap-3">
                 <div className={`w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 ${isAIMode
-                    ? 'bg-gradient-to-br from-violet-500 to-primary text-white shadow-md shadow-primary/30'
-                    : 'bg-muted text-muted-foreground'
+                  ? 'bg-gradient-to-br from-violet-500 to-primary text-white shadow-md shadow-primary/30'
+                  : 'bg-muted text-muted-foreground'
                   }`}>
                   {isAIMode ? <Brain className="w-6 h-6" /> : <BookOpen className="w-6 h-6" />}
                 </div>
@@ -266,8 +266,8 @@ export default function Roadmap() {
                   size="sm"
                   onClick={toggleMode}
                   className={`gap-1.5 text-xs font-semibold ${isAIMode
-                      ? 'border-muted hover:bg-muted'
-                      : 'bg-gradient-to-r from-violet-500 to-primary text-white border-0 hover:opacity-90 shadow-md shadow-primary/20'
+                    ? 'border-muted hover:bg-muted'
+                    : 'bg-gradient-to-r from-violet-500 to-primary text-white border-0 hover:opacity-90 shadow-md shadow-primary/20'
                     }`}
                 >
                   {isAIMode ? (
@@ -301,8 +301,8 @@ export default function Roadmap() {
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 animate-fade-in">
           <div>
             <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium mb-4 ${isAIMode
-                ? 'bg-gradient-to-r from-violet-500/20 to-primary/20 text-primary'
-                : 'bg-muted text-muted-foreground'
+              ? 'bg-gradient-to-r from-violet-500/20 to-primary/20 text-primary'
+              : 'bg-muted text-muted-foreground'
               }`}>
               {isAIMode ? <Sparkles className="w-4 h-4" /> : <BookOpen className="w-4 h-4" />}
               {isAIMode ? 'AI-Powered Roadmap' : 'Static Roadmap'}
@@ -451,8 +451,8 @@ export default function Roadmap() {
 
             {/* Progress Overview */}
             <div className={`rounded-xl border p-6 animate-slide-up transition-all duration-500 ${isAIMode
-                ? 'bg-gradient-to-r from-violet-500/5 via-primary/5 to-cyan-500/5 border-primary/20'
-                : 'bg-card border-border'
+              ? 'bg-gradient-to-r from-violet-500/5 via-primary/5 to-cyan-500/5 border-primary/20'
+              : 'bg-card border-border'
               }`}>
               <div className="flex items-center justify-between mb-4">
                 <h2 className="font-semibold text-foreground flex items-center gap-2">
@@ -470,10 +470,10 @@ export default function Roadmap() {
                   <div
                     key={phase.id}
                     className={`flex-1 h-3 rounded-full transition-all duration-300 ${completedPhases.includes(phase.id)
-                        ? 'bg-emerald-500'
-                        : phase.id === currentPhase
-                          ? isAIMode ? 'bg-primary' : 'bg-muted-foreground'
-                          : 'bg-muted'
+                      ? 'bg-emerald-500'
+                      : phase.id === currentPhase
+                        ? isAIMode ? 'bg-primary' : 'bg-muted-foreground'
+                        : 'bg-muted'
                       }`}
                   />
                 ))}
@@ -486,8 +486,8 @@ export default function Roadmap() {
 
             {/* Phase Cards — wrapped with mode-specific border accent */}
             <div className={`relative space-y-4 ${isAIMode
-                ? 'before:absolute before:-left-3 before:top-0 before:bottom-0 before:w-0.5 before:bg-gradient-to-b before:from-violet-500 before:via-primary before:to-cyan-500 before:rounded-full'
-                : ''
+              ? 'before:absolute before:-left-3 before:top-0 before:bottom-0 before:w-0.5 before:bg-gradient-to-b before:from-violet-500 before:via-primary before:to-cyan-500 before:rounded-full'
+              : ''
               }`}>
               {phases.map((phase, index) => {
                 const isCompleted = completedPhases.includes(phase.id);
@@ -495,30 +495,25 @@ export default function Roadmap() {
                 const isLocked = !isCompleted && phase.id > currentPhase;
 
                 return (
-                  <div
+                  <RoadmapPhaseCard
                     key={phase.id}
-                    className={`animate-slide-up transition-all duration-300 ${isStaticMode ? 'opacity-90' : ''
-                      }`}
-                    style={{ animationDelay: `${index * 0.05}s` }}
-                  >
-                    <RoadmapPhaseCard
-                      phase={phase}
-                      isCompleted={isCompleted}
-                      isCurrent={isCurrent}
-                      isLocked={isLocked}
-                      isExpanded={expandedPhase === phase.id}
-                      onToggle={() => setExpandedPhase(expandedPhase === phase.id ? null : phase.id)}
-                      onMarkComplete={() => handleMarkComplete(phase.id)}
-                    />
-                  </div>
+                    phase={phase}
+                    isCompleted={isCompleted}
+                    isCurrent={isCurrent}
+                    isLocked={isLocked}
+                    isExpanded={expandedPhase === phase.id}
+                    onToggle={() => setExpandedPhase(expandedPhase === phase.id ? null : phase.id)}
+                    onMarkComplete={() => handleMarkComplete(phase.id)}
+                    index={index}
+                  />
                 );
               })}
             </div>
 
             {/* Bottom CTA — push to switch mode */}
             <div className={`rounded-xl border p-4 flex items-center justify-between gap-4 ${isAIMode
-                ? 'bg-muted/30 border-border'
-                : 'bg-gradient-to-r from-violet-500/10 to-primary/10 border-primary/30'
+              ? 'bg-muted/30 border-border'
+              : 'bg-gradient-to-r from-violet-500/10 to-primary/10 border-primary/30'
               }`}>
               {isAIMode ? (
                 <>
