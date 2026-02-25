@@ -24,6 +24,7 @@ export class UsageTracker {
     }
 
     private static async updateCounter(field: keyof Omit<DailyUsage, 'last_updated'>, amount: number = 1) {
+        if (!db) return;
         const docId = this.getDocId();
         const docRef = db.collection('admin_metrics').doc(docId);
 
@@ -50,6 +51,7 @@ export class UsageTracker {
     }
 
     static async getDailyStats() {
+        if (!db) return { firestore_reads: 0, firestore_writes: 0, gemini_requests: 0 };
         const docId = this.getDocId();
         const doc = await db.collection('admin_metrics').doc(docId).get();
         if (doc.exists) {
@@ -75,6 +77,7 @@ export class UsageTracker {
 
         // Parallel fetch for all days
         const promises = dates.map(async (dateStr) => {
+            if (!db) return { date: dateStr, firestore_reads: 0, firestore_writes: 0, gemini_requests: 0 };
             const docId = `usage_${dateStr}`;
             const doc = await db.collection('admin_metrics').doc(docId).get();
 

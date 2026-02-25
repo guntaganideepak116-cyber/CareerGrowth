@@ -1,5 +1,6 @@
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import { db } from '../config/firebase';
+import * as admin from 'firebase-admin';
 
 // Initialize Gemini
 const GEMINI_KEY = process.env.GEMINI_API_KEY || '';
@@ -34,8 +35,13 @@ function cleanAIResponse(rawText: string): string {
 // ============================================
 async function getCachedContent(cacheKey: string): Promise<any | null> {
     try {
+        if (!db) return null;
         const { UsageTracker } = await import('./usageTracker');
-        await UsageTracker.logFirestoreRead(1);
+        try {
+            await UsageTracker.logFirestoreRead(1);
+        } catch (e) {
+            // Metrics failure shouldn't stop the app
+        }
 
         const doc = await db.collection('ai_generated_content').doc(cacheKey).get();
         if (doc.exists) {
@@ -53,8 +59,13 @@ async function getCachedContent(cacheKey: string): Promise<any | null> {
 
 async function setCachedContent(cacheKey: string, content: any): Promise<void> {
     try {
+        if (!db) return;
         const { UsageTracker } = await import('./usageTracker');
-        await UsageTracker.logFirestoreWrite(1);
+        try {
+            await UsageTracker.logFirestoreWrite(1);
+        } catch (e) {
+            // Metrics failure shouldn't stop the app
+        }
 
         await db.collection('ai_generated_content').doc(cacheKey).set({
             content,
@@ -269,8 +280,12 @@ export async function generateDynamicContent(
         }
 
         // Generate content
-        const { UsageTracker } = await import('./usageTracker');
-        await UsageTracker.logGeminiRequest();
+        try {
+            const { UsageTracker } = await import('./usageTracker');
+            await UsageTracker.logGeminiRequest();
+        } catch (e) {
+            console.warn('[dynamicContentService] Usage tracking failed, proceeding...');
+        }
 
         const result = await model.generateContent(prompt);
 
@@ -345,7 +360,7 @@ export async function clearCache(cacheKey?: string): Promise<void> {
             // Clear all cache
             const snapshot = await db.collection('ai_generated_content').get();
             const batch = db.batch();
-            snapshot.docs.forEach(doc => batch.delete(doc.ref));
+            snapshot.docs.forEach((doc: admin.firestore.QueryDocumentSnapshot) => batch.delete(doc.ref));
             await batch.commit();
             console.log(`🗑️ Cleared all cache`);
         }

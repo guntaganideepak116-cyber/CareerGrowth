@@ -47,5 +47,23 @@ const initializeFirebase = () => {
 // Run initialization immediately
 initializeFirebase();
 
-export const db = admin.firestore();
-export const auth = admin.auth();
+// Export services with crash protection
+export const db = (() => {
+    try {
+        if (!admin.apps.length) return null as any;
+        return admin.firestore();
+    } catch (e) {
+        console.warn('Firestore service initialization skipped (no app)');
+        return null as any;
+    }
+})();
+
+export const auth = (() => {
+    try {
+        if (!admin.apps.length) return null as any;
+        return admin.auth();
+    } catch (e) {
+        console.warn('Auth service initialization skipped (no app)');
+        return null as any;
+    }
+})();
