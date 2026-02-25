@@ -1,5 +1,6 @@
 import { useState, useEffect, useMemo, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useQueryClient } from '@tanstack/react-query';
 import { DashboardLayout } from '@/components/dashboard/DashboardLayout';
 import { useAuthContext } from '@/contexts/AuthContext';
 import { useRoadmapProgress } from '@/hooks/useRoadmapProgress';
@@ -35,6 +36,7 @@ type RoadmapMode = 'STATIC' | 'AI';
 export default function Roadmap() {
   const { user, profile, loading: authLoading } = useAuthContext();
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
   // Field and specialization selection
   const [selectedField, setSelectedField] = useState<string>('');
@@ -171,6 +173,8 @@ export default function Roadmap() {
       await resetProgress();
       setExpandedPhase(1);
       setRoadmapMode('STATIC');
+      // Clear stale AI cache so it won't flash errors on next AI activation
+      queryClient.resetQueries({ queryKey: ['dynamic_roadmap'] });
       toast.success('Roadmap progress has been reset');
     } catch (error) {
       toast.error('Failed to reset progress');
@@ -192,6 +196,8 @@ export default function Roadmap() {
     if (roadmapMode === 'AI') {
       // Switch to STATIC — predefined data, no AI
       setRoadmapMode('STATIC');
+      // Clear any AI error/data from cache so it won't show next time
+      queryClient.resetQueries({ queryKey: ['dynamic_roadmap'] });
       toast.info('Switched to Static roadmap (predefined, no AI)');
     } else {
       // Switch to AI — trigger generation
@@ -199,7 +205,7 @@ export default function Roadmap() {
       refetchDynamic();
       toast.info('Switched to AI-generated roadmap');
     }
-  }, [roadmapMode, refetchDynamic]);
+  }, [roadmapMode, refetchDynamic, queryClient]);
 
   // ── Export ───────────────────────────────────────────────────
   const handleExport = () => {

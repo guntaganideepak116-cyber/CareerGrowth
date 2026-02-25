@@ -54,7 +54,21 @@ const SystemSettings = lazy(() => import("./pages/admin/SystemSettings"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      // Serve cached data for 5 minutes before re-fetching
+      staleTime: 1000 * 60 * 5,
+      // Keep data in memory for 30 minutes after a component unmounts
+      gcTime: 1000 * 60 * 30,
+      // Only retry once on failure (not 3x which adds latency)
+      retry: 1,
+      // On reconnect, only re-fetch if data is actually stale
+      refetchOnWindowFocus: false,
+      refetchOnReconnect: 'always',
+    },
+  },
+});
 
 const LoadingFallback = () => (
   <div className="min-h-screen w-full flex items-center justify-center bg-background">
@@ -66,15 +80,9 @@ const LoadingFallback = () => (
 );
 
 const AppContent = () => {
-  const { config, loading: systemLoading } = useSystem();
-
-  if (systemLoading) {
-    return (
-      <div className="min-h-screen w-full flex items-center justify-center bg-background">
-        <Loader2 className="w-8 h-8 animate-spin text-primary" />
-      </div>
-    );
-  }
+  // We read config but do NOT block rendering on it.
+  // The defaultStatus is applied immediately; Firestore updates silently in background.
+  const { config } = useSystem();
 
   return (
     <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
