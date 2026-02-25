@@ -94,7 +94,7 @@ Student Context:
 - Career Goal: ${userProfile?.careerGoal || 'Not specified'}
 
 STRICT Requirements:
-1. Generate exactly 5 phases (Beginner to Advanced) SPECIFIC to ${specializationId}
+1. Generate exactly 3 phases (Beginner to Advanced) SPECIFIC to ${specializationId}
 2. Each phase must be 2-4 months
 3. Use ONLY technologies/tools that are SPECIFIC to ${specializationId} (NOT generic ${fieldId} tools)
 4. Include certifications that are SPECIFIC to ${specializationId} (e.g., for "Robotics Engineering" use ROS, Arduino, not generic "Python")

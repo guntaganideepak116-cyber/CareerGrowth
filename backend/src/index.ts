@@ -52,7 +52,13 @@ app.get('/', (_req, res) => {
 });
 
 app.get('/api/health', (_req, res) => {
-    res.json({ status: 'ok', timestamp: new Date().toISOString(), env: process.env.NODE_ENV });
+    res.json({
+        status: 'ok',
+        timestamp: new Date().toISOString(),
+        env: process.env.NODE_ENV,
+        geminiConfigured: !!process.env.GEMINI_API_KEY,
+        firebaseConfigured: !!process.env.FIREBASE_SERVICE_ACCOUNT_JSON || !!process.env.GOOGLE_APPLICATION_CREDENTIALS
+    });
 });
 
 app.use('/api/content', contentRoutes);
