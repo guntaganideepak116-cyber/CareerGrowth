@@ -1,5 +1,5 @@
 import cron from 'node-cron';
-import { runDailyGeneration, runHourlyGeneration, runNewsFetch, runCleanup } from '../routes/notifications';
+import { runDailyGeneration, runHourlyGeneration, runSixHourlyGeneration, runNewsFetch, runCleanup } from '../routes/notifications';
 
 /**
  * Notification Scheduler — uses node-cron for local development.
@@ -66,6 +66,17 @@ export function startNotificationScheduler(): void {
         }
     });
 
+    // ── Six-Hourly AI Notifications ─────────────────────────────────────────
+    cron.schedule('0 */6 * * *', async () => {
+        console.log(`\n🔔 [${new Date().toISOString()}] Cron: Six-Hourly AI Notifications`);
+        try {
+            const result = await runSixHourlyGeneration(false);
+            console.log(`✅ Six-hourly: ${result.count} AI notifications generated`);
+        } catch (error) {
+            console.error('❌ Six-hourly cron error:', error);
+        }
+    });
+
     // ── News every 30 minutes ────────────────────────────────────────────────
     cron.schedule('*/30 * * * *', async () => {
         console.log(`\n📰 [${new Date().toISOString()}] Cron: Live news fetch`);
@@ -90,6 +101,7 @@ export function startNotificationScheduler(): void {
 
     console.log('  ✅ Daily generation  — 3:00 AM UTC (8:30 AM IST)');
     console.log('  ✅ Hourly AI Insights — top of every hour');
+    console.log('  ✅ Six-Hourly AI     — every 6 hours (0:00, 6:00, 12:00, 18:00 UTC)');
     console.log('  ✅ Live News          — every 30 minutes');
     console.log('  ✅ Weekly Cleanup     — Sunday 2:00 AM UTC');
     console.log('📅 Scheduler ready.\n');

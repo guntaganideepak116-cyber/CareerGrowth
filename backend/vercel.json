@@ -2,8 +2,16 @@
     "version": 2,
     "crons": [
         {
+            "path": "/api/notifications/cron/bootstrap",
+            "schedule": "0 0 * * *"
+        },
+        {
             "path": "/api/notifications/cron/daily",
             "schedule": "0 3 * * *"
+        },
+        {
+            "path": "/api/notifications/cron/six-hourly",
+            "schedule": "0 */6 * * *"
         },
         {
             "path": "/api/notifications/cron/hourly",

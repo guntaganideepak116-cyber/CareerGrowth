@@ -16,7 +16,7 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { toast } from 'sonner';
-import { useRoadmap, DynamicRoadmapPhase, clearContentCache } from '@/hooks/useDynamicContent';
+import { useRoadmap, DynamicRoadmapPhase } from '@/hooks/useDynamicContent';
 import {
   Sparkles,
   RefreshCw,
@@ -26,6 +26,11 @@ import {
   Loader2,
   Zap,
 } from 'lucide-react';
+
+// ── Roadmap Mode ──────────────────────────────────────────────
+// STATIC: loads predefined local data — NO AI calls
+// AI:     calls Gemini via backend and shows personalised roadmap
+type RoadmapMode = 'STATIC' | 'AI';
 
 export default function Roadmap() {
   const { user, profile, loading: authLoading } = useAuthContext();
@@ -38,25 +43,32 @@ export default function Roadmap() {
   // Expanded phase
   const [expandedPhase, setExpandedPhase] = useState<number | null>(null);
 
-  // Toggle for dynamic vs static content (Default to DYNAMIC - AI powered!)
-  const [useDynamicContent, setUseDynamicContent] = useState(true);
+  // ── Mode: default to STATIC ───────────────────────────────────
+  // STATIC → uses local roadmapData.ts (no AI, no network call)
+  // AI     → calls backend generateContent("/api/content/generate")
+  const [roadmapMode, setRoadmapMode] = useState<RoadmapMode>('STATIC');
+
+  // Derived: is AI mode active?
+  const isAIMode = roadmapMode === 'AI';
 
   // Get specializations for selected field
   const specializations = selectedField ? specializationsMap[selectedField] || [] : [];
 
-  // Dynamic roadmap from AI
+  // ── AI Roadmap (only fires when mode is AI) ──────────────────
+  // Pass null for fieldId/specId when NOT in AI mode → query stays disabled
   const {
     phases: dynamicPhases,
     loading: dynamicLoading,
     error: dynamicError,
     refetch: refetchDynamic
   } = useRoadmap(
-    useDynamicContent ? selectedField : null,
-    useDynamicContent ? selectedSpecialization : null,
+    isAIMode ? selectedField : null,
+    isAIMode ? selectedSpecialization : null,
     { semester: profile?.current_semester || 1, careerGoal: profile?.career_path || undefined }
   );
 
-  // Static roadmap from local data
+  // ── Static Roadmap (always computed, never calls AI) ─────────
+  // Derived from local roadmapData.ts — same for all users with same field+spec
   const staticPhases = useMemo(() => {
     if (selectedField && selectedSpecialization) {
       return generateRoadmap(selectedField, selectedSpecialization);
@@ -64,10 +76,17 @@ export default function Roadmap() {
     return [];
   }, [selectedField, selectedSpecialization]);
 
-  // Use dynamic phases if available, fallback to static
+  // ── Active phases based on current mode ──────────────────────
+  // STATIC mode: always use staticPhases (never AI data)
+  // AI mode:     use dynamicPhases if available; show loading/error otherwise
   const phases: RoadmapPhase[] = useMemo(() => {
-    if (useDynamicContent && dynamicPhases.length > 0) {
-      // Convert dynamic phases to RoadmapPhase format
+    if (roadmapMode === 'STATIC') {
+      // Static mode: ONLY local predefined data — no AI fallback
+      return staticPhases;
+    }
+
+    // AI mode: use Gemini-generated phases (converted to RoadmapPhase shape)
+    if (dynamicPhases.length > 0) {
       return dynamicPhases.map((dp: DynamicRoadmapPhase) => ({
         id: dp.id,
         title: dp.title,
@@ -80,26 +99,26 @@ export default function Roadmap() {
         careerRelevance: dp.careerRelevance,
       }));
     }
-    return staticPhases;
-  }, [useDynamicContent, dynamicPhases, staticPhases]);
+
+    // AI mode but still loading or errored → return empty so loading/error UI renders
+    return [];
+  }, [roadmapMode, dynamicPhases, staticPhases]);
 
   // Progress tracking
   const { progress, loading: progressLoading, markPhaseComplete, resetProgress } =
     useRoadmapProgress(selectedField, selectedSpecialization);
 
-  // Initialize from profile
+  // ── Initialise field/spec from user profile ────────────────────
   useEffect(() => {
     if (!authLoading && !user) {
       navigate('/login');
       return;
     }
-
     if (profile?.field && !selectedField) {
       setSelectedField(profile.field);
     }
   }, [user, authLoading, profile, navigate, selectedField]);
 
-  // Set specialization from profile when field is set
   useEffect(() => {
     if (profile?.specialization && selectedField && !selectedSpecialization) {
       const specMatch = specializations.find(s => s.id === profile.specialization);
@@ -109,34 +128,35 @@ export default function Roadmap() {
     }
   }, [profile, specializations, selectedField, selectedSpecialization]);
 
-  // Set expanded phase to current when progress loads
   useEffect(() => {
     if (progress && !expandedPhase) {
       setExpandedPhase(progress.current_phase);
     }
   }, [progress, expandedPhase]);
 
-  // Handle field change
+  // ── Field / Spec change handlers ────────────────────────────
   const handleFieldChange = (fieldId: string) => {
     setSelectedField(fieldId);
     setSelectedSpecialization('');
     setExpandedPhase(null);
+    // Changing field resets to static so there's no stale AI data visible
+    setRoadmapMode('STATIC');
   };
 
-  // Handle specialization change
   const handleSpecializationChange = (specId: string) => {
     setSelectedSpecialization(specId);
     setExpandedPhase(1);
+    // Changing spec also resets to static
+    setRoadmapMode('STATIC');
   };
 
-  // Handle marking phase complete
+  // ── Mark phase complete ──────────────────────────────────────
   const handleMarkComplete = async (phaseId: number) => {
     try {
       const phase = phases.find(p => p.id === phaseId);
       const skills = phase?.skills || [];
       await markPhaseComplete(phaseId, phases.length, skills);
       toast.success(`Phase ${phaseId} marked as complete!`);
-      // Expand next phase
       if (phaseId < phases.length) {
         setExpandedPhase(phaseId + 1);
       }
@@ -145,33 +165,45 @@ export default function Roadmap() {
     }
   };
 
-  // Handle reset
+  // ── Reset: clears progress & returns to STATIC mode ──────────
   const handleReset = async () => {
     try {
       await resetProgress();
       setExpandedPhase(1);
+      setRoadmapMode('STATIC');
       toast.success('Roadmap progress has been reset');
     } catch (error) {
       toast.error('Failed to reset progress');
     }
   };
 
-  // Handle refresh dynamic content
+  // ── Refresh: switches to AI mode and triggers generation ─────
+  // Only Refresh activates AI — Static button always returns to STATIC
   const handleRefresh = useCallback(() => {
-    // React Query refetch will handle fetching fresh data
+    setRoadmapMode('AI');
     refetchDynamic();
-    toast.success('Refreshing roadmap with latest data...');
+    toast.success('Generating AI-powered roadmap...');
   }, [refetchDynamic]);
 
-  // Export functionality
+  // ── Toggle button on header: switches between STATIC and AI ──
+  // Static → AI: triggers fetch
+  // AI → Static: immediately shows predefined data, no network call
+  const toggleContentSource = useCallback(() => {
+    if (roadmapMode === 'AI') {
+      // Switch to STATIC — predefined data, no AI
+      setRoadmapMode('STATIC');
+      toast.info('Switched to Static roadmap (predefined, no AI)');
+    } else {
+      // Switch to AI — trigger generation
+      setRoadmapMode('AI');
+      refetchDynamic();
+      toast.info('Switched to AI-generated roadmap');
+    }
+  }, [roadmapMode, refetchDynamic]);
+
+  // ── Export ───────────────────────────────────────────────────
   const handleExport = () => {
     toast.success('Roadmap exported to PDF!');
-  };
-
-  // Toggle content source
-  const toggleContentSource = () => {
-    setUseDynamicContent(!useDynamicContent);
-    toast.info(useDynamicContent ? 'Switched to static roadmap' : 'Switched to AI-generated roadmap');
   };
 
   const completedPhases = progress?.completed_phases || [];
@@ -181,8 +213,11 @@ export default function Roadmap() {
   const selectedFieldData = fields.find(f => f.id === selectedField);
   const selectedSpecData = specializations.find(s => s.id === selectedSpecialization);
 
-  const isLoading = dynamicLoading || progressLoading;
-  const showDynamicIndicator = useDynamicContent && dynamicPhases.length > 0;
+  // Loading state: only show spinner when in AI mode and actively loading
+  const isLoading = (isAIMode && dynamicLoading) || progressLoading;
+
+  // Show the AI indicator banner only when AI mode is active and has data
+  const showDynamicIndicator = isAIMode && dynamicPhases.length > 0;
 
   if (authLoading) {
     return (
@@ -220,9 +255,9 @@ export default function Roadmap() {
                 className="gap-2"
               >
                 <Zap className="w-4 h-4" />
-                {useDynamicContent ? 'Static' : 'AI'}
+                {isAIMode ? 'Static' : 'AI'}
               </Button>
-              {useDynamicContent && (
+              {isAIMode && (
                 <Button
                   variant="outline"
                   size="sm"
@@ -246,7 +281,7 @@ export default function Roadmap() {
           )}
         </div>
 
-        {/* Dynamic Content Indicator */}
+        {/* Dynamic Content Indicator — shown only in AI mode with loaded data */}
         {showDynamicIndicator && (
           <div className="bg-gradient-to-r from-primary/10 to-accent/10 border border-primary/20 rounded-lg p-4 animate-fade-in">
             <div className="flex items-center gap-3">
@@ -263,8 +298,8 @@ export default function Roadmap() {
           </div>
         )}
 
-        {/* Error Display - Only show if dynamic mode AND there's an error AND no fallback data */}
-        {dynamicError && useDynamicContent && staticPhases.length === 0 && (
+        {/* Error — only in AI mode, only when generation truly failed (no phases loaded) */}
+        {dynamicError && isAIMode && dynamicPhases.length === 0 && !dynamicLoading && (
           <div className="bg-amber-500/10 border border-amber-500/20 rounded-lg p-4 animate-fade-in">
             <div className="flex items-start gap-3">
               <div className="w-10 h-10 rounded-full bg-amber-500/20 flex items-center justify-center flex-shrink-0">
@@ -433,13 +468,15 @@ export default function Roadmap() {
         ) : selectedField && selectedSpecialization ? (
           <div className="text-center py-16 bg-card rounded-xl border border-border animate-fade-in">
             <MapPin className="w-16 h-16 text-muted-foreground mx-auto mb-4" />
-            <h3 className="text-xl font-semibold text-foreground mb-2">Generating Roadmap...</h3>
+            <h3 className="text-xl font-semibold text-foreground mb-2">
+              {isAIMode ? 'Generating AI Roadmap...' : 'Preparing Roadmap...'}
+            </h3>
             <p className="text-muted-foreground max-w-md mx-auto mb-4">
-              {useDynamicContent
+              {isAIMode
                 ? 'AI is creating a personalized roadmap based on real-world industry standards.'
                 : 'A detailed roadmap for this specialization is being prepared.'}
             </p>
-            {useDynamicContent && (
+            {isAIMode && (
               <Button onClick={handleRefresh} className="gap-2">
                 <RefreshCw className="w-4 h-4" />
                 Generate Now

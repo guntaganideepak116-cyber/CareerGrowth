@@ -5,7 +5,17 @@
             "queryScope": "COLLECTION",
             "fields": [
                 {
-                    "fieldPath": "field_id",
+                    "fieldPath": "timestamp",
+                    "order": "DESCENDING"
+                }
+            ]
+        },
+        {
+            "collectionGroup": "notifications",
+            "queryScope": "COLLECTION",
+            "fields": [
+                {
+                    "fieldPath": "fieldId",
                     "order": "ASCENDING"
                 },
                 {
@@ -19,7 +29,7 @@
             "queryScope": "COLLECTION",
             "fields": [
                 {
-                    "fieldPath": "generated_date",
+                    "fieldPath": "dateKey",
                     "order": "DESCENDING"
                 },
                 {
@@ -33,7 +43,7 @@
             "queryScope": "COLLECTION",
             "fields": [
                 {
-                    "fieldPath": "generated_date",
+                    "fieldPath": "dateKey",
                     "order": "ASCENDING"
                 }
             ]
@@ -43,36 +53,68 @@
             "queryScope": "COLLECTION",
             "fields": [
                 {
-                    "fieldPath": "timestamp",
-                    "order": "DESCENDING"
-                }
-            ]
-        },
-        {
-            "collectionGroup": "user_notification_reads",
-            "queryScope": "COLLECTION",
-            "fields": [
-                {
-                    "fieldPath": "user_id",
+                    "fieldPath": "dateKey",
                     "order": "ASCENDING"
                 },
                 {
-                    "fieldPath": "notification_id",
+                    "fieldPath": "fieldId",
                     "order": "ASCENDING"
                 }
             ]
         },
         {
-            "collectionGroup": "user_notification_reads",
+            "collectionGroup": "notifications",
             "queryScope": "COLLECTION",
             "fields": [
                 {
-                    "fieldPath": "user_id",
+                    "fieldPath": "category",
                     "order": "ASCENDING"
                 },
                 {
-                    "fieldPath": "read_at",
+                    "fieldPath": "createdAt",
                     "order": "DESCENDING"
+                }
+            ]
+        },
+        {
+            "collectionGroup": "notifications",
+            "queryScope": "COLLECTION",
+            "fields": [
+                {
+                    "fieldPath": "fieldId",
+                    "order": "ASCENDING"
+                },
+                {
+                    "fieldPath": "category",
+                    "order": "ASCENDING"
+                },
+                {
+                    "fieldPath": "createdAt",
+                    "order": "ASCENDING"
+                }
+            ]
+        },
+        {
+            "collectionGroup": "notifications",
+            "queryScope": "COLLECTION",
+            "fields": [
+                {
+                    "fieldPath": "fieldId",
+                    "order": "ASCENDING"
+                },
+                {
+                    "fieldPath": "dateKey",
+                    "order": "ASCENDING"
+                }
+            ]
+        },
+        {
+            "collectionGroup": "notifications",
+            "queryScope": "COLLECTION",
+            "fields": [
+                {
+                    "fieldPath": "title",
+                    "order": "ASCENDING"
                 }
             ]
         }
