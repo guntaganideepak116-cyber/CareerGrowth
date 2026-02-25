@@ -4,26 +4,6 @@
         {
             "path": "/api/notifications/cron/bootstrap",
             "schedule": "0 0 * * *"
-        },
-        {
-            "path": "/api/notifications/cron/daily",
-            "schedule": "0 3 * * *"
-        },
-        {
-            "path": "/api/notifications/cron/six-hourly",
-            "schedule": "0 */6 * * *"
-        },
-        {
-            "path": "/api/notifications/cron/hourly",
-            "schedule": "0 * * * *"
-        },
-        {
-            "path": "/api/notifications/cron/news",
-            "schedule": "*/30 * * * *"
-        },
-        {
-            "path": "/api/notifications/cron/cleanup",
-            "schedule": "0 2 * * 0"
         }
     ],
     "builds": [
