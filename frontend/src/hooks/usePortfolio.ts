@@ -15,8 +15,17 @@ import { doc, onSnapshot } from 'firebase/firestore';
 import { useAuthContext } from '@/contexts/AuthContext';
 
 // ── Base URL helper ────────────────────────────────────────────────────────
-// Reads once — avoids repeated env access inside callbacks
-const getApiUrl = () => import.meta.env.VITE_API_URL as string | undefined;
+const getBaseUrl = () => {
+    const envUrl = import.meta.env.VITE_API_URL;
+    if (envUrl && !envUrl.includes('localhost')) return envUrl.replace(/\/$/, '');
+
+    if (typeof window !== 'undefined' && window.location.hostname.includes('vercel.app')) {
+        return 'https://career-growth-opr6.vercel.app';
+    }
+
+    return 'http://localhost:5000';
+};
+const API_BASE = getBaseUrl();
 
 // ── Types (must match PortfolioData in Portfolio.tsx) ──────────────────────
 export interface SkillItem {
@@ -73,13 +82,7 @@ export function usePortfolio() {
 
     // ── Resolved API URL (falls back to backend Vercel subdomain if env missing) ──
     const resolveApiUrl = useCallback(async (): Promise<string> => {
-        const env = getApiUrl();
-        // If env var is set AND doesn't contain localhost, use it directly
-        if (env && !env.includes('localhost')) return env.replace(/\/$/, '');
-        // In production, use the same host with /api prefix ISN'T valid—
-        // the user needs to set VITE_API_URL in Vercel dashboard.
-        // For now, fall back safely to the env value or empty string.
-        return (env || '').replace(/\/$/, '');
+        return API_BASE;
     }, []);
 
     // ── Step A: Initial fast fetch from backend API ───────────────────────

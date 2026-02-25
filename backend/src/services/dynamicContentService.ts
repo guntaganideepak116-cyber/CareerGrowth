@@ -2,7 +2,12 @@ import { GoogleGenerativeAI } from '@google/generative-ai';
 import { db } from '../config/firebase';
 
 // Initialize Gemini
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '');
+const GEMINI_KEY = process.env.GEMINI_API_KEY || '';
+const genAI = new GoogleGenerativeAI(GEMINI_KEY);
+
+if (!GEMINI_KEY) {
+    console.warn('⚠️ GEMINI_API_KEY is missing in environment variables. AI generation will fail.');
+}
 
 // ============================================
 // UTILITY: Clean AI Response (Prevents Crashes)
@@ -225,6 +230,10 @@ export async function generateDynamicContent(
     // Generate with AI (SLOW PATH - only runs once)
     try {
         console.log(`🤖 Generating ${type} for ${fieldId}/${specializationId}...`);
+
+        if (!GEMINI_KEY) {
+            throw new Error('Gemini API Key is not configured on the server. Please add GEMINI_API_KEY to your environment variables.');
+        }
 
         const model = genAI.getGenerativeModel({
             model: 'gemini-1.5-flash',

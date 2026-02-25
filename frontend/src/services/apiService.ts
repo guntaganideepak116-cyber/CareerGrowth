@@ -1,5 +1,18 @@
 // API service to call Express backend instead of Supabase
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+const getBaseUrl = () => {
+    // If we're on Vercel, use the window domain to find the backend if VITE_API_URL is missing
+    const envUrl = import.meta.env.VITE_API_URL;
+    if (envUrl && !envUrl.includes('localhost')) return envUrl.replace(/\/$/, '');
+
+    // Fallback: If we are on career-growth-five.vercel.app, trial career-growth-opr6
+    if (typeof window !== 'undefined' && window.location.hostname.includes('vercel.app')) {
+        return 'https://career-growth-opr6.vercel.app';
+    }
+
+    return 'http://localhost:5000';
+};
+
+const API_URL = getBaseUrl();
 import { auth } from '@/lib/firebase';
 
 interface ContentRequest {
