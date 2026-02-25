@@ -1,18 +1,22 @@
 /**
  * usePortfolio — Real-time portfolio hook
  *
- * Strategy:
- *   1. On mount, immediately trigger a background sync (POST /api/portfolio/sync)
- *      so the portfolio auto-populates from all progress data.
- *   2. Attach a Firestore onSnapshot listener to user_portfolios/{userId}
- *      so any write (from sync, trigger, or manual save) reflects in <200ms.
- *   3. Expose `syncPortfolio()` so pages can call it manually if needed.
- *   4. Expose `triggerSync(event)` so other components can notify of completions.
+ * Data flow:
+ *   1. On mount, call GET /api/portfolio (fast read) → immediate display
+ *   2. Attach Firestore onSnapshot to user_portfolios/{userId} for live updates
+ *      (only after Firestore rules allow it — degrades gracefully if not)
+ *   3. After snapshot attaches, trigger POST /api/portfolio/sync in background
+ *      so auto-generated data populates without blocking UI
+ *   4. Expose savePortfolio() and triggerSync() for other components
  */
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { db } from '@/lib/firebase';
 import { doc, onSnapshot } from 'firebase/firestore';
 import { useAuthContext } from '@/contexts/AuthContext';
+
+// ── Base URL helper ────────────────────────────────────────────────────────
+// Reads once — avoids repeated env access inside callbacks
+const getApiUrl = () => import.meta.env.VITE_API_URL as string | undefined;
 
 // ── Types (must match PortfolioData in Portfolio.tsx) ──────────────────────
 export interface SkillItem {
@@ -60,33 +64,88 @@ export function usePortfolio() {
     const [error, setError] = useState<string | null>(null);
     const snapshotUnsub = useRef<(() => void) | null>(null);
     const syncedOnMount = useRef(false);
+    const mountedRef = useRef(true);
 
-    // ── Step 1: Trigger backend sync (background, non-blocking) ──
-    const syncPortfolio = useCallback(async () => {
+    useEffect(() => {
+        mountedRef.current = true;
+        return () => { mountedRef.current = false; };
+    }, []);
+
+    // ── Resolved API URL (falls back to backend Vercel subdomain if env missing) ──
+    const resolveApiUrl = useCallback(async (): Promise<string> => {
+        const env = getApiUrl();
+        // If env var is set AND doesn't contain localhost, use it directly
+        if (env && !env.includes('localhost')) return env.replace(/\/$/, '');
+        // In production, use the same host with /api prefix ISN'T valid—
+        // the user needs to set VITE_API_URL in Vercel dashboard.
+        // For now, fall back safely to the env value or empty string.
+        return (env || '').replace(/\/$/, '');
+    }, []);
+
+    // ── Step A: Initial fast fetch from backend API ───────────────────────
+    const fetchFromApi = useCallback(async () => {
         if (!user) return;
-        setSyncing(true);
         try {
             const token = await user.getIdToken();
-            const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
-            await fetch(`${API_URL}/api/portfolio/sync`, {
+            const base = await resolveApiUrl();
+            if (!base) return; // No API URL configured — skip
+
+            const res = await fetch(`${base}/api/portfolio`, {
+                headers: { 'Authorization': `Bearer ${token}` },
+            });
+            if (res.ok) {
+                const result = await res.json();
+                if (mountedRef.current && result.data) {
+                    setPortfolioData(result.data);
+                    setError(null);
+                }
+            }
+        } catch (err) {
+            console.warn('[usePortfolio] API fetch failed:', err);
+        } finally {
+            if (mountedRef.current) setLoading(false);
+        }
+    }, [user, resolveApiUrl]);
+
+    // ── Step B: Background sync (aggregates progress → portfolio doc) ─────
+    const syncPortfolio = useCallback(async () => {
+        if (!user) return;
+        if (mountedRef.current) setSyncing(true);
+        try {
+            const token = await user.getIdToken();
+            const base = await resolveApiUrl();
+            if (!base) return;
+
+            const res = await fetch(`${base}/api/portfolio/sync`, {
                 method: 'POST',
                 headers: { 'Authorization': `Bearer ${token}` },
             });
-            // onSnapshot will pick up the updated data automatically
+            if (res.ok) {
+                const result = await res.json();
+                // If Firestore onSnapshot isn't active (permissions), update directly
+                if (mountedRef.current && result.data) {
+                    setPortfolioData(result.data);
+                    setError(null);
+                }
+            }
         } catch (err) {
             console.warn('[usePortfolio] Sync failed:', err);
         } finally {
-            setSyncing(false);
+            if (mountedRef.current) setSyncing(false);
         }
-    }, [user]);
+    }, [user, resolveApiUrl]);
 
-    // ── Trigger after a completion event ──────────────────────────
-    const triggerSync = useCallback(async (event: 'roadmap_phase' | 'project' | 'certification' | 'skill' | 'assessment' | 'internship') => {
+    // ── Step C: Trigger after completion events ───────────────────────────
+    const triggerSync = useCallback(async (
+        event: 'roadmap_phase' | 'project' | 'certification' | 'skill' | 'assessment' | 'internship'
+    ) => {
         if (!user) return;
         try {
             const token = await user.getIdToken();
-            const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
-            await fetch(`${API_URL}/api/portfolio/trigger`, {
+            const base = await resolveApiUrl();
+            if (!base) return;
+
+            await fetch(`${base}/api/portfolio/trigger`, {
                 method: 'POST',
                 headers: {
                     'Authorization': `Bearer ${token}`,
@@ -97,54 +156,65 @@ export function usePortfolio() {
         } catch (err) {
             console.warn('[usePortfolio] Trigger sync failed:', err);
         }
-    }, [user]);
+    }, [user, resolveApiUrl]);
 
-    // ── Step 2: Real-time Firestore onSnapshot listener ──────────
+    // ── Step D: Real-time Firestore onSnapshot (best-effort) ─────────────
+    // If Firestore rules allow it, updates appear in <200ms after any backend write.
+    // If rules block it (permissions error), we degrade gracefully to the API fetch.
     useEffect(() => {
         if (!user) {
             setLoading(false);
             return;
         }
 
-        // Attach realtime listener first so data appears instantly if cached
+        // Immediate fast-path: fetch from backend API right away
+        fetchFromApi();
+
+        // Attach Firestore real-time listener (best-effort)
         const portfolioDocRef = doc(db, 'user_portfolios', user.uid);
         snapshotUnsub.current = onSnapshot(
             portfolioDocRef,
             (snap) => {
+                if (!mountedRef.current) return;
                 if (snap.exists()) {
                     setPortfolioData(snap.data() as AutoPortfolioData);
                     setError(null);
-                } else {
-                    // Document doesn't exist yet — sync will create it
-                    setPortfolioData(null);
                 }
                 setLoading(false);
             },
             (err) => {
-                console.error('[usePortfolio] Snapshot error:', err);
-                setError('Failed to load portfolio');
-                setLoading(false);
+                // Permission error = Firestore rules not yet deployed
+                // Degrade gracefully: API fetch already ran, just log quietly
+                console.warn('[usePortfolio] Firestore listener unavailable (permissions). Using API fallback.');
+                if (mountedRef.current) setLoading(false);
             }
         );
 
-        // Trigger auto-sync once on mount (background — does NOT block UI)
+        // Background sync — runs after UI is visible
         if (!syncedOnMount.current) {
             syncedOnMount.current = true;
-            syncPortfolio();
+            // Small delay so the initial render is not blocked
+            const t = setTimeout(() => syncPortfolio(), 800);
+            return () => {
+                clearTimeout(t);
+                snapshotUnsub.current?.();
+            };
         }
 
         return () => {
             snapshotUnsub.current?.();
         };
-    }, [user, syncPortfolio]);
+    }, [user, fetchFromApi, syncPortfolio]);
 
-    // ── Manual save (for Edit mode) — same shape as before ───────
+    // ── Manual save (Edit mode) ───────────────────────────────────────────
     const savePortfolio = useCallback(async (data: AutoPortfolioData): Promise<boolean> => {
         if (!user) return false;
         try {
             const token = await user.getIdToken();
-            const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
-            const response = await fetch(`${API_URL}/api/portfolio`, {
+            const base = await resolveApiUrl();
+            if (!base) return false;
+
+            const res = await fetch(`${base}/api/portfolio`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -152,13 +222,17 @@ export function usePortfolio() {
                 },
                 body: JSON.stringify(data),
             });
-            // onSnapshot will update state automatically after write
-            return response.ok;
+
+            if (res.ok && mountedRef.current) {
+                // onSnapshot picks it up; fallback: update local state directly
+                setPortfolioData(data);
+            }
+            return res.ok;
         } catch (err) {
             console.error('[usePortfolio] Save failed:', err);
             return false;
         }
-    }, [user]);
+    }, [user, resolveApiUrl]);
 
     return {
         portfolioData,

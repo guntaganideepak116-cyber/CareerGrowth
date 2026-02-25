@@ -105,6 +105,13 @@ service cloud.firestore {
     }
 
     // ===========================================
+    // 8b. USER PORTFOLIOS (auto-generated collection)
+    // ===========================================
+    match /user_portfolios/{userId} {
+      allow read, write: if isOwner(userId) || isAdmin();
+    }
+
+    // ===========================================
     // 9. AI MENTOR CONVERSATIONS
     // ===========================================
     match /ai_conversations/{conversationId} {
@@ -115,6 +122,26 @@ service cloud.firestore {
     // Legacy Support (Optional)
     match /user_profiles/{userId} {
       allow read, write: if isOwner(userId) || isAdmin();
+    }
+
+    // ===========================================
+    // 10. PROGRESS COLLECTIONS (backend reads these)
+    // ===========================================
+    match /roadmap_progress/{docId} {
+      allow read, write: if isAuthenticated() && (resource == null || resource.data.userId == request.auth.uid || isAdmin());
+      allow create: if isAuthenticated() && request.resource.data.userId == request.auth.uid;
+    }
+    match /skills_progress/{docId} {
+      allow read, write: if isAuthenticated() && (resource == null || resource.data.userId == request.auth.uid || isAdmin());
+      allow create: if isAuthenticated() && request.resource.data.userId == request.auth.uid;
+    }
+    match /certifications_progress/{docId} {
+      allow read, write: if isAuthenticated() && (resource == null || resource.data.userId == request.auth.uid || isAdmin());
+      allow create: if isAuthenticated() && request.resource.data.userId == request.auth.uid;
+    }
+    match /assessments_attempts/{docId} {
+      allow read, write: if isAuthenticated() && (resource == null || resource.data.userId == request.auth.uid || isAdmin());
+      allow create: if isAuthenticated() && request.resource.data.userId == request.auth.uid;
     }
   }
 }
