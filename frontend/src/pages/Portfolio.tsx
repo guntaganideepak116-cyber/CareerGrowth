@@ -9,6 +9,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { Switch } from '@/components/ui/switch';
 import { useToast } from '@/components/ui/use-toast';
+import { usePortfolio } from '@/hooks/usePortfolio';
 import {
     Award,
     Download,
@@ -90,50 +91,29 @@ export default function Portfolio() {
     const { profile, user, loading: authLoading } = useAuthContext();
     const { toast } = useToast();
 
-    const [loading, setLoading] = useState(true);
-    const [isEditing, setIsEditing] = useState(false);
+    // ── Real-time auto-portfolio hook ──────────────────────────────
+    const {
+        portfolioData: livePortfolioData,
+        loading,
+        syncing,
+        savePortfolio: hookSave,
+        syncPortfolio,
+    } = usePortfolio();
+
+    // Local editable copy — initialized from live data, edited locally
     const [portfolioData, setPortfolioData] = useState<PortfolioData | null>(null);
+    const [isEditing, setIsEditing] = useState(false);
     const [activeSection, setActiveSection] = useState('about');
-    const [isNewUser, setIsNewUser] = useState(false);
 
-    const loadPortfolioData = useCallback(async () => {
-        if (!user) return;
-        try {
-            setLoading(true);
-            const token = await user.getIdToken();
-            const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
-
-            const response = await fetch(`${API_URL}/api/portfolio`, {
-                headers: { 'Authorization': `Bearer ${token}` }
-            });
-
-            if (response.ok) {
-                const result = await response.json();
-                setPortfolioData(result.data);
-                setIsNewUser(false);
-            } else if (response.status === 404) {
-                setIsNewUser(true);
-                setPortfolioData(null);
-            } else {
-                throw new Error('Failed to fetch portfolio');
-            }
-        } catch (error) {
-            console.error('Error loading portfolio:', error);
-            toast({
-                title: "Error loading portfolio",
-                description: "Could not fetch your data.",
-                variant: "destructive"
-            });
-        } finally {
-            setLoading(false);
-        }
-    }, [user, toast]);
-
+    // Sync live data → local state when NOT editing
     useEffect(() => {
-        if (!authLoading && user) {
-            loadPortfolioData();
+        if (livePortfolioData && !isEditing) {
+            setPortfolioData(livePortfolioData as unknown as PortfolioData);
         }
-    }, [authLoading, user, loadPortfolioData]);
+    }, [livePortfolioData, isEditing]);
+
+    // isNewUser is now handled by the hook — if no data and still loading, show spinner
+    const isNewUser = !loading && !livePortfolioData;
 
     useEffect(() => {
         if (!portfolioData) return;
@@ -165,23 +145,11 @@ export default function Portfolio() {
 
 
     const savePortfolio = async () => {
-        if (!user || !portfolioData) return;
+        if (!portfolioData) return;
         try {
-            const token = await user.getIdToken();
-            const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
-
-            const response = await fetch(`${API_URL}/api/portfolio`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`
-                },
-                body: JSON.stringify(portfolioData)
-            });
-
-            if (response.ok) {
+            const ok = await hookSave(portfolioData as any);
+            if (ok) {
                 setIsEditing(false);
-                setIsNewUser(false);
                 toast({ title: "Success", description: "Portfolio updated successfully." });
             } else {
                 throw new Error('Failed to save');
@@ -192,7 +160,11 @@ export default function Portfolio() {
         }
     };
 
+    // initializePortfolio — triggers a fresh sync from backend
+    // The auto-sync will populate from real progress data
     const initializePortfolio = () => {
+        syncPortfolio();
+        // Optimistically set blank data so Edit mode opens immediately
         const field = profile?.field || 'General';
         const initialData: PortfolioData = {
             theme: 'modern',
@@ -200,7 +172,7 @@ export default function Portfolio() {
                 visible: true,
                 name: profile?.full_name || user?.email?.split('@')[0] || 'Your Name',
                 headline: `${field} Professional`,
-                summary: 'Brief professional summary.',
+                summary: 'Building a career in ' + field + '.',
                 field: field
             },
             skills: { visible: true, title: 'Skills', items: [] },
@@ -211,7 +183,6 @@ export default function Portfolio() {
         };
         setPortfolioData(initialData);
         setIsEditing(true);
-        setIsNewUser(false);
     };
 
     // State updaters
@@ -275,7 +246,7 @@ export default function Portfolio() {
                             })}
                         </div>
                         <div className="flex gap-2">
-                            {!isEditing ? <Button onClick={() => setIsEditing(true)} size="sm" variant="outline"><Edit2 className="w-4 h-4 mr-2" /> Edit</Button> : <><Button variant="ghost" onClick={() => { setIsEditing(false); loadPortfolioData(); }} size="sm">Cancel</Button><Button onClick={savePortfolio} size="sm">Save</Button></>}
+                            {!isEditing ? <Button onClick={() => setIsEditing(true)} size="sm" variant="outline"><Edit2 className="w-4 h-4 mr-2" /> Edit</Button> : <><Button variant="ghost" onClick={() => { setIsEditing(false); if (livePortfolioData) setPortfolioData(livePortfolioData as unknown as PortfolioData); }} size="sm">Cancel</Button><Button onClick={savePortfolio} size="sm">Save</Button></>}
                         </div>
                     </div>
                 </nav>
