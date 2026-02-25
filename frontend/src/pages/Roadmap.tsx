@@ -26,51 +26,45 @@ import {
   Target,
   Loader2,
   Zap,
+  BookOpen,
+  Brain,
+  ChevronRight,
 } from 'lucide-react';
 
 // ── Roadmap Mode ──────────────────────────────────────────────
-// STATIC: loads predefined local data — NO AI calls
-// AI:     calls Gemini via backend and shows personalised roadmap
-type RoadmapMode = 'STATIC' | 'AI';
+// AI:     DEFAULT — calls Gemini via backend, real-world personalised roadmap
+// STATIC: Fallback / user-selected — local predefined data, no AI call
+type RoadmapMode = 'AI' | 'STATIC';
 
 export default function Roadmap() {
   const { user, profile, loading: authLoading } = useAuthContext();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
 
-  // Field and specialization selection
   const [selectedField, setSelectedField] = useState<string>('');
   const [selectedSpecialization, setSelectedSpecialization] = useState<string>('');
-
-  // Expanded phase
   const [expandedPhase, setExpandedPhase] = useState<number | null>(null);
 
-  // ── Mode: default to STATIC ───────────────────────────────────
-  // STATIC → uses local roadmapData.ts (no AI, no network call)
-  // AI     → calls backend generateContent("/api/content/generate")
-  const [roadmapMode, setRoadmapMode] = useState<RoadmapMode>('STATIC');
-
-  // Derived: is AI mode active?
+  // ── Default: AI mode ──────────────────────────────────────────
+  const [roadmapMode, setRoadmapMode] = useState<RoadmapMode>('AI');
   const isAIMode = roadmapMode === 'AI';
+  const isStaticMode = roadmapMode === 'STATIC';
 
-  // Get specializations for selected field
   const specializations = selectedField ? specializationsMap[selectedField] || [] : [];
 
-  // ── AI Roadmap (only fires when mode is AI) ──────────────────
-  // Pass null for fieldId/specId when NOT in AI mode → query stays disabled
+  // ── AI Roadmap — only fires when in AI mode and field+spec are selected ──
   const {
     phases: dynamicPhases,
     loading: dynamicLoading,
     error: dynamicError,
-    refetch: refetchDynamic
+    refetch: refetchDynamic,
   } = useRoadmap(
     isAIMode ? selectedField : null,
     isAIMode ? selectedSpecialization : null,
     { semester: profile?.current_semester || 1, careerGoal: profile?.career_path || undefined }
   );
 
-  // ── Static Roadmap (always computed, never calls AI) ─────────
-  // Derived from local roadmapData.ts — same for all users with same field+spec
+  // ── Static Roadmap — always computed locally, zero network cost ──
   const staticPhases = useMemo(() => {
     if (selectedField && selectedSpecialization) {
       return generateRoadmap(selectedField, selectedSpecialization);
@@ -78,16 +72,13 @@ export default function Roadmap() {
     return [];
   }, [selectedField, selectedSpecialization]);
 
-  // ── Active phases based on current mode ──────────────────────
-  // STATIC mode: always use staticPhases (never AI data)
-  // AI mode:     use dynamicPhases if available; show loading/error otherwise
+  // ── Resolved phases based on mode ───────────────────────────
+  // AI mode:     Gemini phases when ready; while loading/error → static fallback
+  // STATIC mode: Always local data
   const phases: RoadmapPhase[] = useMemo(() => {
-    if (roadmapMode === 'STATIC') {
-      // Static mode: ONLY local predefined data — no AI fallback
-      return staticPhases;
-    }
+    if (isStaticMode) return staticPhases;
 
-    // AI mode: use Gemini-generated phases (converted to RoadmapPhase shape)
+    // AI mode with data
     if (dynamicPhases.length > 0) {
       return dynamicPhases.map((dp: DynamicRoadmapPhase) => ({
         id: dp.id,
@@ -102,134 +93,101 @@ export default function Roadmap() {
       }));
     }
 
-    // AI mode but still loading or errored → return empty so loading/error UI renders
-    return [];
-  }, [roadmapMode, dynamicPhases, staticPhases]);
+    // AI mode but still loading or errored → show static data as placeholder
+    // so the page is never empty while waiting for AI
+    return staticPhases;
+  }, [isStaticMode, dynamicPhases, staticPhases]);
 
-  // Progress tracking
+  // True only while AI is fetching AND we have no AI data yet
+  const isAIGenerating = isAIMode && dynamicLoading && dynamicPhases.length === 0;
+  // AI has successfully loaded its own data
+  const aiDataReady = isAIMode && dynamicPhases.length > 0;
+
   const { progress, loading: progressLoading, markPhaseComplete, resetProgress } =
     useRoadmapProgress(selectedField, selectedSpecialization);
 
-  // ── Initialise field/spec from user profile ────────────────────
+  // ── Init from profile ────────────────────────────────────────
   useEffect(() => {
-    if (!authLoading && !user) {
-      navigate('/login');
-      return;
-    }
-    if (profile?.field && !selectedField) {
-      setSelectedField(profile.field);
-    }
+    if (!authLoading && !user) { navigate('/login'); return; }
+    if (profile?.field && !selectedField) setSelectedField(profile.field);
   }, [user, authLoading, profile, navigate, selectedField]);
 
   useEffect(() => {
     if (profile?.specialization && selectedField && !selectedSpecialization) {
-      const specMatch = specializations.find(s => s.id === profile.specialization);
-      if (specMatch) {
-        setSelectedSpecialization(specMatch.id);
-      }
+      const match = specializations.find(s => s.id === profile.specialization);
+      if (match) setSelectedSpecialization(match.id);
     }
   }, [profile, specializations, selectedField, selectedSpecialization]);
 
   useEffect(() => {
-    if (progress && !expandedPhase) {
-      setExpandedPhase(progress.current_phase);
-    }
+    if (progress && !expandedPhase) setExpandedPhase(progress.current_phase);
   }, [progress, expandedPhase]);
 
-  // ── Field / Spec change handlers ────────────────────────────
+  // ── Field / Spec handlers ────────────────────────────────────
   const handleFieldChange = (fieldId: string) => {
     setSelectedField(fieldId);
     setSelectedSpecialization('');
     setExpandedPhase(null);
-    // Changing field resets to static so there's no stale AI data visible
-    setRoadmapMode('STATIC');
+    setRoadmapMode('AI'); // always start fresh with AI on field change
   };
 
   const handleSpecializationChange = (specId: string) => {
     setSelectedSpecialization(specId);
     setExpandedPhase(1);
-    // Changing spec also resets to static
-    setRoadmapMode('STATIC');
+    setRoadmapMode('AI'); // always try AI on spec change
   };
 
-  // ── Mark phase complete ──────────────────────────────────────
   const handleMarkComplete = async (phaseId: number) => {
     try {
       const phase = phases.find(p => p.id === phaseId);
-      const skills = phase?.skills || [];
-      await markPhaseComplete(phaseId, phases.length, skills);
+      await markPhaseComplete(phaseId, phases.length, phase?.skills || []);
       toast.success(`Phase ${phaseId} marked as complete!`);
-      if (phaseId < phases.length) {
-        setExpandedPhase(phaseId + 1);
-      }
-    } catch (error) {
-      toast.error('Failed to update progress');
-    }
+      if (phaseId < phases.length) setExpandedPhase(phaseId + 1);
+    } catch { toast.error('Failed to update progress'); }
   };
 
-  // ── Reset: clears progress & returns to STATIC mode ──────────
+  // ── Reset: clears progress, stays in AI mode ─────────────────
   const handleReset = async () => {
     try {
       await resetProgress();
       setExpandedPhase(1);
-      setRoadmapMode('STATIC');
-      // Clear stale AI cache so it won't flash errors on next AI activation
-      queryClient.resetQueries({ queryKey: ['dynamic_roadmap'] });
       toast.success('Roadmap progress has been reset');
-    } catch (error) {
-      toast.error('Failed to reset progress');
-    }
+    } catch { toast.error('Failed to reset progress'); }
   };
 
-  // ── Refresh: switches to AI mode and triggers generation ─────
-  // Only Refresh activates AI — Static button always returns to STATIC
+  // ── Refresh AI ───────────────────────────────────────────────
   const handleRefresh = useCallback(() => {
     setRoadmapMode('AI');
     refetchDynamic();
-    toast.success('Generating AI-powered roadmap...');
+    toast.success('Regenerating AI roadmap...');
   }, [refetchDynamic]);
 
-  // ── Toggle button on header: switches between STATIC and AI ──
-  // Static → AI: triggers fetch
-  // AI → Static: immediately shows predefined data, no network call
-  const toggleContentSource = useCallback(() => {
-    if (roadmapMode === 'AI') {
-      // Switch to STATIC — predefined data, no AI
+  // ── Toggle: AI ↔ Static ──────────────────────────────────────
+  const toggleMode = useCallback(() => {
+    if (isAIMode) {
       setRoadmapMode('STATIC');
-      // Clear any AI error/data from cache so it won't show next time
       queryClient.resetQueries({ queryKey: ['dynamic_roadmap'] });
-      toast.info('Switched to Static roadmap (predefined, no AI)');
+      toast.info('Switched to Static roadmap — predefined, offline, no AI');
     } else {
-      // Switch to AI — trigger generation
       setRoadmapMode('AI');
       refetchDynamic();
-      toast.info('Switched to AI-generated roadmap');
+      toast.success('Switched to AI-powered roadmap — generating your personalised path...');
     }
-  }, [roadmapMode, refetchDynamic, queryClient]);
+  }, [isAIMode, refetchDynamic, queryClient]);
 
-  // ── Export ───────────────────────────────────────────────────
-  const handleExport = () => {
-    toast.success('Roadmap exported to PDF!');
-  };
+  const handleExport = () => toast.success('Roadmap exported to PDF!');
 
   const completedPhases = progress?.completed_phases || [];
   const currentPhase = progress?.current_phase || 1;
   const overallProgress = progress?.overall_progress || 0;
-
   const selectedFieldData = fields.find(f => f.id === selectedField);
   const selectedSpecData = specializations.find(s => s.id === selectedSpecialization);
-
-  // Loading state: only show spinner when in AI mode and actively loading
-  const isLoading = (isAIMode && dynamicLoading) || progressLoading;
-
-  // Show the AI indicator banner only when AI mode is active and has data
-  const showDynamicIndicator = isAIMode && dynamicPhases.length > 0;
 
   if (authLoading) {
     return (
       <DashboardLayout>
         <div className="flex items-center justify-center min-h-[60vh]">
-          <span className="text-muted-foreground">Loading...</span>
+          <Loader2 className="w-8 h-8 animate-spin text-primary" />
         </div>
       </DashboardLayout>
     );
@@ -238,99 +196,175 @@ export default function Roadmap() {
   return (
     <DashboardLayout>
       <div className="max-w-4xl mx-auto space-y-8">
-        {/* Header */}
+
+        {/* ── Mode Banner (prominent, always visible when data loaded) ── */}
+        {selectedField && selectedSpecialization && (
+          <div className={`relative overflow-hidden rounded-2xl border-2 p-5 transition-all duration-500 ${isAIMode
+              ? 'bg-gradient-to-r from-violet-500/10 via-primary/10 to-cyan-500/10 border-primary/40 shadow-lg shadow-primary/10'
+              : 'bg-muted/40 border-border shadow-none'
+            }`}>
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+              {/* Left: mode label */}
+              <div className="flex items-center gap-3">
+                <div className={`w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 ${isAIMode
+                    ? 'bg-gradient-to-br from-violet-500 to-primary text-white shadow-md shadow-primary/30'
+                    : 'bg-muted text-muted-foreground'
+                  }`}>
+                  {isAIMode ? <Brain className="w-6 h-6" /> : <BookOpen className="w-6 h-6" />}
+                </div>
+                <div>
+                  {isAIMode ? (
+                    <>
+                      <div className="flex items-center gap-2 mb-0.5">
+                        <span className="font-bold text-foreground text-base">AI-Powered Roadmap</span>
+                        <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-primary/20 text-primary tracking-wide uppercase">Live</span>
+                        {isAIGenerating && (
+                          <span className="flex items-center gap-1 text-xs text-primary animate-pulse">
+                            <Loader2 className="w-3 h-3 animate-spin" /> Generating...
+                          </span>
+                        )}
+                        {aiDataReady && (
+                          <span className="flex items-center gap-1 text-xs text-emerald-500 font-medium">
+                            <Sparkles className="w-3 h-3" /> AI Ready
+                          </span>
+                        )}
+                      </div>
+                      <p className="text-sm text-muted-foreground">
+                        Personalised by Gemini · current industry standards · real certifications
+                      </p>
+                    </>
+                  ) : (
+                    <>
+                      <div className="flex items-center gap-2 mb-0.5">
+                        <span className="font-bold text-foreground text-base">Static Roadmap</span>
+                        <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-muted text-muted-foreground tracking-wide uppercase">Offline</span>
+                      </div>
+                      <p className="text-sm text-muted-foreground">
+                        Predefined curriculum · no AI · works without network
+                      </p>
+                    </>
+                  )}
+                </div>
+              </div>
+
+              {/* Right: action buttons */}
+              <div className="flex items-center gap-2 flex-shrink-0">
+                {isAIMode && (
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={handleRefresh}
+                    disabled={dynamicLoading}
+                    className="gap-1.5 text-xs border-primary/30 hover:bg-primary/10"
+                  >
+                    <RefreshCw className={`w-3.5 h-3.5 ${dynamicLoading ? 'animate-spin' : ''}`} />
+                    Regenerate
+                  </Button>
+                )}
+                <Button
+                  variant={isAIMode ? 'outline' : 'default'}
+                  size="sm"
+                  onClick={toggleMode}
+                  className={`gap-1.5 text-xs font-semibold ${isAIMode
+                      ? 'border-muted hover:bg-muted'
+                      : 'bg-gradient-to-r from-violet-500 to-primary text-white border-0 hover:opacity-90 shadow-md shadow-primary/20'
+                    }`}
+                >
+                  {isAIMode ? (
+                    <><BookOpen className="w-3.5 h-3.5" /> Use Static</>
+                  ) : (
+                    <><Brain className="w-3.5 h-3.5" /> Switch to AI</>
+                  )}
+                </Button>
+              </div>
+            </div>
+
+            {/* AI generating progress bar */}
+            {isAIGenerating && (
+              <div className="mt-4 h-1 rounded-full bg-primary/20 overflow-hidden">
+                <div className="h-full bg-gradient-to-r from-violet-500 to-primary rounded-full animate-pulse w-2/3" />
+              </div>
+            )}
+
+            {/* Static notice */}
+            {isStaticMode && (
+              <div className="mt-3 flex items-center gap-2 text-xs text-muted-foreground border-t border-border/60 pt-3">
+                <Zap className="w-3.5 h-3.5 text-amber-500" />
+                <span>Click <strong>Switch to AI</strong> to get a personalised, Gemini-generated roadmap with real industry data</span>
+                <ChevronRight className="w-3.5 h-3.5 ml-auto" />
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* ── Header ── */}
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 animate-fade-in">
           <div>
-            <div className="inline-flex items-center gap-2 px-4 py-2 bg-primary/10 rounded-full text-primary text-sm font-medium mb-4">
-              <Sparkles className="w-4 h-4" />
-              {showDynamicIndicator ? 'AI-Powered Roadmap' : 'Learning Roadmap'}
+            <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium mb-4 ${isAIMode
+                ? 'bg-gradient-to-r from-violet-500/20 to-primary/20 text-primary'
+                : 'bg-muted text-muted-foreground'
+              }`}>
+              {isAIMode ? <Sparkles className="w-4 h-4" /> : <BookOpen className="w-4 h-4" />}
+              {isAIMode ? 'AI-Powered Roadmap' : 'Static Roadmap'}
             </div>
             <h1 className="text-3xl font-bold text-foreground">Your Learning Roadmap</h1>
             <p className="mt-2 text-muted-foreground">
-              {showDynamicIndicator
-                ? 'Real-world learning path generated with AI based on current industry trends'
-                : 'Personalized learning path based on your selected specialization'}
+              {isAIMode
+                ? 'Real-world learning path generated by Gemini AI based on current industry trends'
+                : 'Predefined learning path — structured curriculum, no AI generation'}
             </p>
           </div>
           {phases.length > 0 && (
             <div className="flex gap-2 flex-wrap">
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={toggleContentSource}
-                className="gap-2"
-              >
-                <Zap className="w-4 h-4" />
-                {isAIMode ? 'Static' : 'AI'}
-              </Button>
-              {isAIMode && (
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={handleRefresh}
-                  className="gap-2"
-                  disabled={dynamicLoading}
-                >
-                  <RefreshCw className={`w-4 h-4 ${dynamicLoading ? 'animate-spin' : ''}`} />
-                  Refresh
-                </Button>
-              )}
               <Button variant="outline" size="sm" onClick={handleReset} className="gap-2">
-                <RefreshCw className="w-4 h-4" />
-                Reset
+                <RefreshCw className="w-4 h-4" /> Reset
               </Button>
               <Button variant="default" size="sm" onClick={handleExport} className="gap-2">
-                <Download className="w-4 h-4" />
-                Export
+                <Download className="w-4 h-4" /> Export
               </Button>
             </div>
           )}
         </div>
 
-        {/* Dynamic Content Indicator — shown only in AI mode with loaded data */}
-        {showDynamicIndicator && (
-          <div className="bg-gradient-to-r from-primary/10 to-accent/10 border border-primary/20 rounded-lg p-4 animate-fade-in">
+        {/* ── AI generation notice while static data shown as preview ── */}
+        {isAIGenerating && staticPhases.length > 0 && (
+          <div className="bg-violet-500/10 border border-violet-500/30 rounded-xl p-4 animate-fade-in">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center">
-                <Sparkles className="w-5 h-5 text-primary" />
-              </div>
-              <div>
-                <p className="font-medium text-foreground">AI-Generated Real-World Roadmap</p>
-                <p className="text-sm text-muted-foreground">
-                  This roadmap uses current industry standards, real technologies, and actual certifications
-                </p>
-              </div>
-            </div>
-          </div>
-        )}
-
-        {/* Error — only in AI mode, only when generation truly failed (no phases loaded) */}
-        {dynamicError && isAIMode && dynamicPhases.length === 0 && !dynamicLoading && (
-          <div className="bg-amber-500/10 border border-amber-500/20 rounded-lg p-4 animate-fade-in">
-            <div className="flex items-start gap-3">
-              <div className="w-10 h-10 rounded-full bg-amber-500/20 flex items-center justify-center flex-shrink-0">
-                <Sparkles className="w-5 h-5 text-amber-500" />
+              <div className="w-9 h-9 rounded-lg bg-violet-500/20 flex items-center justify-center flex-shrink-0">
+                <Brain className="w-4 h-4 text-violet-500" />
               </div>
               <div className="flex-1">
-                <p className="font-medium text-foreground mb-1">Generating your personalized roadmap...</p>
-                <p className="text-sm text-muted-foreground">
-                  Our AI is creating a custom learning path based on current industry trends. This may take a few moments.
+                <p className="text-sm font-semibold text-foreground">AI is generating your personalised roadmap…</p>
+                <p className="text-xs text-muted-foreground mt-0.5">
+                  Showing static preview below. AI version will replace it automatically once ready.
                 </p>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={handleRefresh}
-                  className="mt-3 gap-2"
-                >
-                  <RefreshCw className="w-4 h-4" />
-                  Retry Generation
-                </Button>
               </div>
+              <Loader2 className="w-5 h-5 text-violet-500 animate-spin flex-shrink-0" />
             </div>
           </div>
         )}
 
-        {/* Field & Specialization Selection */}
+        {/* ── AI failed, showing static fallback notice ── */}
+        {dynamicError && isAIMode && dynamicPhases.length === 0 && !dynamicLoading && staticPhases.length > 0 && (
+          <div className="bg-amber-500/10 border border-amber-500/30 rounded-xl p-4 animate-fade-in">
+            <div className="flex items-start gap-3">
+              <div className="w-9 h-9 rounded-lg bg-amber-500/20 flex items-center justify-center flex-shrink-0">
+                <Zap className="w-4 h-4 text-amber-500" />
+              </div>
+              <div className="flex-1">
+                <p className="text-sm font-semibold text-foreground">AI generation failed — showing Static roadmap</p>
+                <p className="text-xs text-muted-foreground mt-0.5">
+                  The backend may be busy. The static roadmap below is fully functional and complete.
+                </p>
+              </div>
+              <Button variant="outline" size="sm" onClick={handleRefresh} className="gap-1.5 text-xs flex-shrink-0 border-amber-500/40 hover:bg-amber-500/10">
+                <RefreshCw className="w-3.5 h-3.5" /> Retry AI
+              </Button>
+            </div>
+          </div>
+        )}
+
+        {/* ── Field & Specialization Selection ── */}
         <div className="bg-card rounded-xl border border-border p-6 animate-slide-up">
           <h2 className="font-semibold text-foreground mb-4 flex items-center gap-2">
             <Target className="w-5 h-5 text-primary" />
@@ -366,7 +400,7 @@ export default function Roadmap() {
                 disabled={!selectedField}
               >
                 <SelectTrigger className="w-full">
-                  <SelectValue placeholder={selectedField ? "Choose specialization" : "Select field first"} />
+                  <SelectValue placeholder={selectedField ? 'Choose specialization' : 'Select field first'} />
                 </SelectTrigger>
                 <SelectContent>
                   {specializations.map(spec => (
@@ -381,8 +415,6 @@ export default function Roadmap() {
               </Select>
             </div>
           </div>
-
-          {/* Selection Summary */}
           {selectedFieldData && selectedSpecData && (
             <div className="mt-4 p-4 bg-primary/5 rounded-lg border border-primary/10">
               <div className="flex items-center gap-2 text-sm">
@@ -397,13 +429,13 @@ export default function Roadmap() {
           )}
         </div>
 
-        {/* Roadmap Content */}
-        {isLoading && selectedField && selectedSpecialization ? (
-          <div className="flex flex-col items-center justify-center py-16 bg-card rounded-xl border border-border animate-fade-in">
-            <Loader2 className="w-12 h-12 animate-spin text-primary mb-4" />
-            <h3 className="text-lg font-semibold text-foreground mb-2">Generating Your Roadmap</h3>
-            <p className="text-muted-foreground text-center max-w-md">
-              Creating a personalized learning path with real-world technologies, certifications, and career milestones...
+        {/* ── Roadmap Content ── */}
+        {(!selectedField || !selectedSpecialization) ? (
+          <div className="text-center py-16 bg-card rounded-xl border border-border animate-fade-in">
+            <MapPin className="w-16 h-16 text-muted-foreground mx-auto mb-4" />
+            <h3 className="text-xl font-semibold text-foreground mb-2">Select Your Path</h3>
+            <p className="text-muted-foreground max-w-md mx-auto">
+              Choose a field and specialization above to view your personalised AI-powered learning roadmap
             </p>
           </div>
         ) : phases.length > 0 ? (
@@ -418,10 +450,18 @@ export default function Roadmap() {
             />
 
             {/* Progress Overview */}
-            <div className="bg-card rounded-xl border border-border p-6 animate-slide-up">
+            <div className={`rounded-xl border p-6 animate-slide-up transition-all duration-500 ${isAIMode
+                ? 'bg-gradient-to-r from-violet-500/5 via-primary/5 to-cyan-500/5 border-primary/20'
+                : 'bg-card border-border'
+              }`}>
               <div className="flex items-center justify-between mb-4">
-                <h2 className="font-semibold text-foreground">Overall Progress</h2>
-                <span className="text-primary font-bold">
+                <h2 className="font-semibold text-foreground flex items-center gap-2">
+                  {isAIMode
+                    ? <><Sparkles className="w-4 h-4 text-primary" /> Overall Progress — AI Roadmap</>
+                    : <><BookOpen className="w-4 h-4 text-muted-foreground" /> Overall Progress — Static Roadmap</>
+                  }
+                </h2>
+                <span className={`font-bold text-sm ${isAIMode ? 'text-primary' : 'text-muted-foreground'}`}>
                   {completedPhases.length} / {phases.length} Phases ({overallProgress}%)
                 </span>
               </div>
@@ -430,10 +470,10 @@ export default function Roadmap() {
                   <div
                     key={phase.id}
                     className={`flex-1 h-3 rounded-full transition-all duration-300 ${completedPhases.includes(phase.id)
-                      ? 'bg-success'
-                      : phase.id === currentPhase
-                        ? 'bg-primary'
-                        : 'bg-muted'
+                        ? 'bg-emerald-500'
+                        : phase.id === currentPhase
+                          ? isAIMode ? 'bg-primary' : 'bg-muted-foreground'
+                          : 'bg-muted'
                       }`}
                   />
                 ))}
@@ -444,8 +484,11 @@ export default function Roadmap() {
               </div>
             </div>
 
-            {/* Timeline */}
-            <div className="relative space-y-4">
+            {/* Phase Cards — wrapped with mode-specific border accent */}
+            <div className={`relative space-y-4 ${isAIMode
+                ? 'before:absolute before:-left-3 before:top-0 before:bottom-0 before:w-0.5 before:bg-gradient-to-b before:from-violet-500 before:via-primary before:to-cyan-500 before:rounded-full'
+                : ''
+              }`}>
               {phases.map((phase, index) => {
                 const isCompleted = completedPhases.includes(phase.id);
                 const isCurrent = phase.id === currentPhase;
@@ -454,7 +497,8 @@ export default function Roadmap() {
                 return (
                   <div
                     key={phase.id}
-                    className="animate-slide-up"
+                    className={`animate-slide-up transition-all duration-300 ${isStaticMode ? 'opacity-90' : ''
+                      }`}
                     style={{ animationDelay: `${index * 0.05}s` }}
                   >
                     <RoadmapPhaseCard
@@ -470,34 +514,45 @@ export default function Roadmap() {
                 );
               })}
             </div>
+
+            {/* Bottom CTA — push to switch mode */}
+            <div className={`rounded-xl border p-4 flex items-center justify-between gap-4 ${isAIMode
+                ? 'bg-muted/30 border-border'
+                : 'bg-gradient-to-r from-violet-500/10 to-primary/10 border-primary/30'
+              }`}>
+              {isAIMode ? (
+                <>
+                  <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                    <BookOpen className="w-4 h-4" />
+                    <span>Want a simpler, offline version?</span>
+                  </div>
+                  <Button variant="outline" size="sm" onClick={toggleMode} className="gap-1.5 text-xs">
+                    <BookOpen className="w-3.5 h-3.5" /> View Static
+                  </Button>
+                </>
+              ) : (
+                <>
+                  <div className="flex items-center gap-2 text-sm text-foreground">
+                    <Brain className="w-4 h-4 text-primary" />
+                    <span>Get an <strong>AI-personalised roadmap</strong> with live industry data</span>
+                  </div>
+                  <Button
+                    size="sm"
+                    onClick={toggleMode}
+                    className="gap-1.5 text-xs bg-gradient-to-r from-violet-500 to-primary text-white border-0 hover:opacity-90"
+                  >
+                    <Sparkles className="w-3.5 h-3.5" /> Activate AI
+                  </Button>
+                </>
+              )}
+            </div>
           </>
-        ) : selectedField && selectedSpecialization ? (
-          <div className="text-center py-16 bg-card rounded-xl border border-border animate-fade-in">
-            <MapPin className="w-16 h-16 text-muted-foreground mx-auto mb-4" />
-            <h3 className="text-xl font-semibold text-foreground mb-2">
-              {isAIMode ? 'Generating AI Roadmap...' : 'Preparing Roadmap...'}
-            </h3>
-            <p className="text-muted-foreground max-w-md mx-auto mb-4">
-              {isAIMode
-                ? 'AI is creating a personalized roadmap based on real-world industry standards.'
-                : 'A detailed roadmap for this specialization is being prepared.'}
-            </p>
-            {isAIMode && (
-              <Button onClick={handleRefresh} className="gap-2">
-                <RefreshCw className="w-4 h-4" />
-                Generate Now
-              </Button>
-            )}
+        ) : progressLoading ? (
+          <div className="flex flex-col items-center justify-center py-16 bg-card rounded-xl border border-border animate-fade-in">
+            <Loader2 className="w-12 h-12 animate-spin text-primary mb-4" />
+            <p className="text-muted-foreground">Loading roadmap...</p>
           </div>
-        ) : (
-          <div className="text-center py-16 bg-card rounded-xl border border-border animate-fade-in">
-            <MapPin className="w-16 h-16 text-muted-foreground mx-auto mb-4" />
-            <h3 className="text-xl font-semibold text-foreground mb-2">Select Your Path</h3>
-            <p className="text-muted-foreground max-w-md mx-auto">
-              Choose a field and specialization above to view your personalized learning roadmap
-            </p>
-          </div>
-        )}
+        ) : null}
       </div>
     </DashboardLayout>
   );
