@@ -353,6 +353,11 @@ export async function generateDynamicContent(
 
 export async function clearCache(cacheKey?: string): Promise<void> {
     try {
+        if (!db) {
+            console.warn('Cannot clear cache: Firestore is not initialized.');
+            return;
+        }
+
         if (cacheKey) {
             await db.collection('ai_generated_content').doc(cacheKey).delete();
             console.log(`🗑️ Cleared cache: ${cacheKey}`);
@@ -360,7 +365,7 @@ export async function clearCache(cacheKey?: string): Promise<void> {
             // Clear all cache
             const snapshot = await db.collection('ai_generated_content').get();
             const batch = db.batch();
-            snapshot.docs.forEach((doc: admin.firestore.QueryDocumentSnapshot) => batch.delete(doc.ref));
+            snapshot.docs.forEach((doc: any) => batch.delete(doc.ref));
             await batch.commit();
             console.log(`🗑️ Cleared all cache`);
         }

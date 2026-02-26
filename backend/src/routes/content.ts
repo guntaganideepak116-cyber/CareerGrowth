@@ -3,6 +3,10 @@ import { generateDynamicContent, clearCache } from '../services/dynamicContentSe
 
 const router = Router();
 
+router.get('/ping', (req, res) => {
+    res.json({ status: 'ok', router: 'content' });
+});
+
 interface ContentRequest {
     type: 'fields' | 'specializations' | 'career-paths' | 'roadmap' | 'certifications' | 'projects';
     fieldId?: string;

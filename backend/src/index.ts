@@ -95,12 +95,9 @@ if (process.env.NODE_ENV !== 'production') {
         startNotificationScheduler();
     });
 } else {
-    // Production: bootstrap runs on each cold start (Vercel warm-up)
-    // This ensures the DB is seeded even if the cron missed a day.
-    console.log('🌐 CareerGrowth Backend initialized for Vercel');
-    bootstrapNotificationsIfEmpty().catch(err =>
-        console.error('Bootstrap error on Vercel cold start:', err)
-    );
+    // Production: Vercel handles cold starts effectively.
+    // Instead of bootstrapping on every request (slow), we rely on the Vercel Cron Job.
+    console.log('🌐 CareerGrowth Backend initialized for Vercel (Production)');
 }
 
 export default app;
