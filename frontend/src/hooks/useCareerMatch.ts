@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useAuthContext } from '@/contexts/AuthContext';
 import { db } from '@/lib/firebase';
-import { collection, query, where, getDocs, doc, onSnapshot } from 'firebase/firestore';
+import { collection, query, where, getDocs, doc, onSnapshot, getDoc } from 'firebase/firestore';
 import { UserProgress } from '@/services/userAnalyticsService';
 import { fields } from '@/data/fieldsData';
 
@@ -26,10 +26,15 @@ export function useCareerMatch() {
 
         const userId = user.uid;
 
-        // 1. Listen for backend-calculated predictions (ADVANCED INTELLIGENCE)
+        // Listen to BOTH career_predictions AND user_progress for real-time intelligence
         const predictionRef = doc(db, 'career_predictions', userId);
-        const unsubsPredictions = onSnapshot(predictionRef, (predDoc) => {
+        const progressRef = doc(db, 'user_progress', userId);
+
+        let isBackendAvailable = false;
+
+        const unsubscribePredictions = onSnapshot(predictionRef, (predDoc) => {
             if (predDoc.exists()) {
+                isBackendAvailable = true;
                 const predData = predDoc.data();
                 const backendMatches: MatchResult[] = (predData.predictedRoles || []).map((role: any) => ({
                     pathId: role.roleName.replace(/\s+/g, '-').toLowerCase(),
@@ -40,17 +45,36 @@ export function useCareerMatch() {
                 }));
                 setMatches(backendMatches);
                 setLoading(false);
+            } else {
+                isBackendAvailable = false;
+                // If backend doc doesn't exist, we don't set loading false yet, 
+                // we let the progress listener handle the calculation.
             }
+        }, (err) => {
+            console.error("Prediction Listener Error:", err);
+            isBackendAvailable = false;
         });
 
-        // 2. Original fallback/real-time logic listener
-        const progressRef = doc(db, 'user_progress', userId);
-        const unsubscribe = onSnapshot(progressRef, async (progressDoc) => {
-            // Only run client-side calculation if backend predictions don't exist yet
-            const careerPredDoc = await getDocs(query(collection(db, 'career_predictions'), where('userId', '==', userId)));
-            if (!careerPredDoc.empty) return;
+        const unsubscribeProgress = onSnapshot(progressRef, async (progressDoc) => {
+            // If backend data already arrived, skip client-side calc
+            if (isBackendAvailable) {
+                setLoading(false);
+                return;
+            }
 
-            setLoading(true);
+            // Double check if backend doc exists before running heavy client logic
+            try {
+                const predSnap = await getDoc(predictionRef);
+                if (predSnap.exists()) {
+                    isBackendAvailable = true;
+                    // The other listener will handle the data
+                    return;
+                }
+            } catch (e) {
+                console.warn("Failed to check backend prediction, falling back to client logic", e);
+            }
+
+            // Fallback: Client-side calculation
             try {
                 const progressData = progressDoc.exists() ? progressDoc.data() as UserProgress : null;
                 const activeField = progressData?.selectedField || profile?.field;
@@ -61,7 +85,6 @@ export function useCareerMatch() {
                     return;
                 }
 
-                // ... rest of the existing client-side logic stays the same as fallback ...
                 const fieldId = fields.find(f =>
                     f.id.toLowerCase() === activeField.toLowerCase() ||
                     f.name.toLowerCase() === activeField.toLowerCase()
@@ -98,15 +121,18 @@ export function useCareerMatch() {
                 results.sort((a, b) => b.matchScore - a.matchScore);
                 setMatches(results);
             } catch (error) {
-                console.error('Error calculating matches:', error);
+                console.error('Error calculating client-side matches:', error);
             } finally {
                 setLoading(false);
             }
+        }, (err) => {
+            console.error("Progress Listener Error:", err);
+            setLoading(false);
         });
 
         return () => {
-            unsubsPredictions();
-            unsubscribe();
+            unsubscribePredictions();
+            unsubscribeProgress();
         };
     }, [user?.uid, profile?.field, profile?.skills]);
 
