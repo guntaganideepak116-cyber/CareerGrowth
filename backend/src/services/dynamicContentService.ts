@@ -240,17 +240,18 @@ export async function generateDynamicContent(
 
     // Generate with AI (SLOW PATH - only runs once)
     try {
-        console.log(`🤖 Generating ${type} for ${fieldId}/${specializationId}...`);
-
         if (!GEMINI_KEY) {
-            throw new Error('Gemini API Key is not configured on the server. Please add GEMINI_API_KEY to your environment variables.');
+            console.error('❌ GEMINI_API_KEY is missing');
+            throw new Error('Gemini API Key is not configured on the server. Please add GEMINI_API_KEY to Vercel Environment Variables.');
         }
+
+        console.log(`🤖 AI Call: ${type} for ${fieldId}/${specializationId}...`);
 
         const model = genAI.getGenerativeModel({
             model: 'gemini-1.5-flash',
             generationConfig: {
                 temperature: 0.7,
-                maxOutputTokens: 8000,
+                maxOutputTokens: 2000,
             },
         });
 

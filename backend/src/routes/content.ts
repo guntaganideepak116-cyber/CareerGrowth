@@ -122,11 +122,13 @@ router.post('/generate', async (req: Request, res: Response) => {
                     error: `Unknown content type: "${request.type}"`,
                 });
         }
-    } catch (error) {
+    } catch (error: any) {
         console.error('Error generating content:', error);
         return res.status(500).json({
             success: false,
-            error: error instanceof Error ? error.message : 'Failed to generate content',
+            error: error?.message || 'Failed to generate content',
+            stack: process.env.NODE_ENV === 'development' ? error?.stack : undefined,
+            details: error
         });
     }
 });
