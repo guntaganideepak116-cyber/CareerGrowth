@@ -1,7 +1,11 @@
 import express from 'express';
+import * as admin from 'firebase-admin';
+
 import { db } from '../config/firebase';
 import { verifyToken } from '../middleware/adminMiddleware';
 import { FieldValue } from 'firebase-admin/firestore';
+import { IntelligenceService } from '../services/intelligenceService';
+
 
 const router = express.Router();
 
@@ -120,7 +124,7 @@ async function syncPortfolioForUser(userId: string): Promise<PortfolioData> {
     // ── Skills from roadmap phases ────────────────────────────────
     const autoSkills: SkillItem[] = [];
 
-    roadmapSnap.docs.forEach(doc => {
+    roadmapSnap.docs.forEach((doc: admin.firestore.QueryDocumentSnapshot) => {
         const data = doc.data();
         const skills: string[] = data.skills || [];
         skills.forEach(skill => {
@@ -131,7 +135,7 @@ async function syncPortfolioForUser(userId: string): Promise<PortfolioData> {
     });
 
     // Skills from skills_progress collection
-    skillsSnap.docs.forEach(doc => {
+    skillsSnap.docs.forEach((doc: admin.firestore.QueryDocumentSnapshot) => {
         const data = doc.data();
         if (data.skillName) {
             autoSkills.push({ name: data.skillName, level: 80, category: data.category || 'Technical' });
@@ -148,7 +152,7 @@ async function syncPortfolioForUser(userId: string): Promise<PortfolioData> {
     const autoProjects: ProjectItem[] = [];
     const completedProjectIds: string[] = user.completed_projects || [];
 
-    roadmapSnap.docs.forEach(doc => {
+    roadmapSnap.docs.forEach((doc: admin.firestore.QueryDocumentSnapshot) => {
         const data = doc.data();
         if (!data.completed) return;
         const projects: string[] = data.projects || [];
@@ -191,7 +195,7 @@ async function syncPortfolioForUser(userId: string): Promise<PortfolioData> {
 
     // Platform learning experience (always add)
     if (roadmapSnap.size > 0 || skillsSnap.size > 0) {
-        const completedPhaseCount = roadmapSnap.docs.filter(d => d.data().completed).length;
+        const completedPhaseCount = roadmapSnap.docs.filter((d: admin.firestore.QueryDocumentSnapshot) => d.data().completed).length;
         autoExperience.push({
             title: 'CareerGrowth Platform Learner',
             type: 'Self-directed Learning',
@@ -222,11 +226,11 @@ async function syncPortfolioForUser(userId: string): Promise<PortfolioData> {
     // ── Readiness score ───────────────────────────────────────────
     let totalScore = 0;
     let scoreCount = 0;
-    assessmentsSnap.docs.forEach(doc => {
+    assessmentsSnap.docs.forEach((doc: admin.firestore.QueryDocumentSnapshot) => {
         const pct = doc.data().percentage;
         if (typeof pct === 'number') { totalScore += pct; scoreCount++; }
     });
-    const completedPhaseCount = roadmapSnap.docs.filter(d => d.data().completed).length;
+    const completedPhaseCount = roadmapSnap.docs.filter((d: admin.firestore.QueryDocumentSnapshot) => d.data().completed).length;
     const roadmapPct = Math.min(Math.round((completedPhaseCount / 8) * 100), 100);
     const avgAssessment = scoreCount > 0 ? Math.round(totalScore / scoreCount) : 0;
     const readinessScore = Math.round((avgAssessment * 0.5) + (roadmapPct * 0.3) + (Math.min(certsProgressSnap.size * 10, 20)));
@@ -329,6 +333,12 @@ router.post('/sync', verifyToken, async (req, res) => {
     try {
         const userId = (req as any).user.uid;
         const portfolio = await syncPortfolioForUser(userId);
+
+        // Update intelligence features
+        IntelligenceService.syncAllIntelligence(userId).catch(err =>
+            console.error('[Intelligence] Sync error:', err)
+        );
+
         res.json({ success: true, data: portfolio, message: 'Portfolio synced from progress data' });
     } catch (error) {
         console.error('Error syncing portfolio:', error);
@@ -379,6 +389,11 @@ router.post('/trigger', verifyToken, async (req, res) => {
         // Run sync in background — respond immediately so UI isn't blocked
         syncPortfolioForUser(userId).catch(err =>
             console.error('[Portfolio] Background sync error:', err)
+        );
+
+        // Run intelligence sync in background
+        IntelligenceService.syncAllIntelligence(userId).catch(err =>
+            console.error('[Intelligence] Background sync error:', err)
         );
 
         res.json({ success: true, message: `Portfolio update queued for event: ${event}` });

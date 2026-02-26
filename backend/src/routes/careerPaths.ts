@@ -136,7 +136,7 @@ router.get('/', async (req: Request, res: Response) => {
             return res.json({
                 success: true,
                 count: snapshot.size,
-                paths: snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })),
+                paths: snapshot.docs.map((doc: admin.firestore.QueryDocumentSnapshot) => ({ id: doc.id, ...doc.data() })),
                 source: 'cache'
             });
         }
@@ -172,7 +172,7 @@ router.get('/', async (req: Request, res: Response) => {
 });
 
 // Admin Route: Pre-generate for all 22 fields
-router.post('/seed-all', async (_req, res) => {
+router.post('/seed-all', async (_req: Request, res: Response) => {
     try {
         let total = 0;
         for (const fieldId of ALL_FIELDS) {

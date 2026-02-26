@@ -212,6 +212,14 @@ export const RoadmapPhaseCard = memo(function RoadmapPhaseCard({
                   Locked
                 </span>
               )}
+              {/* FEATURE 4: INDUSTRY-LEVEL BADGE */}
+              {(phase as any).level && (
+                <span
+                  className="px-2 py-0.5 text-[10px] font-bold rounded-full uppercase tracking-wider bg-secondary/50 text-muted-foreground border border-border"
+                >
+                  {(phase as any).level}
+                </span>
+              )}
             </div>
             <h3 className="text-base sm:text-lg font-bold text-gray-900 dark:text-white leading-snug">
               {phase.title}

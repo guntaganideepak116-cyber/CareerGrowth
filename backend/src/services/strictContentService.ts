@@ -168,7 +168,18 @@ async function fetchDatabaseRoadmap(userContext: UserContext): Promise<any[]> {
         }
 
         console.log(`✅ Found ${roadmaps.length} roadmaps in database`);
-        return roadmaps.length > 0 ? roadmaps[0].phases || [] : [];
+        const phases = roadmaps.length > 0 ? roadmaps[0].phases || [] : [];
+
+        // FEATURE 4: INDUSTRY-LEVEL ROADMAP CLASSIFICATION
+        return phases.map((phase: any, index: number) => {
+            const semester = index + 1;
+            let level: "Beginner" | "Intermediate" | "Advanced" | "Industry Level";
+            if (semester <= 2) level = "Beginner";
+            else if (semester <= 4) level = "Intermediate";
+            else if (semester <= 6) level = "Advanced";
+            else level = "Industry Level";
+            return { ...phase, level };
+        });
     } catch (error) {
         console.error('❌ Database fetch failed:', error);
         return [];
@@ -335,6 +346,19 @@ Return ONLY JSON:
         const parsed = JSON.parse(cleaned);
 
         let data = Array.isArray(parsed) ? parsed : (parsed.phases || []);
+
+        // FEATURE 4: INDUSTRY-LEVEL ROADMAP CLASSIFICATION
+        if (type === 'roadmap') {
+            data = data.map((phase: any, index: number) => {
+                const semester = index + 1;
+                let level: "Beginner" | "Intermediate" | "Advanced" | "Industry Level";
+                if (semester <= 2) level = "Beginner";
+                else if (semester <= 4) level = "Intermediate";
+                else if (semester <= 6) level = "Advanced";
+                else level = "Industry Level";
+                return { ...phase, level };
+            });
+        }
 
         // ENFORCE FREE certifications
         if (type === 'certifications') {

@@ -453,7 +453,7 @@ export async function runCleanup(): Promise<{ deletedCount: number }> {
     for (let i = 0; i < docs.length; i += BATCH_SIZE) {
         const chunk = docs.slice(i, i + BATCH_SIZE);
         const batch = db.batch();
-        chunk.forEach(doc => batch.delete(doc.ref));
+        chunk.forEach((doc: admin.firestore.QueryDocumentSnapshot) => batch.delete(doc.ref));
         await batch.commit();
         deletedCount += chunk.length;
     }
@@ -657,7 +657,7 @@ router.get('/all', async (req: Request, res: Response) => {
             : query.get()
         );
 
-        const notifications = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        const notifications = snapshot.docs.map((doc: admin.firestore.QueryDocumentSnapshot) => ({ id: doc.id, ...doc.data() }));
         res.json({ success: true, notifications, count: notifications.length });
     } catch (error) {
         console.error('Error fetching all notifications:', error);
@@ -680,7 +680,7 @@ router.get('/field/:fieldId', async (req: Request, res: Response) => {
             .limit(limitVal)
             .get();
 
-        const notifications = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        const notifications = snapshot.docs.map((doc: admin.firestore.QueryDocumentSnapshot) => ({ id: doc.id, ...doc.data() }));
         res.json({ success: true, notifications, count: notifications.length });
     } catch (error) {
         console.error('Error fetching field notifications:', error);
@@ -708,7 +708,7 @@ router.get('/stats', async (req: Request, res: Response) => {
         const byDate: Record<string, number> = {};
         const byField: Record<string, number> = {};
 
-        recentSnapshot.docs.forEach(doc => {
+        recentSnapshot.docs.forEach((doc: admin.firestore.QueryDocumentSnapshot) => {
             const data = doc.data();
             const date = data.dateKey || '';
             const field = data.fieldId || 'unknown';

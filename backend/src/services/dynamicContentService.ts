@@ -308,7 +308,17 @@ export async function generateDynamicContent(
             const parsedData = JSON.parse(cleanedText);
 
             if (type === 'roadmap' && parsedData.phases) {
-                finalData = parsedData.phases;
+                // FEATURE 4: INDUSTRY-LEVEL ROADMAP CLASSIFICATION
+                finalData = parsedData.phases.map((phase: any, index: number) => {
+                    const semester = index + 1;
+                    let level: "Beginner" | "Intermediate" | "Advanced" | "Industry Level";
+                    if (semester <= 2) level = "Beginner";
+                    else if (semester <= 4) level = "Intermediate";
+                    else if (semester <= 6) level = "Advanced";
+                    else level = "Industry Level";
+
+                    return { ...phase, level };
+                });
             } else if (Array.isArray(parsedData)) {
                 finalData = parsedData;
             } else {
@@ -340,17 +350,27 @@ export async function generateDynamicContent(
         console.log('🛡️  Applying Fallback Recovery Path...');
 
         if (type === 'roadmap') {
-            return Array.from({ length: 8 }, (_, i) => ({
-                id: i + 1,
-                title: `Semester ${i + 1}: ${specializationId} ${i < 3 ? 'Foundations' : i < 6 ? 'Core Engineering' : 'Advanced & Industry'}`,
-                duration: '6 months',
-                focus: `Semester ${i + 1} curriculum for ${specializationId}`,
-                skills: [`Skill Set ${i + 1}`, `Industry Prep ${i + 1}`],
-                tools: [`Primary Tool ${i + 1}`, `Workflow Tool ${i + 1}`],
-                projects: [`Semester ${i + 1} Major/Minor Project`],
-                certifications: [`Relevant Certification ${i + 1}`],
-                careerRelevance: `Ensures completion of ${specializationId} competency by Semester ${i + 1}.`
-            }));
+            return Array.from({ length: 8 }, (_, i) => {
+                const semester = i + 1;
+                let level: "Beginner" | "Intermediate" | "Advanced" | "Industry Level";
+                if (semester <= 2) level = "Beginner";
+                else if (semester <= 4) level = "Intermediate";
+                else if (semester <= 6) level = "Advanced";
+                else level = "Industry Level";
+
+                return {
+                    id: semester,
+                    title: `Semester ${semester}: ${specializationId} ${semester < 3 ? 'Foundations' : semester < 6 ? 'Core Engineering' : 'Advanced & Industry'}`,
+                    duration: '6 months',
+                    level, // FEATURE 4
+                    focus: `Semester ${semester} curriculum for ${specializationId}`,
+                    skills: [`Skill Set ${semester}`, `Industry Prep ${semester}`],
+                    tools: [`Primary Tool ${semester}`, `Workflow Tool ${semester}`],
+                    projects: [`Semester ${semester} Major/Minor Project`],
+                    certifications: [`Relevant Certification ${semester}`],
+                    careerRelevance: `Ensures completion of ${specializationId} competency by Semester ${semester}.`
+                };
+            });
         }
 
         throw new Error(`Failed to generate ${type}: ${error.message}`);

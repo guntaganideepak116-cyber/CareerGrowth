@@ -2,6 +2,8 @@ import express from 'express';
 import { verifyToken } from '../middleware/adminMiddleware';
 import admin from 'firebase-admin';
 import { createNotification } from '../services/notificationService';
+import { IntelligenceService } from '../services/intelligenceService';
+
 
 const router = express.Router();
 const db = admin.firestore();
@@ -231,7 +233,7 @@ router.post('/submit', verifyToken, async (req, res) => {
         const correctAnswersMap: Record<string, number> = {};
         const questionsDataMap: Record<string, any> = {};
 
-        questionsSnapshot.docs.forEach(doc => {
+        questionsSnapshot.docs.forEach((doc: admin.firestore.QueryDocumentSnapshot) => {
             const data = doc.data();
             const correctAnswer = data.correctAnswerIndex !== undefined ? data.correctAnswerIndex : data.correctAnswer;
             correctAnswersMap[doc.id] = correctAnswer;
@@ -306,6 +308,11 @@ router.post('/submit', verifyToken, async (req, res) => {
             `You scored ${percentage}% in your recent assessment. Status: ${status === 'passed' ? 'Passed' : 'Needs Improvement'}.`,
             'assessment',
             `/dashboard`
+        );
+
+        // TRIGGER INTELLIGENCE SYNC
+        IntelligenceService.syncAllIntelligence(userId).catch(err =>
+            console.error('[Intelligence] Sync error after assessment:', err)
         );
 
         // Return result to frontend

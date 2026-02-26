@@ -25,15 +25,34 @@ export function useCareerMatch() {
         }
 
         const userId = user.uid;
-        const progressRef = doc(db, 'user_progress', userId);
 
-        // Listen for real-time progress updates
+        // 1. Listen for backend-calculated predictions (ADVANCED INTELLIGENCE)
+        const predictionRef = doc(db, 'career_predictions', userId);
+        const unsubsPredictions = onSnapshot(predictionRef, (predDoc) => {
+            if (predDoc.exists()) {
+                const predData = predDoc.data();
+                const backendMatches: MatchResult[] = (predData.predictedRoles || []).map((role: any) => ({
+                    pathId: role.roleName.replace(/\s+/g, '-').toLowerCase(),
+                    pathName: role.roleName,
+                    matchScore: role.matchPercentage,
+                    missingSkills: role.missingSkills,
+                    acquiredSkills: role.requiredSkills.filter((s: string) => !role.missingSkills.includes(s))
+                }));
+                setMatches(backendMatches);
+                setLoading(false);
+            }
+        });
+
+        // 2. Original fallback/real-time logic listener
+        const progressRef = doc(db, 'user_progress', userId);
         const unsubscribe = onSnapshot(progressRef, async (progressDoc) => {
+            // Only run client-side calculation if backend predictions don't exist yet
+            const careerPredDoc = await getDocs(query(collection(db, 'career_predictions'), where('userId', '==', userId)));
+            if (!careerPredDoc.empty) return;
+
             setLoading(true);
             try {
                 const progressData = progressDoc.exists() ? progressDoc.data() as UserProgress : null;
-
-                // Priority 1: Field from Real-time Progress, Priority 2: Field from Profile
                 const activeField = progressData?.selectedField || profile?.field;
 
                 if (!activeField) {
@@ -42,13 +61,12 @@ export function useCareerMatch() {
                     return;
                 }
 
-                // Find the correct fieldId (it might be the name or ID)
+                // ... rest of the existing client-side logic stays the same as fallback ...
                 const fieldId = fields.find(f =>
                     f.id.toLowerCase() === activeField.toLowerCase() ||
                     f.name.toLowerCase() === activeField.toLowerCase()
                 )?.id || activeField.toLowerCase();
 
-                // Fetch career paths for the field
                 const pathsRef = collection(db, 'career_paths');
                 const q = query(pathsRef, where('fieldId', '==', fieldId.trim()));
                 const querySnapshot = await getDocs(q);
@@ -56,24 +74,18 @@ export function useCareerMatch() {
                 const userSkills: string[] = [
                     ...(progressData?.completedSkills || []),
                     ...(profile?.skills || [])
-                ].filter((v, i, a) => a.indexOf(v) === i); // Unique skills
+                ].filter((v, i, a) => a.indexOf(v) === i);
 
                 const results: MatchResult[] = querySnapshot.docs.map(doc => {
                     const data = doc.data();
                     const requiredSkills: string[] = data.requiredSkills || [];
-
-                    // Simple intersection logic
                     const acquired = requiredSkills.filter(skill =>
                         userSkills.some(us => us.toLowerCase().includes(skill.toLowerCase()) || skill.toLowerCase().includes(us.toLowerCase()))
                     );
-
                     const missing = requiredSkills.filter(skill =>
                         !userSkills.some(us => us.toLowerCase().includes(skill.toLowerCase()) || skill.toLowerCase().includes(us.toLowerCase()))
                     );
-
-                    const score = requiredSkills.length > 0
-                        ? Math.round((acquired.length / requiredSkills.length) * 100)
-                        : 0;
+                    const score = requiredSkills.length > 0 ? Math.round((acquired.length / requiredSkills.length) * 100) : 0;
 
                     return {
                         pathId: doc.id,
@@ -83,8 +95,6 @@ export function useCareerMatch() {
                         acquiredSkills: acquired
                     };
                 });
-
-                // Sort by match score descending
                 results.sort((a, b) => b.matchScore - a.matchScore);
                 setMatches(results);
             } catch (error) {
@@ -94,7 +104,10 @@ export function useCareerMatch() {
             }
         });
 
-        return () => unsubscribe();
+        return () => {
+            unsubsPredictions();
+            unsubscribe();
+        };
     }, [user?.uid, profile?.field, profile?.skills]);
 
     return { matches, loading };
