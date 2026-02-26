@@ -25,14 +25,14 @@ const ALL_FIELDS = [
     { id: 'sports', name: 'Sports, Fitness & Lifestyle' },
     { id: 'vocational', name: 'Skill-Based & Vocational Fields' },
     { id: 'cloud-computing', name: 'Cloud Computing' },
-    { id: 'devops-sre', name: 'DevOps & Site Reliability Engineering' },
+    { id: 'devops', name: 'DevOps & Site Reliability Engineering' },
     { id: 'blockchain-web3', name: 'Blockchain & Web3' },
-    { id: 'ar-vr-mr', name: 'AR / VR / Mixed Reality' },
-    { id: 'quantum-computing', name: 'Quantum Computing' },
+    { id: 'ar-vr', name: 'AR / VR / Mixed Reality' },
+    { id: 'quantum', name: 'Quantum Computing' },
     { id: 'robotics-automation', name: 'Robotics & Automation' },
-    { id: 'bioinformatics-compbio', name: 'Bioinformatics & Computational Biology' },
+    { id: 'bioinformatics', name: 'Bioinformatics & Computational Biology' },
     { id: 'product-management', name: 'Product Management & Tech Leadership' },
-    { id: 'uiux-hci', name: 'UI/UX & Human–Computer Interaction' },
+    { id: 'ui-ux', name: 'UI/UX & Human–Computer Interaction' },
 ];
 
 // ============================================================
@@ -62,42 +62,22 @@ function verifyCronSecret(req: Request, res: Response, next: NextFunction): void
  */
 async function generateFieldNotifications(fieldId: string, fieldName: string, date: string): Promise<any[]> {
     try {
-        const model = genAI.getGenerativeModel({ model: 'gemini-2.0-flash-001' });
+        const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
 
-        const prompt = `You are an AI career advisor generating daily notifications for students in the ${fieldName} field.
+        const prompt = `You are an AI career advisor for students in ${fieldName}.
+Generate exactly 3 diverse notifications for ${date}:
+1. Industry trend/news (type: "trend")
+2. Skill opportunity (type: "skill")
+3. Career tip/opportunity (type: "opportunity")
 
-Generate exactly 3 diverse notifications for ${date}. Include:
-1. One industry trend/news notification (type: "trend")
-2. One skill/learning opportunity (type: "skill")
-3. One career tip or opportunity (type: "opportunity")
-
-For each notification, provide:
-- title: Catchy, concise title (max 60 characters)
-- message: Detailed, actionable message (100-150 characters)
-- priority: "high", "medium", or "low"
-- category: "Industry Update", "Skill Development", "Career Opportunity", "Upcoming Event", or "Learning Resource"
-- actionText: Clear call-to-action (e.g., "Learn More", "Explore Now", "Take Action")
-- actionUrl: Relevant external link (real, working URLs only)
-
-Return ONLY valid JSON array in this exact format:
-[
-  {
-    "title": "...",
-    "message": "...",
-    "type": "trend",
-    "priority": "high",
-    "category": "Industry Update",
-    "actionText": "Learn More",
-    "actionUrl": "https://..."
-  }
-]
-
-Make notifications specific to ${fieldName}, current (2026 trends), actionable, and professional.`;
+Return ONLY a valid JSON array. Each object must have: title, message, priority, category, actionText, actionUrl.
+Titles max 60 chars. Messages max 150 chars.`;
 
         const result = await model.generateContent(prompt);
-        const response = result.response.text();
+        const response = await result.response;
+        const text = response.text();
 
-        const jsonMatch = response.match(/\[[\s\S]*\]/);
+        const jsonMatch = text.match(/\[[\s\S]*\]/);
         if (!jsonMatch) throw new Error('Invalid AI response format');
 
         const notifications = JSON.parse(jsonMatch[0]);
@@ -240,11 +220,12 @@ export async function runHourlyGeneration(force = false): Promise<{ count: numbe
 
     for (const field of ALL_FIELDS) {
         try {
-            const model = genAI.getGenerativeModel({ model: 'gemini-2.0-flash-001' });
+            const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
             const prompt = `Generate 1 short AI Insight or Future Trend for the career field: ${field.name}. Make it relevant to 2026. Return ONLY JSON: { "title": "...", "message": "...", "actionUrl": "https://..." }`;
 
             const result = await model.generateContent(prompt);
-            const text = result.response.text();
+            const response = await result.response;
+            const text = response.text();
             const jsonMatch = text.match(/\{[\s\S]*\}/);
             if (!jsonMatch) continue;
 
@@ -316,7 +297,7 @@ export async function runSixHourlyGeneration(force = false): Promise<{ count: nu
                 }
             }
 
-            const model = genAI.getGenerativeModel({ model: 'gemini-2.0-flash-001' });
+            const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
             const prompt = `Generate 1 concise, real-world career update notification for the field: ${field.name}.
 Make it relevant to 2026 industry trends. Focus on: certifications, job opportunities, skill demands, or industry news.
 Return ONLY valid JSON (no markdown, no explanation):
@@ -330,7 +311,8 @@ Return ONLY valid JSON (no markdown, no explanation):
 }`;
 
             const result = await model.generateContent(prompt);
-            const text = result.response.text();
+            const response = await result.response;
+            const text = response.text();
             const jsonMatch = text.match(/\{[\s\S]*\}/);
             if (!jsonMatch) continue;
 
