@@ -34,8 +34,31 @@ export class IntelligenceService {
             const userDoc = await db.collection('users').doc(userId).get();
             if (!userDoc.exists) return;
             const userData = userDoc.data() || {};
-            const fieldId = userData.field;
+            let fieldId = (userData.field || '').toString().toLowerCase().trim();
             const specId = userData.specialization;
+
+            // Robust check: Mapping field name to ID if necessary
+            const fieldMapping: Record<string, string> = {
+                'engineering & technology': 'engineering',
+                'medical & health sciences': 'medical',
+                'science & research': 'science',
+                'arts, humanities & degree': 'arts',
+                'commerce, business & management': 'commerce',
+                'law & public services': 'law',
+                'education & teaching': 'education',
+                'design, media & creative arts': 'design',
+                'defense, security & physical services': 'defense',
+                'agriculture & environmental studies': 'agriculture',
+                'hospitality, travel & tourism': 'hospitality',
+                'sports, fitness & lifestyle': 'sports',
+                'skill-based & vocational fields': 'vocational'
+            };
+
+            if (fieldMapping[fieldId]) {
+                fieldId = fieldMapping[fieldId];
+            }
+
+            if (!fieldId) return;
 
             // Fetch user's current progress data
             const [skillsSnap, certsSnap, assessmentsSnap, roadmapSnap] = await Promise.all([

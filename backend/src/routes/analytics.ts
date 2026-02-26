@@ -1,6 +1,8 @@
 import express from 'express';
+import * as admin from 'firebase-admin';
 import { db } from '../config/firebase';
 import { verifyToken } from '../middleware/adminMiddleware';
+import { IntelligenceService } from '../services/intelligenceService';
 
 const router = express.Router();
 
@@ -34,10 +36,36 @@ router.get('/dashboard-analytics', verifyToken, async (req, res) => {
     try {
         const userId = (req as any).user.uid;
 
+        // Trigger Intelligence Sync (Background-ish but awaited for consistency here)
+        // We call it but don't strictly require it to finish to return the basic count-based metrics
+        IntelligenceService.syncAllIntelligence(userId).catch(e => console.error("Auto-sync error:", e));
+
         // 1. Fetch User Data (Essential for Field ID)
         const userDoc = await db.collection('users').doc(userId).get();
         const userData = userDoc.data() || {};
-        const fieldId = userData.field;
+        let fieldId = (userData.field || '').toString().toLowerCase().trim();
+        const specId = userData.specialization;
+
+        // Robust check: Mapping field name to ID if necessary
+        const fieldMapping: Record<string, string> = {
+            'engineering & technology': 'engineering',
+            'medical & health sciences': 'medical',
+            'science & research': 'science',
+            'arts, humanities & degree': 'arts',
+            'commerce, business & management': 'commerce',
+            'law & public services': 'law',
+            'education & teaching': 'education',
+            'design, media & creative arts': 'design',
+            'defense, security & physical services': 'defense',
+            'agriculture & environmental studies': 'agriculture',
+            'hospitality, travel & tourism': 'hospitality',
+            'sports, fitness & lifestyle': 'sports',
+            'skill-based & vocational fields': 'vocational'
+        };
+
+        if (fieldMapping[fieldId]) {
+            fieldId = fieldMapping[fieldId];
+        }
 
         // 2. Execute Independent Queries Concurrently
         const [
@@ -59,7 +87,7 @@ router.get('/dashboard-analytics', verifyToken, async (req, res) => {
         let assessmentCount = 0;
 
         if (!assessmentsSnap.empty) {
-            assessmentsSnap.forEach(doc => {
+            assessmentsSnap.forEach((doc: admin.firestore.QueryDocumentSnapshot) => {
                 const data = doc.data();
                 if (typeof data.percentage === 'number') {
                     totalScore += data.percentage;
@@ -70,7 +98,7 @@ router.get('/dashboard-analytics', verifyToken, async (req, res) => {
             // Fallback: Check subcollection only if main collection empty
             // This is kept sequential to avoid unnecessary reads if main data exists
             const subAssessments = await db.collection('users').doc(userId).collection('assessments').get();
-            subAssessments.forEach(doc => {
+            subAssessments.forEach((doc: admin.firestore.QueryDocumentSnapshot) => {
                 const data = doc.data();
                 if (typeof data.score === 'number') {
                     totalScore += data.score;
@@ -92,7 +120,7 @@ router.get('/dashboard-analytics', verifyToken, async (req, res) => {
         if (fieldId) {
             const pathsQuery = await db.collection('career_paths').where('field', '==', fieldId).get();
             const skillsSet = new Set();
-            pathsQuery.forEach(doc => {
+            pathsQuery.forEach((doc: admin.firestore.QueryDocumentSnapshot) => {
                 if (doc.data().requiredSkills && Array.isArray(doc.data().requiredSkills)) {
                     doc.data().requiredSkills.forEach((s: any) => skillsSet.add(s));
                 }
@@ -162,7 +190,7 @@ router.get('/user-progress', verifyToken, async (req, res) => {
         let previousWeekActivityCount = 0;
 
         // Consolidate all activities
-        const processDoc = (doc: any) => {
+        const processDoc = (doc: admin.firestore.QueryDocumentSnapshot) => {
             const date = extractDate(doc.data());
             if (date) {
                 if (date >= oneWeekAgo) weeklyActivityCount++;
@@ -170,11 +198,11 @@ router.get('/user-progress', verifyToken, async (req, res) => {
             }
         };
 
-        assessmentsSnap.forEach(processDoc);
-        skillsSnap.forEach(processDoc);
-        certsSnap.forEach(processDoc);
-        logsSnap.forEach(processDoc);
-        roadmapSnap.forEach(processDoc);
+        assessmentsSnap.forEach((doc: admin.firestore.QueryDocumentSnapshot) => processDoc(doc));
+        skillsSnap.forEach((doc: admin.firestore.QueryDocumentSnapshot) => processDoc(doc));
+        certsSnap.forEach((doc: admin.firestore.QueryDocumentSnapshot) => processDoc(doc));
+        logsSnap.forEach((doc: admin.firestore.QueryDocumentSnapshot) => processDoc(doc));
+        roadmapSnap.forEach((doc: admin.firestore.QueryDocumentSnapshot) => processDoc(doc));
 
         const monthlyGrowthRate = previousWeekActivityCount === 0 ?
             (weeklyActivityCount > 0 ? 100 : 0) :
