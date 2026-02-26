@@ -94,31 +94,29 @@ Student Context:
 - Career Goal: ${userProfile?.careerGoal || 'Not specified'}
 
 STRICT Requirements:
-1. Generate exactly 3 phases (Beginner to Advanced) SPECIFIC to ${specializationId}
-2. Each phase must be 2-4 months
-3. Use ONLY technologies/tools that are SPECIFIC to ${specializationId} (NOT generic ${fieldId} tools)
-4. Include certifications that are SPECIFIC to ${specializationId} (e.g., for "Robotics Engineering" use ROS, Arduino, not generic "Python")
-5. Include project ideas that are UNIQUE to ${specializationId}
-6. Phase titles must reflect ${specializationId} progression (not generic titles)
+1. Generate exactly 8 to 10 phases, where each phase represents ONE SEMESTER (Sem 1, Sem 2, ..., up to Sem 8 or 10 depending on the field).
+2. Phase titles must be formatted as: "Semester [Number]: [Topic Specific to ${specializationId}]"
+3. Contents MUST be specific to ${specializationId}. Do NOT suggest generic first-year subjects unless they are directly tailored.
+4. For each semester, provide specialized skills, tools, projects, and certifications.
+5. Progression: From foundational concepts (Sem 1-2) to industry-ready specialization (Sem 7-8).
 
-Example for Robotics Engineering:
-- Phase 1: "Robot Fundamentals & Kinematics" (NOT "Programming Basics")
-- Tools: ROS2, Gazebo, Arduino, Raspberry Pi (NOT just "Python, Git")
-- Projects: "Autonomous Line Following Robot" (NOT "Build a Website")
+Example for Cloud Computing:
+- Semester 1: "Introduction to Infrastructure & OS"
+- Semester 5: "Serverless Architecture & Distributed Systems"
 
 Return ONLY valid JSON:
 {
   "phases": [
     {
       "id": 1,
-      "title": "SPECIFIC to ${specializationId}",
-      "duration": "2-3 months",
-      "focus": "Core ${specializationId} fundamentals",
-      "skills": ["${specializationId}-specific skill1", "${specializationId}-specific skill2"],
-      "tools": ["${specializationId}-specific tool1", "${specializationId}-specific tool2"],
-      "projects": ["${specializationId}-specific project1"],
-      "certifications": ["${specializationId}-relevant cert1"],
-      "careerRelevance": "Why this matters for ${specializationId} careers"
+      "title": "Semester 1: [Specific Topic]",
+      "duration": "6 months (Semester)",
+      "focus": "Foundational mastery for ${specializationId}",
+      "skills": ["skill1", "skill2"],
+      "tools": ["tool1", "tool2"],
+      "projects": ["Mini project for Sem 1"],
+      "certifications": ["Introductory Certification"],
+      "careerRelevance": "Relationship to ${specializationId} career"
     }
   ]
 }`;
@@ -251,7 +249,7 @@ export async function generateDynamicContent(
             model: 'gemini-1.5-flash',
             generationConfig: {
                 temperature: 0.7,
-                maxOutputTokens: 2000,
+                maxOutputTokens: 4000,
             },
         });
 
@@ -342,30 +340,17 @@ export async function generateDynamicContent(
         console.log('🛡️  Applying Fallback Recovery Path...');
 
         if (type === 'roadmap') {
-            return [
-                {
-                    id: 1,
-                    title: `Beginner: ${specializationId} Fundamentals`,
-                    duration: '2-3 months',
-                    focus: 'Core concepts and basic tooling',
-                    skills: ['Basic Principles', 'Introduction to Industry Tools'],
-                    tools: ['Standard IDE', 'Version Control'],
-                    projects: [`Introduction to ${specializationId}`],
-                    certifications: ['Foundational Course (Free)'],
-                    careerRelevance: 'Builds the necessary base for advanced study.'
-                },
-                {
-                    id: 2,
-                    title: `Intermediate: ${specializationId} Implementation`,
-                    duration: '3-4 months',
-                    focus: 'Working on real-world projects',
-                    skills: ['Advanced Techniques', 'System Design'],
-                    tools: [`${specializationId} Pro Tools`],
-                    projects: [`Complex ${specializationId} Application`],
-                    certifications: [`Expert ${specializationId} Certification`],
-                    careerRelevance: 'Demonstrates professional capability.'
-                }
-            ];
+            return Array.from({ length: 8 }, (_, i) => ({
+                id: i + 1,
+                title: `Semester ${i + 1}: ${specializationId} ${i < 3 ? 'Foundations' : i < 6 ? 'Core Engineering' : 'Advanced & Industry'}`,
+                duration: '6 months',
+                focus: `Semester ${i + 1} curriculum for ${specializationId}`,
+                skills: [`Skill Set ${i + 1}`, `Industry Prep ${i + 1}`],
+                tools: [`Primary Tool ${i + 1}`, `Workflow Tool ${i + 1}`],
+                projects: [`Semester ${i + 1} Major/Minor Project`],
+                certifications: [`Relevant Certification ${i + 1}`],
+                careerRelevance: `Ensures completion of ${specializationId} competency by Semester ${i + 1}.`
+            }));
         }
 
         throw new Error(`Failed to generate ${type}: ${error.message}`);
