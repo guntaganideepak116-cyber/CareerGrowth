@@ -1,0 +1,4 @@
+collegeId,collegeName,type,accreditation,rankingTier,state,district,region,address,website,rating,latitude,longitude,searchKeywords
+VITV-001,Vellore Institute of Technology,Private,NAAC A++,Tier 1,Tamil Nadu,Vellore,South,Vellore Campus Tiruvalam Rd,https://vit.ac.in,4.5,12.9692,79.1559,Computer Science|Information Technology|Mechanical Engineering|Electrical Engineering
+SRM-002,SRM Institute of Science and Technology,Deemed,NAAC A++,Tier 1,Tamil Nadu,Kancheepuram,South,Kattankulathur Chennai,https://srmist.edu.in,4.4,12.8231,80.0453,Computer Science|Artificial Intelligence|Robotics
+PU-003,Panjab University,Government,NAAC A,Tier 2,Chandigarh,Chandigarh,North,Sector 14 Chandigarh,https://puchd.ac.in,4.2,30.7610,76.7645,MBA|Law|Commerce|Arts
