@@ -50,6 +50,16 @@ fs.createReadStream(csvFilePath)
     .on('data', (row) => {
         // Parse CSV Row into advanced JSON structure
         try {
+            let website = row.website?.trim();
+            // Provide a strict fallback or just make sure it's valid if provided
+            if (!website) {
+                website = "https://www.example-college.edu"; // Fallback to avoid empty strings
+            } else if (!website.startsWith('http://') && !website.startsWith('https://')) {
+                website = `https://${website}`;
+            } else if (website.startsWith('http://')) {
+                website = website.replace('http://', 'https://');
+            }
+
             const college = {
                 collegeId: row.collegeId?.trim() || `COL-${Date.now()}-${Math.floor(Math.random() * 1000)}`,
                 collegeName: row.collegeName?.trim(),
@@ -60,7 +70,7 @@ fs.createReadStream(csvFilePath)
                 district: row.district?.trim() || row.city?.trim() || "",
                 region: row.region?.trim() || "India",
                 address: row.address?.trim() || "",
-                website: row.website?.trim() || "",
+                website: website,
                 rating: parseFloat(row.rating) || 4.0,
                 location: {
                     latitude: parseFloat(row.latitude) || 0,

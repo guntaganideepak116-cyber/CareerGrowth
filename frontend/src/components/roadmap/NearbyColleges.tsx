@@ -1,4 +1,7 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
+import { db } from '@/lib/firebase';
+import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
+import { useAuthContext } from '@/contexts/AuthContext';
 import {
     MapPin,
     Navigation,
@@ -92,6 +95,16 @@ function loadGoogleMapsScript(apiKey: string): Promise<void> {
     });
 }
 
+const isValidURL = (url?: string): boolean => {
+    if (!url || url.trim() === '') return false;
+    try {
+        new URL(url);
+        return true;
+    } catch {
+        return false;
+    }
+};
+
 const getValidUrl = (url?: string): string => {
     if (!url) return '#';
     if (url.startsWith('http://') || url.startsWith('https://')) return url;
@@ -99,6 +112,7 @@ const getValidUrl = (url?: string): string => {
 };
 
 export function NearbyColleges({ specialization }: NearbyCollegesProps) {
+    const { user } = useAuthContext();
     const [isOpen, setIsOpen] = useState(false);
     const [loading, setLoading] = useState(false);
     const [colleges, setColleges] = useState<College[]>([]);
@@ -127,6 +141,39 @@ export function NearbyColleges({ specialization }: NearbyCollegesProps) {
         setSavedColleges(updated);
         localStorage.setItem('user_saved_colleges', JSON.stringify(updated));
         toast.success(savedColleges.includes(id) ? 'College removed from saved' : 'College saved successfully!');
+    };
+
+    const handleVisitWebsite = async (e: React.MouseEvent, college: College) => {
+        e.preventDefault();
+        e.stopPropagation();
+
+        if (!college.website || college.website.trim() === '') {
+            toast.error("Website not available.");
+            return;
+        }
+
+        const finalUrl = getValidUrl(college.website);
+
+        if (!isValidURL(finalUrl)) {
+            toast.error("Official website link is currently unavailable.");
+            return;
+        }
+
+        try {
+            if (user) {
+                await addDoc(collection(db, 'college_website_clicks'), {
+                    userId: user.uid,
+                    collegeId: college.id,
+                    collegeName: college.collegeName,
+                    field: specialization,
+                    clickedAt: serverTimestamp()
+                });
+            }
+        } catch (err) {
+            console.error("Failed to log website click", err);
+        }
+
+        window.open(finalUrl, "_blank", "noopener,noreferrer");
     };
 
     const mapRef = useRef<HTMLDivElement>(null);
@@ -224,13 +271,20 @@ export function NearbyColleges({ specialization }: NearbyCollegesProps) {
                 }
             });
 
+            const finalUrl = getValidUrl(college.website);
+            const canVisit = isValidURL(finalUrl) && college.website && college.website.trim() !== '';
+
+            const visitLink = canVisit
+                ? `<a href="${finalUrl}" target="_blank" rel="noopener noreferrer" style="font-size:12px;color:#6c63ff;text-decoration:none;">🌐 Visit Website →</a>`
+                : `<span style="font-size:12px;color:#a0aec0;cursor:not-allowed;" title="Website not available">🌐 Visit Website →</span>`;
+
             const infoWindow = new window.google.maps.InfoWindow({
                 content: `
                     <div style="max-width:220px;font-family:sans-serif;">
                         <h3 style="margin:0 0 4px;font-size:14px;color:#1a202c;font-weight:bold;">${college.collegeName}</h3>
                         <p style="margin:0 0 4px;font-size:12px;color:#4a5568;">📍 ${college.address}</p>
                         <p style="margin:0 0 4px;font-size:12px;color:#4a5568;">⭐ ${college.rating}/5.0 &nbsp;•&nbsp; ${college.distance ? college.distance + ' km away' : college.city}</p>
-                        <a href="${getValidUrl(college.website)}" target="_blank" style="font-size:12px;color:#6c63ff;text-decoration:none;">🌐 Visit Website →</a>
+                        ${visitLink}
                     </div>
                 `
             });
@@ -612,11 +666,26 @@ export function NearbyColleges({ specialization }: NearbyCollegesProps) {
                                             <p className="font-semibold text-sm text-foreground">{selectedCollege.collegeName}</p>
                                             <p className="text-xs text-muted-foreground">{selectedCollege.distance ? `${selectedCollege.distance} km away` : selectedCollege.city}</p>
                                         </div>
-                                        <a href={getValidUrl(selectedCollege.website)} target="_blank" rel="noopener noreferrer">
-                                            <Button size="sm" variant="outline" className="gap-1.5 text-xs">
+                                        {selectedCollege.website && isValidURL(getValidUrl(selectedCollege.website)) ? (
+                                            <Button
+                                                size="sm"
+                                                variant="outline"
+                                                className="gap-1.5 text-xs"
+                                                onClick={(e) => handleVisitWebsite(e, selectedCollege)}
+                                            >
                                                 <ExternalLink className="w-3.5 h-3.5" /> Visit
                                             </Button>
-                                        </a>
+                                        ) : (
+                                            <Button
+                                                size="sm"
+                                                variant="outline"
+                                                className="gap-1.5 text-xs opacity-50 cursor-not-allowed"
+                                                title="Website not available"
+                                                disabled
+                                            >
+                                                <ExternalLink className="w-3.5 h-3.5" /> Visit
+                                            </Button>
+                                        )}
                                     </div>
                                 )}
                             </div>
@@ -699,10 +768,9 @@ export function NearbyColleges({ specialization }: NearbyCollegesProps) {
                                                         variant="outline"
                                                         size="sm"
                                                         className="flex-1 text-xs h-8 gap-1.5"
-                                                        onClick={(e) => {
-                                                            e.stopPropagation();
-                                                            window.open(getValidUrl(college.website), '_blank');
-                                                        }}
+                                                        disabled={!college.website || !isValidURL(getValidUrl(college.website))}
+                                                        title={(!college.website || !isValidURL(getValidUrl(college.website))) ? "Website not available" : "Visit Website"}
+                                                        onClick={(e) => handleVisitWebsite(e, college)}
                                                     >
                                                         <Globe className="w-3 h-3" /> Website
                                                     </Button>
