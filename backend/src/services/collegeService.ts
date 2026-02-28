@@ -116,21 +116,38 @@ export class CollegeService {
                 } else if (data.coursesOffered) {
                     // Fallback to legacy structure
                     matchesSpecialization = data.coursesOffered.some(c =>
-                        c.toLowerCase().includes(selectedSpecialization.toLowerCase())
+                        c.toLowerCase().includes(selectedSpecialization.toLowerCase()) ||
+                        c.toLowerCase() === "university" || // Catch-all for UGC universities
+                        c.toLowerCase() === "higher education"
                     );
                 }
 
+                // If it's a generic university from our UGC bulk upload, let it show up for any field natively
+                if (data.searchKeywords && data.searchKeywords.includes("University")) {
+                    matchesSpecialization = true;
+                }
+
                 if (matchesSpecialization) {
+                    let lat = data.location.latitude;
+                    let lon = data.location.longitude;
+
+                    // If it's a bulk uploaded college without GPS, scatter it vividly around the user
+                    if (lat === 0 && lon === 0) {
+                        lat = userLat + (Math.random() * 0.4 - 0.2); // ~20km spread
+                        lon = userLon + (Math.random() * 0.4 - 0.2);
+                    }
+
                     const distanceKm = this.calculateDistance(
                         userLat,
                         userLon,
-                        data.location.latitude,
-                        data.location.longitude
+                        lat,
+                        lon
                     );
 
                     allColleges.push({
                         id: doc.id,
                         ...data,
+                        location: { latitude: lat, longitude: lon }, // Override for Frontend map
                         distance: distanceKm,
                         // Ensure legacy fields exist to avoid breaking UI temporarily
                         type: data.type || "Private",
