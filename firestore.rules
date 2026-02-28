@@ -96,6 +96,7 @@ service cloud.firestore {
     match /specializations/{id} { allow read: if isAuthenticated(); allow write: if isAdmin(); }
     match /projects/{id} { allow read: if isAuthenticated(); allow write: if isAdmin(); }
     match /certifications/{id} { allow read: if isAuthenticated(); allow write: if isAdmin(); }
+    match /colleges/{id} { allow read: if true; allow write: if isAdmin(); }
 
     // ===========================================
     // 8. PORTFOLIOS

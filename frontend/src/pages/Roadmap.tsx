@@ -30,6 +30,7 @@ import {
   Brain,
   ChevronRight,
 } from 'lucide-react';
+import { NearbyColleges } from '@/components/roadmap/NearbyColleges';
 
 // ── Roadmap Mode ──────────────────────────────────────────────
 // AI:     DEFAULT — calls Gemini via backend, real-world personalised roadmap
@@ -448,6 +449,9 @@ export default function Roadmap() {
               completedPhases={completedPhases}
               phases={phases}
             />
+
+            {/* Nearby Colleges Section */}
+            <NearbyColleges specialization={selectedSpecialization} />
 
             {/* Progress Overview */}
             <div className={`rounded-xl border p-6 animate-slide-up transition-all duration-500 ${isAIMode

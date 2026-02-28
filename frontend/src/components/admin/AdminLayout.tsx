@@ -16,7 +16,8 @@ import {
     FileCheck,
     Menu,
     BarChart3,
-    TrendingUp
+    TrendingUp,
+    Building2
 } from 'lucide-react';
 
 import { auth } from '@/lib/firebase';
@@ -38,6 +39,7 @@ const adminNavItems = [
     { icon: Map, label: 'Projects & Certifications', path: '/admin/roadmaps' },
     { icon: BarChart3, label: 'Quota & Usage Monitor', path: '/admin/ai-usage' },
     { icon: Bell, label: 'Notifications Manager', path: '/admin/notifications' },
+    { icon: Building2, label: 'College Manager', path: '/admin/colleges' },
     { icon: Shield, label: 'Plan & Subscription Manager', path: '/admin/settings' },
     { icon: Settings, label: 'System Settings', path: '/admin/security' },
 ];

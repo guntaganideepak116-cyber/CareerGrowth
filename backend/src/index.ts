@@ -46,6 +46,7 @@ import analyticsRoutes from './routes/analytics';
 import careerPathsRoutes from './routes/careerPaths';
 import assessmentRoutes from './routes/assessmentRoutes';
 import recommendationRoutes from './routes/recommendationRoutes';
+import collegeRoutes from './routes/collegeRoutes';
 
 app.get('/', (_req, res) => {
     res.send('CareerGrowth Backend — Running ✅');
@@ -73,6 +74,7 @@ app.use('/api/analytics', analyticsRoutes);
 app.use('/api/career-paths', careerPathsRoutes);
 app.use('/api/assessment', assessmentRoutes);
 app.use('/api/recommendation', recommendationRoutes);
+app.use('/api/colleges', collegeRoutes);
 
 // ── Server startup ────────────────────────────────────────────────────────────
 //

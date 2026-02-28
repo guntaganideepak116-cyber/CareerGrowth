@@ -51,6 +51,7 @@ const FeedbackReports = lazy(() => import("./pages/admin/FeedbackReports"));
 const CareerPathManager = lazy(() => import("./pages/admin/CareerPathManager"));
 const SecurityAccess = lazy(() => import("./pages/admin/SecurityAccess"));
 const SystemSettings = lazy(() => import("./pages/admin/SystemSettings"));
+const CollegeManager = lazy(() => import("./pages/admin/CollegeManager"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 
@@ -130,6 +131,7 @@ const AppContent = () => {
           <Route path="/admin/career-paths" element={<ProtectedRoute requireAdmin><CareerPathManager /></ProtectedRoute>} />
           <Route path="/admin/security" element={<ProtectedRoute requireAdmin><SecurityAccess /></ProtectedRoute>} />
           <Route path="/admin/settings" element={<ProtectedRoute requireAdmin><SystemSettings /></ProtectedRoute>} />
+          <Route path="/admin/colleges" element={<ProtectedRoute requireAdmin><CollegeManager /></ProtectedRoute>} />
 
           {/* 404 */}
           <Route path="*" element={<NotFound />} />
