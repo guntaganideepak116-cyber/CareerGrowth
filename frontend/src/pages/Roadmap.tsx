@@ -451,7 +451,7 @@ export default function Roadmap() {
             />
 
             {/* Nearby Colleges Section */}
-            <NearbyColleges specialization={selectedSpecialization} />
+            <NearbyColleges specialization={selectedSpecData?.name || selectedSpecialization} />
 
             {/* Progress Overview */}
             <div className={`rounded-xl border p-6 animate-slide-up transition-all duration-500 ${isAIMode
