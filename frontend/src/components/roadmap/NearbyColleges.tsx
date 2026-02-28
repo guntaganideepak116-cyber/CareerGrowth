@@ -32,8 +32,11 @@ interface College {
     rating: number;
     address: string;
     website: string;
-    coursesOffered: string[];
-    city: string;
+    coursesOffered?: string[];
+    city?: string;
+    type?: string;
+    rankingTier?: string;
+    accreditation?: string;
     location?: {
         latitude: number;
         longitude: number;
@@ -222,7 +225,7 @@ export function NearbyColleges({ specialization }: NearbyCollegesProps) {
             if (!window.google || !window.google.maps || !window.google.maps.places) {
                 return resolve([]);
             }
-            
+
             const dummyNode = document.createElement('div');
             const service = new window.google.maps.places.PlacesService(dummyNode);
             const request = {
@@ -247,6 +250,8 @@ export function NearbyColleges({ specialization }: NearbyCollegesProps) {
                             address: place.vicinity || 'Address not available',
                             website: `https://www.google.com/search?q=${encodeURIComponent((place.name || '') + ' ' + (place.vicinity || ''))}`,
                             coursesOffered: [specialization], // Tag with requested specialization
+                            type: 'Global University',
+                            rankingTier: 'Unranked',
                             city: place.vicinity?.split(',').pop()?.trim() || 'Local Area',
                             location: place.geometry?.location ? {
                                 latitude: place.geometry.location.lat(),
@@ -277,7 +282,7 @@ export function NearbyColleges({ specialization }: NearbyCollegesProps) {
             let googleColleges: College[] = [];
             if (window.google) {
                 // Shorten specialization string for better broad matching on Google Maps
-                const searchKeyword = specialization.replace(/ & .*/, '').trim(); 
+                const searchKeyword = specialization.replace(/ & .*/, '').trim();
                 googleColleges = await searchGooglePlaces(lat, lon, searchKeyword);
             }
 
@@ -286,7 +291,7 @@ export function NearbyColleges({ specialization }: NearbyCollegesProps) {
             const existingNames = new Set(allColleges.map(c => c.collegeName.toLowerCase()));
 
             googleColleges.forEach(gc => {
-                const isDuplicate = Array.from(existingNames).some(name => 
+                const isDuplicate = Array.from(existingNames).some(name =>
                     gc.collegeName.toLowerCase().includes(name) || name.includes(gc.collegeName.toLowerCase())
                 );
                 if (!isDuplicate) {
@@ -299,7 +304,7 @@ export function NearbyColleges({ specialization }: NearbyCollegesProps) {
             allColleges.sort((a, b) => (a.distance || 0) - (b.distance || 0));
 
             setColleges(allColleges);
-            
+
             if (allColleges.length === 0) {
                 toast.info('No colleges found nearby. Try increasing search radius or different field.');
             }
@@ -509,9 +514,23 @@ export function NearbyColleges({ specialization }: NearbyCollegesProps) {
                                     >
                                         <CardContent className="p-4">
                                             <div className="flex justify-between items-start mb-3">
-                                                <h4 className="font-bold text-sm text-foreground group-hover:text-primary transition-colors leading-tight pr-2">
-                                                    {college.collegeName}
-                                                </h4>
+                                                <div className="flex flex-col gap-1.5 pr-2">
+                                                    <h4 className="font-bold text-sm text-foreground group-hover:text-primary transition-colors leading-tight">
+                                                        {college.collegeName}
+                                                    </h4>
+                                                    <div className="flex flex-wrap gap-1.5">
+                                                        {college.type && (
+                                                            <Badge variant="outline" className="text-[9px] h-4 px-1.5 py-0">
+                                                                {college.type}
+                                                            </Badge>
+                                                        )}
+                                                        {college.rankingTier && college.rankingTier !== "Unranked" && (
+                                                            <Badge variant="outline" className="bg-amber-500/10 text-amber-600 border-amber-500/20 text-[9px] h-4 px-1.5 py-0">
+                                                                {college.rankingTier}
+                                                            </Badge>
+                                                        )}
+                                                    </div>
+                                                </div>
                                                 <Badge
                                                     variant="secondary"
                                                     className="flex items-center gap-1 flex-shrink-0 bg-primary/10 text-primary border-primary/20"
@@ -534,7 +553,7 @@ export function NearbyColleges({ specialization }: NearbyCollegesProps) {
                                                 </div>
                                                 <div className="flex items-start gap-2">
                                                     <Building2 className="w-3.5 h-3.5 text-blue-500/60 mt-0.5 flex-shrink-0" />
-                                                    <span className="line-clamp-2">{college.coursesOffered.join(', ')}</span>
+                                                    <span className="line-clamp-2">{college.coursesOffered ? college.coursesOffered.join(', ') : specialization}</span>
                                                 </div>
                                             </div>
 

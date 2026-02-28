@@ -12,19 +12,22 @@ const router = express.Router();
  */
 router.get('/nearby', async (req, res) => {
     try {
-        const { lat, lon, specialization } = req.query;
+        const { lat, lon, field, specialization, state, district } = req.query;
 
         if (!lat || !lon || !specialization) {
             return res.status(400).json({ error: 'Missing latitude, longitude or specialization' });
         }
 
-        const colleges = await CollegeService.getNearbyColleges(
+        const result = await CollegeService.getNearbyColleges(
             parseFloat(lat as string),
             parseFloat(lon as string),
-            specialization as string
+            field as string,
+            specialization as string,
+            state as string,
+            district as string
         );
 
-        res.json({ success: true, colleges });
+        res.json(result);
     } catch (error) {
         console.error('Error in /colleges/nearby:', error);
         res.status(500).json({ error: (error as Error).message });

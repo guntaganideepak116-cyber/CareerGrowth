@@ -4,16 +4,16 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { 
-    Plus, 
-    Search, 
-    Edit2, 
-    Trash2, 
-    Loader2, 
-    MapPin, 
-    Globe, 
-    Award, 
-    Building2 
+import {
+    Plus,
+    Search,
+    Edit2,
+    Trash2,
+    Loader2,
+    MapPin,
+    Globe,
+    Award,
+    Building2
 } from 'lucide-react';
 import {
     Table,
@@ -23,13 +23,13 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table";
-import { 
-    Dialog, 
-    DialogContent, 
-    DialogDescription, 
-    DialogFooter, 
-    DialogHeader, 
-    DialogTitle 
+import {
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogFooter,
+    DialogHeader,
+    DialogTitle
 } from '@/components/ui/dialog';
 import { Badge } from '@/components/ui/badge';
 import { toast } from 'sonner';
@@ -61,6 +61,9 @@ interface College {
     city: string;
     state: string;
     country: string;
+    type?: string;
+    rankingTier?: string;
+    accreditation?: string;
 }
 
 export default function CollegeManager() {
@@ -81,7 +84,10 @@ export default function CollegeManager() {
         longitude: 0,
         city: '',
         state: '',
-        country: 'India'
+        country: 'India',
+        type: 'Private',
+        rankingTier: 'Tier 2',
+        accreditation: 'NAAC A'
     });
 
     // Specialization options for selection
@@ -125,6 +131,9 @@ export default function CollegeManager() {
                 city: form.city,
                 state: form.state,
                 country: form.country,
+                type: form.type,
+                rankingTier: form.rankingTier,
+                accreditation: form.accreditation,
                 updatedAt: serverTimestamp()
             };
 
@@ -158,7 +167,10 @@ export default function CollegeManager() {
             longitude: 0,
             city: '',
             state: '',
-            country: 'India'
+            country: 'India',
+            type: 'Private',
+            rankingTier: 'Tier 2',
+            accreditation: 'NAAC A'
         });
     };
 
@@ -174,7 +186,10 @@ export default function CollegeManager() {
             longitude: college.location.longitude,
             city: college.city,
             state: college.state,
-            country: college.country
+            country: college.country,
+            type: college.type || "Private",
+            rankingTier: college.rankingTier || "Tier 2",
+            accreditation: college.accreditation || ""
         });
         setIsDialogOpen(true);
     };
@@ -198,7 +213,7 @@ export default function CollegeManager() {
         }));
     };
 
-    const filteredColleges = colleges.filter(c => 
+    const filteredColleges = colleges.filter(c =>
         c.collegeName.toLowerCase().includes(searchTerm.toLowerCase()) ||
         c.city.toLowerCase().includes(searchTerm.toLowerCase())
     );
@@ -253,7 +268,15 @@ export default function CollegeManager() {
                                 ) : (
                                     filteredColleges.map((college) => (
                                         <TableRow key={college.id}>
-                                            <TableCell className="font-bold">{college.collegeName}</TableCell>
+                                            <TableCell>
+                                                <div className="flex flex-col">
+                                                    <span className="font-bold">{college.collegeName}</span>
+                                                    <div className="flex items-center gap-1 mt-1">
+                                                        {college.type && <Badge variant="outline" className="text-[10px]">{college.type}</Badge>}
+                                                        {college.rankingTier && <Badge variant="outline" className="text-[10px] bg-amber-500/10 text-amber-600">{college.rankingTier}</Badge>}
+                                                    </div>
+                                                </div>
+                                            </TableCell>
                                             <TableCell>
                                                 <div className="flex flex-col text-xs">
                                                     <span>{college.city}, {college.state}</span>
@@ -300,79 +323,119 @@ export default function CollegeManager() {
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 py-4">
                             <div className="space-y-2 col-span-2">
                                 <Label>College Name</Label>
-                                <Input 
-                                    placeholder="e.g. IIT Bombay" 
-                                    value={form.collegeName} 
-                                    onChange={e => setForm({ ...form, collegeName: e.target.value })} 
+                                <Input
+                                    placeholder="e.g. IIT Bombay"
+                                    value={form.collegeName}
+                                    onChange={e => setForm({ ...form, collegeName: e.target.value })}
                                 />
                             </div>
                             <div className="space-y-2 col-span-2">
                                 <Label>Address</Label>
-                                <Input 
-                                    placeholder="Full address..." 
-                                    value={form.address} 
-                                    onChange={e => setForm({ ...form, address: e.target.value })} 
+                                <Input
+                                    placeholder="Full address..."
+                                    value={form.address}
+                                    onChange={e => setForm({ ...form, address: e.target.value })}
                                 />
                             </div>
                             <div className="space-y-2">
                                 <Label>Website URL</Label>
-                                <Input 
-                                    placeholder="https://..." 
-                                    value={form.website} 
-                                    onChange={e => setForm({ ...form, website: e.target.value })} 
+                                <Input
+                                    placeholder="https://..."
+                                    value={form.website}
+                                    onChange={e => setForm({ ...form, website: e.target.value })}
                                 />
                             </div>
                             <div className="space-y-2">
                                 <Label>Rating (1-5)</Label>
-                                <Input 
-                                    type="number" 
-                                    step="0.1" 
-                                    min="1" 
-                                    max="5" 
-                                    value={form.rating} 
-                                    onChange={e => setForm({ ...form, rating: parseFloat(e.target.value) })} 
+                                <Input
+                                    type="number"
+                                    step="0.1"
+                                    min="1"
+                                    max="5"
+                                    value={form.rating}
+                                    onChange={e => setForm({ ...form, rating: parseFloat(e.target.value) })}
                                 />
                             </div>
                             <div className="space-y-2">
                                 <Label>Latitude</Label>
-                                <Input 
-                                    type="number" 
-                                    step="0.000001" 
-                                    value={form.latitude} 
-                                    onChange={e => setForm({ ...form, latitude: parseFloat(e.target.value) })} 
+                                <Input
+                                    type="number"
+                                    step="0.000001"
+                                    value={form.latitude}
+                                    onChange={e => setForm({ ...form, latitude: parseFloat(e.target.value) })}
                                 />
                             </div>
                             <div className="space-y-2">
                                 <Label>Longitude</Label>
-                                <Input 
-                                    type="number" 
-                                    step="0.000001" 
-                                    value={form.longitude} 
-                                    onChange={e => setForm({ ...form, longitude: parseFloat(e.target.value) })} 
+                                <Input
+                                    type="number"
+                                    step="0.000001"
+                                    value={form.longitude}
+                                    onChange={e => setForm({ ...form, longitude: parseFloat(e.target.value) })}
                                 />
                             </div>
                             <div className="space-y-2">
                                 <Label>City</Label>
-                                <Input 
-                                    value={form.city} 
-                                    onChange={e => setForm({ ...form, city: e.target.value })} 
+                                <Input
+                                    value={form.city}
+                                    onChange={e => setForm({ ...form, city: e.target.value })}
                                 />
                             </div>
                             <div className="space-y-2">
                                 <Label>State</Label>
-                                <Input 
-                                    value={form.state} 
-                                    onChange={e => setForm({ ...form, state: e.target.value })} 
+                                <Input
+                                    value={form.state}
+                                    onChange={e => setForm({ ...form, state: e.target.value })}
                                 />
                             </div>
-                            
+
+                            <div className="space-y-2">
+                                <Label>Type</Label>
+                                <select
+                                    className="flex h-10 w-full items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                                    value={form.type}
+                                    onChange={e => setForm({ ...form, type: e.target.value })}
+                                >
+                                    <option value="Government">Government</option>
+                                    <option value="Private">Private</option>
+                                    <option value="Autonomous">Autonomous</option>
+                                    <option value="Deemed">Deemed</option>
+                                    <option value="Central University">Central University</option>
+                                    <option value="State University">State University</option>
+                                </select>
+                            </div>
+
+                            <div className="space-y-2">
+                                <Label>Ranking Tier</Label>
+                                <select
+                                    className="flex h-10 w-full items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                                    value={form.rankingTier}
+                                    onChange={e => setForm({ ...form, rankingTier: e.target.value })}
+                                >
+                                    <option value="Top">Top (IITs/IIMs/AIIMS)</option>
+                                    <option value="Tier 1">Tier 1</option>
+                                    <option value="Tier 2">Tier 2</option>
+                                    <option value="Tier 3">Tier 3</option>
+                                    <option value="Unranked">Unranked</option>
+                                </select>
+                            </div>
+
+                            <div className="space-y-2 col-span-2">
+                                <Label>Accreditation</Label>
+                                <Input
+                                    placeholder="e.g. NAAC A++, NBA Approved"
+                                    value={form.accreditation}
+                                    onChange={e => setForm({ ...form, accreditation: e.target.value })}
+                                />
+                            </div>
+
                             <div className="space-y-2 col-span-2">
                                 <Label>Courses Offered (Specializations)</Label>
                                 <div className="border rounded-md p-3 max-h-40 overflow-y-auto grid grid-cols-2 gap-2">
                                     {uniqueSpecs.map(spec => (
                                         <div key={spec} className="flex items-center gap-2">
-                                            <input 
-                                                type="checkbox" 
+                                            <input
+                                                type="checkbox"
                                                 id={`spec-${spec}`}
                                                 checked={form.coursesOffered.includes(spec)}
                                                 onChange={() => toggleCourse(spec)}
