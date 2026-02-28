@@ -206,21 +206,102 @@ export function NearbyColleges({ specialization }: NearbyCollegesProps) {
         });
     };
 
+    const calculateDistance = (lat1: number, lon1: number, lat2: number, lon2: number) => {
+        const R = 6371; // km
+        const dLat = (lat2 - lat1) * Math.PI / 180;
+        const dLon = (lon2 - lon1) * Math.PI / 180;
+        const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+            Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+            Math.sin(dLon / 2) * Math.sin(dLon / 2);
+        const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        return parseFloat((R * c).toFixed(1));
+    };
+
+    const searchGooglePlaces = (lat: number, lon: number, keyword: string): Promise<College[]> => {
+        return new Promise((resolve) => {
+            if (!window.google || !window.google.maps || !window.google.maps.places) {
+                return resolve([]);
+            }
+            
+            const dummyNode = document.createElement('div');
+            const service = new window.google.maps.places.PlacesService(dummyNode);
+            const request = {
+                location: new window.google.maps.LatLng(lat, lon),
+                radius: 50000, // 50km radius
+                type: 'university',
+                keyword: keyword
+            };
+
+            service.nearbySearch(request, (results, status) => {
+                if (status === window.google.maps.places.PlacesServiceStatus.OK && results) {
+                    const mapColleges: College[] = results.map(place => {
+                        let distance = 0;
+                        if (place.geometry?.location) {
+                            distance = calculateDistance(lat, lon, place.geometry.location.lat(), place.geometry.location.lng());
+                        }
+                        return {
+                            id: place.place_id || Math.random().toString(),
+                            collegeName: place.name || 'Unknown University',
+                            distance: distance,
+                            rating: place.rating || 4.0,
+                            address: place.vicinity || 'Address not available',
+                            website: `https://www.google.com/search?q=${encodeURIComponent((place.name || '') + ' ' + (place.vicinity || ''))}`,
+                            coursesOffered: [specialization], // Tag with requested specialization
+                            city: place.vicinity?.split(',').pop()?.trim() || 'Local Area',
+                            location: place.geometry?.location ? {
+                                latitude: place.geometry.location.lat(),
+                                longitude: place.geometry.location.lng()
+                            } : undefined
+                        };
+                    });
+                    resolve(mapColleges);
+                } else {
+                    resolve([]);
+                }
+            });
+        });
+    };
+
     const fetchColleges = useCallback(async (lat: number, lon: number) => {
         setLoading(true);
         try {
+            // 1. Fetch curated colleges from your Firebase Database
             const baseUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000';
             const response = await fetch(
                 `${baseUrl}/api/colleges/nearby?lat=${lat}&lon=${lon}&specialization=${encodeURIComponent(specialization)}`
             );
             const data = await response.json();
-            if (data.success) {
-                setColleges(data.colleges);
-                if (data.colleges.length === 0) {
-                    toast.info('No colleges found for this specialization in your area yet. Admin can add more!');
+            let backendColleges: College[] = data.success ? data.colleges : [];
+
+            // 2. Fetch real-time global colleges from Google Places API
+            let googleColleges: College[] = [];
+            if (window.google) {
+                // Shorten specialization string for better broad matching on Google Maps
+                const searchKeyword = specialization.replace(/ & .*/, '').trim(); 
+                googleColleges = await searchGooglePlaces(lat, lon, searchKeyword);
+            }
+
+            // 3. Merge & Deduplicate
+            const allColleges = [...backendColleges];
+            const existingNames = new Set(allColleges.map(c => c.collegeName.toLowerCase()));
+
+            googleColleges.forEach(gc => {
+                const isDuplicate = Array.from(existingNames).some(name => 
+                    gc.collegeName.toLowerCase().includes(name) || name.includes(gc.collegeName.toLowerCase())
+                );
+                if (!isDuplicate) {
+                    allColleges.push(gc);
+                    existingNames.add(gc.collegeName.toLowerCase());
                 }
-            } else {
-                toast.error('Failed to fetch nearby colleges');
+            });
+
+            // 4. Sort all by real-world distance
+            allColleges.sort((a, b) => (a.distance || 0) - (b.distance || 0));
+
+            setColleges(allColleges);
+            
+            if (allColleges.length === 0) {
+                toast.info('No colleges found nearby. Try increasing search radius or different field.');
             }
         } catch (error) {
             console.error('Error fetching colleges:', error);
@@ -228,7 +309,7 @@ export function NearbyColleges({ specialization }: NearbyCollegesProps) {
         } finally {
             setLoading(false);
         }
-    }, [specialization]);
+    }, [specialization, mapsLoaded]);
 
     const handleGetLocation = useCallback(() => {
         if (!navigator.geolocation) {
