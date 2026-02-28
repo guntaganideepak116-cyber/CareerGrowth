@@ -92,6 +92,12 @@ function loadGoogleMapsScript(apiKey: string): Promise<void> {
     });
 }
 
+const getValidUrl = (url?: string): string => {
+    if (!url) return '#';
+    if (url.startsWith('http://') || url.startsWith('https://')) return url;
+    return `https://${url}`;
+};
+
 export function NearbyColleges({ specialization }: NearbyCollegesProps) {
     const [isOpen, setIsOpen] = useState(false);
     const [loading, setLoading] = useState(false);
@@ -224,7 +230,7 @@ export function NearbyColleges({ specialization }: NearbyCollegesProps) {
                         <h3 style="margin:0 0 4px;font-size:14px;color:#1a202c;font-weight:bold;">${college.collegeName}</h3>
                         <p style="margin:0 0 4px;font-size:12px;color:#4a5568;">📍 ${college.address}</p>
                         <p style="margin:0 0 4px;font-size:12px;color:#4a5568;">⭐ ${college.rating}/5.0 &nbsp;•&nbsp; ${college.distance ? college.distance + ' km away' : college.city}</p>
-                        <a href="${college.website}" target="_blank" style="font-size:12px;color:#6c63ff;text-decoration:none;">🌐 Visit Website →</a>
+                        <a href="${getValidUrl(college.website)}" target="_blank" style="font-size:12px;color:#6c63ff;text-decoration:none;">🌐 Visit Website →</a>
                     </div>
                 `
             });
@@ -606,7 +612,7 @@ export function NearbyColleges({ specialization }: NearbyCollegesProps) {
                                             <p className="font-semibold text-sm text-foreground">{selectedCollege.collegeName}</p>
                                             <p className="text-xs text-muted-foreground">{selectedCollege.distance ? `${selectedCollege.distance} km away` : selectedCollege.city}</p>
                                         </div>
-                                        <a href={selectedCollege.website} target="_blank" rel="noopener noreferrer">
+                                        <a href={getValidUrl(selectedCollege.website)} target="_blank" rel="noopener noreferrer">
                                             <Button size="sm" variant="outline" className="gap-1.5 text-xs">
                                                 <ExternalLink className="w-3.5 h-3.5" /> Visit
                                             </Button>
@@ -695,7 +701,7 @@ export function NearbyColleges({ specialization }: NearbyCollegesProps) {
                                                         className="flex-1 text-xs h-8 gap-1.5"
                                                         onClick={(e) => {
                                                             e.stopPropagation();
-                                                            window.open(college.website, '_blank');
+                                                            window.open(getValidUrl(college.website), '_blank');
                                                         }}
                                                     >
                                                         <Globe className="w-3 h-3" /> Website
