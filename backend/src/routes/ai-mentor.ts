@@ -329,16 +329,24 @@ router.post('/stream', verifyToken, async (req: Request, res: Response) => {
         const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
         const systemPrompt = SYSTEM_PROMPTS[role as keyof typeof SYSTEM_PROMPTS];
 
-        const conversationHistory = messages.map((msg: { role: string; content: string }) => ({
-            role: msg.role === 'user' ? 'user' : 'model',
-            parts: [{ text: msg.content }],
-        }));
+        // Prepare conversation history with system prompt
+        const fullMessages = [
+            { role: 'user', parts: [{ text: systemPrompt }] },
+            { role: 'model', parts: [{ text: 'I understand my role and will provide helpful guidance accordingly.' }] },
+            ...messages.map((msg: { role: string; content: string }) => ({
+                role: msg.role === 'user' ? 'user' : 'model',
+                parts: [{ text: msg.content }],
+            })),
+        ];
+
+        // Remove system prompt exchange from history to save tokens
+        const conversationHistory = fullMessages.slice(2);
 
         const chat = model.startChat({
             history: conversationHistory.slice(0, -1),
             generationConfig: {
-                maxOutputTokens: 1500, // Longer responses
-                temperature: 0.9, // More ChatGPT-like creativity
+                maxOutputTokens: 1500,
+                temperature: 0.9,
             },
         });
 
@@ -358,7 +366,7 @@ router.post('/stream', verifyToken, async (req: Request, res: Response) => {
 
     } catch (error: any) {
         console.error('AI Mentor stream error:', error);
-        res.write(`data: ${JSON.stringify({ error: 'Stream failed' })}\n\n`);
+        res.write(`data: ${JSON.stringify({ error: error.message || 'Stream failed' })}\n\n`);
         res.end();
     }
 });
