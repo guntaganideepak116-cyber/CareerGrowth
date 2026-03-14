@@ -1,6 +1,6 @@
 {
     "version": 2,
-    "outputDirectory": "frontend/dist",
+    "outputDirectory": "dist",
     "crons": [
         {
             "path": "/api/cron/daily-engagement",
@@ -37,7 +37,7 @@
         },
         {
             "source": "/(.*)",
-            "destination": "/frontend/dist/index.html"
+            "destination": "/index.html"
         }
     ]
 }
