@@ -82,12 +82,18 @@ service cloud.firestore {
     // 5. NOTIFICATIONS (STRICTER)
     // ===========================================
     match /notifications/{notificationId} {
-      // Users can ONLY read notifications sent to them
-      allow read: if isAuthenticated() && (resource.data.recipientId == request.auth.uid || isAdmin());
+      // Users can ONLY read notifications sent to them ('userId' or 'all')
+      allow read: if isAuthenticated() && (
+        resource.data.userId == request.auth.uid || 
+        resource.data.userId == 'all' ||
+        isAdmin()
+      );
       
-      // Users can ONLY update 'read' status of their own notifications
-      allow update: if isAuthenticated() && resource.data.recipientId == request.auth.uid 
-                   && incomingData().diff(resource.data).affectedKeys().hasOnly(['read', 'readAt']);
+      // Users can update 'readBy' status
+      allow update: if isAuthenticated() && (
+        resource.data.userId == request.auth.uid || 
+        resource.data.userId == 'all'
+      );
       
       allow create, delete: if isAdmin();
     }

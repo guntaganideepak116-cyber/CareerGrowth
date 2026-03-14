@@ -4,7 +4,7 @@ import {
 } from 'react';
 import { db } from '@/lib/firebase';
 import {
-    collection, query, orderBy, limit,
+    collection, query, where, orderBy, limit,
     onSnapshot, doc, updateDoc, arrayUnion, getDoc
 } from 'firebase/firestore';
 import { useAuthContext } from '@/contexts/AuthContext';
@@ -113,8 +113,10 @@ export function NotificationProvider({ children }: { children: ReactNode }) {
 
         // Order by `timestamp` (number) for reliable sorting.
         // Backend stores `timestamp: Date.now()` on every notification.
+        // query both global and user-specific notifications using the 'in' operator
         const q = query(
             collection(db, 'notifications'),
+            where('userId', 'in', ['all', user.uid]),
             orderBy('timestamp', 'desc'),
             limit(60)
         );
