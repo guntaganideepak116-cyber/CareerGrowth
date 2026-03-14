@@ -1,6 +1,7 @@
 {
     "name": "CareerGrowth",
     "short_name": "CareerGrowth",
+    "id": "com.careergrowth.pwa",
     "description": "AI-Powered Professional Development Platform",
     "icons": [
         {
@@ -19,6 +20,7 @@
     "theme_color": "#0F766E",
     "background_color": "#ECFDF5",
     "display": "standalone",
+    "orientation": "portrait",
     "start_url": "/",
     "scope": "/"
 }

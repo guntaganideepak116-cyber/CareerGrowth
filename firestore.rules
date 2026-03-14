@@ -15,8 +15,7 @@ service cloud.firestore {
     }
 
     function isAdmin() {
-      // Source of truth for roles is the 'users' collection
-      // Note: In high-traffic PWAs, consider using Custom Claims for performance
+      // Robust admin check
       return isAuthenticated() && 
              exists(/databases/$(database)/documents/users/$(request.auth.uid)) &&
              get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
@@ -31,13 +30,20 @@ service cloud.firestore {
     // 1. USERS COLLECTION
     // ===========================================
     match /users/{userId} {
-      // Authenticated users can read basic profile info for searches/collaboration
-      // but only owner/admin can read sensitive setup
       allow read: if isAuthenticated();
       
-      // Stricter write: users cannot change their own 'role' to admin
-      allow create: if isOwner(userId) && (!incomingData().keys().has('role') || incomingData().role == 'user');
-      allow update: if (isOwner(userId) && (!incomingData().diff(resource.data).affectedKeys().has('role') || resource.data.role == 'admin')) || isAdmin();
+      allow create: if isOwner(userId) && (
+        !('role' in incomingData()) || 
+        incomingData().role == 'user'
+      );
+      
+      allow update: if (
+        isOwner(userId) && (
+          !incomingData().diff(resource.data).affectedKeys().has('role') || 
+          (resource.data.role == 'admin' && incomingData().role == 'admin')
+        )
+      ) || isAdmin();
+      
       allow delete: if isAdmin();
 
       // Assessment attempts for this user
@@ -82,14 +88,12 @@ service cloud.firestore {
     // 5. NOTIFICATIONS (STRICTER)
     // ===========================================
     match /notifications/{notificationId} {
-      // Authenticated read - Frontend query handles userId filter
       allow read: if isAuthenticated();
       
-      // Users can update their own read status
       allow update: if isAuthenticated() && (
-        !('userId' in resource.data) || 
         resource.data.userId == request.auth.uid || 
-        resource.data.userId == 'all'
+        resource.data.userId == 'all' ||
+        !('userId' in resource.data)
       );
       
       allow create, delete: if isAdmin();

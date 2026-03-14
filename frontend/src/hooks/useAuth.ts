@@ -193,16 +193,24 @@ export function useAuth() {
         updated_at: new Date().toISOString()
       };
 
+      console.log('[Signup] User created in Auth. Creating Firestore profile...');
       await setDoc(doc(db, 'users', user.uid), newProfile);
       await updateFirebaseProfile(user, { displayName: fullName });
 
       setProfile(newProfile);
       localStorage.setItem('user_profile', JSON.stringify(newProfile));
+      console.log('[Signup] Success. Profile created.');
       return user;
     } catch (error: unknown) {
+      console.error('[Signup] Error during process:', error);
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      if ((error as any).code === 'auth/email-already-in-use') {
+      const errorCode = (error as any).code;
+
+      if (errorCode === 'auth/email-already-in-use') {
         throw new Error('This email is already registered. Please sign in instead.');
+      }
+      if (errorCode === 'permission-denied') {
+        throw new Error('Permission denied while creating your profile. Please check system status.');
       }
       throw error;
     }

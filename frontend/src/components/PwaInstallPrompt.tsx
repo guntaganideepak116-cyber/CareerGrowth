@@ -24,26 +24,21 @@ export const PwaInstallPrompt: React.FC = () => {
       setIsVisible(true);
     };
 
-    // Show prompt after 3 seconds regardless (to ensure "WOW" factor)
-    // If native prompt isn't ready, we'll show helpful instructions
-    const timer = setTimeout(() => {
-      if (!isVisible) {
-        console.log('💡 PWA: Proactive prompt display triggered');
-        setIsVisible(true);
-      }
-    }, 3000);
-
     // iOS/Standalone Detection
     const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !(window as any).MSStream;
     const isStandalone = window.matchMedia('(display-mode: standalone)').matches;
 
+    // Show prompt after 2 seconds on mobile to ensure visibility
+    const timer = setTimeout(() => {
+      if (!isStandalone) {
+        console.log('💡 PWA: Proactive prompt display triggered');
+        setIsVisible(true);
+      }
+    }, 2000);
+
     if (isStandalone) {
       setIsVisible(false);
       clearTimeout(timer);
-    }
-
-    if (isIOS && !isStandalone) {
-      console.log('📱 PWA: iOS detected');
     }
 
     window.addEventListener('beforeinstallprompt', handler);
@@ -52,7 +47,7 @@ export const PwaInstallPrompt: React.FC = () => {
       window.removeEventListener('beforeinstallprompt', handler);
       clearTimeout(timer);
     };
-  }, [isVisible]);
+  }, []);
 
   const handleInstallClick = async () => {
     if (!deferredPrompt) {
