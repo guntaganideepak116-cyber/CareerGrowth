@@ -1,0 +1,147 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // ===========================================
+    // HELPER FUNCTIONS
+    // ===========================================
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+    
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+
+    function isAdmin() {
+      // Source of truth for roles is now the 'users' collection
+      return isAuthenticated() && 
+             exists(/databases/$(database)/documents/users/$(request.auth.uid)) &&
+             get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
+    }
+
+    // ===========================================
+    // 1. USERS COLLECTION
+    // ===========================================
+    match /users/{userId} {
+      // Users read/write their own, Admins read/write all
+      allow read: if isAuthenticated(); // Allow users to read other profiles if needed (e.g. for collaboration)
+      allow write: if isOwner(userId) || isAdmin();
+
+      // Assessment attempts for this user
+      match /assessments/{assessmentId} {
+        allow read, write: if isOwner(userId) || isAdmin();
+      }
+    }
+
+    // ===========================================
+    // 2. USER PROGRESS (CRITICAL for Dashboard & Admin)
+    // ===========================================
+    match /user_progress/{docId} {
+      // docId is often the userId
+      allow read, write: if isOwner(docId) || isAdmin();
+    }
+
+    // ===========================================
+    // 3. USER ACTIVITY LOGS
+    // ===========================================
+    match /user_activity_logs/{logId} {
+      allow create: if isAuthenticated() && request.resource.data.userId == request.auth.uid;
+      allow read: if isAuthenticated() && (resource.data.userId == request.auth.uid || isAdmin());
+    }
+
+    // ===========================================
+    // 4. ADMIN ACTIVITY LOGS
+    // ===========================================
+    match /admin_activity_logs/{logId} {
+      // Admins read/write
+      allow read, write: if isAdmin();
+    }
+
+    // ===========================================
+    // 4. SYSTEM SETTINGS
+    // ===========================================
+    match /system_settings/{configId} {
+      // allow public read for config to support feature flags on login/signup pages
+      allow read: if true; 
+      // Only admins can write
+      allow write: if isAdmin();
+    }
+
+    // ===========================================
+    // 5. NOTIFICATIONS
+    // ===========================================
+    match /notifications/{notificationId} {
+      // Read: Recipient reads their own. Admins read all.
+      allow read: if isAuthenticated(); // Broad read, but we filter in code. 
+      // Write: Update readStatus (anyone can if they are recipient) or full write for admin
+      allow update: if isAuthenticated();
+      allow create, delete: if isAdmin();
+    }
+
+    // ===========================================
+    // 6. ASSESSMENT QUESTIONS
+    // ===========================================
+    match /assessment_questions/{questionId} {
+      allow read: if isAuthenticated(); 
+      allow write: if isAdmin();
+    }
+
+    // ===========================================
+    // 7. CAREER CONTENT (Paths, Fields, etc.)
+    // ===========================================
+    match /career_paths/{id} { allow read: if isAuthenticated(); allow write: if isAdmin(); }
+    match /fields/{id} { allow read: if isAuthenticated(); allow write: if isAdmin(); }
+    match /specializations/{id} { allow read: if isAuthenticated(); allow write: if isAdmin(); }
+    match /projects/{id} { allow read: if isAuthenticated(); allow write: if isAdmin(); }
+    match /certifications/{id} { allow read: if isAuthenticated(); allow write: if isAdmin(); }
+
+    // ===========================================
+    // 8. PORTFOLIOS
+    // ===========================================
+    match /portfolios/{userId} {
+      allow read, write: if isOwner(userId) || isAdmin();
+    }
+
+    // ===========================================
+    // 8b. USER PORTFOLIOS (auto-generated collection)
+    // ===========================================
+    match /user_portfolios/{userId} {
+      allow read, write: if isOwner(userId) || isAdmin();
+    }
+
+    // ===========================================
+    // 9. AI MENTOR CONVERSATIONS
+    // ===========================================
+    match /ai_conversations/{conversationId} {
+      allow read, write: if isAuthenticated() && (resource == null || resource.data.user_id == request.auth.uid || isAdmin());
+      allow create: if isAuthenticated();
+    }
+
+    // Legacy Support (Optional)
+    match /user_profiles/{userId} {
+      allow read, write: if isOwner(userId) || isAdmin();
+    }
+
+    // ===========================================
+    // 10. PROGRESS COLLECTIONS (backend reads these)
+    // ===========================================
+    match /roadmap_progress/{docId} {
+      allow read, write: if isAuthenticated() && (resource == null || resource.data.userId == request.auth.uid || isAdmin());
+      allow create: if isAuthenticated() && request.resource.data.userId == request.auth.uid;
+    }
+    match /skills_progress/{docId} {
+      allow read, write: if isAuthenticated() && (resource == null || resource.data.userId == request.auth.uid || isAdmin());
+      allow create: if isAuthenticated() && request.resource.data.userId == request.auth.uid;
+    }
+    match /certifications_progress/{docId} {
+      allow read, write: if isAuthenticated() && (resource == null || resource.data.userId == request.auth.uid || isAdmin());
+      allow create: if isAuthenticated() && request.resource.data.userId == request.auth.uid;
+    }
+    match /assessments_attempts/{docId} {
+      allow read, write: if isAuthenticated() && (resource == null || resource.data.userId == request.auth.uid || isAdmin());
+      allow create: if isAuthenticated() && request.resource.data.userId == request.auth.uid;
+    }
+  }
+}
