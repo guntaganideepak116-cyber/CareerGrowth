@@ -3,7 +3,8 @@ import { GoogleGenerativeAI } from '@google/generative-ai';
 import { verifyToken } from '../middleware/adminMiddleware';
 
 const router = Router();
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '', { apiVersion: 'v1' });
+const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '');
+const GEMINI_MODEL = 'gemini-1.5-flash-latest';
 
 // ChatGPT-Style AI Mentor Training - Conversational and versatile
 const SYSTEM_PROMPTS = {
@@ -247,8 +248,8 @@ router.post('/chat', verifyToken, async (req: Request, res: Response) => {
         }
 
         // Get AI model
-        console.log(`[AI Mentor] Generating response for user: ${userId} with model: gemini-1.5-flash`);
-        const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
+        console.log(`[AI Mentor] Generating response for user: ${userId} with model: ${GEMINI_MODEL}`);
+        const model = genAI.getGenerativeModel({ model: GEMINI_MODEL });
 
         // Prepare conversation history with system prompt
         const systemPrompt = SYSTEM_PROMPTS[role as keyof typeof SYSTEM_PROMPTS];
@@ -326,7 +327,7 @@ router.post('/stream', verifyToken, async (req: Request, res: Response) => {
         res.setHeader('Cache-Control', 'no-cache');
         res.setHeader('Connection', 'keep-alive');
 
-        const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
+        const model = genAI.getGenerativeModel({ model: GEMINI_MODEL });
         const systemPrompt = SYSTEM_PROMPTS[role as keyof typeof SYSTEM_PROMPTS];
 
         // Prepare conversation history with system prompt
