@@ -18,6 +18,7 @@ export async function verifyToken(req: Request, res: Response, next: NextFunctio
 
         // Attach user to request
         (req as any).user = decodedToken;
+        (req as any).userId = decodedToken.uid;
 
         next();
     } catch (error) {

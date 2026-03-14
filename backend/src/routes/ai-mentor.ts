@@ -247,7 +247,8 @@ router.post('/chat', verifyToken, async (req: Request, res: Response) => {
         }
 
         // Get AI model
-        const model = genAI.getGenerativeModel({ model: 'gemini-2.0-flash-001' });
+        console.log(`[AI Mentor] Generating response for user: ${userId} with model: gemini-1.5-flash`);
+        const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
 
         // Prepare conversation history with system prompt
         const systemPrompt = SYSTEM_PROMPTS[role as keyof typeof SYSTEM_PROMPTS];
@@ -325,7 +326,7 @@ router.post('/stream', verifyToken, async (req: Request, res: Response) => {
         res.setHeader('Cache-Control', 'no-cache');
         res.setHeader('Connection', 'keep-alive');
 
-        const model = genAI.getGenerativeModel({ model: 'gemini-2.0-flash-001' });
+        const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
         const systemPrompt = SYSTEM_PROMPTS[role as keyof typeof SYSTEM_PROMPTS];
 
         const conversationHistory = messages.map((msg: { role: string; content: string }) => ({

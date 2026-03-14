@@ -80,6 +80,10 @@ export async function streamChat({
 
         try {
           const parsed = JSON.parse(jsonStr);
+          if (parsed.error) {
+            onError(parsed.error);
+            return;
+          }
           const content = parsed.choices?.[0]?.delta?.content as string | undefined;
           if (content) onDelta(content);
         } catch {
@@ -100,6 +104,10 @@ export async function streamChat({
         if (jsonStr === '[DONE]') continue;
         try {
           const parsed = JSON.parse(jsonStr);
+          if (parsed.error) {
+            onError(parsed.error);
+            return;
+          }
           const content = parsed.choices?.[0]?.delta?.content as string | undefined;
           if (content) onDelta(content);
         } catch { /* ignore */ }
