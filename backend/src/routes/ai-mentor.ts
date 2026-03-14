@@ -3,7 +3,7 @@ import { GoogleGenerativeAI } from '@google/generative-ai';
 import { verifyToken } from '../middleware/adminMiddleware';
 
 const router = Router();
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '');
+const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '', { apiVersion: 'v1' });
 
 // ChatGPT-Style AI Mentor Training - Conversational and versatile
 const SYSTEM_PROMPTS = {
