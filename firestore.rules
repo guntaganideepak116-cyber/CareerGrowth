@@ -15,133 +15,140 @@ service cloud.firestore {
     }
 
     function isAdmin() {
-      // Source of truth for roles is now the 'users' collection
+      // Source of truth for roles is the 'users' collection
+      // Note: In high-traffic PWAs, consider using Custom Claims for performance
       return isAuthenticated() && 
              exists(/databases/$(database)/documents/users/$(request.auth.uid)) &&
              get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
+    }
+
+    // Helper to validate common fields
+    function incomingData() {
+      return request.resource.data;
     }
 
     // ===========================================
     // 1. USERS COLLECTION
     // ===========================================
     match /users/{userId} {
-      // Users read/write their own, Admins read/write all
-      allow read: if isAuthenticated(); // Allow users to read other profiles if needed (e.g. for collaboration)
-      allow write: if isOwner(userId) || isAdmin();
+      // Authenticated users can read basic profile info for searches/collaboration
+      // but only owner/admin can read sensitive setup
+      allow read: if isAuthenticated();
+      
+      // Stricter write: users cannot change their own 'role' to admin
+      allow create: if isOwner(userId) && (!incomingData().keys().has('role') || incomingData().role == 'user');
+      allow update: if (isOwner(userId) && (!incomingData().diff(resource.data).affectedKeys().has('role') || resource.data.role == 'admin')) || isAdmin();
+      allow delete: if isAdmin();
 
       // Assessment attempts for this user
       match /assessments/{assessmentId} {
-        allow read, write: if isOwner(userId) || isAdmin();
+        allow read: if isOwner(userId) || isAdmin();
+        allow write: if isOwner(userId) || isAdmin();
       }
     }
 
     // ===========================================
-    // 2. USER PROGRESS (CRITICAL for Dashboard & Admin)
+    // 2. USER PROGRESS
     // ===========================================
     match /user_progress/{docId} {
-      // docId is often the userId
-      allow read, write: if isOwner(docId) || isAdmin();
+      // docId is the userId
+      allow read: if isOwner(docId) || isAdmin();
+      allow write: if isOwner(docId) || isAdmin();
     }
 
     // ===========================================
-    // 3. USER ACTIVITY LOGS
+    // 3. USER ACTIVITY LOGS (Append only for users)
     // ===========================================
     match /user_activity_logs/{logId} {
-      allow create: if isAuthenticated() && request.resource.data.userId == request.auth.uid;
+      allow create: if isAuthenticated() && incomingData().userId == request.auth.uid;
       allow read: if isAuthenticated() && (resource.data.userId == request.auth.uid || isAdmin());
+      allow update, delete: if isAdmin();
     }
 
     // ===========================================
-    // 4. ADMIN ACTIVITY LOGS
+    // 4. ADMIN & SYSTEM
     // ===========================================
     match /admin_activity_logs/{logId} {
-      // Admins read/write
       allow read, write: if isAdmin();
     }
 
-    // ===========================================
-    // 4. SYSTEM SETTINGS
-    // ===========================================
     match /system_settings/{configId} {
-      // allow public read for config to support feature flags on login/signup pages
+      // Public read for feature flags (Maintenance mode, Signup enabled, etc.)
       allow read: if true; 
-      // Only admins can write
       allow write: if isAdmin();
     }
 
     // ===========================================
-    // 5. NOTIFICATIONS
+    // 5. NOTIFICATIONS (STRICTER)
     // ===========================================
     match /notifications/{notificationId} {
-      // Read: Recipient reads their own. Admins read all.
-      allow read: if isAuthenticated(); // Broad read, but we filter in code. 
-      // Write: Update readStatus (anyone can if they are recipient) or full write for admin
-      allow update: if isAuthenticated();
+      // Users can ONLY read notifications sent to them
+      allow read: if isAuthenticated() && (resource.data.recipientId == request.auth.uid || isAdmin());
+      
+      // Users can ONLY update 'read' status of their own notifications
+      allow update: if isAuthenticated() && resource.data.recipientId == request.auth.uid 
+                   && incomingData().diff(resource.data).affectedKeys().hasOnly(['read', 'readAt']);
+      
       allow create, delete: if isAdmin();
     }
 
     // ===========================================
-    // 6. ASSESSMENT QUESTIONS
+    // 6. CONTENT COLLECTIONS (Read-only for users)
     // ===========================================
-    match /assessment_questions/{questionId} {
-      allow read: if isAuthenticated(); 
-      allow write: if isAdmin();
+    function isPublicContent() {
+      return isAuthenticated();
     }
 
-    // ===========================================
-    // 7. CAREER CONTENT (Paths, Fields, etc.)
-    // ===========================================
-    match /career_paths/{id} { allow read: if isAuthenticated(); allow write: if isAdmin(); }
-    match /fields/{id} { allow read: if isAuthenticated(); allow write: if isAdmin(); }
-    match /specializations/{id} { allow read: if isAuthenticated(); allow write: if isAdmin(); }
-    match /projects/{id} { allow read: if isAuthenticated(); allow write: if isAdmin(); }
-    match /certifications/{id} { allow read: if isAuthenticated(); allow write: if isAdmin(); }
+    match /assessment_questions/{id} { allow read: if isPublicContent(); allow write: if isAdmin(); }
+    match /career_paths/{id} { allow read: if isPublicContent(); allow write: if isAdmin(); }
+    match /fields/{id} { allow read: if isPublicContent(); allow write: if isAdmin(); }
+    match /specializations/{id} { allow read: if isPublicContent(); allow write: if isAdmin(); }
+    match /projects/{id} { allow read: if isPublicContent(); allow write: if isAdmin(); }
+    match /certifications/{id} { allow read: if isPublicContent(); allow write: if isAdmin(); }
 
     // ===========================================
-    // 8. PORTFOLIOS
+    // 7. PORTFOLIOS
     // ===========================================
     match /portfolios/{userId} {
-      allow read, write: if isOwner(userId) || isAdmin();
+      allow read: if isPublicContent(); // Allow others to view portfolios
+      allow write: if isOwner(userId) || isAdmin();
     }
 
-    // ===========================================
-    // 8b. USER PORTFOLIOS (auto-generated collection)
-    // ===========================================
     match /user_portfolios/{userId} {
       allow read, write: if isOwner(userId) || isAdmin();
     }
 
     // ===========================================
-    // 9. AI MENTOR CONVERSATIONS
+    // 8. AI MENTOR CONVERSATIONS
     // ===========================================
     match /ai_conversations/{conversationId} {
-      allow read, write: if isAuthenticated() && (resource == null || resource.data.user_id == request.auth.uid || isAdmin());
-      allow create: if isAuthenticated();
-    }
-
-    // Legacy Support (Optional)
-    match /user_profiles/{userId} {
-      allow read, write: if isOwner(userId) || isAdmin();
+      allow create: if isAuthenticated() && incomingData().user_id == request.auth.uid;
+      allow read: if isAuthenticated() && (resource.data.user_id == request.auth.uid || isAdmin());
+      // Users can update their own conversations (e.g. title changes)
+      allow update: if isAuthenticated() && resource.data.user_id == request.auth.uid;
+      allow delete: if isAdmin();
     }
 
     // ===========================================
-    // 10. PROGRESS COLLECTIONS (backend reads these)
+    // 9. PROGRESS COLLECTIONS (Owner only)
     // ===========================================
     match /roadmap_progress/{docId} {
       allow read, write: if isAuthenticated() && (resource == null || resource.data.userId == request.auth.uid || isAdmin());
-      allow create: if isAuthenticated() && request.resource.data.userId == request.auth.uid;
+      allow create: if isAuthenticated() && incomingData().userId == request.auth.uid;
     }
     match /skills_progress/{docId} {
       allow read, write: if isAuthenticated() && (resource == null || resource.data.userId == request.auth.uid || isAdmin());
-      allow create: if isAuthenticated() && request.resource.data.userId == request.auth.uid;
+      allow create: if isAuthenticated() && incomingData().userId == request.auth.uid;
     }
     match /certifications_progress/{docId} {
       allow read, write: if isAuthenticated() && (resource == null || resource.data.userId == request.auth.uid || isAdmin());
-      allow create: if isAuthenticated() && request.resource.data.userId == request.auth.uid;
+      allow create: if isAuthenticated() && incomingData().userId == request.auth.uid;
     }
     match /assessments_attempts/{docId} {
       allow read, write: if isAuthenticated() && (resource == null || resource.data.userId == request.auth.uid || isAdmin());
-      allow create: if isAuthenticated() && request.resource.data.userId == request.auth.uid;
+      allow create: if isAuthenticated() && incomingData().userId == request.auth.uid;
     }
+  }
+}
   }
 }
