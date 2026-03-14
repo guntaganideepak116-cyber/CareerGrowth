@@ -18,6 +18,7 @@ export const PwaInstallPrompt: React.FC = () => {
 
   useEffect(() => {
     const handler = (e: Event) => {
+      console.log('✅ beforeinstallprompt event fired');
       // Prevent the mini-infobar from appearing on mobile
       e.preventDefault();
       // Stash the event so it can be triggered later.
@@ -25,6 +26,15 @@ export const PwaInstallPrompt: React.FC = () => {
       // Show the install button/prompt
       setIsVisible(true);
     };
+
+    // iOS Detection
+    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !(window as any).MSStream;
+    const isStandalone = window.matchMedia('(display-mode: standalone)').matches;
+
+    if (isIOS && !isStandalone) {
+      console.log('📱 iOS detected - showing manual install instructions');
+      setIsVisible(true);
+    }
 
     window.addEventListener('beforeinstallprompt', handler);
 
@@ -34,7 +44,13 @@ export const PwaInstallPrompt: React.FC = () => {
   }, []);
 
   const handleInstallClick = async () => {
-    if (!deferredPrompt) return;
+    if (!deferredPrompt) {
+      // Fallback for iOS or if prompt hasn't fired but user clicked
+      toast.info("To install: Tap the 'Share' icon and choose 'Add to Home Screen'", {
+        duration: 5000,
+      });
+      return;
+    }
 
     // Show the install prompt
     await deferredPrompt.prompt();
