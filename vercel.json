@@ -36,7 +36,7 @@
             "destination": "/api/$1"
         },
         {
-            "source": "/(.*)",
+            "source": "/((?!api/|assets/|sw.js|workbox-|manifest).*)",
             "destination": "/index.html"
         }
     ]
