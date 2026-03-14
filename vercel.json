@@ -1,8 +1,13 @@
 {
+    "version": 2,
     "crons": [
         {
             "path": "/api/cron/daily-engagement",
             "schedule": "0 9 * * *"
+        },
+        {
+            "path": "/api/notifications/cron/bootstrap",
+            "schedule": "0 0 * * *"
         }
     ],
     "headers": [
@@ -25,6 +30,10 @@
         }
     ],
     "rewrites": [
+        {
+            "source": "/api/(.*)",
+            "destination": "/api/$1"
+        },
         {
             "source": "/(.*)",
             "destination": "/index.html"
