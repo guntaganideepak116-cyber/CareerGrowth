@@ -54,24 +54,40 @@ export const PwaInstallPrompt: React.FC = () => {
   if (!isVisible) return null;
 
   return (
-    <div className="fixed bottom-4 left-4 right-4 z-[100] md:left-auto md:right-8 md:bottom-8 md:w-96 animate-fade-in">
-      <div className="bg-card border border-border rounded-xl shadow-2xl p-4 flex items-center justify-between gap-4 backdrop-blur-sm bg-card/95">
-        <div className="flex items-center gap-3">
-          <div className="bg-primary/20 p-2 rounded-lg">
-            <Download className="w-5 h-5 text-primary" />
+    <div className="fixed bottom-6 left-6 right-6 z-[100] md:left-auto md:right-8 md:bottom-8 md:w-[400px] animate-in fade-in slide-in-from-bottom-5 duration-500">
+      <div className="relative overflow-hidden bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border border-white/20 dark:border-slate-800/50 rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.1)] dark:shadow-[0_20px_50px_rgba(0,0,0,0.3)] p-5 group">
+        {/* Abstract background blobs for 'WOW' effect */}
+        <div className="absolute -top-10 -right-10 w-32 h-32 bg-teal-500/10 rounded-full blur-3xl group-hover:bg-teal-500/20 transition-colors duration-700"></div>
+        <div className="absolute -bottom-10 -left-10 w-32 h-32 bg-emerald-500/10 rounded-full blur-3xl group-hover:bg-emerald-500/20 transition-colors duration-700"></div>
+        
+        <div className="relative flex items-center justify-between gap-4">
+          <div className="flex items-center gap-4">
+            <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-gradient-to-br from-teal-500 to-emerald-600 flex items-center justify-center shadow-lg shadow-teal-500/20">
+              <Download className="w-6 h-6 text-white" />
+            </div>
+            <div>
+              <h3 className="text-base font-bold text-slate-900 dark:text-white leading-tight">Install CareerGrowth</h3>
+              <p className="text-sm text-slate-500 dark:text-slate-400 mt-0.5">Experience the platform as a native app</p>
+            </div>
           </div>
-          <div>
-            <p className="text-sm font-semibold">Install CareerGrowth</p>
-            <p className="text-xs text-muted-foreground line-clamp-1">Install our app for a better experience</p>
+          
+          <div className="flex items-center gap-2">
+            <Button 
+              variant="ghost" 
+              size="icon" 
+              onClick={() => setIsVisible(false)} 
+              className="h-8 w-8 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800"
+            >
+              <X className="h-4 w-4" />
+            </Button>
+            <Button 
+              size="sm" 
+              onClick={handleInstallClick} 
+              className="bg-teal-600 hover:bg-teal-700 text-white font-semibold rounded-lg shadow-md hover:shadow-teal-500/25 transition-all active:scale-95 px-5"
+            >
+              Install
+            </Button>
           </div>
-        </div>
-        <div className="flex items-center gap-2">
-          <Button variant="ghost" size="icon" onClick={() => setIsVisible(false)} className="h-8 w-8">
-            <X className="h-4 w-4" />
-          </Button>
-          <Button size="sm" onClick={handleInstallClick} className="whitespace-nowrap font-medium px-4">
-            Install
-          </Button>
         </div>
       </div>
     </div>
