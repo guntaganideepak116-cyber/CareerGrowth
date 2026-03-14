@@ -1,6 +1,6 @@
 {
     "version": 2,
-    "outputDirectory": "dist",
+    "outputDirectory": "public",
     "crons": [
         {
             "path": "/api/cron/daily-engagement",

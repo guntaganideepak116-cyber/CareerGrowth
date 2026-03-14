@@ -18,37 +18,55 @@ export const PwaInstallPrompt: React.FC = () => {
 
   useEffect(() => {
     const handler = (e: Event) => {
-      console.log('✅ beforeinstallprompt event fired');
-      // Prevent the mini-infobar from appearing on mobile
+      console.log('✅ PWA: beforeinstallprompt event received');
       e.preventDefault();
-      // Stash the event so it can be triggered later.
       setDeferredPrompt(e as BeforeInstallPromptEvent);
-      // Show the install button/prompt
       setIsVisible(true);
     };
 
-    // iOS Detection
+    // Show prompt after 3 seconds regardless (to ensure "WOW" factor)
+    // If native prompt isn't ready, we'll show helpful instructions
+    const timer = setTimeout(() => {
+      if (!isVisible) {
+        console.log('💡 PWA: Proactive prompt display triggered');
+        setIsVisible(true);
+      }
+    }, 3000);
+
+    // iOS/Standalone Detection
     const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !(window as any).MSStream;
     const isStandalone = window.matchMedia('(display-mode: standalone)').matches;
 
+    if (isStandalone) {
+      setIsVisible(false);
+      clearTimeout(timer);
+    }
+
     if (isIOS && !isStandalone) {
-      console.log('📱 iOS detected - showing manual install instructions');
-      setIsVisible(true);
+      console.log('📱 PWA: iOS detected');
     }
 
     window.addEventListener('beforeinstallprompt', handler);
 
     return () => {
       window.removeEventListener('beforeinstallprompt', handler);
+      clearTimeout(timer);
     };
-  }, []);
+  }, [isVisible]);
 
   const handleInstallClick = async () => {
     if (!deferredPrompt) {
-      // Fallback for iOS or if prompt hasn't fired but user clicked
-      toast.info("To install: Tap the 'Share' icon and choose 'Add to Home Screen'", {
-        duration: 5000,
-      });
+      // Manual instructions for iOS or if browser hasn't fired event yet
+      const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !(window as any).MSStream;
+      if (isIOS) {
+        toast.info("Tap the 'Share' icon and choose 'Add to Home Screen' to install CareerGrowth", {
+          duration: 6000,
+        });
+      } else {
+        toast.info("Open your browser menu (⋮) and select 'Install App' or 'Add to Home Screen'", {
+          duration: 6000,
+        });
+      }
       return;
     }
 
