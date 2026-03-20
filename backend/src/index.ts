@@ -88,8 +88,12 @@ if (process.env.NODE_ENV !== 'production') {
     app.listen(PORT, async () => {
         console.log(`\n🚀 Server running on port ${PORT} (${process.env.NODE_ENV || 'development'})`);
 
-        // Seed today's notifications immediately on startup
-        await bootstrapNotificationsIfEmpty();
+        // Seed today's notifications immediately on startup (only if Firebase is ready)
+        if (!!process.env.FIREBASE_SERVICE_ACCOUNT_JSON || !!process.env.GOOGLE_APPLICATION_CREDENTIALS) {
+            await bootstrapNotificationsIfEmpty();
+        } else {
+            console.warn('⚠️ Skipping notification bootstrap: Firebase not configured.');
+        }
 
         // Start cron scheduler for local dev
         startNotificationScheduler();

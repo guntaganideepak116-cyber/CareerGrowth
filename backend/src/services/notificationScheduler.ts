@@ -42,6 +42,13 @@ export async function bootstrapNotificationsIfEmpty(): Promise<void> {
 // CRON SCHEDULER (local dev)
 // ============================================================
 export function startNotificationScheduler(): void {
+    // Only start if Firebase is initialized
+    const { apps } = require('firebase-admin');
+    if (!apps || apps.length === 0) {
+        console.warn('⚠️ Skipping notification scheduler: Firebase not initialized.');
+        return;
+    }
+
     console.log('\n📅 Starting notification scheduler (node-cron)...');
 
     // ── Daily at 8:30 AM IST (3:00 AM UTC) ──────────────────────────────────

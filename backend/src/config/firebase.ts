@@ -48,22 +48,32 @@ const initializeFirebase = () => {
 initializeFirebase();
 
 // Export services with crash protection
+const createProxy = (name: string) => {
+    return new Proxy({}, {
+        get: (target, prop) => {
+            return (...args: any[]) => {
+                console.warn(`⚠️ Firebase ${name} called but not initialized. Action: ${String(prop)}`);
+                // Return a "fake" chainable object for common Firestore/Auth patterns
+                return createProxy(name);
+            };
+        }
+    });
+};
+
 export const db = (() => {
     try {
-        if (!admin.apps.length) return null as any;
+        if (!admin.apps.length) return createProxy('Firestore') as any;
         return admin.firestore();
     } catch (e) {
-        console.warn('Firestore service initialization skipped (no app)');
-        return null as any;
+        return createProxy('Firestore') as any;
     }
 })();
 
 export const auth = (() => {
     try {
-        if (!admin.apps.length) return null as any;
+        if (!admin.apps.length) return createProxy('Auth') as any;
         return admin.auth();
     } catch (e) {
-        console.warn('Auth service initialization skipped (no app)');
-        return null as any;
+        return createProxy('Auth') as any;
     }
 })();
