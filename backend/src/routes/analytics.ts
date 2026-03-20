@@ -178,7 +178,7 @@ router.get('/user-progress', verifyToken, async (req, res) => {
 
         // --- Scores ---
         let totalScore = 0;
-        assessmentsSnap.forEach(doc => totalScore += (doc.data().percentage || 0));
+        assessmentsSnap.forEach((doc: admin.firestore.QueryDocumentSnapshot) => totalScore += (doc.data().percentage || 0));
         const avgScore = assessmentsSnap.size > 0 ? Math.round(totalScore / assessmentsSnap.size) : 0;
 
         // --- Activity Analysis ---
