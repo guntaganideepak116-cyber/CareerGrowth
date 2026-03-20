@@ -11,6 +11,7 @@ import { Loader2 } from "lucide-react";
 import { ProtectedRoute } from "@/components/ProtectedRoute";
 import { LoginRedirect } from "@/components/LoginRedirect";
 import { PwaInstallPrompt } from "@/components/PwaInstallPrompt";
+import { NotificationSetup } from "@/components/NotificationSetup";
 import { useRegisterSW } from 'virtual:pwa-register/react';
 
 // Critical Routes (Static Import)
@@ -167,6 +168,7 @@ const App = () => (
           <NotificationProvider>
             <Toaster />
             <Sonner />
+            <NotificationSetup />
             <AppContent />
           </NotificationProvider>
         </SystemProvider>

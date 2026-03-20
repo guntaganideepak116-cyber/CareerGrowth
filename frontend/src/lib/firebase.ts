@@ -1,6 +1,7 @@
 import { initializeApp } from 'firebase/app';
 import { getAuth, setPersistence, browserLocalPersistence } from 'firebase/auth';
 import { initializeFirestore, persistentLocalCache, persistentMultipleTabManager } from 'firebase/firestore';
+import { getMessaging } from 'firebase/messaging';
 
 const firebaseConfig = {
     apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
@@ -14,32 +15,26 @@ const firebaseConfig = {
 // Validate Firebase config
 if (!firebaseConfig.apiKey) {
     console.error("Firebase API Key is missing! Check your .env file.");
-    console.error("Current env:", {
-        hasApiKey: !!import.meta.env.VITE_FIREBASE_API_KEY,
-        hasProjectId: !!import.meta.env.VITE_FIREBASE_PROJECT_ID
-    });
 }
-
-console.log("Initializing Firebase with project:", firebaseConfig.projectId);
 
 const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
+export const messaging = getMessaging(app);
 
-// Initialize Firestore with persistent cache and long-polling for better stability
+// Initialize Firestore with persistent cache 
 export const db = initializeFirestore(app, {
     localCache: persistentLocalCache({
         tabManager: persistentMultipleTabManager()
-    }),
-    experimentalForceLongPolling: true
+    })
 });
 
 // Enable persistence to maintain auth state across refreshes
 setPersistence(auth, browserLocalPersistence)
     .then(() => {
-        console.log("✅ Firebase Auth persistence enabled (local storage)");
+        console.log("✅ Firebase Auth persistence enabled");
     })
     .catch((error) => {
         console.error("❌ Failed to enable Firebase persistence:", error);
     });
 
-console.log("Firebase initialized successfully");
+export default app;

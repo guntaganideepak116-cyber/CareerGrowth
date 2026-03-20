@@ -3,6 +3,7 @@ import { GoogleGenerativeAI } from '@google/generative-ai';
 import { db } from '../config/firebase';
 import * as admin from 'firebase-admin';
 import axios from 'axios';
+import { FCMService } from '../services/fcmService';
 
 const router = Router();
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '');
@@ -189,6 +190,18 @@ export async function runDailyGeneration(force = false): Promise<{ count: number
             chunk.forEach(n => batch.set(db.collection('notifications').doc(n.id), n));
             await batch.commit();
         }
+
+        // Send push notifications for each field updated
+        for (const field of ALL_FIELDS) {
+            const fieldNotifs = allNotifications.filter(n => n.fieldId === field.id);
+            if (fieldNotifs.length > 0) {
+                await FCMService.sendToField(field.id, {
+                    title: `Today's ${field.name} Updates`,
+                    body: "We've generated new career trends and opportunities for you. Check them out!",
+                    data: { url: '/dashboard' }
+                });
+            }
+        }
     }
 
     console.log(`✅ Daily generation complete: ${allNotifications.length} notifications saved, ${skipped} fields skipped`);
@@ -261,6 +274,18 @@ export async function runHourlyGeneration(force = false): Promise<{ count: numbe
         const batch = db.batch();
         updates.forEach(u => batch.set(db.collection('notifications').doc(u.id), u));
         await batch.commit();
+
+        // Send push notifications for each field updated
+        for (const field of ALL_FIELDS) {
+            const fieldInsight = updates.find(u => u.fieldId === field.id);
+            if (fieldInsight) {
+                await FCMService.sendToField(field.id, {
+                    title: `New AI Insight: ${field.name}`,
+                    body: fieldInsight.title, // Use title as body for the push alert
+                    data: { url: '/dashboard' }
+                });
+            }
+        }
     }
 
     console.log(`✅ Hourly AI insights: ${updates.length} generated`);
@@ -630,6 +655,37 @@ router.post('/fetch-news', async (req: Request, res: Response) => {
     } catch (error) {
         console.error('Manual news fetch error:', error);
         res.status(500).json({ success: false, error: (error as Error).message });
+    }
+});
+
+/**
+ * POST /api/notifications/send-push
+ * Send a manual FCM push notification
+ */
+router.post('/send-push', async (req: Request, res: Response) => {
+    try {
+        const { title, body, userId, fieldId, specialization, url } = req.body;
+
+        if (!title || !body) {
+            return res.status(400).json({ error: 'Title and body are required' });
+        }
+
+        let result;
+        if (userId) {
+            result = await FCMService.sendToUser(userId, { title, body, data: { url: url || '/dashboard' } });
+        } else if (fieldId) {
+            result = await FCMService.sendToField(fieldId, { title, body, data: { url: url || '/dashboard' } }, specialization);
+        } else {
+            // Default to all users if nothing specified (optional, depending on safety)
+            const allTokens = await db.collection('user_tokens').get();
+            const tokens = allTokens.docs.map(doc => doc.data().token);
+            result = await FCMService.sendToTokens(tokens, { title, body, data: { url: url || '/dashboard' } });
+        }
+
+        res.json({ success: true, result });
+    } catch (error) {
+        console.error('Error sending manual push:', error);
+        res.status(500).json({ error: 'Failed to send notification' });
     }
 });
 

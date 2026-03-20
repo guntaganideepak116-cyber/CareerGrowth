@@ -1,5 +1,6 @@
 import { db } from '../config/firebase';
 import { sendNotificationEmail } from '../utils/sendEmail';
+import { FCMService } from './fcmService';
 
 /**
  * Creates a notification for a specific user and sends an email if enabled.
@@ -53,6 +54,13 @@ export async function createNotification(
             // await sendNotificationEmail(userData.email, title, message);
             console.log(`📧 Email delivery delegated to Cloud Function for ${userData.email}`);
         }
+
+        // 5. Send Push Notification (FCM)
+        await FCMService.sendToUser(userId, {
+            title,
+            body: message,
+            data: { url: actionUrl || '/dashboard' }
+        });
 
     } catch (error) {
         console.error('❌ Error creating notification:', error);
