@@ -60,7 +60,7 @@ const createProxy = (name: string) => {
     });
 };
 
-export const db = (() => {
+export const db: admin.firestore.Firestore = (() => {
     try {
         if (!admin.apps.length) return createProxy('Firestore') as any;
         return admin.firestore();
@@ -69,7 +69,7 @@ export const db = (() => {
     }
 })();
 
-export const auth = (() => {
+export const auth: admin.auth.Auth = (() => {
     try {
         if (!admin.apps.length) return createProxy('Auth') as any;
         return admin.auth();

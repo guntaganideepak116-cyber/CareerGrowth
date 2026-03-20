@@ -30,7 +30,7 @@ router.get('/stats', verifyAdminToken, async (req, res) => {
 
         // Get all users
         const usersSnapshot = await db.collection('users').get();
-        const allUsers = usersSnapshot.docs.map(doc => doc.data());
+        const allUsers = usersSnapshot.docs.map((doc: admin.firestore.QueryDocumentSnapshot) => doc.data());
 
         const totalUsers = usersSnapshot.size;
 
@@ -104,7 +104,7 @@ router.get('/users', verifyAdminToken, async (req, res) => {
 
         const thirtyMinutesAgo = new Date(Date.now() - 30 * 60 * 1000);
 
-        const users = usersSnapshot.docs.map(doc => {
+        const users = usersSnapshot.docs.map((doc: admin.firestore.QueryDocumentSnapshot) => {
             const data = doc.data();
             const lastLogin = data.lastLogin?.toDate();
             const isOnline = lastLogin && lastLogin >= thirtyMinutesAgo;
