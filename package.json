@@ -1,0 +1,8 @@
+{
+  "name": "careergrowth-monorepo",
+  "private": true,
+  "scripts": {
+    "build": "cd frontend && npm install && npm run build && cd .. && rm -rf dist && mkdir dist && cp -rv frontend/dist/* dist/",
+    "install-all": "npm install && cd frontend && npm install && cd ../backend && npm install"
+  }
+}

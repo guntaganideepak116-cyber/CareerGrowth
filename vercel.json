@@ -1,0 +1,43 @@
+{
+    "version": 2,
+    "outputDirectory": "dist",
+    "crons": [
+        {
+            "path": "/api/cron/daily-engagement",
+            "schedule": "0 9 * * *"
+        },
+        {
+            "path": "/api/notifications/cron/bootstrap",
+            "schedule": "0 0 * * *"
+        }
+    ],
+    "headers": [
+        {
+            "source": "/(.*)",
+            "headers": [
+                {
+                    "key": "Cross-Origin-Opener-Policy",
+                    "value": "unsafe-none"
+                },
+                {
+                    "key": "Cross-Origin-Embedder-Policy",
+                    "value": "unsafe-none"
+                },
+                {
+                    "key": "Cross-Origin-Resource-Policy",
+                    "value": "cross-origin"
+                }
+            ]
+        }
+    ],
+    "rewrites": [
+        {
+            "source": "/api/(.*)",
+            "destination": "/api/$1"
+        },
+        {
+            "source": "/((?!api/|assets/|sw.js|workbox-|manifest).*)",
+            "destination": "/index.html"
+        }
+    ]
+}

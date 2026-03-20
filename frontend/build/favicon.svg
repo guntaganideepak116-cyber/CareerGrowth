@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0F766E;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#059669;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="arrowGrad" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#ffffff;stop-opacity:0.85" />
+      <stop offset="100%" style="stop-color:#ffffff;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+
+  <!-- Background rounded square -->
+  <rect width="512" height="512" rx="100" ry="100" fill="url(#bg)" />
+
+  <!-- Bar chart bars -->
+  <rect x="80" y="340" width="72" height="112" rx="10" fill="white" opacity="0.30"/>
+  <rect x="178" y="280" width="72" height="172" rx="10" fill="white" opacity="0.45"/>
+  <rect x="276" y="210" width="72" height="242" rx="10" fill="white" opacity="0.60"/>
+
+  <!-- Rising arrow path -->
+  <polyline
+    points="90,380 200,280 295,320 420,160"
+    fill="none"
+    stroke="white"
+    stroke-width="28"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    opacity="1"
+  />
+
+  <!-- Arrow head -->
+  <polygon
+    points="420,160 370,158 420,210"
+    fill="white"
+    opacity="1"
+  />
+  <!-- Better arrowhead -->
+  <polyline
+    points="375,140 425,155 410,210"
+    fill="none"
+    stroke="white"
+    stroke-width="28"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+
+  <!-- Growth dot highlight -->
+  <circle cx="295" cy="320" r="18" fill="white" opacity="0.9"/>
+  <circle cx="200" cy="280" r="14" fill="white" opacity="0.7"/>
+  <circle cx="90" cy="380" r="14" fill="white" opacity="0.7"/>
+</svg>

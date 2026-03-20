@@ -1,0 +1,7 @@
+# Deployment Ignores
+*.md
+docs/
+# Keep essential files
+!README.md
+!LICENSE.md
+!CONTRIBUTING.md

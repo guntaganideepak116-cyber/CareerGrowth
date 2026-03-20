@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>CareerGrowth Favicon Generator</title>
+    <style>
+        body {
+            font-family: system-ui, sans-serif;
+            background: #0f172a;
+            color: #e2e8f0;
+            padding: 2rem;
+        }
+
+        h1 {
+            color: #0F766E;
+        }
+
+        .canvases {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin: 2rem 0;
+            align-items: flex-end;
+        }
+
+        .item {
+            text-align: center;
+        }
+
+        .item p {
+            font-size: 11px;
+            color: #94a3b8;
+            margin: 4px 0 0;
+        }
+
+        #status {
+            background: #1e293b;
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+            min-height: 80px;
+        }
+
+        .log {
+            color: #4ade80;
+            font-family: monospace;
+            font-size: 13px;
+            line-height: 1.8;
+        }
+
+        .btn {
+            background: #0F766E;
+            color: white;
+            border: none;
+            padding: 0.75rem 2rem;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background 0.2s;
+        }
+
+        .btn:hover {
+            background: #0d9488;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>🎨 CareerGrowth Favicon Generator</h1>
+    <p>Click the button below to generate and download all favicon files automatically.</p>
+
+    <button class="btn" onclick="generateAll()">⬇️ Generate & Download All Favicons</button>
+
+    <div class="canvases" id="canvases"></div>
+    <div id="status">
+        <p style="color:#64748b">Click the button to start...</p>
+    </div>
+
+    <script>
+        const BG_COLOR = '#0F766E';
+        const BG_COLOR2 = '#059669';
+
+        function drawCareerGrowthIcon(ctx, size) {
+            const s = size / 512;
+
+            // Background with rounded corners
+            const radius = size * 0.19;
+            ctx.beginPath();
+            ctx.moveTo(radius, 0);
+            ctx.lineTo(size - radius, 0);
+            ctx.quadraticCurveTo(size, 0, size, radius);
+            ctx.lineTo(size, size - radius);
+            ctx.quadraticCurveTo(size, size, size - radius, size);
+            ctx.lineTo(radius, size);
+            ctx.quadraticCurveTo(0, size, 0, size - radius);
+            ctx.lineTo(0, radius);
+            ctx.quadraticCurveTo(0, 0, radius, 0);
+            ctx.closePath();
+
+            // Teal gradient background
+            const grad = ctx.createLinearGradient(0, 0, size, size);
+            grad.addColorStop(0, '#0F766E');
+            grad.addColorStop(1, '#059669');
+            ctx.fillStyle = grad;
+            ctx.fill();
+
+            ctx.save();
+            ctx.clip(); // clip everything to rounded rect
+
+            // Bar chart bars
+            const bars = [
+                { x: 80, y: 340, w: 72, h: 172, a: 0.30 },
+                { x: 178, y: 280, w: 72, h: 232, a: 0.45 },
+                { x: 276, y: 210, w: 72, h: 302, a: 0.60 },
+            ];
+            for (const b of bars) {
+                ctx.fillStyle = `rgba(255,255,255,${b.a})`;
+                const bx = b.x * s, by = b.y * s, bw = b.w * s, bh = b.h * s;
+                const br = 5 * s;
+                ctx.beginPath();
+                ctx.moveTo(bx + br, by);
+                ctx.lineTo(bx + bw - br, by);
+                ctx.quadraticCurveTo(bx + bw, by, bx + bw, by + br);
+                ctx.lineTo(bx + bw, by + bh);
+                ctx.lineTo(bx, by + bh);
+                ctx.lineTo(bx, by + br);
+                ctx.quadraticCurveTo(bx, by, bx + br, by);
+                ctx.closePath();
+                ctx.fill();
+            }
+
+            // Rising trend line
+            const pts = [
+                [90 * s, 390 * s],
+                [200 * s, 285 * s],
+                [295 * s, 325 * s],
+                [415 * s, 160 * s],
+            ];
+
+            ctx.beginPath();
+            ctx.moveTo(pts[0][0], pts[0][1]);
+            for (let i = 1; i < pts.length; i++) {
+                ctx.lineTo(pts[i][0], pts[i][1]);
+            }
+            ctx.strokeStyle = 'rgba(255,255,255,0.95)';
+            ctx.lineWidth = 26 * s;
+            ctx.lineCap = 'round';
+            ctx.lineJoin = 'round';
+            ctx.stroke();
+
+            // Arrowhead at tip
+            const tip = pts[pts.length - 1];
+            const prev = pts[pts.length - 2];
+            const angle = Math.atan2(tip[1] - prev[1], tip[0] - prev[0]);
+            const arrowLen = 48 * s;
+            const arrowAngle = Math.PI / 6;
+
+            ctx.beginPath();
+            ctx.moveTo(tip[0], tip[1]);
+            ctx.lineTo(
+                tip[0] - arrowLen * Math.cos(angle - arrowAngle),
+                tip[1] - arrowLen * Math.sin(angle - arrowAngle)
+            );
+            ctx.moveTo(tip[0], tip[1]);
+            ctx.lineTo(
+                tip[0] - arrowLen * Math.cos(angle + arrowAngle),
+                tip[1] - arrowLen * Math.sin(angle + arrowAngle)
+            );
+            ctx.strokeStyle = 'white';
+            ctx.lineWidth = 24 * s;
+            ctx.lineCap = 'round';
+            ctx.stroke();
+
+            // Accent dots on inflection points
+            const dots = [
+                { x: 90 * s, y: 390 * s, r: 14 * s, a: 0.7 },
+                { x: 200 * s, y: 285 * s, r: 14 * s, a: 0.7 },
+                { x: 295 * s, y: 325 * s, r: 16 * s, a: 0.9 },
+            ];
+            for (const d of dots) {
+                ctx.beginPath();
+                ctx.arc(d.x, d.y, d.r, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(255,255,255,${d.a})`;
+                ctx.fill();
+            }
+
+            ctx.restore();
+        }
+
+        function generateCanvas(size) {
+            const canvas = document.createElement('canvas');
+            canvas.width = size;
+            canvas.height = size;
+            const ctx = canvas.getContext('2d');
+            drawCareerGrowthIcon(ctx, size);
+            return canvas;
+        }
+
+        function downloadCanvas(canvas, filename) {
+            return new Promise(resolve => {
+                canvas.toBlob(blob => {
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = filename;
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                    URL.revokeObjectURL(url);
+                    setTimeout(resolve, 300);
+                }, 'image/png');
+            });
+        }
+
+        function log(msg) {
+            const el = document.getElementById('status');
+            el.innerHTML += `<div class="log">${msg}</div>`;
+            el.scrollTop = el.scrollHeight;
+        }
+
+        async function generateAll() {
+            document.getElementById('status').innerHTML = '';
+            document.getElementById('canvases').innerHTML = '';
+
+            log('🎨 Generating CareerGrowth favicons...');
+
+            const files = [
+                { name: 'favicon-16x16.png', size: 16 },
+                { name: 'favicon-32x32.png', size: 32 },
+                { name: 'apple-touch-icon.png', size: 180 },
+                { name: 'android-chrome-192x192.png', size: 192 },
+                { name: 'android-chrome-512x512.png', size: 512 },
+                { name: 'favicon.ico', size: 32 }, // ico = 32px PNG (browsers accept this)
+            ];
+
+            const container = document.getElementById('canvases');
+
+            for (const { name, size } of files) {
+                const canvas = generateCanvas(size);
+
+                // Show preview (capped at 128px for display)
+                const displaySize = Math.min(size, 128);
+                const preview = generateCanvas(displaySize);
+                preview.style.border = '2px solid #1e293b';
+                preview.style.borderRadius = '8px';
+
+                const item = document.createElement('div');
+                item.className = 'item';
+                item.appendChild(preview);
+                item.innerHTML += `<p>${name}<br>${size}×${size}</p>`;
+                container.appendChild(item);
+
+                await downloadCanvas(canvas, name);
+                log(`✅ Downloaded: ${name} (${size}×${size})`);
+            }
+
+            log('');
+            log('🎉 All done! Move the downloaded files to your public/ folder.');
+            log('');
+            log('📁 Files to move: favicon.ico, favicon-16x16.png, favicon-32x32.png,');
+            log('   apple-touch-icon.png, android-chrome-192x192.png, android-chrome-512x512.png');
+        }
+
+        // Auto-preview on load
+        window.onload = () => {
+            const container = document.getElementById('canvases');
+            const previewSizes = [16, 32, 180, 192, 512];
+            for (const size of previewSizes) {
+                const displaySize = Math.min(size, 128);
+                const preview = generateCanvas(displaySize);
+                preview.style.border = '2px solid #334155';
+                preview.style.borderRadius = '8px';
+
+                const item = document.createElement('div');
+                item.className = 'item';
+                item.appendChild(preview);
+                item.innerHTML += `<p>${size}×${size}</p>`;
+                container.appendChild(item);
+            }
+        };
+    </script>
+</body>
+
+</html>

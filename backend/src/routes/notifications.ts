@@ -1,0 +1,824 @@
+import { Router, Request, Response, NextFunction } from 'express';
+import { GoogleGenerativeAI } from '@google/generative-ai';
+import { db } from '../config/firebase';
+import * as admin from 'firebase-admin';
+import axios from 'axios';
+
+const router = Router();
+const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '');
+
+// ============================================================
+// ALL 22 FIELDS
+// ============================================================
+const ALL_FIELDS = [
+    { id: 'engineering', name: 'Engineering & Technology' },
+    { id: 'medical', name: 'Medical & Health Sciences' },
+    { id: 'science', name: 'Science & Research' },
+    { id: 'arts', name: 'Arts, Humanities & Degree' },
+    { id: 'commerce', name: 'Commerce, Business & Management' },
+    { id: 'law', name: 'Law & Public Services' },
+    { id: 'education', name: 'Education & Teaching' },
+    { id: 'design', name: 'Design, Media & Creative Arts' },
+    { id: 'defense', name: 'Defense, Security & Physical Services' },
+    { id: 'agriculture', name: 'Agriculture & Environmental Studies' },
+    { id: 'hospitality', name: 'Hospitality, Travel & Tourism' },
+    { id: 'sports', name: 'Sports, Fitness & Lifestyle' },
+    { id: 'vocational', name: 'Skill-Based & Vocational Fields' },
+    { id: 'cloud-computing', name: 'Cloud Computing' },
+    { id: 'devops', name: 'DevOps & Site Reliability Engineering' },
+    { id: 'blockchain-web3', name: 'Blockchain & Web3' },
+    { id: 'ar-vr', name: 'AR / VR / Mixed Reality' },
+    { id: 'quantum', name: 'Quantum Computing' },
+    { id: 'robotics-automation', name: 'Robotics & Automation' },
+    { id: 'bioinformatics', name: 'Bioinformatics & Computational Biology' },
+    { id: 'product-management', name: 'Product Management & Tech Leadership' },
+    { id: 'ui-ux', name: 'UI/UX & Human–Computer Interaction' },
+];
+
+// ============================================================
+// CRON SECRET MIDDLEWARE
+// ============================================================
+function verifyCronSecret(req: Request, res: Response, next: NextFunction): void {
+    const expectedSecret = process.env.CRON_SECRET;
+    // If no CRON_SECRET configured, allow all (for initial setup / local dev)
+    if (!expectedSecret) {
+        next();
+        return;
+    }
+    const authHeader = req.headers.authorization;
+    if (authHeader !== `Bearer ${expectedSecret}`) {
+        res.status(401).json({ error: 'Unauthorized: Invalid cron secret' });
+        return;
+    }
+    next();
+}
+
+// ============================================================
+// CORE GENERATION FUNCTIONS (standalone — callable from anywhere)
+// ============================================================
+
+/**
+ * Generate AI notifications for a single field using Gemini
+ */
+async function generateFieldNotifications(fieldId: string, fieldName: string, date: string): Promise<any[]> {
+    try {
+        const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
+
+        const prompt = `You are an AI career advisor for students in ${fieldName}.
+Generate exactly 3 diverse notifications for ${date}:
+1. Industry trend/news (type: "trend")
+2. Skill opportunity (type: "skill")
+3. Career tip/opportunity (type: "opportunity")
+
+Return ONLY a valid JSON array. Each object must have: title, message, priority, category, actionText, actionUrl.
+Titles max 60 chars. Messages max 150 chars.`;
+
+        const result = await model.generateContent(prompt);
+        const response = await result.response;
+        const text = response.text();
+
+        const jsonMatch = text.match(/\[[\s\S]*\]/);
+        if (!jsonMatch) throw new Error('Invalid AI response format');
+
+        const notifications = JSON.parse(jsonMatch[0]);
+        const baseTimestamp = Date.now();
+
+        return notifications.map((notif: any, index: number) => {
+            const uniqueTimestamp = baseTimestamp + (index * 1000);
+            return {
+                id: `${fieldId}-${date}-${index}`,
+                fieldId,
+                fieldName,
+                title: notif.title || `${fieldName} Update`,
+                message: notif.message || 'Stay updated with the latest in your field',
+                category: notif.category || 'Industry Update',
+                type: notif.type || 'update',
+                priority: notif.priority || 'medium',
+                actionText: notif.actionText || 'Learn More',
+                actionUrl: notif.actionUrl || '#',
+                source: 'AI',
+                isGlobal: true,
+                visible: true,
+                createdAt: new Date(uniqueTimestamp).toISOString(),
+                dateKey: date,
+                readBy: [],
+                timestamp: uniqueTimestamp,
+            };
+        });
+
+    } catch (error) {
+        console.error(`Error generating notifications for ${fieldName}:`, error);
+        // Return a meaningful fallback so the field is never empty
+        const ts = Date.now();
+        return [{
+            id: `${fieldId}-${date}-fallback`,
+            fieldId,
+            fieldName,
+            title: `${fieldName}: Daily Career Update`,
+            message: `Stay ahead in ${fieldName} — explore the latest trends and opportunities.`,
+            category: 'Industry Update',
+            type: 'update',
+            priority: 'medium',
+            actionText: 'Explore',
+            actionUrl: 'https://www.linkedin.com/jobs',
+            source: 'AI',
+            isGlobal: true,
+            visible: true,
+            createdAt: new Date(ts).toISOString(),
+            dateKey: date,
+            readBy: [],
+            timestamp: ts,
+        }];
+    }
+}
+
+/**
+ * Check if notifications already exist for a specific field and date
+ */
+async function notificationsExistForFieldAndDate(fieldId: string, date: string): Promise<boolean> {
+    try {
+        const snapshot = await db.collection('notifications')
+            .where('dateKey', '==', date)
+            .where('fieldId', '==', fieldId)
+            .limit(1)
+            .get();
+        return !snapshot.empty;
+    } catch (error) {
+        console.error(`Error checking existing notifications for ${fieldId}:`, error);
+        return false;
+    }
+}
+
+// ============================================================
+// EXPORTED CORE RUNNERS (used by scheduler + cron endpoints)
+// ============================================================
+
+/**
+ * Run daily notification generation for all 22 fields.
+ * Exported so it can be called on server startup.
+ */
+export async function runDailyGeneration(force = false): Promise<{ count: number; fields: number; date: string; skipped: number }> {
+    const today = new Date().toISOString().split('T')[0];
+    console.log(`\n🔄 Daily notification generation started for ${today} [force=${force}]`);
+
+    const allNotifications: any[] = [];
+    let skipped = 0;
+
+    for (const field of ALL_FIELDS) {
+        if (!force) {
+            const exists = await notificationsExistForFieldAndDate(field.id, today);
+            if (exists) {
+                console.log(`  ℹ️  Skipping ${field.name} — already generated today`);
+                skipped++;
+                continue;
+            }
+        }
+        console.log(`  📝 Generating for ${field.name}...`);
+        const notifications = await generateFieldNotifications(field.id, field.name, today);
+        allNotifications.push(...notifications);
+        // Throttle to avoid Gemini rate limits
+        await new Promise(r => setTimeout(r, 800));
+    }
+
+    if (allNotifications.length > 0) {
+        // Save in Firestore batches (max 500 per batch)
+        const BATCH_SIZE = 400;
+        for (let i = 0; i < allNotifications.length; i += BATCH_SIZE) {
+            const chunk = allNotifications.slice(i, i + BATCH_SIZE);
+            const batch = db.batch();
+            chunk.forEach(n => batch.set(db.collection('notifications').doc(n.id), n));
+            await batch.commit();
+        }
+    }
+
+    console.log(`✅ Daily generation complete: ${allNotifications.length} notifications saved, ${skipped} fields skipped`);
+    return { count: allNotifications.length, fields: ALL_FIELDS.length, date: today, skipped };
+}
+
+/**
+ * Run hourly AI Insight generation (1 insight per field)
+ */
+export async function runHourlyGeneration(force = false): Promise<{ count: number }> {
+    const now = new Date();
+    const dateKey = now.toISOString().split('T')[0];
+
+    if (!force) {
+        const fiftyMinsAgo = new Date(Date.now() - 50 * 60 * 1000).toISOString();
+        const recentCheck = await db.collection('notifications')
+            .where('category', '==', 'AI Insight')
+            .where('createdAt', '>=', fiftyMinsAgo)
+            .limit(1)
+            .get();
+        if (!recentCheck.empty) {
+            console.log('⏭️  Skipping hourly AI insights — already generated recently');
+            return { count: 0 };
+        }
+    }
+
+    const updates: any[] = [];
+    const baseTimestamp = Date.now();
+
+    for (const field of ALL_FIELDS) {
+        try {
+            const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
+            const prompt = `Generate 1 short AI Insight or Future Trend for the career field: ${field.name}. Make it relevant to 2026. Return ONLY JSON: { "title": "...", "message": "...", "actionUrl": "https://..." }`;
+
+            const result = await model.generateContent(prompt);
+            const response = await result.response;
+            const text = response.text();
+            const jsonMatch = text.match(/\{[\s\S]*\}/);
+            if (!jsonMatch) continue;
+
+            const insight = JSON.parse(jsonMatch[0]);
+            if (!insight.title) continue;
+
+            const ts = baseTimestamp + updates.length * 500;
+            updates.push({
+                id: `ai-insight-${field.id}-${ts}`,
+                fieldId: field.id,
+                fieldName: field.name,
+                title: insight.title,
+                message: insight.message || '',
+                category: 'AI Insight',
+                source: 'AI Analysis',
+                type: 'trend',
+                priority: 'medium',
+                actionText: 'Learn More',
+                actionUrl: insight.actionUrl || '#',
+                isGlobal: true,
+                createdAt: new Date(ts).toISOString(),
+                dateKey,
+                readBy: [],
+                timestamp: ts,
+            });
+        } catch {
+            console.error(`Failed AI insight for ${field.name}`);
+        }
+        await new Promise(r => setTimeout(r, 200));
+    }
+
+    if (updates.length > 0) {
+        const batch = db.batch();
+        updates.forEach(u => batch.set(db.collection('notifications').doc(u.id), u));
+        await batch.commit();
+    }
+
+    console.log(`✅ Hourly AI insights: ${updates.length} generated`);
+    return { count: updates.length };
+}
+
+/**
+ * Run 6-hourly AI notification generation for all 22 fields.
+ * Generates 1 fresh notification per field if none generated within 6 hours.
+ * Exported so it can be called from scheduler and cron endpoint.
+ */
+export async function runSixHourlyGeneration(force = false): Promise<{ count: number }> {
+    const now = new Date();
+    const dateKey = now.toISOString().split('T')[0];
+    // Window: 6 hours ago
+    const sixHoursAgo = new Date(Date.now() - 6 * 60 * 60 * 1000).toISOString();
+
+    const updates: any[] = [];
+    const baseTimestamp = Date.now();
+
+    for (const field of ALL_FIELDS) {
+        try {
+            // Duplicate prevention: skip if a 6h notification exists for this field recently
+            if (!force) {
+                const recentCheck = await db.collection('notifications')
+                    .where('fieldId', '==', field.id)
+                    .where('category', '==', 'Six-Hour Update')
+                    .where('createdAt', '>=', sixHoursAgo)
+                    .limit(1)
+                    .get();
+                if (!recentCheck.empty) {
+                    console.log(`  ⏭️  Skipping 6h update for ${field.name} — already generated`);
+                    continue;
+                }
+            }
+
+            const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
+            const prompt = `Generate 1 concise, real-world career update notification for the field: ${field.name}.
+Make it relevant to 2026 industry trends. Focus on: certifications, job opportunities, skill demands, or industry news.
+Return ONLY valid JSON (no markdown, no explanation):
+{
+  "title": "max 60 characters",
+  "message": "100-140 characters, actionable and specific",
+  "type": "skill" | "trend" | "certification" | "opportunity",
+  "priority": "high" | "medium" | "low",
+  "actionText": "Learn More",
+  "actionUrl": "https://real-working-url.com"
+}`;
+
+            const result = await model.generateContent(prompt);
+            const response = await result.response;
+            const text = response.text();
+            const jsonMatch = text.match(/\{[\s\S]*\}/);
+            if (!jsonMatch) continue;
+
+            const notif = JSON.parse(jsonMatch[0]);
+            if (!notif.title) continue;
+
+            const ts = baseTimestamp + updates.length * 300;
+            updates.push({
+                id: `6h-${field.id}-${ts}`,
+                fieldId: field.id,
+                fieldName: field.name,
+                title: (notif.title || `${field.name} Update`).slice(0, 60),
+                message: notif.message || `New developments in ${field.name} — stay current.`,
+                category: 'Six-Hour Update',
+                source: 'AI',
+                type: notif.type || 'trend',
+                priority: notif.priority || 'medium',
+                actionText: notif.actionText || 'Learn More',
+                actionUrl: notif.actionUrl || 'https://www.linkedin.com/feed/',
+                isGlobal: true,
+                visible: true,
+                createdAt: new Date(ts).toISOString(),
+                dateKey,
+                readBy: [],
+                timestamp: ts,
+            });
+
+        } catch {
+            console.error(`❌ Failed 6h notification for ${field.name}`);
+        }
+        // Throttle between fields to respect Gemini rate limits
+        await new Promise(r => setTimeout(r, 300));
+    }
+
+    if (updates.length > 0) {
+        const BATCH_SIZE = 400;
+        for (let i = 0; i < updates.length; i += BATCH_SIZE) {
+            const chunk = updates.slice(i, i + BATCH_SIZE);
+            const batch = db.batch();
+            chunk.forEach(u => batch.set(db.collection('notifications').doc(u.id), u));
+            await batch.commit();
+        }
+    }
+
+    console.log(`✅ Six-hourly AI notifications: ${updates.length} generated`);
+    return { count: updates.length };
+}
+
+/**
+ * Fetch live news from Google News RSS (every 30 min)
+ */
+export async function runNewsFetch(): Promise<{ count: number }> {
+    try {
+        const RSS_URL = 'https://news.google.com/rss/search?q=career+technology+future+skills+2026&hl=en-IN&gl=IN&ceid=IN:en';
+        const response = await axios.get(RSS_URL, { timeout: 10000 });
+        const xml = response.data as string;
+
+        const itemRegex = /<item>[\s\S]*?<\/item>/g;
+        const items = xml.match(itemRegex) || [];
+        const validItems = items.slice(0, 8);
+
+        const newNotifs: any[] = [];
+
+        for (const itemStr of validItems) {
+            const titleMatch = itemStr.match(/<title><!\[CDATA\[(.*?)\]\]><\/title>/) ||
+                itemStr.match(/<title>(.*?)<\/title>/);
+            const linkMatch = itemStr.match(/<link>(.*?)<\/link>/);
+
+            const title = titleMatch?.[1]?.trim() || '';
+            const link = linkMatch?.[1]?.trim() || '';
+
+            if (!title || title.length < 5) continue;
+
+            // Dedup check
+            const existing = await db.collection('notifications')
+                .where('title', '==', title)
+                .limit(1)
+                .get();
+            if (!existing.empty) continue;
+
+            const ts = Date.now() + newNotifs.length * 100;
+            newNotifs.push({
+                id: `news-${ts}-${Math.random().toString(36).slice(2, 8)}`,
+                fieldId: 'general',
+                fieldName: 'Global News',
+                title: title.slice(0, 100),
+                message: 'Latest career & tech update from Google News',
+                category: 'Live News',
+                source: 'Google News',
+                type: 'update',
+                priority: 'medium',
+                actionText: 'Read Article',
+                actionUrl: link || '#',
+                isGlobal: true,
+                createdAt: new Date(ts).toISOString(),
+                dateKey: new Date(ts).toISOString().split('T')[0],
+                readBy: [],
+                timestamp: ts,
+            });
+        }
+
+        if (newNotifs.length > 0) {
+            const batch = db.batch();
+            newNotifs.forEach(n => batch.set(db.collection('notifications').doc(n.id), n));
+            await batch.commit();
+        }
+
+        console.log(`✅ News fetch: ${newNotifs.length} new articles`);
+        return { count: newNotifs.length };
+    } catch (error) {
+        console.error('News fetch error:', error);
+        return { count: 0 };
+    }
+}
+
+/**
+ * Clean up notifications older than 30 days
+ */
+export async function runCleanup(): Promise<{ deletedCount: number }> {
+    const thirtyDaysAgo = new Date();
+    thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+    const cutoffDate = thirtyDaysAgo.toISOString().split('T')[0];
+
+    // Use dateKey field (the correct field name stored by generateFieldNotifications)
+    const snapshot = await db.collection('notifications')
+        .where('dateKey', '<', cutoffDate)
+        .get();
+
+    if (snapshot.empty) {
+        console.log('🧹 No old notifications to clean up');
+        return { deletedCount: 0 };
+    }
+
+    const BATCH_SIZE = 400;
+    let deletedCount = 0;
+    const docs = snapshot.docs;
+
+    for (let i = 0; i < docs.length; i += BATCH_SIZE) {
+        const chunk = docs.slice(i, i + BATCH_SIZE);
+        const batch = db.batch();
+        chunk.forEach((doc: admin.firestore.QueryDocumentSnapshot) => batch.delete(doc.ref));
+        await batch.commit();
+        deletedCount += chunk.length;
+    }
+
+    console.log(`🧹 Cleanup: deleted ${deletedCount} notifications older than ${cutoffDate}`);
+    return { deletedCount };
+}
+
+// ============================================================
+// VERCEL CRON ENDPOINTS — GET requests, protected by CRON_SECRET
+// These are called automatically by Vercel's scheduler
+// ============================================================
+
+/**
+ * GET /api/notifications/cron/daily
+ * Vercel Cron: runs daily at 3:00 AM UTC (8:30 AM IST)
+ */
+router.get('/cron/daily', verifyCronSecret, async (req: Request, res: Response) => {
+    try {
+        const force = req.query.force === 'true';
+        const result = await runDailyGeneration(force);
+        res.json({ success: true, ...result, triggeredBy: 'vercel-cron' });
+    } catch (error) {
+        console.error('Cron daily error:', error);
+        res.status(500).json({ success: false, error: (error as Error).message });
+    }
+});
+
+/**
+ * GET /api/notifications/cron/hourly
+ * Vercel Cron: runs every hour
+ */
+router.get('/cron/hourly', verifyCronSecret, async (req: Request, res: Response) => {
+    try {
+        const force = req.query.force === 'true';
+        const result = await runHourlyGeneration(force);
+        res.json({ success: true, ...result, triggeredBy: 'vercel-cron' });
+    } catch (error) {
+        console.error('Cron hourly error:', error);
+        res.status(500).json({ success: false, error: (error as Error).message });
+    }
+});
+
+// GET /api/notifications/cron/six-hourly
+// Vercel Cron: runs every 6 hours — schedule: 0 */6 * * *
+// Protected by CRON_SECRET
+router.get('/cron/six-hourly', verifyCronSecret, async (req: Request, res: Response) => {
+    try {
+        const force = req.query.force === 'true';
+        const result = await runSixHourlyGeneration(force);
+        res.json({ success: true, ...result, triggeredBy: 'vercel-cron' });
+    } catch (error) {
+        console.error('Cron six-hourly error:', error);
+        res.status(500).json({ success: false, error: (error as Error).message });
+    }
+});
+
+/**
+ * GET /api/notifications/cron/bootstrap
+ * Vercel Cron: runs at server start for cold-start seeding — 0 0 * * *
+ * Ensures today's notifications are always seeded on Vercel cold starts.
+ */
+router.get('/cron/bootstrap', verifyCronSecret, async (_req: Request, res: Response) => {
+    try {
+        const today = new Date().toISOString().split('T')[0];
+        const snapshot = await db.collection('notifications')
+            .where('dateKey', '==', today)
+            .limit(1)
+            .get();
+
+        if (snapshot.empty) {
+            console.log(`[Bootstrap Cron] No notifications for ${today} — generating now`);
+            const result = await runDailyGeneration(false);
+            res.json({ success: true, seeded: true, ...result });
+        } else {
+            res.json({ success: true, seeded: false, message: 'Notifications already exist for today' });
+        }
+    } catch (error) {
+        console.error('Bootstrap cron error:', error);
+        res.status(500).json({ success: false, error: (error as Error).message });
+    }
+});
+
+/**
+ * GET /api/notifications/cron/news
+ * Vercel Cron: runs every 30 minutes
+ */
+router.get('/cron/news', verifyCronSecret, async (req: Request, res: Response) => {
+    try {
+        const result = await runNewsFetch();
+        res.json({ success: true, ...result, triggeredBy: 'vercel-cron' });
+    } catch (error) {
+        console.error('Cron news error:', error);
+        res.status(500).json({ success: false, error: (error as Error).message });
+    }
+});
+
+/**
+ * GET /api/notifications/cron/cleanup
+ * Vercel Cron: runs every Sunday at 2:00 AM
+ */
+router.get('/cron/cleanup', verifyCronSecret, async (req: Request, res: Response) => {
+    try {
+        const result = await runCleanup();
+        res.json({ success: true, ...result, triggeredBy: 'vercel-cron' });
+    } catch (error) {
+        console.error('Cron cleanup error:', error);
+        res.status(500).json({ success: false, error: (error as Error).message });
+    }
+});
+
+// ============================================================
+// MANUAL TRIGGER ENDPOINTS — POST, for admin dashboard use
+// ============================================================
+
+/**
+ * POST /api/notifications/generate-daily
+ * Manual trigger: generates for all 22 fields
+ */
+router.post('/generate-daily', async (req: Request, res: Response) => {
+    try {
+        const force = req.query.force === 'true';
+        const result = await runDailyGeneration(force);
+        res.json({
+            success: true,
+            message: `Generated ${result.count} notifications`,
+            ...result,
+            triggeredBy: 'manual',
+        });
+    } catch (error) {
+        console.error('Manual daily generation error:', error);
+        res.status(500).json({ success: false, error: (error as Error).message });
+    }
+});
+
+/**
+ * POST /api/notifications/generate-hourly
+ * Manual trigger: hourly AI insights
+ */
+router.post('/generate-hourly', async (req: Request, res: Response) => {
+    try {
+        const force = req.query.force === 'true';
+        const result = await runHourlyGeneration(force);
+        res.json({ success: true, ...result, triggeredBy: 'manual' });
+    } catch (error) {
+        console.error('Manual hourly generation error:', error);
+        res.status(500).json({ success: false, error: (error as Error).message });
+    }
+});
+
+/**
+ * POST /api/notifications/generate-six-hourly
+ * Manual trigger: generate 1 notification per field (6h cadence)
+ */
+router.post('/generate-six-hourly', async (req: Request, res: Response) => {
+    try {
+        const force = req.query.force === 'true';
+        const result = await runSixHourlyGeneration(force);
+        res.json({ success: true, ...result, triggeredBy: 'manual' });
+    } catch (error) {
+        console.error('Manual six-hourly generation error:', error);
+        res.status(500).json({ success: false, error: (error as Error).message });
+    }
+});
+
+/**
+ * POST /api/notifications/fetch-news
+ * Manual trigger: news fetch
+ */
+router.post('/fetch-news', async (req: Request, res: Response) => {
+    try {
+        const result = await runNewsFetch();
+        res.json({ success: true, ...result, triggeredBy: 'manual' });
+    } catch (error) {
+        console.error('Manual news fetch error:', error);
+        res.status(500).json({ success: false, error: (error as Error).message });
+    }
+});
+
+// ============================================================
+// FETCH ENDPOINTS
+// ============================================================
+
+/**
+ * GET /api/notifications/all
+ * Get latest notifications across all fields (limit 50)
+ */
+router.get('/all', async (req: Request, res: Response) => {
+    try {
+        const limitVal = Math.min(Number(req.query.limit) || 50, 100);
+        const fieldId = req.query.fieldId as string | undefined;
+
+        let query = db.collection('notifications').orderBy('timestamp', 'desc').limit(limitVal);
+
+        const snapshot = await (fieldId
+            ? db.collection('notifications')
+                .where('fieldId', 'in', [fieldId, 'general'])
+                .orderBy('timestamp', 'desc')
+                .limit(limitVal)
+                .get()
+            : query.get()
+        );
+
+        const notifications = snapshot.docs.map((doc: admin.firestore.QueryDocumentSnapshot) => ({ id: doc.id, ...doc.data() }));
+        res.json({ success: true, notifications, count: notifications.length });
+    } catch (error) {
+        console.error('Error fetching all notifications:', error);
+        res.status(500).json({ success: false, error: (error as Error).message });
+    }
+});
+
+/**
+ * GET /api/notifications/field/:fieldId
+ * Get notifications for a specific field
+ */
+router.get('/field/:fieldId', async (req: Request, res: Response) => {
+    try {
+        const { fieldId } = req.params;
+        const limitVal = Math.min(Number(req.query.limit) || 20, 50);
+
+        const snapshot = await db.collection('notifications')
+            .where('fieldId', 'in', [fieldId, 'general'])
+            .orderBy('timestamp', 'desc')
+            .limit(limitVal)
+            .get();
+
+        const notifications = snapshot.docs.map((doc: admin.firestore.QueryDocumentSnapshot) => ({ id: doc.id, ...doc.data() }));
+        res.json({ success: true, notifications, count: notifications.length });
+    } catch (error) {
+        console.error('Error fetching field notifications:', error);
+        res.status(500).json({ success: false, error: (error as Error).message });
+    }
+});
+
+/**
+ * GET /api/notifications/stats
+ * Get notification statistics (uses dateKey — the correct field)
+ */
+router.get('/stats', async (req: Request, res: Response) => {
+    try {
+        const totalSnapshot = await db.collection('notifications').get();
+        const totalCount = totalSnapshot.size;
+
+        const sevenDaysAgo = new Date();
+        sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+        const cutoffDate = sevenDaysAgo.toISOString().split('T')[0];
+
+        const recentSnapshot = await db.collection('notifications')
+            .where('dateKey', '>=', cutoffDate)
+            .get();
+
+        const byDate: Record<string, number> = {};
+        const byField: Record<string, number> = {};
+
+        recentSnapshot.docs.forEach((doc: admin.firestore.QueryDocumentSnapshot) => {
+            const data = doc.data();
+            const date = data.dateKey || '';
+            const field = data.fieldId || 'unknown';
+            byDate[date] = (byDate[date] || 0) + 1;
+            byField[field] = (byField[field] || 0) + 1;
+        });
+
+        res.json({
+            success: true,
+            stats: {
+                total: totalCount,
+                last7Days: recentSnapshot.size,
+                byDate,
+                byField,
+                fieldsCount: ALL_FIELDS.length,
+            },
+        });
+    } catch (error) {
+        console.error('Error fetching stats:', error);
+        res.status(500).json({ success: false, error: (error as Error).message });
+    }
+});
+
+// ============================================================
+// READ MANAGEMENT
+// ============================================================
+
+/**
+ * PUT /api/notifications/read/:id
+ * Mark a single notification as read by user
+ */
+router.put('/read/:id', async (req: Request, res: Response) => {
+    try {
+        const { id } = req.params;
+        const { userId } = req.body;
+
+        if (!userId) {
+            return res.status(400).json({ success: false, error: 'userId is required' });
+        }
+
+        const docRef = db.collection('notifications').doc(id);
+        const docSnap = await docRef.get();
+
+        if (!docSnap.exists) {
+            return res.status(404).json({ success: false, error: 'Notification not found' });
+        }
+
+        const readBy: string[] = docSnap.data()?.readBy || [];
+        if (!readBy.includes(userId)) {
+            await docRef.update({ readBy: [...readBy, userId] });
+        }
+
+        res.json({ success: true, message: 'Marked as read' });
+    } catch (error) {
+        console.error('Error marking as read:', error);
+        res.status(500).json({ success: false, error: (error as Error).message });
+    }
+});
+
+/**
+ * PUT /api/notifications/read-all
+ * Mark all notifications as read for a user
+ */
+router.put('/read-all', async (req: Request, res: Response) => {
+    try {
+        const { userId, notificationIds } = req.body;
+
+        if (!userId || !Array.isArray(notificationIds)) {
+            return res.status(400).json({ success: false, error: 'userId and notificationIds[] required' });
+        }
+
+        const BATCH_SIZE = 400;
+        let updatedCount = 0;
+
+        for (let i = 0; i < notificationIds.length; i += BATCH_SIZE) {
+            const chunk = notificationIds.slice(i, i + BATCH_SIZE);
+            const batch = db.batch();
+            chunk.forEach((nId: string) => {
+                const ref = db.collection('notifications').doc(nId);
+                batch.update(ref, {
+                    readBy: admin.firestore.FieldValue.arrayUnion(userId)
+                });
+            });
+            await batch.commit();
+            updatedCount += chunk.length;
+        }
+
+        res.json({ success: true, updatedCount });
+    } catch (error) {
+        console.error('Error marking all as read:', error);
+        res.status(500).json({ success: false, error: (error as Error).message });
+    }
+});
+
+// ============================================================
+// CLEANUP
+// ============================================================
+
+/**
+ * DELETE /api/notifications/old
+ * Clean up notifications older than 30 days (uses dateKey — fixed)
+ */
+router.delete('/old', async (req: Request, res: Response) => {
+    try {
+        const result = await runCleanup();
+        res.json({ success: true, ...result });
+    } catch (error) {
+        console.error('Error cleaning old notifications:', error);
+        res.status(500).json({ success: false, error: (error as Error).message });
+    }
+});
+
+export default router;
