@@ -1,12 +1,11 @@
 import express from 'express';
 import { verifyToken } from '../middleware/adminMiddleware';
+import { db } from '../config/firebase';
 import admin from 'firebase-admin';
 import { createNotification } from '../services/notificationService';
 import { IntelligenceService } from '../services/intelligenceService';
 
-
 const router = express.Router();
-const db = admin.firestore();
 
 /**
  * GET /api/assessment/questions/:fieldId
@@ -43,7 +42,7 @@ router.get('/questions/:fieldId', verifyToken, async (req, res) => {
             hard: []
         };
 
-        snapshot.docs.forEach(doc => {
+        snapshot.docs.forEach((doc: any) => {
             const data = doc.data();
             const difficulty = (data.difficulty || 'medium').toLowerCase();
             const question = {
