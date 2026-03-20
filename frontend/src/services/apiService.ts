@@ -1,12 +1,12 @@
 // API service to call Express backend instead of Supabase
 const getBaseUrl = () => {
-    // 1. Check environment variable first (Vite will bake this in during build)
+    // 1. Check environment variable first
     const envUrl = import.meta.env.VITE_API_URL;
     if (envUrl && !envUrl.includes('localhost')) return envUrl.replace(/\/$/, '');
 
-    // 2. Fallback for Vercel Web
-    if (typeof window !== 'undefined' && window.location.hostname.includes('vercel.app')) {
-        return 'https://career-growth-opr6.vercel.app';
+    // 2. Fallback for production: use relative path
+    if (typeof window !== 'undefined' && !window.location.hostname.includes('localhost')) {
+        return '';
     }
 
     // 4. Local Development
