@@ -4,7 +4,7 @@ import { verifyToken } from '../middleware/adminMiddleware';
 
 const router = Router();
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '');
-const GEMINI_MODEL = 'gemini-1.5-flash-latest';
+const GEMINI_MODEL = 'gemini-1.5-flash';
 
 // ChatGPT-Style AI Mentor Training - Conversational and versatile
 const SYSTEM_PROMPTS = {
