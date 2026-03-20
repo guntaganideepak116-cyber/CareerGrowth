@@ -1,4 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
+import { auth, db } from '../config/firebase';
 import admin from 'firebase-admin';
 
 /**
@@ -14,7 +15,7 @@ export async function verifyToken(req: Request, res: Response, next: NextFunctio
         }
 
         const token = authHeader.split('Bearer ')[1];
-        const decodedToken = await admin.auth().verifyIdToken(token);
+        const decodedToken = await auth.verifyIdToken(token);
 
         // Attach user to request
         (req as any).user = decodedToken;

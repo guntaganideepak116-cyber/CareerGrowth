@@ -1,4 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
+import { auth } from '../config/firebase';
 import admin from 'firebase-admin';
 
 /**
@@ -19,7 +20,7 @@ export async function verifyFirebaseToken(req: Request, res: Response, next: Nex
         const token = authHeader.split('Bearer ')[1];
 
         // Verify token with Firebase Admin
-        const decodedToken = await admin.auth().verifyIdToken(token);
+        const decodedToken = await auth.verifyIdToken(token);
 
         // Attach user info to request (using type assertion)
         (req as any).user = {

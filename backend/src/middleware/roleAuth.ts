@@ -1,4 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
+import { auth, db } from '../config/firebase';
 import admin from 'firebase-admin';
 
 /**
@@ -30,7 +31,7 @@ async function verifyFirebaseToken(req: AuthenticatedRequest, res: Response): Pr
         const token = authHeader.split('Bearer ')[1];
 
         // Verify token with Firebase Admin
-        const decodedToken = await admin.auth().verifyIdToken(token);
+        const decodedToken = await auth.verifyIdToken(token);
 
         return decodedToken;
     } catch (error) {
@@ -66,7 +67,6 @@ export async function verifyAdminToken(req: AuthenticatedRequest, res: Response,
         }
 
         // 2. Fallback to Firestore check
-        const db = admin.firestore();
         const userDoc = await db.collection('users').doc(decodedToken.uid).get();
         const userData = userDoc.data();
 
@@ -76,8 +76,8 @@ export async function verifyAdminToken(req: AuthenticatedRequest, res: Response,
         if (hasAdminRole || isEmailAdmin) {
             // Set claim for next time if missing
             if (isEmailAdmin && decodedToken.role !== 'admin') {
-                admin.auth().setCustomUserClaims(decodedToken.uid, { role: 'admin' })
-                    .catch(err => console.error('Error setting custom claim:', err));
+                auth.setCustomUserClaims(decodedToken.uid, { role: 'admin' })
+                    .catch((err: any) => console.error('Error setting custom claim:', err));
             }
 
             req.user = {
