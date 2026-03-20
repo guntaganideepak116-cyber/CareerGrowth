@@ -38,7 +38,7 @@ interface CareerPath {
 
 async function generateCareerPaths(fieldId: string, specId?: string): Promise<CareerPath[]> {
     try {
-        const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
+        const model = genAI.getGenerativeModel({ model: 'gemini-2.0-flash' });
         const target = specId ? `specialization "${specId}"` : `field "${fieldId}"`;
 
         const prompt = `You are a career counseling expert. Generate 5 diverse, professional career paths for the ${target}.

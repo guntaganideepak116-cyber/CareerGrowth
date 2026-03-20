@@ -62,7 +62,7 @@ function verifyCronSecret(req: Request, res: Response, next: NextFunction): void
  */
 async function generateFieldNotifications(fieldId: string, fieldName: string, date: string): Promise<any[]> {
     try {
-        const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
+        const model = genAI.getGenerativeModel({ model: 'gemini-2.0-flash' });
 
         const prompt = `You are an AI career advisor for students in ${fieldName}.
 Generate exactly 3 diverse notifications for ${date}:
@@ -220,7 +220,7 @@ export async function runHourlyGeneration(force = false): Promise<{ count: numbe
 
     for (const field of ALL_FIELDS) {
         try {
-            const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
+            const model = genAI.getGenerativeModel({ model: 'gemini-2.0-flash' });
             const prompt = `Generate 1 short AI Insight or Future Trend for the career field: ${field.name}. Make it relevant to 2026. Return ONLY JSON: { "title": "...", "message": "...", "actionUrl": "https://..." }`;
 
             const result = await model.generateContent(prompt);
@@ -297,7 +297,7 @@ export async function runSixHourlyGeneration(force = false): Promise<{ count: nu
                 }
             }
 
-            const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
+            const model = genAI.getGenerativeModel({ model: 'gemini-2.0-flash' });
             const prompt = `Generate 1 concise, real-world career update notification for the field: ${field.name}.
 Make it relevant to 2026 industry trends. Focus on: certifications, job opportunities, skill demands, or industry news.
 Return ONLY valid JSON (no markdown, no explanation):
