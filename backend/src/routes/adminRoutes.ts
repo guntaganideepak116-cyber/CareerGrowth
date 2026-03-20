@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import { verifyAdminToken } from '../middleware/roleAuth';
+import { db } from '../config/firebase';
 import admin from 'firebase-admin';
 
 const router = Router();
@@ -18,8 +19,6 @@ router.get('/stats', verifyAdminToken, async (req, res) => {
     try {
         const { UsageTracker } = await import('../services/usageTracker');
         await UsageTracker.logFirestoreRead(1);
-
-        const db = admin.firestore();
 
         // Time period constants
         const now = new Date();
@@ -101,7 +100,6 @@ router.get('/users', verifyAdminToken, async (req, res) => {
         const { UsageTracker } = await import('../services/usageTracker');
         await UsageTracker.logFirestoreRead(1);
 
-        const db = admin.firestore();
         const usersSnapshot = await db.collection('users').orderBy('created_at', 'desc').get();
 
         const thirtyMinutesAgo = new Date(Date.now() - 30 * 60 * 1000);

@@ -3,10 +3,10 @@
  * Database-first approach with AI as controlled fallback only
  */
 
+import { db } from '../config/firebase';
 import * as admin from 'firebase-admin';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 
-const db = admin.firestore();
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '');
 
 // ============================================
