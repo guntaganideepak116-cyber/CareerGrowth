@@ -183,7 +183,7 @@
     appearance: none;
   }
 
-  /* Fix: Change display to inline-block to allow vertical-align middle (Tailwind Preflight default) */
+  /* Fix: vertical-align is ignored on block elements (Tailwind Preflight default) */
   img,
   svg,
   video,
@@ -192,8 +192,7 @@
   iframe,
   embed,
   object {
-    display: inline-block;
-    vertical-align: middle;
+    vertical-align: unset;
   }
 }
 

@@ -3,5 +3,8 @@
   "css.lint.propertyIgnoredDueToDisplay": "ignore",
   "files.associations": {
     "*.css": "tailwindcss"
-  }
+  },
+  "css.validate": false,
+  "scss.validate": true,
+  "less.validate": true
 }
