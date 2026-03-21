@@ -71,11 +71,26 @@ export class FCMService {
                 imageUrl: payload.imageUrl
             },
             data: payload.data || {},
-            webpush: {
+            android: {
+                priority: 'high',
                 notification: {
+                    sound: 'default',
+                    priority: 'high'
+                }
+            },
+            webpush: {
+                headers: {
+                    Urgency: 'high'
+                },
+                notification: {
+                    title: payload.title,
+                    body: payload.body,
                     icon: '/favicon.svg',
                     badge: '/favicon.svg',
-                    click_action: payload.data?.url || '/dashboard'
+                    requireInteraction: true,
+                },
+                fcmOptions: {
+                    link: payload.data?.url || '/dashboard'
                 }
             }
         };
