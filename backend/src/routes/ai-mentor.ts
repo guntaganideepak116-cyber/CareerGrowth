@@ -1,5 +1,5 @@
 import { Router, Request, Response } from 'express';
-import { GoogleGenerativeAI } from '@google/generative-ai';
+import Groq from 'groq-sdk';
 import { verifyToken } from '../middleware/adminMiddleware';
 
 const router = Router();
@@ -7,18 +7,13 @@ const router = Router();
 // ------------------------------------------------------------
 // UNIVERSAL AI CONFIGURATION (WITH AUTO-FALLBACK)
 // ------------------------------------------------------------
-// Initialize Gemini at top level for efficiency
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_MENTOR_KEY || process.env.GEMINI_API_KEY || '');
+// Initialize Groq at top level for efficiency
+const groq = new Groq({ 
+    apiKey: process.env.GROQ_API_KEY || ''
+});
 
-// We will try these models in order. 
-// Note: As of March 2026, Gemini 3.1 is the latest stable series.
-const MODELS_TO_TRY = [
-    "gemini-1.5-flash",      // Known to work in other parts of this project
-    "gemini-3.1-flash-lite", // Latest performance model
-    "gemini-3.1-flash",      // Latest stable flash
-    "gemini-1.5-pro",        // Legacy pro (may be 404 in some regions)
-    "gemini-pro"             // Ultra-stable fallback (Gemini 1.0 Pro)
-];
+// We will try these Groq models in order
+const MODELS_TO_TRY = ["llama-3.3-70b-versatile", "mixtral-8x7b-32768", "llama3-8b-8192"];
 
 const handleAIChat = async (req: Request, res: Response) => {
     const { message, field, specialization } = req.body;
@@ -27,9 +22,9 @@ const handleAIChat = async (req: Request, res: Response) => {
         return res.status(400).json({ error: "No user message provided." });
     }
 
-    if (!process.env.GEMINI_MENTOR_KEY && !process.env.GEMINI_API_KEY) {
-        console.error("[AI] CRITICAL ERROR: No API key found in environment variables.");
-        return res.status(500).json({ error: "Server configuration error: Missing API Key" });
+    if (!process.env.GROQ_API_KEY) {
+        console.error("[GROQ-AI] CRITICAL ERROR: GROQ_API_KEY is missing in environment variables.");
+        return res.status(500).json({ error: "Server configuration error: Missing Groq API Key" });
     }
 
     let lastError = null;
@@ -37,19 +32,31 @@ const handleAIChat = async (req: Request, res: Response) => {
     // --- AUTO-FALLBACK LOOP ---
     for (const modelName of MODELS_TO_TRY) {
         try {
-            console.log(`[AI] Attempting response with model: ${modelName}`);
-            const model = genAI.getGenerativeModel({ model: modelName });
+            console.log(`[GROQ-AI] Attempting response with model: ${modelName}`);
             
-            const prompt = `You are a career mentor helping students with real-world guidance.
-Context:
-Field: ${field || 'General Engineering'}
-Specialization: ${specialization || 'General'}
-User Question: ${message}`;
+            const completion = await groq.chat.completions.create({
+                messages: [
+                    {
+                        role: "system",
+                        content: `You are a career mentor helping students with real-world guidance. Context: Field: ${field || 'General Engineering'}, Specialization: ${specialization || 'General'}. Focus on practical advice, industry trends, and specific next steps.`
+                    },
+                    {
+                        role: "user",
+                        content: message
+                    }
+                ],
+                model: modelName,
+                temperature: 0.7,
+                max_tokens: 2048,
+            });
 
-            const result = await model.generateContent(prompt);
-            const text = result.response.text();
+            const text = completion.choices[0]?.message?.content || "";
 
-            console.log(`[AI] SUCCESS: Responded using ${modelName}`);
+            if (!text) {
+                throw new Error("No response content from model.");
+            }
+
+            console.log(`[GROQ-AI] SUCCESS: Responded using ${modelName}`);
             
             // If we succeed, return immediately and stop the loop
             return res.json({ 
@@ -59,16 +66,13 @@ User Question: ${message}`;
             });
 
         } catch (error: any) {
-            console.error(`[AI] FAILED with ${modelName}:`, error.message);
+            console.error(`[GROQ-AI] FAILED with ${modelName}:`, error.message);
             lastError = error;
-            
-            // If the error is not a "model not found" (404), maybe it's a rate limit (429) or invalid key (403)
-            // In case of 403 or 429, trying another model might not help, but we'll try anyway just in case.
         }
     }
 
     // --- FINAL FAILURE IF ALL MODELS FAIL ---
-    console.error("[AI] CRITICAL ERROR: All models failed. Last error:", lastError?.message);
+    console.error("[GROQ-AI] CRITICAL ERROR: All models failed. Last error:", lastError?.message);
     
     // Provide a clear error message back to the UI
     res.status(500).json({ 
