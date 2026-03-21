@@ -14,43 +14,59 @@ firebase.initializeApp({
 
 const messaging = firebase.messaging();
 
-// Background message handler
-messaging.onBackgroundMessage((payload) => {
-  console.log('[firebase-messaging-sw.js] Received background message ', payload);
-  
-  const notificationTitle = payload.notification.title || 'CareerGrowth Update';
-  const notificationOptions = {
-    body: payload.notification.body || 'Check out the latest update on your dashboard.',
-    icon: '/favicon.svg',
-    badge: '/favicon.svg',
-    data: payload.data // Contains the URL
-  };
+// ------------------------------------------------------------
+// STEP 2: SERVICE WORKER PUSH HANDLER
+// ------------------------------------------------------------
+self.addEventListener("push", function(event) {
+    console.log('[firebase-messaging-sw.js] Push Received.');
+    if (!event.data) return;
 
-  self.registration.showNotification(notificationTitle, notificationOptions);
+    let data;
+    try {
+        data = event.data.json();
+    } catch (e) {
+        // Fallback for non-JSON data
+        console.warn('Non-JSON push received:', event.data.text());
+        return;
+    }
+
+    // Extract from our custom data-only payload
+    const payload = data.data || data;
+    const notificationTitle = payload.title || 'Career Update';
+    const notificationOptions = {
+        body: payload.body || 'New notification received.',
+        icon: "/favicon.svg",
+        badge: "/favicon.svg",
+        data: {
+          url: payload.url || "/dashboard"
+        }
+    };
+
+    event.waitUntil(
+        self.registration.showNotification(notificationTitle, notificationOptions)
+    );
 });
 
-// Handle notification click 
-self.addEventListener('notificationclick', (event) => {
-  event.notification.close();
+// ------------------------------------------------------------
+// STEP 3: NOTIFICATION CLICK HANDLING
+// ------------------------------------------------------------
+self.addEventListener("notificationclick", function(event) {
+    console.log('[firebase-messaging-sw.js] Notification click Received.');
+    event.notification.close();
 
-  const urlToOpen = event.notification.data?.url || '/dashboard';
+    const targetUrl = event.notification.data.url || '/dashboard';
 
-  event.waitUntil(
-    clients.matchAll({
-      type: 'window',
-      includeUncontrolled: true
-    }).then((windowClients) => {
-      // Check if there is already a window/tab open with the target URL
-      for (var i = 0; i < windowClients.length; i++) {
-        var client = windowClients[i];
-        if (client.url === urlToOpen && 'focus' in client) {
-          return client.focus();
-        }
-      }
-      // If not, open a new window/tab
-      if (clients.openWindow) {
-        return clients.openWindow(urlToOpen);
-      }
-    })
-  );
+    event.waitUntil(
+        clients.matchAll({ type: "window", includeUncontrolled: true }).then((clientList) => {
+            for (const client of clientList) {
+                // Check if the URL matches (base comparison)
+                if (client.url.includes(targetUrl) && "focus" in client) {
+                    return client.focus();
+                }
+            }
+            if (clients.openWindow) {
+                return clients.openWindow(targetUrl);
+            }
+        })
+    );
 });

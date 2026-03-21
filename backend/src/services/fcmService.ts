@@ -65,29 +65,18 @@ export class FCMService {
 
         const message: admin.messaging.MulticastMessage = {
             tokens: Array.from(new Set(tokens)), // Unique tokens only
-            notification: {
+            data: {
                 title: payload.title,
                 body: payload.body,
-                imageUrl: payload.imageUrl
+                url: payload.data?.url || '/dashboard',
+                imageUrl: payload.imageUrl || ''
             },
-            data: payload.data || {},
             android: {
-                priority: 'high',
-                notification: {
-                    sound: 'default',
-                    priority: 'high'
-                }
+                priority: 'high'
             },
             webpush: {
                 headers: {
                     Urgency: 'high'
-                },
-                notification: {
-                    title: payload.title,
-                    body: payload.body,
-                    icon: '/favicon.svg',
-                    badge: '/favicon.svg',
-                    requireInteraction: true,
                 },
                 fcmOptions: {
                     link: payload.data?.url || '/dashboard'

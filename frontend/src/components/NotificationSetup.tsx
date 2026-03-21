@@ -27,28 +27,35 @@ export const NotificationSetup = () => {
 
       try {
         // 1. Request Permission
+        console.log('[NotificationSetup] Requesting notification permission...');
         const permission = await Notification.requestPermission();
+        
         if (permission !== 'granted') {
-            console.log('Notification permission denied');
+            console.warn('[NotificationSetup] Permission denied by user');
             return;
         }
 
-        // 2. Explicitly register FCM Service Worker for PWA/Mobile
+        // 2. Explicitly register and wait for service worker to be READY
+        console.log('[NotificationSetup] Registering service worker...');
         const registration = await navigator.serviceWorker.register('/firebase-messaging-sw.js', {
             scope: '/'
         });
-        console.log('Firebase SW registered:', registration);
+        
+        // Wait for it to be actually ready
+        await navigator.serviceWorker.ready;
+        console.log('[NotificationSetup] Service Worker is READY:', registration);
 
         // 3. Get FCM Token
-        const currentToken = await getToken(messaging, {
-          vapidKey: VAPID_KEY,
-          serviceWorkerRegistration: registration
-        });
+        try {
+            const currentToken = await getToken(messaging, {
+                vapidKey: VAPID_KEY,
+                serviceWorkerRegistration: registration
+            });
 
-        if (currentToken) {
-          console.log('FCM Token received:', currentToken);
-          
-          // 3. Store Token in Firestore
+            if (currentToken) {
+                console.log('[NotificationSetup] Successfully generated Device Token:', currentToken);
+                
+                // 4. Store Token in Firestore (Optimized)
           // Fetch user profile to get field and specialization
           const userProfileRef = doc(db, 'user_profiles', user.uid);
           const userProfileSnap = await getDoc(userProfileRef);
