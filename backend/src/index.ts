@@ -67,7 +67,7 @@ app.use('/api/strict-content', strictContentRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/api/notifications', notificationRoutes);
 app.use('/api/ai-mentor', aiMentorRoutes);
-app.use('/api/ai', aiRoutes);
+app.use('/api/ai', aiMentorRoutes); // Both paths now point to the consolidated, working router
 app.use('/api/projects', projectsRoutes);
 app.use('/api/certifications', certificationsRoutes);
 app.use('/api/portfolio', portfolioRoutes);
