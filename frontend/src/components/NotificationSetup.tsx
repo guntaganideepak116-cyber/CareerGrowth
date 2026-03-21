@@ -33,9 +33,16 @@ export const NotificationSetup = () => {
             return;
         }
 
-        // 2. Get FCM Token
+        // 2. Explicitly register FCM Service Worker for PWA/Mobile
+        const registration = await navigator.serviceWorker.register('/firebase-messaging-sw.js', {
+            scope: '/'
+        });
+        console.log('Firebase SW registered:', registration);
+
+        // 3. Get FCM Token
         const currentToken = await getToken(messaging, {
-          vapidKey: VAPID_KEY
+          vapidKey: VAPID_KEY,
+          serviceWorkerRegistration: registration
         });
 
         if (currentToken) {
