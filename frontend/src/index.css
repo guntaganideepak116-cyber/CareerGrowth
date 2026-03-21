@@ -163,15 +163,24 @@
   input:where([type="button"]),
   input:where([type="reset"]),
   input:where([type="submit"]) {
+    -webkit-appearance: button;
+    -moz-appearance: button;
     appearance: button;
   }
 
   [type="search"] {
+    -webkit-appearance: textfield;
+    -moz-appearance: textfield;
     appearance: textfield;
   }
 
   ::-webkit-file-upload-button {
     appearance: button;
+  }
+
+  ::-webkit-search-decoration {
+    -webkit-appearance: none;
+    appearance: none;
   }
 
   /* Fix: vertical-align is ignored on block elements (Tailwind Preflight default) */
