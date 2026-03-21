@@ -18,7 +18,7 @@ const getGenAI = () => {
 // We will try these models in order
 const MODELS_TO_TRY = ["gemini-1.5-flash", "gemini-2.0-flash-lite", "gemini-1.5-pro"];
 
-router.post('/chat', verifyToken, async (req: Request, res: Response) => {
+const handleAIChat = async (req: Request, res: Response) => {
     const { message, field, specialization } = req.body;
 
     if (!message) {
@@ -67,7 +67,9 @@ User Question: ${message}`;
         error: "AI service temporarily unavailable", 
         message: lastError?.message || "All AI models returned an error."
     });
-});
+};
+
+router.post('/chat', verifyToken, handleAIChat);
 
 // Legacy /stream support redirected to the same logic
 router.post('/stream', verifyToken, async (req: Request, res: Response) => {
@@ -75,8 +77,9 @@ router.post('/stream', verifyToken, async (req: Request, res: Response) => {
     const { message, messages } = req.body;
     const content = message || (messages && messages.length > 0 ? messages[messages.length-1].content : "");
     req.body.message = content;
+    
     // Call our own handler
-    return router.handle(req, res, () => {});
+    return handleAIChat(req, res);
 });
 
 export default router;
