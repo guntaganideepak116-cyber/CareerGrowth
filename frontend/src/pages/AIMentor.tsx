@@ -105,11 +105,12 @@ export default function AIMentor() {
         })
       });
 
-      if (!response.ok) {
-        throw new Error("AI service temporarily unavailable");
-      }
+      const data = await response.json().catch(() => ({ error: "Server did not return JSON" }));
 
-      const data = await response.json();
+      if (!response.ok) {
+        // STEP 7 & 10 (REFINE): Throw the real message from our server
+        throw new Error(data.message || data.error || "AI service temporarily unavailable");
+      }
 
       // ------------------------------------------------------------
       // STEP 7 & 10: RESPONSE HANDLING
