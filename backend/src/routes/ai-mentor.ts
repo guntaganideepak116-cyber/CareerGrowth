@@ -7,16 +7,18 @@ const router = Router();
 // ------------------------------------------------------------
 // UNIVERSAL AI CONFIGURATION (WITH AUTO-FALLBACK)
 // ------------------------------------------------------------
-const getGenAI = () => {
-    const key = process.env.GEMINI_MENTOR_KEY || process.env.GEMINI_API_KEY;
-    if (!key) {
-        throw new Error("SERVER_CONFIG_ERROR: GEMINI_API_KEY is missing in environment variables. Please check Vercel settings.");
-    }
-    return new GoogleGenerativeAI(key);
-};
+// Initialize Gemini at top level for efficiency
+const genAI = new GoogleGenerativeAI(process.env.GEMINI_MENTOR_KEY || process.env.GEMINI_API_KEY || '');
 
-// We will try these models in order
-const MODELS_TO_TRY = ["gemini-1.5-flash", "gemini-2.0-flash-lite", "gemini-1.5-pro"];
+// We will try these models in order. 
+// Note: As of March 2026, Gemini 3.1 is the latest stable series.
+const MODELS_TO_TRY = [
+    "gemini-1.5-flash",      // Known to work in other parts of this project
+    "gemini-3.1-flash-lite", // Latest performance model
+    "gemini-3.1-flash",      // Latest stable flash
+    "gemini-1.5-pro",        // Legacy pro (may be 404 in some regions)
+    "gemini-pro"             // Ultra-stable fallback (Gemini 1.0 Pro)
+];
 
 const handleAIChat = async (req: Request, res: Response) => {
     const { message, field, specialization } = req.body;
@@ -25,7 +27,11 @@ const handleAIChat = async (req: Request, res: Response) => {
         return res.status(400).json({ error: "No user message provided." });
     }
 
-    const genAI = getGenAI();
+    if (!process.env.GEMINI_MENTOR_KEY && !process.env.GEMINI_API_KEY) {
+        console.error("[AI] CRITICAL ERROR: No API key found in environment variables.");
+        return res.status(500).json({ error: "Server configuration error: Missing API Key" });
+    }
+
     let lastError = null;
 
     // --- AUTO-FALLBACK LOOP ---
@@ -55,12 +61,14 @@ User Question: ${message}`;
         } catch (error: any) {
             console.error(`[AI] FAILED with ${modelName}:`, error.message);
             lastError = error;
-            // Continue to the next model in the loop...
+            
+            // If the error is not a "model not found" (404), maybe it's a rate limit (429) or invalid key (403)
+            // In case of 403 or 429, trying another model might not help, but we'll try anyway just in case.
         }
     }
 
     // --- FINAL FAILURE IF ALL MODELS FAIL ---
-    console.error("[AI] CRITICAL ERROR: All models failed.");
+    console.error("[AI] CRITICAL ERROR: All models failed. Last error:", lastError?.message);
     
     // Provide a clear error message back to the UI
     res.status(500).json({ 
