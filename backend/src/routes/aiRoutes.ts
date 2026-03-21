@@ -12,9 +12,10 @@ router.post('/chat', verifyToken, async (req: Request, res: Response) => {
     const { message, field, specialization } = req.body;
 
     // ------------------------------------------------------------
-    // STEP 8: DEBUGGING LOGS
+    // PART 5: DEBUGGING LOGS
     // ------------------------------------------------------------
-    console.log("User Message:", message);
+    console.log("API Key:", (process.env.GEMINI_MENTOR_KEY || process.env.GEMINI_API_KEY || "").substring(0, 10) + "...");
+    console.log("User message:", message);
     console.log("Context:", { field, specialization });
 
     if (!message) {
