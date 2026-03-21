@@ -133,4 +133,7 @@ export default {
     },
   },
   plugins: [tailwindcssAnimate],
+  corePlugins: {
+    lineClamp: false,
+  },
 } satisfies Config;
