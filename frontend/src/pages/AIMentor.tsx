@@ -55,7 +55,7 @@ export default function AIMentor() {
       if (response.ok) {
         const data = await response.json();
         if (data.messages && data.messages.length > 0) {
-          setMessages(data.messages.map((m: any) => ({
+          setMessages(data.messages.map((m: Message) => ({
             ...m,
             timestamp: new Date(m.timestamp)
           })));
@@ -153,9 +153,10 @@ export default function AIMentor() {
           : m
       ));
 
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error("Chat error:", err);
-      toast.error(err.message || "AI service temporarily unavailable");
+      const errorMessage = err instanceof Error ? err.message : "AI service temporarily unavailable";
+      toast.error(errorMessage);
       setMessages(prev => prev.filter(m => m.id !== assistantId));
     } finally {
       setIsTyping(false);

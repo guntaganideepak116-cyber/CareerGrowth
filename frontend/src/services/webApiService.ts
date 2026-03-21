@@ -32,7 +32,7 @@ export const setupPushNotifications = async () => {
         return;
     }
 
-    let permission = await Notification.requestPermission();
+    const permission = await Notification.requestPermission();
     if (permission !== 'granted') {
         throw new Error('User denied permissions!');
     }

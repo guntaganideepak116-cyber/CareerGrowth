@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { getToken, onMessage } from 'firebase/messaging';
 import { messaging, db, auth } from '@/lib/firebase';
 import { doc, setDoc, getDoc } from 'firebase/firestore';
-import { onAuthStateChanged } from 'firebase/auth';
+import { onAuthStateChanged, User } from 'firebase/auth';
 import { toast } from 'sonner';
 
 const VAPID_KEY = import.meta.env.VITE_FIREBASE_VAPID_KEY;
@@ -22,7 +22,7 @@ export const NotificationSetup = () => {
         });
     });
 
-    const setupNotifications = async (user: any) => {
+    const setupNotifications = async (user: User) => {
       if (!user) return;
 
       try {

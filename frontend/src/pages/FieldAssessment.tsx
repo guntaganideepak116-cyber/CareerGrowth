@@ -84,7 +84,7 @@ export default function FieldAssessment() {
                 return snapshot.docs.map(doc => {
                     const data = doc.data();
                     // Security: Do not expose correctAnswer to frontend (Grading fetched separately)
-                    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+                     
                     const { correctAnswer, ...rest } = data;
                     return {
                         id: doc.id,
