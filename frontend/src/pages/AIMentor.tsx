@@ -186,7 +186,7 @@ export default function AIMentor() {
 
   return (
     <DashboardLayout>
-      <div className="max-w-6xl mx-auto h-[calc(100vh-8rem)] flex flex-col">
+      <div className="w-full h-[calc(100vh-6rem)] flex flex-col lg:h-[calc(100vh-5rem)]">
         {/* Header */}
         <div className="flex items-center justify-between mb-6 animate-fade-in">
           <div className="flex items-center gap-4">
@@ -240,10 +240,10 @@ export default function AIMentor() {
                   )}
                 </div>
                 <div
-                  className={`max-w-[70%] ${message.role === 'assistant' ? 'chat-bubble-ai' : 'chat-bubble-user'
+                  className={`max-w-[85%] md:max-w-[80%] ${message.role === 'assistant' ? 'chat-bubble-ai' : 'chat-bubble-user'
                     }`}
                 >
-                  <p className="text-sm leading-relaxed whitespace-pre-wrap">{message.content}</p>
+                  <p className="leading-relaxed whitespace-pre-wrap">{message.content}</p>
                   <span className="text-xs opacity-50 mt-1 block">
                     {message.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                   </span>
@@ -277,11 +277,11 @@ export default function AIMentor() {
                 onChange={e => setInput(e.target.value)}
                 onKeyPress={handleKeyPress}
                 placeholder="Ask about your career path..."
-                className="flex-1"
+                className="flex-1 py-6 text-base"
                 disabled={isTyping}
               />
-              <Button variant="hero" onClick={handleSend} disabled={!input.trim() || isTyping}>
-                <Send className="w-5 h-5" />
+              <Button variant="hero" onClick={handleSend} disabled={!input.trim() || isTyping} className="h-auto px-6">
+                <Send className="w-6 h-6" />
               </Button>
             </div>
             <p className="text-xs text-muted-foreground text-center mt-2">

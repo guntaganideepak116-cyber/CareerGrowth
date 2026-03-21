@@ -242,11 +242,11 @@
 
   /* Chat Bubble */
   .chat-bubble-ai {
-    @apply bg-primary-light text-foreground rounded-2xl rounded-tl-md px-4 py-3;
+    @apply bg-primary-light text-foreground rounded-2xl rounded-tl-md px-5 py-4 text-base md:text-lg leading-relaxed;
   }
 
   .chat-bubble-user {
-    @apply bg-primary text-primary-foreground rounded-2xl rounded-tr-md px-4 py-3;
+    @apply bg-primary text-primary-foreground rounded-2xl rounded-tr-md px-5 py-4 text-base md:text-lg leading-relaxed;
   }
 
   /* Custom Hover Utility */
