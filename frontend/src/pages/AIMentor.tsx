@@ -59,9 +59,6 @@ export default function AIMentor() {
   const handleSend = async () => {
     if (!input.trim() || isTyping) return;
 
-    // Dynamically import streamChat to reduce initial bundle size
-    const { streamChat } = await import('@/lib/ai-chat');
-
     const userMessage: Message = {
       id: crypto.randomUUID(),
       role: 'user',
@@ -69,49 +66,67 @@ export default function AIMentor() {
       timestamp: new Date(),
     };
 
-    // ... rest of handleSend logic ...
     setMessages(prev => [...prev, userMessage]);
     setInput('');
     setIsTyping(true);
 
-    // Prepare messages for API (convert to API format)
-    const apiMessages = messages
-      .filter(m => m.id !== '1') // Exclude initial greeting
-      .concat(userMessage)
-      .map(m => ({ role: m.role, content: m.content }));
-
-    let assistantContent = '';
+    // ------------------------------------------------------------
+    // STEP 9: TIMEOUT/LOADING HANDLING
+    // ------------------------------------------------------------
     const assistantId = crypto.randomUUID();
-
-    // Add empty assistant message that we'll stream into
+    // Use "Generating response..." as requested
     setMessages(prev => [...prev, {
       id: assistantId,
       role: 'assistant',
-      content: '',
+      content: 'Generating response...',
       timestamp: new Date(),
     }]);
 
-    await streamChat({
-      messages: apiMessages,
-      role: activeRole,
-      onDelta: (chunk) => {
-        assistantContent += chunk;
-        setMessages(prev => prev.map(m =>
-          m.id === assistantId
-            ? { ...m, content: assistantContent }
-            : m
-        ));
-      },
-      onDone: () => {
-        setIsTyping(false);
-      },
-      onError: (error) => {
-        setIsTyping(false);
-        toast.error(error);
-        // Remove the empty assistant message on error
-        setMessages(prev => prev.filter(m => m.id !== assistantId));
-      },
-    });
+    try {
+      const { auth } = await import('@/lib/firebase');
+      const user = auth.currentUser;
+      const token = await user?.getIdToken();
+
+      // ------------------------------------------------------------
+      // STEP 6: FRONTEND CONNECTION
+      // ------------------------------------------------------------
+      // Determine field/specialization from profile or context if available
+      // For now, we use a simple default or active role as context
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/ai/chat`, {
+        method: "POST",
+        headers: { 
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`
+        },
+        body: JSON.stringify({
+          message: userMessage.content,
+          field: activeRole === 'counselor' ? 'Career Guidance' : activeRole === 'mentor' ? 'Industry Insights' : 'Skill Development',
+          specialization: activeRole
+        })
+      });
+
+      if (!response.ok) {
+        throw new Error("AI service temporarily unavailable");
+      }
+
+      const data = await response.json();
+
+      // ------------------------------------------------------------
+      // STEP 7 & 10: RESPONSE HANDLING
+      // ------------------------------------------------------------
+      setMessages(prev => prev.map(m =>
+        m.id === assistantId
+          ? { ...m, content: data.response || data.message || "I apologize, but I couldn't generate a response." }
+          : m
+      ));
+
+    } catch (err: any) {
+      console.error("Chat error:", err);
+      toast.error(err.message || "AI service temporarily unavailable");
+      setMessages(prev => prev.filter(m => m.id !== assistantId));
+    } finally {
+      setIsTyping(false);
+    }
   };
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
