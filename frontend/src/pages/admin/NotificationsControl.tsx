@@ -16,8 +16,11 @@ import {
     Clock,
     Wifi,
     Users,
-    MessageSquareQuote
+    MessageSquareQuote,
+    Smartphone
 } from 'lucide-react';
+import { Switch } from '@/components/ui/switch';
+import { sendPushNotification } from '@/services/apiService';
 import { toast } from 'sonner';
 import { db } from '@/lib/firebase';
 import {
@@ -57,6 +60,8 @@ export default function NotificationsControl() {
     const [individualEmail, setIndividualEmail] = useState('');
     const [title, setTitle] = useState('');
     const [message, setMessage] = useState('');
+    const [sendPush, setSendPush] = useState(false);
+    const [actionUrl, setActionUrl] = useState('');
 
     // Real-time Global Notification Stream (Summary)
     useEffect(() => {
@@ -109,10 +114,35 @@ export default function NotificationsControl() {
 
             await Promise.all(batch);
 
+            // 2. If Push is enabled, send to FCM
+            if (sendPush) {
+                const pushParams: any = {
+                    title,
+                    body: message,
+                    url: actionUrl || '/dashboard'
+                };
+
+                if (targetType === 'field') {
+                    pushParams.fieldId = targetField;
+                } else if (targetType === 'individual') {
+                    // We need to find the specific user ID by email
+                    const q = query(collection(db, 'users'), where('email', '==', individualEmail));
+                    const usersSnap = await getDocs(q);
+                    if (!usersSnap.empty) {
+                        pushParams.userId = usersSnap.docs[0].id;
+                    }
+                }
+                // If 'all', backend handles it by sending to all tokens
+
+                await sendPushNotification(pushParams);
+                toast.success("Real-time push notification dispatched.");
+            }
+
             toast.success(`Broadcast successful to ${targetUserIds.length} users.`);
             setTitle('');
             setMessage('');
             setIndividualEmail('');
+            setActionUrl('');
         } catch (error) {
             toast.error("Failed to propagate notifications.");
         } finally {
@@ -204,10 +234,35 @@ export default function NotificationsControl() {
                                 <div className="space-y-2">
                                     <Label className="text-xs font-bold uppercase text-muted-foreground">Detailed Message</Label>
                                     <Textarea
-                                        placeholder="Broadcast content reaches users instantly via socket listeners..."
-                                        className="min-h-[120px] resize-none"
+                                        placeholder="Message content shown in the notification list..."
+                                        className="min-h-[100px] resize-none"
                                         value={message}
                                         onChange={e => setMessage(e.target.value)}
+                                    />
+                                </div>
+
+                                <div className="space-y-2">
+                                    <Label className="text-xs font-bold uppercase text-muted-foreground">Action URL (Optional)</Label>
+                                    <Input
+                                        placeholder="/dashboard, /profile, etc."
+                                        value={actionUrl}
+                                        onChange={e => setActionUrl(e.target.value)}
+                                    />
+                                </div>
+
+                                <div className="flex items-center justify-between p-4 bg-primary/5 rounded-lg border border-primary/20 animate-pulse">
+                                    <div className="space-y-0.5">
+                                        <Label className="text-base font-semibold flex items-center gap-2">
+                                            <Smartphone className="h-4 w-4 text-primary" />
+                                            Push Notification
+                                        </Label>
+                                        <p className="text-xs text-muted-foreground">
+                                            Send as a real-time system alert to devices
+                                        </p>
+                                    </div>
+                                    <Switch
+                                        checked={sendPush}
+                                        onCheckedChange={setSendPush}
                                     />
                                 </div>
                             </div>

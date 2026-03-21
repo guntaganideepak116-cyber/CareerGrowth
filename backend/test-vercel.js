@@ -1,7 +1,7 @@
 
 const axios = require('axios');
 const API_URL = 'https://career-growth-opr6.vercel.app';
-const API_KEY = 'AIzaSyATy-Dxy6-YJA2dFPFyclKikV43NUzrCj4'; // Reusing your Gemini key for general test? No.
+const API_KEY = process.env.GEMINI_API_KEY; // Using env variable instead of hardcoded key
 
 async function testHealth() {
     try {

@@ -3,8 +3,8 @@ import { GoogleGenerativeAI } from '@google/generative-ai';
 import { verifyToken } from '../middleware/adminMiddleware';
 
 const router = Router();
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '');
-const GEMINI_MODEL = 'gemini-2.0-flash';
+const genAI = new GoogleGenerativeAI(process.env.GEMINI_MENTOR_KEY || process.env.GEMINI_API_KEY || '');
+const GEMINI_MODEL = 'gemini-1.5-flash';
 
 // ChatGPT-Style AI Mentor Training - Conversational and versatile
 const SYSTEM_PROMPTS = {

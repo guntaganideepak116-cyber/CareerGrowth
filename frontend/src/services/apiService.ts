@@ -104,3 +104,28 @@ export async function getCareerPaths(params: { fieldId: string; specializationId
         return [];
     }
 }
+export async function sendPushNotification(params: {
+    title: string;
+    body: string;
+    userId?: string;
+    fieldId?: string;
+    specialization?: string;
+    url?: string;
+}): Promise<any> {
+    const token = await auth.currentUser?.getIdToken();
+    const response = await fetch(`${API_URL}/api/notifications/send-push`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify(params),
+    });
+
+    if (!response.ok) {
+        const errorData = await response.json().catch(() => ({ error: 'Network error' }));
+        throw new Error(errorData.error || `HTTP error! status: ${response.status}`);
+    }
+
+    return await response.json();
+}
