@@ -1,14 +1,30 @@
 {
     "version": 2,
-    "outputDirectory": "dist",
-    "crons": [
+    "builds": [
         {
-            "path": "/api/cron/daily-engagement",
-            "schedule": "0 9 * * *"
+            "src": "backend/src/index.ts",
+            "use": "@vercel/node"
         },
         {
-            "path": "/api/notifications/cron/bootstrap",
-            "schedule": "0 0 * * *"
+            "src": "package.json",
+            "use": "@vercel/static-build",
+            "config": {
+                "distDir": "dist"
+            }
+        }
+    ],
+    "rewrites": [
+        {
+            "source": "/api/notifications/(.*)",
+            "destination": "/backend/src/index.ts"
+        },
+        {
+            "source": "/api/(.*)",
+            "destination": "/backend/api_legacy/$1"
+        },
+        {
+            "source": "/((?!assets/|sw.js|workbox-|manifest).*)",
+            "destination": "/index.html"
         }
     ],
     "headers": [
@@ -29,15 +45,6 @@
                 }
             ]
         }
-    ],
-    "rewrites": [
-        {
-            "source": "/api/(.*)",
-            "destination": "/api/$1"
-        },
-        {
-            "source": "/((?!api/|assets/|sw.js|workbox-|manifest).*)",
-            "destination": "/index.html"
-        }
     ]
 }
+
