@@ -1,6 +1,8 @@
 import { Router, Request, Response } from 'express';
 import Groq from 'groq-sdk';
 import { verifyToken } from '../middleware/adminMiddleware';
+import { db } from '../config/firebase';
+import admin from 'firebase-admin';
 
 const router = Router();
 
@@ -16,10 +18,15 @@ const groq = new Groq({
 const MODELS_TO_TRY = ["llama-3.3-70b-versatile", "mixtral-8x7b-32768", "llama3-8b-8192"];
 
 const handleAIChat = async (req: Request, res: Response) => {
-    const { message, field, specialization } = req.body;
+    const { message, field, specialization, roleId } = req.body;
+    const userId = (req as any).userId;
 
     if (!message) {
         return res.status(400).json({ error: "No user message provided." });
+    }
+
+    if (!userId) {
+        return res.status(401).json({ error: "User not authenticated" });
     }
 
     if (!process.env.GROQ_API_KEY) {
@@ -58,6 +65,30 @@ const handleAIChat = async (req: Request, res: Response) => {
 
             console.log(`[GROQ-AI] SUCCESS: Responded using ${modelName}`);
             
+            // Save to Firestore for persistence
+            try {
+                const chatRef = db.collection('users').doc(userId)
+                    .collection('ai_mentor_chats').doc(roleId || 'default')
+                    .collection('messages');
+
+                // Save User Message
+                await chatRef.add({
+                    role: 'user',
+                    content: message,
+                    timestamp: admin.firestore.FieldValue.serverTimestamp()
+                });
+
+                // Save Assistant Message
+                await chatRef.add({
+                    role: 'assistant',
+                    content: text,
+                    timestamp: admin.firestore.FieldValue.serverTimestamp()
+                });
+            } catch (fsError) {
+                console.error("[GROQ-AI] Firestore save error:", fsError);
+                // Continue anyway, don't block the user's response
+            }
+
             // If we succeed, return immediately and stop the loop
             return res.json({ 
                 success: true,
@@ -82,6 +113,34 @@ const handleAIChat = async (req: Request, res: Response) => {
 };
 
 router.post('/chat', verifyToken, handleAIChat);
+
+// New endpoint to fetch history
+router.get('/history', verifyToken, async (req: Request, res: Response) => {
+    const userId = (req as any).userId;
+    const { roleId } = req.query;
+
+    if (!userId) return res.status(401).json({ error: "Unauthorized" });
+
+    try {
+        const snapshot = await db.collection('users').doc(userId)
+            .collection('ai_mentor_chats').doc(roleId as string || 'default')
+            .collection('messages')
+            .orderBy('timestamp', 'asc')
+            .limit(50)
+            .get();
+
+        const messages = snapshot.docs.map(doc => ({
+            id: doc.id,
+            ...doc.data(),
+            timestamp: doc.data().timestamp?.toDate() || new Date()
+        }));
+
+        res.json({ success: true, messages });
+    } catch (error: any) {
+        console.error("[GROQ-AI] History fetch error:", error);
+        res.status(500).json({ error: "Failed to fetch history" });
+    }
+});
 
 // Legacy /stream support redirected to the same logic
 router.post('/stream', verifyToken, async (req: Request, res: Response) => {

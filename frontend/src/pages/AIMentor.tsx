@@ -27,7 +27,6 @@ interface AIRole {
   icon: React.ElementType;
   description: string;
 }
-
 const aiRoles: AIRole[] = [
   { id: 'counselor', name: 'Career Counselor', icon: GraduationCap, description: 'General career guidance and planning' },
   { id: 'mentor', name: 'Industry Mentor', icon: Briefcase, description: 'Industry-specific advice and insights' },
@@ -35,18 +34,50 @@ const aiRoles: AIRole[] = [
 ];
 
 export default function AIMentor() {
-  const [messages, setMessages] = useState<Message[]>([
-    {
-      id: '1',
-      role: 'assistant',
-      content: "Hello! I'm your AI Career Mentor powered by advanced AI. I can help you with career guidance, skill development, and industry insights. What would you like to discuss today?",
-      timestamp: new Date(),
-    },
-  ]);
+  const [activeRole, setActiveRole] = useState<string>('counselor');
+  const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
   const [isTyping, setIsTyping] = useState(false);
-  const [activeRole, setActiveRole] = useState<string>('counselor');
   const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  const fetchHistory = async (roleId: string) => {
+    try {
+      const { auth } = await import('@/lib/firebase');
+      const user = auth.currentUser;
+      const token = await user?.getIdToken();
+
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/ai/history?roleId=${roleId}`, {
+        headers: {
+          "Authorization": `Bearer ${token}`
+        }
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        if (data.messages && data.messages.length > 0) {
+          setMessages(data.messages.map((m: any) => ({
+            ...m,
+            timestamp: new Date(m.timestamp)
+          })));
+        } else {
+          // Default initial message for new chat
+          const role = aiRoles.find(r => r.id === roleId);
+          setMessages([{
+            id: '1',
+            role: 'assistant',
+            content: `Hello! I'm your ${role?.name}. ${role?.description}. How can I help you today?`,
+            timestamp: new Date(),
+          }]);
+        }
+      }
+    } catch (err) {
+      console.error("Failed to fetch history:", err);
+    }
+  };
+
+  useEffect(() => {
+    fetchHistory(activeRole);
+  }, [activeRole]);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -101,7 +132,8 @@ export default function AIMentor() {
         body: JSON.stringify({
           message: userMessage.content,
           field: activeRole === 'counselor' ? 'Career Guidance' : activeRole === 'mentor' ? 'Industry Insights' : 'Skill Development',
-          specialization: activeRole
+          specialization: activeRole,
+          roleId: activeRole
         })
       });
 
@@ -138,15 +170,9 @@ export default function AIMentor() {
   };
 
   const handleRoleChange = (roleId: string) => {
+    if (roleId === activeRole) return;
     setActiveRole(roleId);
-    const role = aiRoles.find(r => r.id === roleId);
-    const switchMessage: Message = {
-      id: crypto.randomUUID(),
-      role: 'assistant',
-      content: `Switched to ${role?.name}. ${role?.description}. How can I help you?`,
-      timestamp: new Date(),
-    };
-    setMessages(prev => [...prev, switchMessage]);
+    setMessages([]); // Clear while loading history
   };
 
   const handleReset = () => {
@@ -160,7 +186,7 @@ export default function AIMentor() {
 
   return (
     <DashboardLayout>
-      <div className="max-w-4xl mx-auto h-[calc(100vh-8rem)] flex flex-col">
+      <div className="max-w-6xl mx-auto h-[calc(100vh-8rem)] flex flex-col">
         {/* Header */}
         <div className="flex items-center justify-between mb-6 animate-fade-in">
           <div className="flex items-center gap-4">
@@ -259,7 +285,7 @@ export default function AIMentor() {
               </Button>
             </div>
             <p className="text-xs text-muted-foreground text-center mt-2">
-              Powered by Google Gemini AI • Responses are for guidance purposes
+              Powered by Groq AI • High-performance Career Guidance
             </p>
           </div>
         </div>
