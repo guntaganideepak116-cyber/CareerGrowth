@@ -90,7 +90,10 @@ export const NotificationSetup = () => {
       } catch (err) {
         console.error('An error occurred while retrieving token. ', err);
       }
-    };
+    } catch (err) {
+      console.error('[NotificationSetup] Outer setup error:', err);
+    }
+  };
 
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
