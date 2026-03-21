@@ -26,7 +26,7 @@ router.post('/chat', verifyToken, async (req: Request, res: Response) => {
         // ------------------------------------------------------------
         // STEP 4: GEMINI IMPLEMENTATION
         // ------------------------------------------------------------
-        const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash-lite" });
+        const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
         
         // Construct a prompt using the field and specialization context
         const prompt = `You are a career mentor helping students with real-world guidance.
