@@ -5,75 +5,78 @@ import { verifyToken } from '../middleware/adminMiddleware';
 const router = Router();
 
 // ------------------------------------------------------------
-// UNIVERSAL AI CONFIGURATION
+// UNIVERSAL AI CONFIGURATION (WITH AUTO-FALLBACK)
 // ------------------------------------------------------------
 const getGenAI = () => {
     const key = process.env.GEMINI_MENTOR_KEY || process.env.GEMINI_API_KEY;
     if (!key) {
-        throw new Error("GEMINI_API_KEY is not configured in environment variables.");
+        throw new Error("SERVER_CONFIG_ERROR: GEMINI_API_KEY is missing in environment variables. Please check Vercel settings.");
     }
     return new GoogleGenerativeAI(key);
 };
 
-const MODEL_NAME = "gemini-1.5-flash";
+// We will try these models in order
+const MODELS_TO_TRY = ["gemini-1.5-flash", "gemini-2.0-flash-lite", "gemini-1.5-pro"];
 
-// ------------------------------------------------------------
-// STANDARDIZED CHAT ROUTE (Matches Part 1-6)
-// ------------------------------------------------------------
 router.post('/chat', verifyToken, async (req: Request, res: Response) => {
     const { message, field, specialization } = req.body;
 
-    console.log("[AI] Request received:", { message, field, specialization });
+    if (!message) {
+        return res.status(400).json({ error: "No user message provided." });
+    }
 
-    try {
-        const genAI = getGenAI();
-        const model = genAI.getGenerativeModel({ model: MODEL_NAME });
-        
-        const prompt = `You are a career mentor helping students with real-world guidance.
+    const genAI = getGenAI();
+    let lastError = null;
+
+    // --- AUTO-FALLBACK LOOP ---
+    for (const modelName of MODELS_TO_TRY) {
+        try {
+            console.log(`[AI] Attempting response with model: ${modelName}`);
+            const model = genAI.getGenerativeModel({ model: modelName });
+            
+            const prompt = `You are a career mentor helping students with real-world guidance.
+Context:
 Field: ${field || 'General Engineering'}
 Specialization: ${specialization || 'General'}
 User Question: ${message}`;
 
-        const result = await model.generateContent(prompt);
-        const text = result.response.text();
+            const result = await model.generateContent(prompt);
+            const text = result.response.text();
 
-        console.log("[AI] Response generated successfully.");
-        res.json({ response: text });
-
-    } catch (error: any) {
-        console.error("[AI] Error:", error.message);
-        
-        if (error.message?.includes("not configured")) {
-            return res.status(500).json({ 
-                error: "Server configuration error", 
-                message: "API Key is missing in server environment variables. Please add GEMINI_API_KEY to your Vercel settings." 
+            console.log(`[AI] SUCCESS: Responded using ${modelName}`);
+            
+            // If we succeed, return immediately and stop the loop
+            return res.json({ 
+                success: true,
+                response: text,
+                model: modelName
             });
-        }
 
-        res.status(500).json({ 
-            error: "AI service temporarily unavailable",
-            details: error.message 
-        });
+        } catch (error: any) {
+            console.error(`[AI] FAILED with ${modelName}:`, error.message);
+            lastError = error;
+            // Continue to the next model in the loop...
+        }
     }
+
+    // --- FINAL FAILURE IF ALL MODELS FAIL ---
+    console.error("[AI] CRITICAL ERROR: All models failed.");
+    
+    // Provide a clear error message back to the UI
+    res.status(500).json({ 
+        error: "AI service temporarily unavailable", 
+        message: lastError?.message || "All AI models returned an error."
+    });
 });
 
-// Alias same logic for /stream for backward compatibility to prevent 404s
+// Legacy /stream support redirected to the same logic
 router.post('/stream', verifyToken, async (req: Request, res: Response) => {
-    // We redirect legacy stream calls to regular chat to ensure they work
-    const { messages, message } = req.body;
+    // Forward to /chat logic internally or just reuse the logic
+    const { message, messages } = req.body;
     const content = message || (messages && messages.length > 0 ? messages[messages.length-1].content : "");
-    
-    try {
-        const genAI = getGenAI();
-        const model = genAI.getGenerativeModel({ model: MODEL_NAME });
-        const result = await model.generateContent(content);
-        const text = result.response.text();
-        
-        // Return in same format as /chat
-        res.json({ response: text });
-    } catch (error: any) {
-        res.status(500).json({ error: "AI service error", message: error.message });
-    }
+    req.body.message = content;
+    // Call our own handler
+    return router.handle(req, res, () => {});
 });
 
 export default router;
