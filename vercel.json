@@ -15,12 +15,20 @@
     ],
     "rewrites": [
         {
-            "source": "/api/notifications/(.*)",
-            "destination": "/backend/src/index.ts"
+            "source": "/api/cron/daily-engagement",
+            "destination": "/backend/api_legacy/cron/daily-engagement.js"
+        },
+        {
+            "source": "/api/fieldTips",
+            "destination": "/backend/api_legacy/fieldTips.js"
+        },
+        {
+            "source": "/api/send-email",
+            "destination": "/backend/api_legacy/send-email.js"
         },
         {
             "source": "/api/(.*)",
-            "destination": "/backend/api_legacy/$1"
+            "destination": "/backend/src/index.ts"
         },
         {
             "source": "/((?!assets/|sw.js|workbox-|manifest).*)",
