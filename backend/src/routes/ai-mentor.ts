@@ -4,7 +4,7 @@ import { verifyToken } from '../middleware/adminMiddleware';
 
 const router = Router();
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_MENTOR_KEY || process.env.GEMINI_API_KEY || '');
-const GEMINI_MODEL = 'gemini-1.5-flash';
+const GEMINI_MODEL = 'gemini-2.0-flash-lite';
 
 // ChatGPT-Style AI Mentor Training - Conversational and versatile
 const SYSTEM_PROMPTS = {
@@ -294,6 +294,14 @@ router.post('/chat', verifyToken, async (req: Request, res: Response) => {
     } catch (error: any) {
         console.error('AI Mentor error:', error);
 
+        // Check for Rate Limit (429) from the AI service itself
+        if (error.status === 429 || (error.message && error.message.includes('429'))) {
+            return res.status(429).json({
+                error: 'AI service rate limit exceeded.',
+                message: "I'm currently receiving a high volume of requests. Please give me a moment to catch my breath (about 30-60 seconds) and then ask your question again! I'm excited to help you with your career."
+            });
+        }
+
         if (error.message?.includes('quota')) {
             return res.status(402).json({
                 error: 'AI service quota exceeded. Please try again later.',
@@ -301,7 +309,8 @@ router.post('/chat', verifyToken, async (req: Request, res: Response) => {
         }
 
         res.status(500).json({
-            error: 'Failed to generate response. Please try again.',
+            error: 'Failed to generate response.',
+            message: "I encountered a technical hiccup. Could you try rephrasing your question?"
         });
     }
 });

@@ -1,13 +1,27 @@
 import { useEffect } from 'react';
-import { getToken } from 'firebase/messaging';
+import { getToken, onMessage } from 'firebase/messaging';
 import { messaging, db, auth } from '@/lib/firebase';
-import { doc, setDoc, getDoc, collection, query, where, getDocs, deleteDoc } from 'firebase/firestore';
+import { doc, setDoc, getDoc } from 'firebase/firestore';
 import { onAuthStateChanged } from 'firebase/auth';
+import { toast } from 'sonner';
 
 const VAPID_KEY = import.meta.env.VITE_FIREBASE_VAPID_KEY;
 
 export const NotificationSetup = () => {
   useEffect(() => {
+    // 1. Setup foreground listener
+    const unsubscribeFCM = onMessage(messaging, (payload) => {
+        console.log('Foreground message received:', payload);
+        toast(payload.notification?.title || 'New Notification', {
+            description: payload.notification?.body,
+            duration: 5000,
+            action: payload.data?.url ? {
+                label: 'View',
+                onClick: () => window.open(payload.data?.url, '_blank')
+            } : undefined
+        });
+    });
+
     const setupNotifications = async (user: any) => {
       if (!user) return;
 

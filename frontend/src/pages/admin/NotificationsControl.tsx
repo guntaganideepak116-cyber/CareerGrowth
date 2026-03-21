@@ -109,7 +109,9 @@ export default function NotificationsControl() {
                 type: 'admin',
                 read: false,
                 createdAt: serverTimestamp(),
-                fieldId: targetType === 'field' ? targetField : null
+                timestamp: Date.now(),
+                dateKey: new Date().toISOString().split('T')[0],
+                fieldId: targetType === 'field' ? targetField : 'general'
             }));
 
             await Promise.all(batch);
